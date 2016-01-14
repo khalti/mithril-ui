@@ -2,77 +2,14 @@
 <html>
 <head>
   <title></title>
-  <link rel="stylesheet" type="text/css" href="../node_modules/semantic-ui-css/semantic.min.css">
-  <script type="text/javascript" src="../node_modules/mithril/mithril.min.js"></script>
-  <script type="text/javascript" src="../node_modules/lodash/lodash.custom.min.js"></script>
-  <script type="text/javascript" src="../dist/selection.js"></script>
+  <script src="../jspm_packages/system.js"></script>
+  <script src="../config.js"></script>
+  <script>
+    System.import('test/test.js');
+  </script>
 </head>
 <body id="app">
 </body>
 <script type="text/javascript">
-// var Selection = {
-//   controller: function (pl) {
-//     var self = this;
-//     self.model = pl.model;
-//     self.field = pl.field;
-//     self.dropdownVisible =  false;
-
-//     self.toggleDropdown = function (e) {
-//         self.dropdownVisible = !self.dropdownVisible;
-//       };
-
-//     self.displayDropdown = function () {
-//         return self.dropdownVisible;
-//       };
-//     self.setValue = function (data) {
-//       self.model[self.field] = data;
-//     };
-//     self.getAlias = function (data) {
-//       return _.find(pl.options, {value: data}).alias;
-//     };
-//   },
-//   view: function (c, pl) {
-//     return m("div.ui.selection.dropdown", {onclick: c.toggleDropdown,
-//                                           class: c.displayDropdown() ? 'active': ''},
-//       m("input[type=hidden][name=gender]"),
-//       m("i.dropdown.icon"),
-//       m("div", {class: c.model[c.field]? 'text': 'default text'},
-//         c.getAlias(c.model[c.field] || '')),
-//       m(".menu", {style: {display: c.displayDropdown() ? 'block' : 'none'}},
-//         _.map(pl.options, function (pair) {
-//           return m("div",
-//             {
-//               class: pair.value? 'item': 'item',
-//               'data-value': pair.value,
-//               onclick: m.withAttr('data-value', c.setValue),
-//             },
-//             pair.html,
-//             pair.alias);
-//         })));
-//   }
-// };
-// m.mount(document.getElementById('app'), {
-//   view: function () {
-//     var model = {model: {sex: ''}};
-//     return m('.ui.container',
-//       m.component(Selection,
-//         {
-//           model: model,
-//           field: 'sex',
-//           label: 'Sex',
-//           options: [
-//             {value: '', alias: '-- Sex --'},
-//             {value: 'male', alias: 'Male', html: m('i.comment.icon')},
-//             {value: 'female', alias: 'Female', html: m('i.conversation.icon')}
-//           ]
-//         }));
-//   }
-//});
-m.mount(document.getElementById('app'), {
-   view: function () {
-     return m('.ui.container',
-       m.component(Selection));
-   }
-});
 </script>
 </html>

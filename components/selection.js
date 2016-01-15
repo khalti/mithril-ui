@@ -1,30 +1,51 @@
+'use strict';
+
 const m = require('mithril');
 const _ = require('lodash');
 const $ = require('jquery');
-const $$ = require('velocity');
+
+// animation types
+// show, hide x
+// add, remove, move, change
+
+let showHide = function (value) {
+  return (el, initialized, context) => {
+    let dom = $(el);
+
+    if(!initialized) {
+      if (value) {
+        dom.css('display', 'block');
+      }
+      else {
+        dom.css('display', 'none');
+      }
+      return;
+    }
+
+    if (value) {
+      let className = 'animation show';
+      dom.css('display', 'block');
+      dom.addClass(className)
+        .one('animationend', () => {dom.removeClass(className);});
+    }
+    else {
+      let className = 'animation hide';
+      dom.addClass(className)
+        .one('animationend', () => {dom.removeClass(className);dom.css('display', 'none');});
+    }
+  };
+};
 
 module.exports = {
   controller: function (pl) {
     const self = this;
-    self.dom = null;
     self.model = pl.model;
     self.field = pl.field;
     self.dropdownVisible =  false;
 
     self.toggleDropdown = function (e) {
-      if (self.dropdownVisible) {
-        m.startComputation();
-        $$(self.dom.children('.menu'), 'slideUp', {
-          duration: 300,
-          complete: function () {
-          self.dropdownVisible = !self.dropdownVisible;
-          m.endComputation();
-        }});
-      }
-      else {
-        self.dropdownVisible = !self.dropdownVisible;
-        $$(self.dom.children('.menu'), 'slideDown', {duration: 300});
-      }};
+      self.dropdownVisible = !self.dropdownVisible;
+      };
 
     self.displayDropdown = function () {
         return self.dropdownVisible;
@@ -40,7 +61,7 @@ module.exports = {
 
     self.config = function(el, initialized) {
       if(initialized) return;
-      self.dom = $(el);
+      self.dom = $(el).children('.menu');
     };
   },
   view: function (c, pl) {
@@ -54,7 +75,7 @@ module.exports = {
       m("i.dropdown.icon"),
       m("div.text", {class: c.model[c.field]? '': 'default'},
         c.getAlias(c.model[c.field] || '')),
-      m(".menu", {style: {display: c.displayDropdown() ? 'block' : 'none'}},
+      m(".menu", {config: showHide(c.dropdownVisible)},
         _.map(pl.options, function (pair) {
           return m("div.item",
             {

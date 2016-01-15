@@ -1,0 +1,23 @@
+.animation {
+  animation-duration: 0.3s;
+}
+
+.menu.animation.show {
+  animation-name: fadeInDown;
+}
+
+.menu.animation.hide {
+  animation-name: fadeOutUp;
+}
+
+.animation.add {
+  animation-name: zoomIn;
+}
+
+.animation.move.low {
+  animation-name: slideInDown;
+}
+
+.animation.move.high {
+  animation-name: slideInUp;
+}

@@ -14,6 +14,7 @@ System.config({
   },
 
   map: {
+    "animate.css": "npm:animate.css@3.4.0",
     "babel": "npm:babel-core@5.8.34",
     "babel-runtime": "npm:babel-runtime@5.8.34",
     "core-js": "npm:core-js@1.2.6",
@@ -22,7 +23,6 @@ System.config({
     "lodash": "npm:lodash@4.0.0",
     "mithril": "npm:mithril@0.2.2-rc.1",
     "semantic-ui-css": "npm:semantic-ui-css@2.1.8",
-    "velocity": "npm:velocity-animate@1.2.3",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
     },
@@ -64,10 +64,6 @@ System.config({
     },
     "npm:util@0.10.3": {
       "inherits": "npm:inherits@2.0.1",
-      "process": "github:jspm/nodelibs-process@0.1.2"
-    },
-    "npm:velocity-animate@1.2.3": {
-      "jquery": "npm:jquery@2.2.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
     }
   }

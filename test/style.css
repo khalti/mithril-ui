@@ -25,3 +25,7 @@
 .animation.change {
   animation-name: shake;
 }
+
+.animation.enter {
+  animation-name: fadeInRight;
+}

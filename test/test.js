@@ -47,6 +47,15 @@ const armc = function (data, index) {
   };
 };
 
+const entry = function () {
+  return function (el, initialized, ctx) {
+    let dom = $(el);
+    if (initialized) return;
+    dom.addClass('animation enter')
+      .one('animationend', () => dom.removeClass('animation enter'));
+  }
+}
+
 let ARMC = {
   controller: function (pl) {
     const self = this;
@@ -81,10 +90,10 @@ let ARMC = {
   }
 };
 
-m.mount(document.getElementById('app'), {
+let page1 = {
   view: function () {
     var model = {model: {sex: ''}};
-    return m('.ui.container',
+    return m('.ui.container', {config: entry()},
       m('h1', 'Selection'),
       m('hr'),
 
@@ -106,4 +115,20 @@ m.mount(document.getElementById('app'), {
       m('hr'),
       m.component(ARMC));
   }
+};
+
+let page2 = {
+  controller: function ()  {
+
+  },
+  view: function () {
+    return m('.ui.container',
+      m('h1', 'Welcome to page 2'));
+  }
+};
+
+
+m.route(document.body, '/', {
+  '/': page1,
+  '/2': page2
 });

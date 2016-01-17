@@ -21,57 +21,62 @@ const armc = function (data, index) {
   return function (el, initialized, ctx) {
     let dom = $(el);
     let addClass = 'animation add';
-    let changeClass = 'animation change';
+    let changeClass = 'animated flash';
     // for addition of element
     if(!initialized) {
       dom.addClass(addClass)
         .one('animationend', () => dom.removeClass(addClass));
     }
     // for element move
-    if (!ctx.index) ctx.index = index;
-    if (ctx.index) {
-      if (ctx.index < index) {
-        dom.addClass('animation move low')
-          .one('animationend', () => dom.removeClass('animation move low'));
-      }
-      else if (ctx.index > index) {
-        dom.addClass('animation move high')
-          .one('animationend', () => dom.removeClass('animation move high'));
-      }
+    if (ctx.index && ctx.index < index) {
+      dom.addClass('animation move low')
+        .one('animationend', () => dom.removeClass('animation move low'));
     }
-    // // if change in data
-    // if (!ctx.data) ctx.data = data;
-    // if (ctx.data) {
-    //   dom.addClass(changeClass)
-    //     .one('animationend', () => dom.removeClass(moveClass));
-    // }
+    else if (ctx.index && ctx.index > index) {
+      dom.addClass('animation move high')
+        .one('animationend', () => dom.removeClass('animation move high'));
+    }
+    // if change in data
+    if (ctx.data && !_.isEqual(ctx.data, data)) {
+      dom.addClass(changeClass)
+        .one('animationend', () => dom.removeClass(changeClass));
+    }
+    // save state
+    ctx.data = _.clone(data, true);
+    ctx.index = index;
   };
 };
 
 let ARMC = {
   controller: function (pl) {
     const self = this;
-    self.model = m.prop('');
     self.data = [
       {id: 1, text: '1. This is awesome'},
       {id: 2, text: '2. This is double awesome'},
       {id: 3, text: '3. This is triple awesome'}];
 
-    self.addData = (data) => {
-      self.model(data);
-      self.data.unshift({id:4, text: data});
+    self.add = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      self.data.unshift({id: 4, text: '4. This is babar awesome.'});
+    };
+
+    self.move = () => {
+      let temp = self.data[1];
+      self.data[1] = self.data[3];
+      self.data[3] = temp;
+    };
+
+    self.change = () => {
+      self.data[2].text = 'x. Change this yo';
     };
   },
   view: function (c, pl) {
     return m('.ui.segment',
         m('.ui.segment',
-          m('.ui.input.fluid',
-            m('input[type=text]', {
-              placeholder: 'Add Card',
-              onchange: m.withAttr('value', c.addData),
-              value: c.model()
-            }))
-          ),
+          m('.ui.button', {onclick: c.add}, 'Add'),
+          m('.ui.button', {onclick: c.move}, 'Move'),
+          m('.ui.button', {onclick: c.change}, 'Change')),
         map(c.data, (adata, index) => m('.ui.segment', {config: armc(adata, index), key: adata.id}, adata.text)));
   }
 };

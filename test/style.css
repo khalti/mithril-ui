@@ -21,3 +21,7 @@
 .animation.move.high {
   animation-name: slideInUp;
 }
+
+.animation.change {
+  animation-name: flash;
+}

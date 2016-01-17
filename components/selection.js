@@ -45,7 +45,7 @@ module.exports = {
 
     self.toggleDropdown = function (e) {
       self.dropdownVisible = !self.dropdownVisible;
-      };
+      }
 
     self.displayDropdown = function () {
         return self.dropdownVisible;

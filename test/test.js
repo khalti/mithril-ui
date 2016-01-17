@@ -21,7 +21,7 @@ const armc = function (data, index) {
   return function (el, initialized, ctx) {
     let dom = $(el);
     let addClass = 'animation add';
-    let changeClass = 'animated flash';
+    let changeClass = 'animation change';
     // for addition of element
     if(!initialized) {
       dom.addClass(addClass)

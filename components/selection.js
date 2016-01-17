@@ -9,7 +9,7 @@ const $ = require('jquery');
 // add, remove, move, change
 
 let showHide = function (value) {
-  return (el, initialized, context) => {
+  return (el, initialized, ctx) => {
     let dom = $(el);
 
     if(!initialized) {
@@ -19,9 +19,10 @@ let showHide = function (value) {
       else {
         dom.css('display', 'none');
       }
-      return;
+      ctx.state = value;
     }
 
+    if (ctx.state === value) return;
     if (value) {
       let className = 'animation show';
       dom.css('display', 'block');
@@ -33,6 +34,8 @@ let showHide = function (value) {
       dom.addClass(className)
         .one('animationend', () => {dom.removeClass(className);dom.css('display', 'none');});
     }
+
+    ctx.state = value;
   };
 };
 

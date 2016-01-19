@@ -3,41 +3,8 @@
 const m = require('mithril');
 const _ = require('lodash');
 const $ = require('jquery');
+const ani = require('utils/animation.js');
 
-// animation types
-// show, hide x
-// add, remove, move, change
-
-let showHide = function (value) {
-  return (el, initialized, ctx) => {
-    let dom = $(el);
-
-    if(!initialized) {
-      if (value) {
-        dom.css('display', 'block');
-      }
-      else {
-        dom.css('display', 'none');
-      }
-      ctx.state = value;
-    }
-
-    if (ctx.state === value) return;
-    if (value) {
-      let className = 'animation show';
-      dom.css('display', 'block');
-      dom.addClass(className)
-        .one('animationend', () => {dom.removeClass(className);});
-    }
-    else {
-      let className = 'animation hide';
-      dom.addClass(className)
-        .one('animationend', () => {dom.removeClass(className);dom.css('display', 'none');});
-    }
-
-    ctx.state = value;
-  };
-};
 
 module.exports = {
   controller: function (pl) {
@@ -48,7 +15,7 @@ module.exports = {
 
     self.toggleDropdown = function (e) {
       self.dropdownVisible = !self.dropdownVisible;
-      }
+      };
 
     self.displayDropdown = function () {
         return self.dropdownVisible;
@@ -78,7 +45,8 @@ module.exports = {
       m("i.dropdown.icon"),
       m("div.text", {class: c.model[c.field]? '': 'default'},
         c.getAlias(c.model[c.field] || '')),
-      m(".menu", {config: showHide(c.dropdownVisible)},
+      ani.toggle(".menu", {boolean: c.dropdownVisible},
+      // ani.toggle(".menu",
         _.map(pl.options, function (pair) {
           return m("div.item",
             {

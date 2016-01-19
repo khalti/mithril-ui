@@ -4,7 +4,7 @@ require('semantic-ui-css/semantic.css!');
 require('animate.css');
 require('test/style.css!');
 
-const sm = require('../index.js');
+const sm = require('index.js');
 const m = require('mithril');
 const _ = require('lodash');
 const $ = require('jquery');
@@ -53,8 +53,8 @@ const entry = function () {
     if (initialized) return;
     dom.addClass('animation enter')
       .one('animationend', () => dom.removeClass('animation enter'));
-  }
-}
+  };
+};
 
 let ARMC = {
   controller: function (pl) {

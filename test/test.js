@@ -1,6 +1,6 @@
 'use strict';
 
-require('semantic-ui-css/semantic.css!');
+// require('semantic-ui-css/semantic.css!');
 require('animate.css');
 require('test/style.css!');
 
@@ -8,6 +8,7 @@ const sm = require('index.js');
 const m = require('mithril');
 const _ = require('lodash');
 const $ = require('jquery');
+const ani = require('utils/animation.js');
 
 const map = function (collection, callback) {
   let output = [];
@@ -93,7 +94,7 @@ let ARMC = {
 let page1 = {
   view: function () {
     var model = {model: {sex: ''}};
-    return m('.ui.container', {config: entry()},
+    return ani.ad('.ui.container',
       m('h1', 'Selection'),
       m('hr'),
 

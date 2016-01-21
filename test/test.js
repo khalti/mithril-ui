@@ -1,6 +1,6 @@
 'use strict';
 
-// require('semantic-ui-css/semantic.css!');
+require('semantic-ui-css/semantic.css!');
 require('animate.css');
 require('test/style.css!');
 
@@ -10,71 +10,26 @@ const _ = require('lodash');
 const $ = require('jquery');
 const ani = require('utils/animation.js');
 
-const map = function (collection, callback) {
-  let output = [];
-  _.forEach(collection, (item, index) => {
-    output.push(callback(item, index));
-  });
-  return output;
-};
-
-const armc = function (data, index) {
-  return function (el, initialized, ctx) {
-    let dom = $(el);
-    let addClass = 'animation add';
-    let changeClass = 'animation change';
-    // for addition of element
-    if(!initialized) {
-      dom.addClass(addClass)
-        .one('animationend', () => dom.removeClass(addClass));
-    }
-    // for element move
-    if (ctx.index && ctx.index < index) {
-      dom.addClass('animation move low')
-        .one('animationend', () => dom.removeClass('animation move low'));
-    }
-    else if (ctx.index && ctx.index > index) {
-      dom.addClass('animation move high')
-        .one('animationend', () => dom.removeClass('animation move high'));
-    }
-    // if change in data
-    if (ctx.data && !_.isEqual(ctx.data, data)) {
-      dom.addClass(changeClass)
-        .one('animationend', () => dom.removeClass(changeClass));
-    }
-    // save state
-    ctx.data = _.clone(data, true);
-    ctx.index = index;
-  };
-};
-
-const entry = function () {
-  return function (el, initialized, ctx) {
-    let dom = $(el);
-    if (initialized) return;
-    dom.addClass('animation enter')
-      .one('animationend', () => dom.removeClass('animation enter'));
-  };
-};
-
 let ARMC = {
   controller: function (pl) {
     const self = this;
     self.data = [
       {id: 1, text: '1. This is awesome'},
       {id: 2, text: '2. This is double awesome'},
-      {id: 3, text: '3. This is triple awesome'}];
+      {id: 3, text: '3. This is double awesome'},
+      {id: 4, text: '4. This is double awesome'},
+      {id: 5, text: '5. This is triple awesome'}];
 
     self.add = (e) => {
       e.preventDefault();
       e.stopPropagation();
-      self.data.unshift({id: 4, text: '4. This is babar awesome.'});
+      self.data.unshift({id: 6, text: '6. This is babar awesome.'});
     };
 
     self.move = () => {
       let temp = self.data[1];
-      self.data[1] = self.data[3];
-      self.data[3] = temp;
+      self.data[1] = self.data[4];
+      self.data[4] = temp;
     };
 
     self.change = () => {
@@ -87,7 +42,7 @@ let ARMC = {
           m('.ui.button', {onclick: c.add}, 'Add'),
           m('.ui.button', {onclick: c.move}, 'Move'),
           m('.ui.button', {onclick: c.change}, 'Change')),
-        map(c.data, (adata, index) => m('.ui.segment', {config: armc(adata, index), key: adata.id}, adata.text)));
+        ani.map(c.data, (adata) => m('.ui.segment', adata.text)));
   }
 };
 

@@ -105,5 +105,56 @@ module.exports = {
     };
 
     return m(vdom.tag, vdom.attrs, vdom.children);
-    }
+    },
+  // add, remove, move and change animation
+  map(data, callback) {
+    if (!(data && callback)) new Error('map needs at least two arguments.');
+
+    let elements = _.map(data, callback);
+    // armc animator
+    let armc = function (index, data, config) {
+      return function (el, initialized, ctx) {
+        let dom = $(el);
+        let addClass = 'animation add';
+        let changeClass = 'animation change';
+
+        // execute original config
+        if (config) config(el, initialized, ctx);
+
+        // for addition of element
+        if(!initialized) {
+          dom.addClass(addClass)
+            .one('animationend', () => dom.removeClass(addClass));
+        }
+        // for element move
+        if (ctx.index && ctx.index < index) {
+          dom.addClass('animation move low')
+            .one('animationend', () => dom.removeClass('animation move low'));
+        }
+        else if (ctx.index && ctx.index > index) {
+          dom.addClass('animation move high')
+            .one('animationend', () => dom.removeClass('animation move high'));
+        }
+        // if change in data
+        if (ctx.data && !_.isEqual(ctx.data, data)) {
+          dom.addClass(changeClass)
+            .one('animationend', () => dom.removeClass(changeClass));
+        }
+        // save state
+        ctx.data = _.clone(data, true);
+        ctx.index = index;
+      };
+    };
+
+    // attach animation to elements
+    return _.map(_.range(data.length), (index) => {
+      let delement = elements[index], ddata = data[index];
+      let originalConfig = delement.attrs.config;
+
+      delement.attrs.key = ddata.id || ddata;
+      delement.attrs.config = armc(index, ddata, originalConfig);
+
+      return delement;
+    });
+  }
 };

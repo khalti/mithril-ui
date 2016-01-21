@@ -127,11 +127,11 @@ module.exports = {
             .one('animationend', () => dom.removeClass(addClass));
         }
         // for element move
-        if (ctx.index && ctx.index < index) {
+        if ((ctx.index || ctx.index === 0) && ctx.index < index) {
           dom.addClass('animation move low')
             .one('animationend', () => dom.removeClass('animation move low'));
         }
-        else if (ctx.index && ctx.index > index) {
+        else if ((ctx.index || ctx.index === 0) && ctx.index > index) {
           dom.addClass('animation move high')
             .one('animationend', () => dom.removeClass('animation move high'));
         }

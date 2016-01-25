@@ -46,7 +46,6 @@ module.exports = {
       m("div.text", {class: c.model[c.field]? '': 'default'},
         c.getAlias(c.model[c.field] || '')),
       ani.toggle(".menu", {_toggle: c.dropdownVisible},
-      // ani.toggle(".menu",
         _.map(pl.options, function (pair) {
           return m("div.item",
             {

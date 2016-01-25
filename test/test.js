@@ -38,11 +38,11 @@ let ARMC = {
   },
   view: function (c, pl) {
     return m('.ui.segment',
-        m('.ui.segment',
-          m('.ui.button', {onclick: c.add}, 'Add'),
-          m('.ui.button', {onclick: c.move}, 'Move'),
-          m('.ui.button', {onclick: c.change}, 'Change')),
-        ani.map(c.data, (adata) => m('.ui.segment', adata.text)));
+      m('.ui.segment',
+        m('.ui.button', {onclick: c.add}, 'Add'),
+        m('.ui.button', {onclick: c.move}, 'Move'),
+        m('.ui.button', {onclick: c.change}, 'Change')),
+      ani.map(c.data, (adata) => m('.ui.segment', adata.text)));
   }
 };
 

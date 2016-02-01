@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ludbek/semantic-ui-mithril.git"
+    "url": "git+https://github.com/ludbek/mithril-ui.git"
   },
   "keywords": [
     "semantic-ui",
@@ -18,9 +18,9 @@
   "author": "ludbek",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ludbek/semantic-ui-mithril/issues"
+    "url": "https://github.com/ludbek/mithril-ui/issues"
   },
-  "homepage": "https://github.com/ludbek/semantic-ui-mithril#readme",
+  "homepage": "https://github.com/ludbek/mithril-ui#readme",
   "devDependencies": {
     "chai": "^3.4.1",
     "gulp": "^3.9.0",

@@ -10,6 +10,7 @@ const _ = require('lodash');
 const $ = require('jquery');
 const ani = require('utils/animation.js');
 
+// Add, Remove, Move, Change
 let ARMC = {
   controller: function (pl) {
     const self = this;

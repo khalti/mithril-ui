@@ -1,4 +1,5 @@
 #!/bin/sh
+# https://github.com/ludbek/bro
 # please do not edit codes below
 project=$1
 task=$2
@@ -12,9 +13,14 @@ case $task in
     # Commands here are executed only during project creation.
     # 'bro create <project>' executes commands here.
 
+    echo "Make sure 'nvm' is installed. If not get it with 'npm install -g nvm'."
+
     # git
     git init
-    echo '.brofile' >> .gitignore
+    echo ".brofile" >> .gitignore
+
+    # setup project
+    npm init
 
     # boot project
     bro boot
@@ -27,17 +33,17 @@ case $task in
     bro workon
 
     # launch necessary tools
-    # subl &
-    # firefox &
-    # nemo &
+    subl &
+    google-chrome &
+    nemo &
     ;;
   workon)
     # Edit this section to set appropriate environment for the project."
     # Commands here are to be executed for every new terminals.
     # 'bro <project> workon' executes commands here.
 
-    # activate the virtual env
-    # source .env/bin/activate
+    # setup node version
+    nvm use 4.2.3
     ;;
   *)
     bro_usage

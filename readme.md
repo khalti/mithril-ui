@@ -1,8 +1,12 @@
 # Workon in progress
 
 # Fort test
-- 1. clone this repo
-- 2. jspm install
+- `$ git clone https://github.com/ludbek/mithril-ui.git`
+- `$ cd mithril-ui`
+- `$ jspm install`
+- `$ npm install -g http-server`
+- `$ http-server`
+- visit localhost:8080/test
 
 #Builds
 ## Modular, exclude dependencies

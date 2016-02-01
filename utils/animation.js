@@ -57,7 +57,7 @@ module.exports = {
     return m(vdom.tag, vdom.attrs, vdom.children);
     },
 
-  // ad animation
+  // mount animation
   ad() {
     let vdom = getVDOM(arguments);
 

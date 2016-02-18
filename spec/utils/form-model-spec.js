@@ -103,7 +103,7 @@ describe("FormModel", function () {
 
     });
 
-  describe(".is_dirty", function () {
+  describe(".is_dirty()", function () {
     let aform = FormModel({username: {presence: true, default: 'ausername'}});
 
     it("returns false if form has not been altered", function () {
@@ -113,6 +113,37 @@ describe("FormModel", function () {
     it("returns true if form has been altered", function () {
       aform.username('busername')
       expect(aform.is_dirty()).toEqual(true);
+      });
+    });
+
+  describe(".validate()", function () {
+    let aform;
+    beforeAll(() => {
+      aform = FormModel({username: {presence: true}});
+      });
+
+    it("populates .errors field if the form is invalid", function () {
+      aform.validate();
+      expect(aform.errors).toBeDefined();
+      });
+
+    if("sets the .errors field to undefined if form is valid", function () {
+      aform.username('ausername');
+      aform.validate();
+      expect(aform.errors).not.toBeDefined();
+      });
+    });
+
+  describe(".is_values", function () {
+    let aform;
+    beforeAll(() => {
+      aform = FormModel(
+        {username: {default: 'ausername'}, password: {default: 'apassword'}}
+        );
+      });
+
+    it("returns the dict with key:value pair for each form field", function () {
+      expect(aform.values()).toEqual({username: 'ausername', password: 'apassword'})
       });
     });
 

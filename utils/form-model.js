@@ -40,7 +40,16 @@ export default function FormModel(config) {
       },
 
     validate() {
+      this.errors = validate(this.values(), this._config);
+      },
 
+    values() {
+      let dict = {};
+      _.forEach(this._config, (avalue, akey) => {
+        dict[akey] = this[akey]();
+        });
+
+      return dict;
       }
     };
 

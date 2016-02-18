@@ -2,21 +2,22 @@ import _ from 'lodash';
 import validate from 'validate.js';
 
 function prop(model, field, defaultValue) {
-  let state = defaultValue;
+  let initialState = defaultValue;
+  let state = initialState;
+
   let aclosure = function (value) {
     if(arguments.length === 0)  return state;
 
-    aclosure.errors(validate.single(
+    aclosure.errors = model.errors[field] = validate.single(
       value,
-      _.omit(model._config[field], ['default'])));
+      _.omit(model._config[field], ['default']));
 
-      state = value;
+    state = value;
     };
 
-  aclosure.errors = function (errors) {
-    if (arguments.length === 0)  return model.errors[field];
-    model.errors[field] = errors;
-  };
+  aclosure.is_dirty = function() {
+    return initialState !== state;
+    };
 
   return aclosure;
   };
@@ -26,9 +27,19 @@ export default function FormModel(config) {
     _config: config,
     errors: {},
     is_valid() {
-
+      if (!this.is_dirty()) return false;
+      return !_.some(_.keys(this._config), (akey) => {
+        return this.errors[akey] && this.errors[akey].length > 0;
+        });
       },
+
     is_dirty() {
+      return _.some(_.keys(this._config), (akey) => {
+        return this[akey].is_dirty();
+        });
+      },
+
+    validate() {
 
       }
     };

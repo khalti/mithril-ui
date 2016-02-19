@@ -25,7 +25,7 @@ export default {
           return m('label.help', attrs.help);
           }
         else if(attrs.model.errors) {
-          return m('.ui.pointing.red.basic.label', attrs.model.errors[0]);
+          return m('label.error', attrs.model.errors[0]);
           }
         },
 

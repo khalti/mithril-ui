@@ -9,6 +9,4 @@ export default {
     return m('div', {class: attrs.class},
       attrs.prepend,
       m('input', inputAttrs),
-      attrs.append);
-    }
-  }
+      attrs.append);}}

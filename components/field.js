@@ -27,14 +27,25 @@ export default {
         else if(attrs.model.errors) {
           return m('.ui.pointing.red.basic.label', attrs.model.errors[0]);
           }
+        },
+
+      has_error() {
+        if (!attrs.model.errors) {return false;}
+        else if (attrs.model.errors.length > 0) {return true;}
+        },
+
+      get_class() {
+        if (this.has_error()) return `${attrs.class} error`;
+        return attrs.class;
         }
+
       };
    },
 
   view: function (ctrl, attrs)  {
     attrs.input.attrs.model = attrs.model;
 
-    return m('div', {class: attrs.class},
+    return m('div', {class: ctrl.get_class()},
       ctrl.get_prepend(),
       attrs.input,
       ctrl.get_append());

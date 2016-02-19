@@ -85,6 +85,10 @@ describe("components/field", () => {
     });
 
   it("adds 'error' class to the root element if the model as an error", () => {
-    fail("TODO");
+    attrs.help = "A help.";
+    attrs.model.errors = ['An error.'];
+    let aField = Field.view(new Field.controller(attrs), attrs);
+
+    expect(aField.attrs.class).toMatch('error');
     });
   });

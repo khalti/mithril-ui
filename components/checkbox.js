@@ -15,5 +15,8 @@ export default {
       class : "ui checkbox",
       type : "hidden",
       append : m("label", attrs.label),
-      [attrs.event] : m.withAttr('value', attrs.model)}
-    return m.component(Field, _.omit(attrs, ['label', 'event']));}}
+      [attrs.event] : m.withAttr('value', attrs.model)
+    }
+    return m.component(Field, _.omit(attrs, ['label', 'event']));
+  }
+}

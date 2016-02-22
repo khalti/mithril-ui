@@ -12,7 +12,7 @@ export default {
   controller: function (attrs) {
     if (!_.isFunction(attrs.model)) throw Error("Please pass a model.");
     return {
-      get_prepend() {
+      getPrepend() {
         if(_.isString(attrs.label)) {
           return m('label', attrs.label);}
         else if (_.isObject(attrs.label) && attrs.label.prepend) {
@@ -20,7 +20,7 @@ export default {
         else if(_.isObject(attrs.label) && !attrs.label.prepend && !attrs.label.append) {
           return m('label', attrs.label.text);}},
 
-      get_append() {
+      getAppend() {
         if(_.isObject(attrs.label) && attrs.label.append) {
           return m('label', attrs.label.text);}
         else if(attrs.help && !attrs.model.errors) {
@@ -28,18 +28,18 @@ export default {
         else if(attrs.model.errors) {
           return m('label.error', attrs.model.errors[0]);}},
 
-      has_error() {
+      hasError() {
         if (!attrs.model.errors) {return false;}
         else if (attrs.model.errors.length > 0) {return true;}},
 
-      get_class() {
-        if (this.has_error()) return `${attrs.class} error`;
+      getClass() {
+        if (this.hasError()) return `${attrs.class} error`;
         return attrs.class;}};},
 
   view: function (ctrl, attrs)  {
-    return m('div', {class: ctrl.get_class()},
-      ctrl.get_prepend(),
+    return m('div', {class: ctrl.getClass()},
+      ctrl.getPrepend(),
       m.component(Input, attrs.input),
-      ctrl.get_append());
+      ctrl.getAppend());
   }
 }

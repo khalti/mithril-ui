@@ -2,7 +2,7 @@
 
 require('semantic-ui-css/semantic.css!');
 require('animate.css');
-require('test/style.css!');
+require('playground/style.css!');
 
 const sm = require('index.js');
 const m = require('mithril');
@@ -50,7 +50,7 @@ let ARMC = {
 let page1 = {
   view: function () {
     var model = {model: {sex: ''}};
-    return ani.ad('.ui.container',
+    return m('.ui.container',
       m('h1', 'Selection'),
       m('hr'),
 
@@ -84,8 +84,10 @@ let page2 = {
   }
 };
 
+m.mount(document.body, page1);
+console.dir(document.body.childNodes[0]);
 
-m.route(document.body, '/', {
-  '/': page1,
-  '/2': page2
-});
+// m.route(document.body, '/', {
+//   '/': page1,
+//   '/2': page2
+// });

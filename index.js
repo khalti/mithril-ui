@@ -1,4 +1,4 @@
 
 module.exports = {
-  Selection: require('./components/selection.js')
+  Selection: require('./components/elements/selection.js')
 };

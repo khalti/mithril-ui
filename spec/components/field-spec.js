@@ -1,80 +1,143 @@
 import Field from "../../components/field.js";
+import Input from "../../components/input.js";
 import FormModel from "../../utils/form-model.js";
 import m from "mithril";
+import mock from "../deps/mock.js";
 
 describe("components/field", () => {
   let attrs;
+  let root;
   let aModel = FormModel({username: {presence: true}}).username;
+
   beforeEach(() => {
+    root = mock.document.createElement("div");
+    m.deps(mock.window);
     attrs = {
       class: 'aClass',
       model: aModel,
-      input: m('input', {})};});
+      input: {class: 'aClass'}
+    };
+  });
 
   it("sets the class of root div to attrs.class", () => {
-    let aField = Field.view(new Field.controller(attrs), attrs);
-    expect(aField.attrs.class).toEqual(attrs.class);});
+    mock.requestAnimationFrame.$resolve();
+
+    let aField = m.component(Field, attrs);
+    m.mount(root, aField);
+
+    expect(root.childNodes[0].class).toEqual(attrs.class);
+    });
 
   it("prepends the attrs.label if it is a text", () => {
-    attrs.label = 'Username';
-    let aField = Field.view(new Field.controller(attrs), attrs);
+    mock.requestAnimationFrame.$resolve();
 
-    expect(aField.children[0].tag).toEqual('label');
-    expect(aField.children[0].children[0]).toEqual(attrs.label);});
+    attrs.label = 'Username';
+    let aField = m.component(Field, attrs);
+    m.mount(root, aField);
+
+    let labelDOM = root.childNodes[0].childNodes[0];
+
+    expect(labelDOM.nodeName).toEqual('LABEL');
+    expect(labelDOM.childNodes[0].nodeValue).toEqual(attrs.label);
+  });
 
   it("prepends the attrs.label.text if attrs.label.prepend is true", () => {
-    attrs.label = {text: 'Username', prepend: true};
-    let aField = Field.view(new Field.controller(attrs), attrs);
+    mock.requestAnimationFrame.$resolve();
 
-    expect(aField.children[0].tag).toEqual('label');
-    expect(aField.children[0].children[0]).toEqual(attrs.label.text);});
+    attrs.label = {text: 'Username', prepend: true};
+    let aField = m.component(Field, attrs);
+    m.mount(root, aField);
+
+    let labelDOM = root.childNodes[0].childNodes[0];
+
+    expect(labelDOM.nodeName).toEqual('LABEL');
+    expect(labelDOM.childNodes[0].nodeValue).toEqual(attrs.label.text);
+  });
 
   it("appends the attrs.label.text if attrs.label.append is false", () => {
-    attrs.label = {text: 'Username', append: true};
-    let aField = Field.view(new Field.controller(attrs), attrs);
+    mock.requestAnimationFrame.$resolve();
 
-    expect(aField.children[2].tag).toEqual('label');
-    expect(aField.children[2].children[0]).toEqual(attrs.label.text);});
+    attrs.label = {text: 'Username', append: true};
+    let aField = m.component(Field, attrs);
+    m.mount(root, aField);
+
+    let labelDOM = root.childNodes[0].childNodes[2];
+
+    expect(labelDOM.nodeName).toEqual('LABEL');
+    expect(labelDOM.childNodes[0].nodeValue).toEqual(attrs.label.text);
+  });
 
   it("prepends the attrs.label.text if attrs.label.prepend and attrs.label.append are not set", () => {
-    attrs.label = {text: 'Username'};
-    let aField = Field.view(new Field.controller(attrs), attrs);
+    mock.requestAnimationFrame.$resolve();
 
-    expect(aField.children[0].tag).toEqual('label');
-    expect(aField.children[0].children[0]).toEqual(attrs.label.text);});
+    attrs.label = {text: 'Username', append: true};
+    let aField = m.component(Field, attrs);
+    m.mount(root, aField);
 
-  it("attaches attrs.input component as its children", () => {
-    let aField = Field.view(new Field.controller(attrs), attrs);
+    let labelDOM = root.childNodes[0].childNodes[2];
 
-    expect(aField.children[1].tag).toEqual('input');});
+    expect(labelDOM.nodeName).toEqual('LABEL');
+    expect(labelDOM.childNodes[0].nodeValue).toEqual(attrs.label.text);
+  });
 
-  it("attaches attrs.model to attrs.input.model", () => {
-    let aField = Field.view(new Field.controller(attrs), attrs);
+  it("passes attrs.input to Input component", () => {
+    mock.requestAnimationFrame.$resolve();
 
-    expect(aField.children[1].attrs.model).toEqual(attrs.model);});
+    attrs.label = {text: 'Username', append: true};
+    let aField = m.component(Field, attrs);
+    m.mount(root, aField);
+
+    let inputDOM = root.childNodes[0].childNodes[1];
+
+    expect(inputDOM.class).toEqual(attrs.input.class);
+  });
 
   it("appends the attrs.help", () => {
-    attrs.help = 'Username';
-    let aField = Field.view(new Field.controller(attrs), attrs);
+    mock.requestAnimationFrame.$resolve();
 
-    expect(aField.children[2].children[0]).toEqual(attrs.help);});
+    attrs.help = 'Username';
+
+    let aField = m.component(Field, attrs);
+    m.mount(root, aField);
+
+    let helpDOM = root.childNodes[0].childNodes[2];
+
+    expect(helpDOM.childNodes[0].nodeValue).toEqual(attrs.help);
+  });
 
   it("appends the error text", () => {
-    attrs.model.errors = ['An error.'];
-    let aField = Field.view(new Field.controller(attrs), attrs);
+    mock.requestAnimationFrame.$resolve();
 
-    expect(aField.children[2].children[0]).toEqual(attrs.model.errors[0]);});
+    attrs.model.errors = ['An error.'];
+    let aField = m.component(Field, attrs);
+    m.mount(root, aField);
+
+    let errorDOM = root.childNodes[0].childNodes[2];
+
+    expect(errorDOM.childNodes[0].nodeValue).toEqual(attrs.model.errors[0]);
+  });
 
   it("removes the help text if there is an error", () => {
+    mock.requestAnimationFrame.$resolve();
+
     attrs.help = "A help.";
     attrs.model.errors = ['An error.'];
-    let aField = Field.view(new Field.controller(attrs), attrs);
+    let aField = m.component(Field, attrs);
+    m.mount(root, aField);
 
-    expect(aField.children[2].children[0]).toEqual(attrs.model.errors[0]);});
+    let errorDOM = root.childNodes[0].childNodes[2];
+
+    expect(errorDOM.childNodes[0].nodeValue).toEqual(attrs.model.errors[0]);
+  });
 
   it("adds 'error' class to the root element if the model as an error", () => {
+    mock.requestAnimationFrame.$resolve();
+
     attrs.help = "A help.";
     attrs.model.errors = ['An error.'];
-    let aField = Field.view(new Field.controller(attrs), attrs);
+    let aField = m.component(Field, attrs);
+    m.mount(root, aField);
 
-    expect(aField.attrs.class).toMatch('error');});});
+    expect(root.childNodes[0].class).toMatch('error');
+  });
+});

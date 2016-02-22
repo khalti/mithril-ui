@@ -1,6 +1,13 @@
-import m from 'mithril';
-import _ from 'lodash';
+import m from "mithril";
+import _ from "lodash";
+import Input from "./input.js";
 
+// m.component(Field, {
+//   'class': ,
+//   'model': a FormModel instance,
+//   'input': ,
+//   'label': {text: , append: , prepend: },
+// });
 export default {
   controller: function (attrs) {
     if (!_.isFunction(attrs.model)) throw Error("Please pass a model.");
@@ -30,9 +37,9 @@ export default {
         return attrs.class;}};},
 
   view: function (ctrl, attrs)  {
-    attrs.input.attrs.model = attrs.model;
-
     return m('div', {class: ctrl.get_class()},
       ctrl.get_prepend(),
-      attrs.input,
-      ctrl.get_append());}}
+      m.component(Input, attrs.input),
+      ctrl.get_append());
+  }
+}

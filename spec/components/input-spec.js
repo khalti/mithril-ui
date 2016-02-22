@@ -2,6 +2,7 @@
 
 import Input from "../../components/input.js";
 import m from 'mithril';
+import mock from "../deps/mock.js";
 
 describe('components/input', () => {
   let attrs = {

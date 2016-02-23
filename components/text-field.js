@@ -10,6 +10,7 @@ import Field from "./field.js";
 //   append: ,
 //   prepend: ,
 //   help: ,
+//   type: ,
 // });
 export default {
   controller: function (attrs) {
@@ -33,9 +34,10 @@ export default {
       class : ctrl.getInputClass(),
       prepend: attrs.prepend,
       append: attrs.append,
+      type: attrs.type || 'text',
       [attrs.event] : m.withAttr('value', attrs.model),
       placeholder: attrs.label
     }
-    return m.component(Field, _.omit(attrs, ['label', 'event']));
+    return m.component(Field, _.omit(attrs, ['label', 'event', 'type']));
   }
 };

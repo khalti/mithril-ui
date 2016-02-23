@@ -73,4 +73,23 @@ describe("components/text-field", () => {
 
     expect(inputDOM.getAttribute('placeholder')).toEqual(attrs.label);
   });
+
+  it("sets input's type to text if no attrs.type is passed", () => {
+    mock.requestAnimationFrame.$resolve();
+
+    m.mount(root, m.component(TextField, attrs));
+    let inputDOM = root.childNodes[0].childNodes[1].childNodes[1];
+
+    expect(inputDOM.getAttribute('type')).toEqual("text");
+  });
+
+  it("sets input's type to attrs.type", () => {
+    mock.requestAnimationFrame.$resolve();
+
+    attrs.type = "number";
+    m.mount(root, m.component(TextField, attrs));
+    let inputDOM = root.childNodes[0].childNodes[1].childNodes[1];
+
+    expect(inputDOM.getAttribute('type')).toEqual(attrs.type);
+  });
 });

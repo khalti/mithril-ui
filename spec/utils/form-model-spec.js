@@ -69,6 +69,19 @@ describe("FormModel", function () {
       expect(formModel.errors.username).not.toBeDefined();
       });
 
+    it("validates against dependent field if equality is set", function () {
+      let form = FormModel({
+        password: {presence: true},
+        confirmPassword: {equality: "password"}});
+
+      form.password("flash");
+      form.confirmPassword("quicksilver");
+      expect(form.errors.confirmPassword).toBeDefined();
+
+      form.confirmPassword("flash");
+      expect(form.errors.confirmPassword).not.toBeDefined();
+    });
+
     describe(".is_dirty()", function () {
       let aform = FormModel({username: {default: 'ausername', presence: true}});
 

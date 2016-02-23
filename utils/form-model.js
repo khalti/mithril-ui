@@ -8,10 +8,24 @@ function prop(model, field, defaultValue) {
   let aclosure = function (value) {
     if(arguments.length === 0)  return state;
 
-    aclosure.errors = model.errors[field] = validate.single(
-      value,
-      _.omit(model._config[field], ['default']));
-
+    // for equality
+    if (model._config[field].equality) {
+      let equalAgainst = model._config[field].equality;
+      let values = {
+        [equalAgainst]: model[equalAgainst](),
+        [field]: value
+      };
+      let constrains = {
+        [field]: _.omit(model._config[field], ['default'])
+      };
+      let errors = validate(values, constrains);
+      aclosure.errors = model.errors[field] = errors? errors[field]: undefined;
+      }
+    else {
+      aclosure.errors = model.errors[field] = validate.single(
+        value,
+        _.omit(model._config[field], ['default']));
+      }
     state = value;
     };
 

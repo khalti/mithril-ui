@@ -3,10 +3,13 @@ import Input from "components/input.js";
 import Field from "components/field.js";
 import FormModel from "utils/form-model.js";
 import TextField from "components/text-field.js";
+import Checkbox from "components/checkbox.js";
 
 import 'semantic-ui-css/semantic.css!';
 
 const fieldModel = FormModel({name: {presence: true, default: ""}});
+const checkboxModel = FormModel({isFlash:
+  {exclusion: {within: [false]}, default: true}});
 
 const app = {
   view: function () {
@@ -38,6 +41,11 @@ const app = {
           event: "onchange",
           help: "This is a text field.",
           type: "text"
+        }),
+        m("h1", "Checkbox"),
+        m.component(Checkbox, {
+          model: checkboxModel.isFlash,
+          label: "Is flash"
         })
       )
     );

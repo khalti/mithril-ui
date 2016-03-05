@@ -6,17 +6,17 @@ import Field from "./field.js";
 // m.component(Checkbox, {
 //   model: ,
 //   label: ,
-//   event: 'onchange'
 // });
 export default {
   view: function (ctrl, attrs) {
     attrs.class = "field";
     attrs.input = {
       class : "ui checkbox",
-      type : "hidden",
+      type : "checkbox",
       append : m("label", attrs.label),
-      [attrs.event] : m.withAttr('value', attrs.model)
+      onclick : m.withAttr("checked", attrs.model),
+      checked: attrs.model()
     }
-    return m.component(Field, _.omit(attrs, ['label', 'event']));
+    return m.component(Field, _.omit(attrs, ['label']));
   }
 }

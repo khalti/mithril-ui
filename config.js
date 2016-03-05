@@ -23,6 +23,7 @@ System.config({
     "lodash": "npm:lodash@4.0.0",
     "mithril": "npm:mithril@0.2.2-rc.1",
     "semantic-ui-css": "npm:semantic-ui-css@2.1.8",
+    "validate.js": "npm:validate.js@0.9.0",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
     },
@@ -64,6 +65,9 @@ System.config({
     },
     "npm:util@0.10.3": {
       "inherits": "npm:inherits@2.0.1",
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:validate.js@0.9.0": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     }
   }

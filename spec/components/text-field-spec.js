@@ -12,7 +12,7 @@ describe("components/text-field", () => {
     root = mock.document.createElement("div");
     m.deps(mock.window);
     attrs = {
-      model: FormModel({username: {presence: true}}).username,
+      model: FormModel({username: {presence: true, default: ""}}).username,
       label: "A label.",
       event: "onchange",
       help: "A help."

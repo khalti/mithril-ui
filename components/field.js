@@ -37,6 +37,8 @@ export default {
         return attrs.class;}};},
 
   view: function (ctrl, attrs)  {
+    attrs.input.value = attrs.model();
+
     return m('div', {class: ctrl.getClass()},
       ctrl.getPrepend(),
       m.component(Input, attrs.input),

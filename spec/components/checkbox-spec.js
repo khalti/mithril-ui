@@ -11,7 +11,7 @@ describe("components/checkbox", () => {
     root = mock.document.createElement("div");
     m.deps(mock.window);
     aCheckbox = m.component(Checkbox, {
-      model: FormModel({username: {presence: true}}).username,
+      model: FormModel({isTrue: {presence: true, default: true}}).isTrue,
       label: 'A label.',
       event: 'onchange'});
   });

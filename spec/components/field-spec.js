@@ -7,9 +7,10 @@ import mock from "../deps/mock.js";
 describe("components/field", () => {
   let attrs;
   let root;
-  let aModel = FormModel({username: {presence: true}}).username;
+  let aModel;
 
   beforeEach(() => {
+    aModel = FormModel({username: {presence: true, default: "1"}}).username;
     root = mock.document.createElement("div");
     m.deps(mock.window);
     attrs = {
@@ -139,5 +140,17 @@ describe("components/field", () => {
     m.mount(root, aField);
 
     expect(root.childNodes[0].class).toMatch('error');
+  });
+
+  it("binds model to value of input", () => {
+    mock.requestAnimationFrame.$resolve();
+    attrs.model("1");
+
+    let aField = m.component(Field, attrs);
+    m.mount(root, aField);
+
+    let input = root.childNodes[0].childNodes[1].childNodes[1];
+
+    expect(input.value).toEqual(attrs.model());
   });
 });

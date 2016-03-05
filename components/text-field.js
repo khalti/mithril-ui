@@ -6,6 +6,7 @@ import Field from "./field.js";
 // m.component(TextField, {
 //   model: ,
 //   label: ,
+//   placeholder: ,
 //   event: ,
 //   append: ,
 //   prepend: ,
@@ -36,8 +37,8 @@ export default {
       append: attrs.append,
       type: attrs.type || 'text',
       [attrs.event] : m.withAttr('value', attrs.model),
-      placeholder: attrs.label
+      placeholder: attrs.placeholder
     }
-    return m.component(Field, _.omit(attrs, ['label', 'event', 'type']));
+    return m.component(Field, _.omit(attrs, ['placeholder', 'event', 'type']));
   }
 };

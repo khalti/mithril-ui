@@ -13,7 +13,7 @@ describe("components/text-field", () => {
     m.deps(mock.window);
     attrs = {
       model: FormModel({username: {presence: true, default: ""}}).username,
-      label: "A label.",
+      placeholder: "Placeholder",
       event: "onchange",
       help: "A help."
     }
@@ -65,13 +65,13 @@ describe("components/text-field", () => {
     expect(helpDOM.childNodes[0].nodeValue).toEqual(attrs.help);
   });
 
-  it("sets attrs.label to input's placeholder", () => {
+  it("sets attrs.placeholder to input's placeholder", () => {
     mock.requestAnimationFrame.$resolve();
 
     m.mount(root, m.component(TextField, attrs));
     let inputDOM = root.childNodes[0].childNodes[1].childNodes[1];
 
-    expect(inputDOM.getAttribute('placeholder')).toEqual(attrs.label);
+    expect(inputDOM.getAttribute('placeholder')).toEqual(attrs.placeholder);
   });
 
   it("sets input's type to text if no attrs.type is passed", () => {

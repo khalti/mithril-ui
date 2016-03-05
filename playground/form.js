@@ -6,7 +6,7 @@ import TextField from "components/text-field.js";
 
 import 'semantic-ui-css/semantic.css!';
 
-const fieldModel = FormModel({name: {presence: true}});
+const fieldModel = FormModel({name: {presence: true, default: ""}});
 
 const app = {
   view: function () {
@@ -34,6 +34,7 @@ const app = {
         m.component(TextField, {
           model: fieldModel.name,
           label: "Text Field",
+          placeholder: "TextField",
           event: "onchange",
           help: "This is a text field.",
           type: "text"

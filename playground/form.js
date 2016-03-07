@@ -5,6 +5,7 @@ import FormModel from "utils/form-model.js";
 import TextField from "components/text-field.js";
 import Checkbox from "components/checkbox.js";
 import PasswordField from "components/password-field.js";
+import PasswordConfirmationField from "components/password-confirmation-field.js";
 
 import 'semantic-ui-css/semantic.css!';
 
@@ -12,7 +13,8 @@ const fieldModel = FormModel({name: {presence: true, default: ""}});
 const checkboxModel = FormModel({isFlash:
   {exclusion: {within: [false]}, default: true}});
 const passwordForm = FormModel({
-  password: {presence: true, default: "", length: {minimum: 8}}
+  password: {presence: true, default: "", length: {minimum: 8}},
+  confirmPassword: {presence: true, default: "", equality: "password"}
 });
 
 const app = {
@@ -57,6 +59,15 @@ const app = {
           label: "Password",
           placeholder: "Password",
           help: "Password should at least be 8 characters long.",
+          event: "onchange"
+        }),
+        m("h1", "Password"),
+        m.component(PasswordConfirmationField, {
+          model: passwordForm.confirmPassword,
+          passwordModel: passwordForm.password,
+          label: "Confirm Password",
+          placeholder: "Confirm Password",
+          help: "Please Confirm the password.",
           event: "onchange"
         })
       )

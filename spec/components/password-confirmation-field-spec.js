@@ -4,7 +4,7 @@ import FormModel from "../../utils/form-model.js";
 import m from "mithril";
 import mock from "../deps/mock.js";
 
-describe("components/password", () => {
+describe("components/password-confirmation-field", () => {
   let root, attrs, form;
   beforeEach(() => {
     let constrains = {
@@ -15,6 +15,7 @@ describe("components/password", () => {
     form = FormModel(constrains);
     attrs = {
       "model": form.confirmPassword,
+      "passwordModel": form.password,
       "label": "Confirm Password",
       "event": 'onchange',
       "help": "A help."

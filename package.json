@@ -1,6 +1,6 @@
 {
   "name": "mithril-ui",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "UI components for Mithril.js",
   "main": "index.js",
   "scripts": {
@@ -36,6 +36,7 @@
     "jspm": "^0.16.30"
   },
   "jspm": {
+    "jspmNodeConversion": false,
     "dependencies": {
       "animate.css": "npm:animate.css@^3.4.0",
       "css": "github:systemjs/plugin-css@^0.1.20",

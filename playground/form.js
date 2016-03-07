@@ -4,12 +4,16 @@ import Field from "components/field.js";
 import FormModel from "utils/form-model.js";
 import TextField from "components/text-field.js";
 import Checkbox from "components/checkbox.js";
+import PasswordField from "components/password-field.js";
 
 import 'semantic-ui-css/semantic.css!';
 
 const fieldModel = FormModel({name: {presence: true, default: ""}});
 const checkboxModel = FormModel({isFlash:
   {exclusion: {within: [false]}, default: true}});
+const passwordForm = FormModel({
+  password: {presence: true, default: "", length: {minimum: 8}}
+});
 
 const app = {
   view: function () {
@@ -46,6 +50,14 @@ const app = {
         m.component(Checkbox, {
           model: checkboxModel.isFlash,
           label: "Is flash"
+        }),
+        m("h1", "Password"),
+        m.component(PasswordField, {
+          model: passwordForm.password,
+          label: "Password",
+          placeholder: "Password",
+          help: "Password should at least be 8 characters long.",
+          event: "onchange"
         })
       )
     );

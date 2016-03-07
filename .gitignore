@@ -1,5 +1,5 @@
-.brofile 
 jspm_packages/
 node_modules/
 semantic/
 npm-debug.log
+.brofile

@@ -41,7 +41,7 @@
   /* eslint-enable no-extend-native */
 })()
 
-export default (function () {
+module.exports = (function () {
   "use strict"
 
   var window = {}

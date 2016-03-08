@@ -1,24 +1,24 @@
-import _ from 'lodash';
-import validate from 'validate.js';
+var _ = require('lodash')
+var validate = require('validate.js')
 
 function prop(model, field, defaultValue) {
-  let initialState = defaultValue;
-  let state = initialState;
+  var initialState = defaultValue;
+  var state = initialState;
 
-  let aclosure = function (value) {
+  var aclosure = function (value) {
     if(arguments.length === 0)  return state;
 
     // for equality
     if (model._config[field].equality) {
-      let equalAgainst = model._config[field].equality;
-      let values = {
+      var equalAgainst = model._config[field].equality;
+      var values = {
         [equalAgainst]: model[equalAgainst](),
         [field]: value
       };
-      let constrains = {
+      var constrains = {
         [field]: _.omit(model._config[field], ['default'])
       };
-      let errors = validate(values, constrains);
+      var errors = validate(values, constrains);
       aclosure.errors = model.errors[field] = errors? errors[field]: undefined;
       }
     else {
@@ -36,20 +36,22 @@ function prop(model, field, defaultValue) {
   return aclosure;
   };
 
-export default function FormModel(config) {
-  let formModel = {
+module.exports =  function (config) {
+  var formModel = {
     _config: config,
     errors: {},
     is_valid() {
+      var self = this
       if (!this.is_dirty()) return false;
-      return !_.some(_.keys(this._config), (akey) => {
-        return this.errors[akey] && this.errors[akey].length > 0;
+      return !_.some(_.keys(this._config), function (akey) {
+        return self.errors[akey] && self.errors[akey].length > 0;
         });
       },
 
     is_dirty() {
-      return _.some(_.keys(this._config), (akey) => {
-        return this[akey].is_dirty();
+      var self = this
+      return _.some(_.keys(this._config), function (akey) {
+        return self[akey].is_dirty();
         });
       },
 
@@ -58,9 +60,10 @@ export default function FormModel(config) {
       },
 
     values() {
-      let dict = {};
-      _.forEach(this._config, (avalue, akey) => {
-        dict[akey] = this[akey]();
+      var dict = {};
+      var self = this
+      _.forEach(this._config, function (avalue, akey) {
+        dict[akey] = self[akey]();
         });
 
       return dict;
@@ -69,7 +72,7 @@ export default function FormModel(config) {
 
   formModel._config = config;
 
-  _.forEach(config, (avalue, akey) => {
+  _.forEach(config, function (avalue, akey) {
     formModel[akey] = prop(formModel, akey, avalue.default);
     });
 

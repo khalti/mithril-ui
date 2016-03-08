@@ -1,15 +1,15 @@
-import Field from "../../components/field.js";
-import Input from "../../components/input.js";
-import FormModel from "../../utils/form-model.js";
-import m from "mithril";
-import mock from "../deps/mock.js";
+var Field = require("../../components/field.js")
+var Input = require("../../components/input.js")
+var FormModel = require("../../utils/form-model.js")
+var m = require("mithril")
+var mock = require("../deps/mock.js")
 
-describe("components/field", () => {
-  let attrs;
-  let root;
-  let aModel;
+describe("components/field", function () {
+  var attrs;
+  var root;
+  var aModel;
 
-  beforeEach(() => {
+  beforeEach(function () {
     aModel = FormModel({username: {presence: true, default: "1"}}).username;
     root = mock.document.createElement("div");
     m.deps(mock.window);
@@ -20,62 +20,62 @@ describe("components/field", () => {
     };
   });
 
-  it("sets the class of root div to attrs.class", () => {
+  it("sets the class of root div to attrs.class", function () {
     mock.requestAnimationFrame.$resolve();
 
-    let aField = m.component(Field, attrs);
+    var aField = m.component(Field, attrs);
     m.mount(root, aField);
 
     expect(root.childNodes[0].class).toEqual(attrs.class);
     });
 
-  it("prepends the attrs.label if it is a text", () => {
+  it("prepends the attrs.label if it is a text", function () {
     mock.requestAnimationFrame.$resolve();
 
     attrs.label = 'Username';
-    let aField = m.component(Field, attrs);
+    var aField = m.component(Field, attrs);
     m.mount(root, aField);
 
-    let labelDOM = root.childNodes[0].childNodes[0];
+    var labelDOM = root.childNodes[0].childNodes[0];
 
     expect(labelDOM.nodeName).toEqual('LABEL');
     expect(labelDOM.childNodes[0].nodeValue).toEqual(attrs.label);
   });
 
-  it("prepends the attrs.label.text if attrs.label.prepend is true", () => {
+  it("prepends the attrs.label.text if attrs.label.prepend is true", function () {
     mock.requestAnimationFrame.$resolve();
 
     attrs.label = {text: 'Username', prepend: true};
-    let aField = m.component(Field, attrs);
+    var aField = m.component(Field, attrs);
     m.mount(root, aField);
 
-    let labelDOM = root.childNodes[0].childNodes[0];
+    var labelDOM = root.childNodes[0].childNodes[0];
 
     expect(labelDOM.nodeName).toEqual('LABEL');
     expect(labelDOM.childNodes[0].nodeValue).toEqual(attrs.label.text);
   });
 
-  it("appends the attrs.label.text if attrs.label.append is false", () => {
+  it("appends the attrs.label.text if attrs.label.append is false", function () {
     mock.requestAnimationFrame.$resolve();
 
     attrs.label = {text: 'Username', append: true};
-    let aField = m.component(Field, attrs);
+    var aField = m.component(Field, attrs);
     m.mount(root, aField);
 
-    let labelDOM = root.childNodes[0].childNodes[2];
+    var labelDOM = root.childNodes[0].childNodes[2];
 
     expect(labelDOM.nodeName).toEqual('LABEL');
     expect(labelDOM.childNodes[0].nodeValue).toEqual(attrs.label.text);
   });
 
-  it("prepends the attrs.label.text if attrs.label.prepend and attrs.label.append are not set", () => {
+  it("prepends the attrs.label.text if attrs.label.prepend and attrs.label.append are not set", function () {
     mock.requestAnimationFrame.$resolve();
 
     attrs.label = {text: 'Username', append: true};
-    let aField = m.component(Field, attrs);
+    var aField = m.component(Field, attrs);
     m.mount(root, aField);
 
-    let labelDOM = root.childNodes[0].childNodes[2];
+    var labelDOM = root.childNodes[0].childNodes[2];
 
     expect(labelDOM.nodeName).toEqual('LABEL');
     expect(labelDOM.childNodes[0].nodeValue).toEqual(attrs.label.text);
@@ -85,10 +85,10 @@ describe("components/field", () => {
     mock.requestAnimationFrame.$resolve();
 
     attrs.label = {text: 'Username', append: true};
-    let aField = m.component(Field, attrs);
+    var aField = m.component(Field, attrs);
     m.mount(root, aField);
 
-    let inputDOM = root.childNodes[0].childNodes[1];
+    var inputDOM = root.childNodes[0].childNodes[1];
 
     expect(inputDOM.class).toEqual(attrs.input.class);
   });
@@ -98,10 +98,10 @@ describe("components/field", () => {
 
     attrs.help = 'Username';
 
-    let aField = m.component(Field, attrs);
+    var aField = m.component(Field, attrs);
     m.mount(root, aField);
 
-    let helpDOM = root.childNodes[0].childNodes[2];
+    var helpDOM = root.childNodes[0].childNodes[2];
 
     expect(helpDOM.childNodes[0].nodeValue).toEqual(attrs.help);
   });
@@ -110,10 +110,10 @@ describe("components/field", () => {
     mock.requestAnimationFrame.$resolve();
 
     attrs.model.errors = ['An error.'];
-    let aField = m.component(Field, attrs);
+    var aField = m.component(Field, attrs);
     m.mount(root, aField);
 
-    let errorDOM = root.childNodes[0].childNodes[2];
+    var errorDOM = root.childNodes[0].childNodes[2];
 
     expect(errorDOM.childNodes[0].nodeValue).toEqual(attrs.model.errors[0]);
   });
@@ -123,10 +123,10 @@ describe("components/field", () => {
 
     attrs.help = "A help.";
     attrs.model.errors = ['An error.'];
-    let aField = m.component(Field, attrs);
+    var aField = m.component(Field, attrs);
     m.mount(root, aField);
 
-    let errorDOM = root.childNodes[0].childNodes[2];
+    var errorDOM = root.childNodes[0].childNodes[2];
 
     expect(errorDOM.childNodes[0].nodeValue).toEqual(attrs.model.errors[0]);
   });
@@ -136,7 +136,7 @@ describe("components/field", () => {
 
     attrs.help = "A help.";
     attrs.model.errors = ['An error.'];
-    let aField = m.component(Field, attrs);
+    var aField = m.component(Field, attrs);
     m.mount(root, aField);
 
     expect(root.childNodes[0].class).toMatch('error');
@@ -146,10 +146,10 @@ describe("components/field", () => {
     mock.requestAnimationFrame.$resolve();
     attrs.model("1");
 
-    let aField = m.component(Field, attrs);
+    var aField = m.component(Field, attrs);
     m.mount(root, aField);
 
-    let input = root.childNodes[0].childNodes[1].childNodes[1];
+    var input = root.childNodes[0].childNodes[1].childNodes[1];
 
     expect(input.value).toEqual(attrs.model());
   });

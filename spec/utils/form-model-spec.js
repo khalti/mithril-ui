@@ -1,13 +1,11 @@
-'use strict';
-
-import FormModel from "../../utils/form-model.js";
+var FormModel = require("../../utils/form-model.js")
 
 describe("FormModel", function () {
-  let formModel;
-  let config = {
+  var formModel;
+  var config = {
     username: {default: 'batman', presence: true},
     password: {}};
-  beforeAll(() => {
+  beforeAll(function () {
     formModel = FormModel(config);
     });
 
@@ -70,7 +68,7 @@ describe("FormModel", function () {
       });
 
     it("validates against dependent field if equality is set", function () {
-      let form = FormModel({
+      var form = FormModel({
         password: {presence: true},
         confirmPassword: {equality: "password"}});
 
@@ -83,7 +81,7 @@ describe("FormModel", function () {
     });
 
     describe(".is_dirty()", function () {
-      let aform = FormModel({username: {default: 'ausername', presence: true}});
+      var aform = FormModel({username: {default: 'ausername', presence: true}});
 
       it("returns false if the value has not been altered", function () {
         expect(aform.username.is_dirty()).toEqual(false);
@@ -98,7 +96,7 @@ describe("FormModel", function () {
     });
 
   describe(".is_valid()", function () {
-    let aform = FormModel({username: {presence: true}});
+    var aform = FormModel({username: {presence: true}});
 
     it("returns false if the form has not been altered", function () {
       expect(aform.is_valid()).toEqual(false);
@@ -117,7 +115,7 @@ describe("FormModel", function () {
     });
 
   describe(".is_dirty()", function () {
-    let aform = FormModel({username: {presence: true, default: 'ausername'}});
+    var aform = FormModel({username: {presence: true, default: 'ausername'}});
 
     it("returns false if form has not been altered", function () {
       expect(aform.is_dirty()).toEqual(false);
@@ -130,8 +128,8 @@ describe("FormModel", function () {
     });
 
   describe(".validate()", function () {
-    let aform;
-    beforeAll(() => {
+    var aform;
+    beforeAll(function () {
       aform = FormModel({username: {presence: true}});
       });
 
@@ -148,8 +146,8 @@ describe("FormModel", function () {
     });
 
   describe(".is_values", function () {
-    let aform;
-    beforeAll(() => {
+    var aform;
+    beforeAll(function () {
       aform = FormModel(
         {username: {default: 'ausername'}, password: {default: 'apassword'}}
         );

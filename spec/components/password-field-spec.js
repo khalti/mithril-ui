@@ -1,12 +1,12 @@
-import PasswordField from "../../components/password-field.js";
-import TextField from "../../components/text-field.js";
-import FormModel from "../../utils/form-model.js";
-import m from "mithril";
-import mock from "../deps/mock.js";
+var PasswordField = require("../../components/password-field.js")
+var TextField = require("../../components/text-field.js")
+var FormModel = require("../../utils/form-model.js")
+var m = require("mithril")
+var mock = require("../deps/mock.js")
 
-describe("components/password", () => {
-  let root, attrs;
-  beforeEach(() => {
+describe("components/password", function () {
+  var root, attrs;
+  beforeEach(function () {
     root = mock.document.createElement("div");
     m.deps(mock.window);
     attrs = {
@@ -17,38 +17,38 @@ describe("components/password", () => {
     };
   });
 
-  it("sets input type to 'password'", () => {
+  it("sets input type to 'password'", function () {
     spyOn(m, 'component');
 
     PasswordField.view(new PasswordField.controller(attrs), attrs);
 
-    let secondArg = m.component.calls.argsFor(0)[1];
+    var secondArg = m.component.calls.argsFor(0)[1];
     expect(secondArg.type).toEqual("password");
   });
 
-  describe(".getStrengthMeter()", () => {
-    it("returns undefined if attrs.strengthChecker() is undefined", () => {
-      let dController = new PasswordField.controller(attrs);
+  describe(".getStrengthMeter()", function () {
+    it("returns undefined if attrs.strengthChecker() is undefined", function () {
+      var dController = new PasswordField.controller(attrs);
       expect(dController.getStrengthMeter()).not.toBeDefined();
     });
 
 
-    it("returns undefined if attrs.strengthChecker() is undefined", () => {
+    it("returns undefined if attrs.strengthChecker() is undefined", function () {
       attrs.strengthChecker = function () {
         return 100;
       };
 
-      let dController = new PasswordField.controller(attrs);
+      var dController = new PasswordField.controller(attrs);
       expect(dController.getStrengthMeter()).not.toBeDefined();
     });
 
-    it("sets proper strength width based upon return value of attrs.strengthChecker()", () => {
+    it("sets proper strength width based upon return value of attrs.strengthChecker()", function () {
       attrs.strengthChecker = function () {
         return 100;
       };
 
       attrs.model("batword");
-      let strengthDOM = new PasswordField.controller(attrs).getStrengthMeter();
+      var strengthDOM = new PasswordField.controller(attrs).getStrengthMeter();
       expect(strengthDOM.children[0].attrs.style.width).toEqual("100%");
     });
   });

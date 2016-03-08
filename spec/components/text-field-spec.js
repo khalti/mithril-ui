@@ -1,14 +1,12 @@
-"use strict";
+var TextField = require("../../components/text-field.js")
+var m = require('mithril')
+var FormModel = require('../../utils/form-model.js')
+var mock = require("../deps/mock.js")
 
-import TextField from "../../components/text-field.js";
-import m from 'mithril';
-import FormModel from '../../utils/form-model.js';
-import mock from "../deps/mock.js";
+describe("components/text-field", function () {
+  var root, attrs;
 
-describe("components/text-field", () => {
-  let root, attrs;
-
-  beforeEach(() => {
+  beforeEach(function () {
     root = mock.document.createElement("div");
     m.deps(mock.window);
     attrs = {
@@ -19,7 +17,7 @@ describe("components/text-field", () => {
     }
   });
 
-  it("sets class of root to .field", () => {
+  it("sets class of root to .field", function () {
     mock.requestAnimationFrame.$resolve();
 
     m.mount(root, m.component(TextField, attrs));
@@ -27,68 +25,68 @@ describe("components/text-field", () => {
     expect(root.childNodes[0].class).toEqual('field');
   });
 
-  it("sets class of <input> to .ui.input if attrs.append and attrs.prepend are not set", () => {
+  it("sets class of <input> to .ui.input if attrs.append and attrs.prepend are not set", function () {
     mock.requestAnimationFrame.$resolve();
 
     m.mount(root, m.component(TextField, attrs));
-    let inputCOM = root.childNodes[0].childNodes[1];
+    var inputCOM = root.childNodes[0].childNodes[1];
 
     expect(inputCOM.class).toEqual('ui input');
   });
 
-  it("sets class of <input> to 'ui labeled input' if attrs.prepend is set but attrs.append is not", () => {
+  it("sets class of <input> to 'ui labeled input' if attrs.prepend is set but attrs.append is not", function () {
     mock.requestAnimationFrame.$resolve();
 
     attrs.prepend = 'aPrepend';
     m.mount(root, m.component(TextField, attrs));
-    let inputCOM = root.childNodes[0].childNodes[1];
+    var inputCOM = root.childNodes[0].childNodes[1];
 
     expect(inputCOM.class).toEqual('ui labeled input');
   });
 
-  it("sets class of <input> to 'ui right labeled input' if attrs.append is set", () => {
+  it("sets class of <input> to 'ui right labeled input' if attrs.append is set", function () {
     mock.requestAnimationFrame.$resolve();
     attrs.append = 'aAppend';
 
     m.mount(root, m.component(TextField, attrs));
-    let inputCOM = root.childNodes[0].childNodes[1];
+    var inputCOM = root.childNodes[0].childNodes[1];
 
     expect(inputCOM.class).toEqual('ui right labeled input');
   });
 
-  it("appends the help text.", () => {
+  it("appends the help text.", function () {
     mock.requestAnimationFrame.$resolve();
 
     m.mount(root, m.component(TextField, attrs));
-    let helpDOM = root.childNodes[0].childNodes[2];
+    var helpDOM = root.childNodes[0].childNodes[2];
 
     expect(helpDOM.childNodes[0].nodeValue).toEqual(attrs.help);
   });
 
-  it("sets attrs.placeholder to input's placeholder", () => {
+  it("sets attrs.placeholder to input's placeholder", function () {
     mock.requestAnimationFrame.$resolve();
 
     m.mount(root, m.component(TextField, attrs));
-    let inputDOM = root.childNodes[0].childNodes[1].childNodes[1];
+    var inputDOM = root.childNodes[0].childNodes[1].childNodes[1];
 
     expect(inputDOM.getAttribute('placeholder')).toEqual(attrs.placeholder);
   });
 
-  it("sets input's type to text if no attrs.type is passed", () => {
+  it("sets input's type to text if no attrs.type is passed", function () {
     mock.requestAnimationFrame.$resolve();
 
     m.mount(root, m.component(TextField, attrs));
-    let inputDOM = root.childNodes[0].childNodes[1].childNodes[1];
+    var inputDOM = root.childNodes[0].childNodes[1].childNodes[1];
 
     expect(inputDOM.getAttribute('type')).toEqual("text");
   });
 
-  it("sets input's type to attrs.type", () => {
+  it("sets input's type to attrs.type", function () {
     mock.requestAnimationFrame.$resolve();
 
     attrs.type = "number";
     m.mount(root, m.component(TextField, attrs));
-    let inputDOM = root.childNodes[0].childNodes[1].childNodes[1];
+    var inputDOM = root.childNodes[0].childNodes[1].childNodes[1];
 
     expect(inputDOM.getAttribute('type')).toEqual(attrs.type);
   });

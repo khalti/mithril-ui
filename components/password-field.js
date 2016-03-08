@@ -1,7 +1,7 @@
-import m from "mithril";
-import _ from "lodash";
-import Input from "./input.js";
-import Field from "./field.js";
+var m = require("mithril")
+var _ = require("lodash")
+var Input = require("./input.js")
+var Field = require("./field.js")
 
 // m.component(PasswordField, {
 //   'model':,
@@ -11,9 +11,9 @@ import Field from "./field.js";
 //   'help':,
 //   'event':,
 // });
-export default {
+module.exports = {
   controller: function (attrs) {
-    let ctrl = Field.controller(attrs);
+    var ctrl = Field.controller(attrs);
     ctrl.getStrengthMeter = function () {
       if (!attrs.strengthChecker || !attrs.model.is_dirty()) return undefined;
       return m(".ui.bottom.attached.progress.success",

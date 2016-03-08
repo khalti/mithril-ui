@@ -1,6 +1,6 @@
-import m from "mithril";
-import _ from "lodash";
-import Input from "./input.js";
+var m = require("mithril")
+var _ = require("lodash")
+var Input = require("./input.js")
 
 // m.component(Field, {
 //   'class': ,
@@ -8,7 +8,7 @@ import Input from "./input.js";
 //   'input': ,
 //   'label': {text: , append: , prepend: },
 // });
-export default {
+module.exports = {
   controller: function (attrs) {
     if (!_.isFunction(attrs.model)) throw Error("Please pass a model.");
     return {

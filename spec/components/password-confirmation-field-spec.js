@@ -1,13 +1,13 @@
-import PasswordConfirmationField from "../../components/password-confirmation-field.js";
-import TextField from "../../components/text-field.js";
-import FormModel from "../../utils/form-model.js";
-import m from "mithril";
-import mock from "../deps/mock.js";
+var PasswordConfirmationField = require("../../components/password-confirmation-field.js")
+var TextField = require("../../components/text-field.js")
+var FormModel = require("../../utils/form-model.js")
+var m = require("mithril")
+var mock = require("../deps/mock.js")
 
-describe("components/password-confirmation-field", () => {
-  let root, attrs, form;
-  beforeEach(() => {
-    let constrains = {
+describe("components/password-confirmation-field", function () {
+  var root, attrs, form;
+  beforeEach(function () {
+    var constrains = {
       password: {presence: true},
       confirmPassword: {equality: "password"}
     };
@@ -22,51 +22,51 @@ describe("components/password-confirmation-field", () => {
     };
   });
 
-  it("sets input type to 'password'", () => {
+  it("sets input type to 'password'", function () {
     spyOn(m, 'component');
 
     PasswordConfirmationField.view(new PasswordConfirmationField.controller(attrs), attrs);
 
-    let secondArg = m.component.calls.argsFor(0)[1];
+    var secondArg = m.component.calls.argsFor(0)[1];
     expect(secondArg.type).toEqual("password");
   });
 
-  it("shows check mark if password is confirmed", () => {
+  it("shows check mark if password is confirmed", function () {
     spyOn(m, 'component');
     form.password("apassword");
     form.confirmPassword("apassword");
 
     PasswordConfirmationField.view(new PasswordConfirmationField.controller(attrs), attrs);
 
-    let secondArg = m.component.calls.argsFor(0)[1];
+    var secondArg = m.component.calls.argsFor(0)[1];
     expect(secondArg.append.tag).toEqual("i");
   });
 
-  it("hides check mark if password is confirmed", () => {
+  it("hides check mark if password is confirmed", function () {
     spyOn(m, 'component');
     form.password("apassword");
     form.confirmPassword("bpassword");
 
     PasswordConfirmationField.view(new PasswordConfirmationField.controller(attrs), attrs);
 
-    let secondArg = m.component.calls.argsFor(0)[1];
+    var secondArg = m.component.calls.argsFor(0)[1];
     expect(secondArg.append).not.toBeDefined();
   });
 
-  describe(".passwordMatches()", () => {
-    it("returns true if model is dirty and error free", () => {
+  describe(".passwordMatches()", function () {
+    it("returns true if model is dirty and error free", function () {
       form.password("apassword");
       form.confirmPassword("apassword");
 
-      let dcontroller = new PasswordConfirmationField.controller(attrs);
+      var dcontroller = new PasswordConfirmationField.controller(attrs);
       expect(dcontroller.passwordMatches()).toEqual(true);
     });
 
-    it("returns false if model has error", () => {
+    it("returns false if model has error", function () {
       form.password("apassword");
       form.confirmPassword("bpassword");
 
-      let dcontroller = new PasswordConfirmationField.controller(attrs);
+      var dcontroller = new PasswordConfirmationField.controller(attrs);
       expect(dcontroller.passwordMatches()).toEqual(false);
     });
   });

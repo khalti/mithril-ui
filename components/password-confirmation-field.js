@@ -1,7 +1,7 @@
-import m from "mithril";
-import _ from "lodash";
-import Input from "./input.js";
-import Field from "./field.js";
+var m = require("mithril")
+var _ = require("lodash")
+var Input = require("./input.js")
+var Field = require("./field.js")
 
 // m.component(PasswordConfirmationField, {
 //   'model':,
@@ -11,9 +11,9 @@ import Field from "./field.js";
 //   'help':,
 //   'event':,
 // });
-export default {
+module.exports = {
   controller: function (attrs) {
-    let ctrl = Field.controller(attrs);
+    var ctrl = Field.controller(attrs);
     ctrl.checkPasswordMatches = function (value) {
       if (attrs.passwordModel() == value) {
         ctrl.passwordMatches = true;
@@ -41,7 +41,7 @@ export default {
   },
 
   view: function (ctrl, attrs) {
-    let checkClass = ".big.green.check.circle.outline.icon";
+    var checkClass = ".big.green.check.circle.outline.icon";
     attrs.input = {};
     attrs.input.append = ctrl.passwordMatches? m(`i${checkClass}`): undefined;
     attrs.input.placeholder = attrs.label;

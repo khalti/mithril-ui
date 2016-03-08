@@ -1,25 +1,23 @@
-'use strict';
+var m = require('mithril');
+var _ = require('lodash');
+var $ = require('jquery');
 
-const m = require('mithril');
-const _ = require('lodash');
-const $ = require('jquery');
+var noop = function () {};
 
-let noop = function () {};
-
-let getVDOM = function (args) {
+var getVDOM = function (args) {
   return m.apply(m, args);
 };
 
 module.exports = {
   // toggle animation
   toggle() {
-    let vdom = getVDOM(arguments);
+    var vdom = getVDOM(arguments);
     if (vdom.attrs._toggle !== false || vdom.attrs.boolean !== true) new Error('toggle requires a "attrs.boolean" field.');
 
-    let value = vdom.attrs._toggle;
+    var value = vdom.attrs._toggle;
 
-    let animate = function (el, initialized, ctx)  {
-      let dom = $(el);
+    var animate = function (el, initialized, ctx)  {
+      var dom = $(el);
 
       if(!initialized) {
         if (value) {
@@ -33,22 +31,22 @@ module.exports = {
 
       if (ctx.state === value) return;
       if (value) {
-        let className = 'animation show';
+        var className = 'animation show';
         dom.css('display', 'block');
         dom.addClass(className)
-          .one('animationend', () => {dom.removeClass(className);});
+          .one('animationend', function () {dom.removeClass(className);});
         }
       else {
-        let className = 'animation hide';
+        var className = 'animation hide';
         dom.addClass(className)
-          .one('animationend', () => {dom.removeClass(className);dom.css('display', 'none');});
+          .one('animationend', function () {dom.removeClass(className);dom.css('display', 'none');});
         }
 
       ctx.state = value;
       };
 
     // attach animate to attrs.config
-    let originalConfig = vdom.attrs.config;
+    var originalConfig = vdom.attrs.config;
     vdom.attrs.config = function (el, initialized, ctx) {
       if (originalConfig) originalConfig(el, initialized, ctx);
       animate(el, initialized, ctx);
@@ -59,17 +57,17 @@ module.exports = {
 
   // mount animation
   ad() {
-    let vdom = getVDOM(arguments);
+    var vdom = getVDOM(arguments);
 
-    let animate = function (el, initialized, ctx)  {
-      let dom = $(el);
+    var animate = function (el, initialized, ctx)  {
+      var dom = $(el);
       if (initialized) return;
       dom.addClass('animation enter')
-        .one('animationend', () => dom.removeClass('animation enter'));
+        .one('animationend', function () {dom.removeClass('animation enter')});
       };
 
     // attach animate to attrs.config
-    let originalConfig = vdom.attrs.config;
+    var originalConfig = vdom.attrs.config;
     vdom.attrs.config = function (el, initialized, ctx) {
       if (originalConfig) originalConfig(el, initialized, ctx);
       animate(el, initialized, ctx);
@@ -82,13 +80,13 @@ module.exports = {
   map(data, callback) {
     if (!(data && callback)) new Error('map needs at least two arguments.');
 
-    let elements = _.map(data, callback);
+    var elements = _.map(data, callback);
     // armc animator
-    let armc = function (index, data, config) {
+    var armc = function (index, data, config) {
       return function (el, initialized, ctx) {
-        let dom = $(el);
-        let addClass = 'animation add';
-        let changeClass = 'animation change';
+        var dom = $(el);
+        var addClass = 'animation add';
+        var changeClass = 'animation change';
 
         // execute original config
         if (config) config(el, initialized, ctx);
@@ -96,21 +94,21 @@ module.exports = {
         // for addition of element
         if(!initialized) {
           dom.addClass(addClass)
-            .one('animationend', () => dom.removeClass(addClass));
+            .one('animationend', function () {dom.removeClass(addClass)});
         }
         // for element move
         if ((ctx.index || ctx.index === 0) && ctx.index < index) {
           dom.addClass('animation move low')
-            .one('animationend', () => dom.removeClass('animation move low'));
+            .one('animationend', function () {dom.removeClass('animation move low')});
         }
         else if ((ctx.index || ctx.index === 0) && ctx.index > index) {
           dom.addClass('animation move high')
-            .one('animationend', () => dom.removeClass('animation move high'));
+            .one('animationend', function () {dom.removeClass('animation move high')});
         }
         // if change in data
         if (ctx.data && !_.isEqual(ctx.data, data)) {
           dom.addClass(changeClass)
-            .one('animationend', () => dom.removeClass(changeClass));
+            .one('animationend', function () {dom.removeClass(changeClass)});
         }
         // save state
         ctx.data = _.clone(data, true);
@@ -119,9 +117,9 @@ module.exports = {
     };
 
     // attach animation to elements
-    return _.map(_.range(data.length), (index) => {
-      let delement = elements[index], ddata = data[index];
-      let originalConfig = delement.attrs.config;
+    return _.map(_.range(data.length), function (index) {
+      var delement = elements[index], ddata = data[index];
+      var originalConfig = delement.attrs.config;
 
       delement.attrs.key = ddata.id || ddata;
       delement.attrs.config = armc(index, ddata, originalConfig);

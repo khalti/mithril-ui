@@ -1,5 +1,5 @@
-import m from 'mithril';
-import _ from 'lodash';
+var m = require('mithril')
+var _ = require('lodash')
 
 // m.component(Input, {
 //   'class':,
@@ -7,9 +7,9 @@ import _ from 'lodash';
 //   'prepend':,
 //   ...
 // });
-export default {
+module.exports = {
   view: function (ctrl, attrs)  {
-    let inputAttrs = _.omit(attrs, ['class', 'prepend', 'append']);
+    var inputAttrs = _.omit(attrs, ['class', 'prepend', 'append']);
     if (inputAttrs.type === 'hidden') {
       inputAttrs.class = 'hidden';
     }

@@ -57,6 +57,8 @@ describe("components/password", function () {
    });
 
   it("updates the model if attrs.event is triggered", function () {
+    mock.requestAnimationFrame.$resolve();
+
     m.mount(root, {
       view: function () {
         return m.component(PasswordField, attrs)}})
@@ -65,7 +67,7 @@ describe("components/password", function () {
     target.value = "yo password"
     target[attrs.event]({})
 
-    mock.requestAnimationFrame.$resolve();
+    mock.requestAnimationFrame.$resolve()
     expect(attrs.model()).toEqual("yo password")
    });
 

@@ -14,7 +14,7 @@ var Field = require("./field.js")
 module.exports = {
   controller: function (attrs) {
     var ctrl = Field.controller(attrs);
-    ctrl.checkPasswordMatches = function (value) {
+    ctrl.setPasswordMatches = function (value) {
       if (attrs.passwordModel() == value) {
         ctrl.passwordMatches = true;
       }
@@ -42,14 +42,15 @@ module.exports = {
 
   view: function (ctrl, attrs) {
     var checkClass = ".big.green.check.circle.outline.icon";
-    attrs.input = {};
-    attrs.input.append = ctrl.passwordMatches? m(`i${checkClass}`): undefined;
-    attrs.input.placeholder = attrs.label;
-    attrs.input.type = "password";
+    attrs.input = {
+      append: ctrl.passwordMatches? m(`i${checkClass}`): undefined,
+      placeholder: attrs.placeholder || "",
+      type: "password",
+      onkeyup: m.withAttr("value", ctrl.setPasswordMatches),
+      value: attrs.model()
+    }
     attrs.input[attrs.event] = m.withAttr("value", attrs.model);
-    attrs.input.onkeyup = m.withAttr("value", ctrl.checkPasswordMatches);
     attrs.input.class = ctrl.getInputClass(attrs.input);
-    attrs.value = attrs.model();
     return m('div', {class: ctrl.getClass()},
       ctrl.getPrepend(),
       m.component(Input, attrs.input),

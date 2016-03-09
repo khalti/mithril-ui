@@ -96,7 +96,7 @@ describe("FormModel", function () {
     });
 
   describe(".is_valid()", function () {
-    var aform = FormModel({username: {presence: true}});
+    var aform = FormModel({username: {presence: true, default: ""}});
 
     it("returns false if the form has not been altered", function () {
       expect(aform.is_valid()).toEqual(false);
@@ -112,7 +112,27 @@ describe("FormModel", function () {
       expect(aform.is_valid()).toEqual(false);
       });
 
-    });
+    it("sets errors if nothing is passed", function () {
+      aform.username("")
+      aform.is_valid()
+
+      expect(aform.errors).toBeDefined()
+    })
+
+    it("does not change .errors if 'false' is passed", function () {
+      aform.username("")
+      expect(aform.errors).toBeDefined()
+      aform.is_valid(false)
+      expect(aform.errors).toBeDefined()
+    })
+
+    it("sets the .errors to undefined if form validates", function () {
+      aform.username("")
+      aform.username("aname")
+      aform.is_valid()
+      expect(aform.errors).not.toBeDefined()
+    })
+  })
 
   describe(".is_dirty()", function () {
     var aform = FormModel({username: {presence: true, default: 'ausername'}});
@@ -124,24 +144,6 @@ describe("FormModel", function () {
     it("returns true if form has been altered", function () {
       aform.username('busername')
       expect(aform.is_dirty()).toEqual(true);
-      });
-    });
-
-  describe(".validate()", function () {
-    var aform;
-    beforeAll(function () {
-      aform = FormModel({username: {presence: true}});
-      });
-
-    it("populates .errors field if the form is invalid", function () {
-      aform.validate();
-      expect(aform.errors).toBeDefined();
-      });
-
-    if("sets the .errors field to undefined if form is valid", function () {
-      aform.username('ausername');
-      aform.validate();
-      expect(aform.errors).not.toBeDefined();
       });
     });
 

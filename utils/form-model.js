@@ -19,6 +19,7 @@ function prop(model, field, defaultValue) {
         [field]: _.omit(model._config[field], ['default'])
       };
       var errors = validate(values, constrains);
+      if (!model.errors) model.errors = {} // formModel.is_valid() sets it undefined
       aclosure.errors = model.errors[field] = errors? errors[field]: undefined;
       }
     else {
@@ -40,12 +41,20 @@ module.exports =  function (config) {
   var formModel = {
     _config: config,
     errors: {},
-    is_valid() {
+    is_valid(attach_errors) {
       var self = this
       if (!this.is_dirty()) return false;
-      return !_.some(_.keys(this._config), function (akey) {
-        return self.errors[akey] && self.errors[akey].length > 0;
-        });
+
+      var config = {}
+      _.forEach(this._config, function (avalue, akey) {
+        config[akey] = _.omit(avalue, ["default"])
+      })
+
+      var errors = validate(this.values(), config)
+
+      if (attach_errors) this.errors = errors
+
+      return errors === undefined
       },
 
     is_dirty() {

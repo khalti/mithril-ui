@@ -54,15 +54,15 @@ describe("components/password-confirmation-field", function () {
     expect(secondArg.placeholder).toEqual("");
   });
 
-  it("sets the value of input to attrs.model", function () {
-    spyOn(m, 'component');
+  // it("sets the value of input to attrs.model", function () {
+  //   spyOn(m, 'component');
 
-    attrs.model("a password")
-    PasswordConfirmationField.view(new PasswordConfirmationField.controller(attrs), attrs);
+  //   attrs.model("a password")
+  //   PasswordConfirmationField.view(new PasswordConfirmationField.controller(attrs), attrs);
 
-    var secondArg = m.component.calls.argsFor(0)[1];
-    expect(secondArg.value).toEqual("a password");
-   });
+  //   var secondArg = m.component.calls.argsFor(0)[1];
+  //   expect(secondArg.value).toEqual("a password");
+  //  });
 
   it("updates the model if attrs.event is triggered", function () {
     mock.requestAnimationFrame.$resolve();
@@ -83,13 +83,13 @@ describe("components/password-confirmation-field", function () {
     mock.requestAnimationFrame.$resolve();
 
     form.password("apassword")
-    form.confirmPassword("apassword")
 
     m.mount(root, {
       view: function () {
         return m.component(PasswordConfirmationField, attrs)}})
 
     var input = root.childNodes[0].childNodes[1].childNodes[1]
+    input.value = form.password()
     input.onkeyup({})
     m.redraw(true)
 
@@ -99,14 +99,14 @@ describe("components/password-confirmation-field", function () {
 
   it("hides check mark if password is not confirmed", function () {
     mock.requestAnimationFrame.$resolve();
-    form.password("apasswordx")
-    form.confirmPassword("apassword")
+    form.password("apassword")
 
     m.mount(root, {
       view: function () {
         return m.component(PasswordConfirmationField, attrs)}})
 
     var input = root.childNodes[0].childNodes[1].childNodes[1]
+    input.value = "bpassword"
     input.onkeyup({})
     m.redraw(true)
 

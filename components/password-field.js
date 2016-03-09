@@ -29,11 +29,13 @@ module.exports = {
   },
 
   view: function (ctrl, attrs) {
-    attrs.input = {};
-    attrs.input.placeholder = attrs.placeholder;
-    attrs.input.type = "password";
-    attrs.input[attrs.event] = m.withAttr("value", attrs.model);
-    attrs.value = attrs.model;
+    attrs.input = {
+      placeholder: attrs.placeholder || '',
+      type: "password",
+      value: attrs.model(),
+      class: "ui input"
+    };
+    attrs.input[attrs.event] = m.withAttr("value", attrs.model)
     return m('div', {class: ctrl.getClass()},
       ctrl.getPrepend(),
       m.component(Input, attrs.input),

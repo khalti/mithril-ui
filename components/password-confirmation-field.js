@@ -47,7 +47,7 @@ module.exports = {
       placeholder: attrs.placeholder || "",
       type: "password",
       onkeyup: m.withAttr("value", ctrl.setPasswordMatches),
-      value: attrs.model()
+      // value: attrs.model()
     }
     attrs.input[attrs.event] = m.withAttr("value", attrs.model);
     attrs.input.class = ctrl.getInputClass(attrs.input);

@@ -11,18 +11,19 @@ function prop(model, field, defaultValue) {
     // for equality
     if (model._config[field].equality) {
       var equalAgainst = model._config[field].equality;
-      var values = {
-        [equalAgainst]: model[equalAgainst](),
-        [field]: value
-      };
-      var constrains = {
-        [field]: _.omit(model._config[field], ['default'])
-      };
+      var values = {}
+      values[equalAgainst] = model[equalAgainst]()
+      values[field] = value
+
+      var constrains = {}
+      constrains[field] = _.omit(model._config[field], ['default'])
+
       var errors = validate(values, constrains);
       if (!model.errors) model.errors = {} // formModel.is_valid() sets it undefined
       aclosure.errors = model.errors[field] = errors? errors[field]: undefined;
       }
     else {
+      if(!model.errors) model.errors = {}
       aclosure.errors = model.errors[field] = validate.single(
         value,
         _.omit(model._config[field], ['default']));
@@ -41,7 +42,7 @@ module.exports =  function (config) {
   var formModel = {
     _config: config,
     errors: {},
-    is_valid(attach_errors) {
+    is_valid: function (attach_errors) {
       var self = this
       if (!this.is_dirty()) return false;
 
@@ -52,23 +53,23 @@ module.exports =  function (config) {
 
       var errors = validate(this.values(), config)
 
-      if (attach_errors) this.errors = errors
+      if (attach_errors !== false) this.errors = errors
 
       return errors === undefined
       },
 
-    is_dirty() {
+    is_dirty: function () {
       var self = this
       return _.some(_.keys(this._config), function (akey) {
         return self[akey].is_dirty();
         });
       },
 
-    validate() {
+    validate: function () {
       this.errors = validate(this.values(), this._config);
       },
 
-    values() {
+    values: function () {
       var dict = {};
       var self = this
       _.forEach(this._config, function (avalue, akey) {

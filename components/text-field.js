@@ -16,7 +16,7 @@ var Field = require("./field.js")
 module.exports = {
   controller: function (attrs) {
     return {
-      getInputClass() {
+      getInputClass: function () {
         if (!attrs.prepend && !attrs.append) {
           return "ui input";
         }
@@ -36,9 +36,9 @@ module.exports = {
       prepend: attrs.prepend,
       append: attrs.append,
       type: attrs.type || 'text',
-      [attrs.event] : m.withAttr('value', attrs.model),
       placeholder: attrs.placeholder
     }
+    attrs.input[attrs.event] = m.withAttr('value', attrs.model)
     return m.component(Field, _.omit(attrs, ['placeholder', 'event', 'type']));
   }
 };

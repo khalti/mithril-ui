@@ -15,7 +15,7 @@ function prop(model, field, defaultValue) {
     };
 
   aclosure.is_valid = function (attach_errors) {
-    var errors;
+    var errors
     var constrains = {}
     constrains[field] = _.omit(model._config[field], ['default'])
     var values = {}
@@ -42,10 +42,9 @@ function prop(model, field, defaultValue) {
 module.exports =  function (config) {
   var formModel = {
     _config: config,
-    errors: {},
+    errors: undefined,
     is_valid: function (attach_errors) {
       var self = this
-      if (!this.is_dirty()) return false;
 
       var config = {}
       _.forEach(this._config, function (avalue, akey) {
@@ -53,8 +52,14 @@ module.exports =  function (config) {
       })
 
       var errors = validate(this.values(), config)
-
-      if (attach_errors !== false) this.errors = errors
+      if (attach_errors !== false){
+        self.errors = errors
+        if (self.errors) {
+          _.forEach(self._config, function (avalue, akey) {
+            self[akey].errors = self.errors[akey]
+            })
+        }
+      }
 
       return errors === undefined
       },

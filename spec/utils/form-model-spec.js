@@ -26,8 +26,8 @@ describe("FormModel", function () {
     expect(formModel.username()).toEqual('batman');
     });
 
-  it("sets empty .errors field", function () {
-    expect(formModel.errors).toBeDefined();
+  it("sets .errors field to 'undefined'", function () {
+    expect(formModel.errors).not.toBeDefined();
     });
 
   it("sets .is_valid() method", function () {
@@ -117,11 +117,10 @@ describe("FormModel", function () {
     })
 
   describe(".is_valid()", function () {
-    var aform = FormModel({username: {presence: true, default: ""}});
-
-    it("returns false if the form has not been altered", function () {
-      expect(aform.is_valid()).toEqual(false);
-      });
+    var aform
+    beforeEach(function () {
+      aform = FormModel({username: {presence: true, default: ""}});
+    })
 
     it("returns true if form is valid", function () {
       aform.username("ausername");
@@ -152,7 +151,14 @@ describe("FormModel", function () {
     })
 
     it("it sets errors on individual properties", function () {
-      fail("todo")
+      aform = FormModel({
+        username: {presence: true, default: ""},
+        password: {presence: true, default: ""}})
+      aform.username("")
+      aform.password("hello")
+      aform.is_valid()
+      expect(aform.username.errors).toBeDefined()
+      expect(aform.password.errors).not.toBeDefined()
     })
   })
 

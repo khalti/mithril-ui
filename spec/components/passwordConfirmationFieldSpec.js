@@ -1,6 +1,6 @@
-var PasswordConfirmationField = require("../../components/password-confirmation-field.js")
-var TextField = require("../../components/text-field.js")
-var FormModel = require("../../utils/form-model.js")
+var PasswordConfirmationField = require("../../components/passwordConfirmationField.js")
+var TextField = require("../../components/textField.js")
+var FormModel = require("../../utils/formModel.js")
 var m = require("mithril")
 var mock = require("../deps/mock.js")
 

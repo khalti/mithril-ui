@@ -1,6 +1,6 @@
 var Field = require("../../components/field.js")
 var Input = require("../../components/input.js")
-var FormModel = require("../../utils/form-model.js")
+var FormModel = require("../../utils/formModel.js")
 var m = require("mithril")
 var mock = require("../deps/mock.js")
 

@@ -25,7 +25,7 @@ module.exports = {
   view: function (ctrl, attrs) {
     var checkClass = ".big.green.check.circle.outline.icon"
     attrs.input = {
-      append: attrs.model.isValid()? m("i"+checkClass): undefined,
+      append: attrs.model.isValid(false)? m("i"+checkClass): undefined,
       placeholder: attrs.placeholder || "",
       type: "password",
       value: attrs.model()

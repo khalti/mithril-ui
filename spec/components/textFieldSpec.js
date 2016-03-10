@@ -1,6 +1,6 @@
-var TextField = require("../../components/text-field.js")
+var TextField = require("../../components/textField.js")
 var m = require('mithril')
-var FormModel = require('../../utils/form-model.js')
+var FormModel = require('../../utils/formModel.js')
 var mock = require("../deps/mock.js")
 
 describe("components/text-field", function () {

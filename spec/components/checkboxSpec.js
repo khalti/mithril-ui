@@ -1,6 +1,6 @@
 var Checkbox = require("../../components/checkbox.js")
 var m = require('mithril')
-var FormModel = require('../../utils/form-model.js')
+var FormModel = require('../../utils/formModel.js')
 var mock = require("../deps/mock.js")
 var _ = require("lodash")
 

@@ -1,4 +1,4 @@
-var FormModel = require("../../utils/form-model.js")
+var FormModel = require("../../utils/formModel.js")
 
 describe("FormModel", function () {
   var formModel

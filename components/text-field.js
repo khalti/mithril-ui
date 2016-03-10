@@ -7,38 +7,29 @@ var Field = require("./field.js")
 //   model: ,
 //   label: ,
 //   placeholder: ,
-//   event: ,
+//   update: ,
+//   validate: ,
 //   append: ,
 //   prepend: ,
 //   help: ,
 //   type: ,
-// });
+// })
 module.exports = {
-  controller: function (attrs) {
-    return {
-      getInputClass: function () {
-        if (!attrs.prepend && !attrs.append) {
-          return "ui input";
-        }
-        else if (attrs.prepend && !attrs.append) {
-          return "ui labeled input";
-        }
-        else if (attrs.append) {
-          return "ui right labeled input";
-        }
-      }
-    };
-  },
   view: function (ctrl, attrs) {
-    attrs.class = "field";
+    attrs.class = "field"
     attrs.input = {
-      class : ctrl.getInputClass(),
       prepend: attrs.prepend,
       append: attrs.append,
       type: attrs.type || 'text',
       placeholder: attrs.placeholder
     }
-    attrs.input[attrs.event] = m.withAttr('value', attrs.model)
-    return m.component(Field, _.omit(attrs, ['placeholder', 'event', 'type']));
+    if (attrs.update === attrs.validate) {
+      attrs.input[attrs.update] = m.withAttr('value', attrs.model.setAndValidate)
+    }
+    else {
+      attrs.input[attrs.update] = m.withAttr('value', attrs.model)
+      attrs.input[attrs.validate] = function () {attrs.model.isValid()}
+    }
+    return m.component(Field, _.omit(attrs, ['placeholder', 'event', 'type']))
   }
-};
+}

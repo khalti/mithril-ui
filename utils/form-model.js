@@ -2,7 +2,7 @@ var _ = require('lodash')
 var validate = require('validate.js')
 
 function prop(model, field, defaultValue) {
-  var initialState = defaultValue;
+  var initialState = defaultValue || "";
   var state = initialState;
 
   var aclosure = function (value) {

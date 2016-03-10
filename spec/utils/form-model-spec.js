@@ -39,14 +39,22 @@ describe("FormModel", function () {
     });
 
   describe(".aProp", function () {
+    var aform
+    beforeEach(function () {
+      aform = FormModel({
+        username: {presence: true},
+        password: {}})})
+
+    it("sets '' default value", function () {
+      expect(aform.username()).toEqual('')})
+
     it("sets default value", function () {
-      expect(formModel.username()).toEqual('batman');
-      });
+      var aform = FormModel({username: {default: "batman"}})
+      expect(aform.username()).toEqual("batman")})
 
     it("is a getter and setter", function () {
-      formModel.username('superman');
-      expect(formModel.username()).toEqual('superman');
-      });
+      aform.username('superman');
+      expect(aform.username()).toEqual('superman')})
 
     describe(".aProp.is_dirty()", function () {
       var aform = FormModel({username: {default: 'ausername', presence: true}});
@@ -119,7 +127,7 @@ describe("FormModel", function () {
   describe(".is_valid()", function () {
     var aform
     beforeEach(function () {
-      aform = FormModel({username: {presence: true, default: ""}});
+      aform = FormModel({username: {presence: true}});
     })
 
     it("returns true if form is valid", function () {
@@ -152,8 +160,8 @@ describe("FormModel", function () {
 
     it("it sets errors on individual properties", function () {
       aform = FormModel({
-        username: {presence: true, default: ""},
-        password: {presence: true, default: ""}})
+        username: {presence: true},
+        password: {presence: true}})
       aform.username("")
       aform.password("hello")
       aform.is_valid()

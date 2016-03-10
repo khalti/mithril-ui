@@ -19,7 +19,7 @@ module.exports = {
       return m(".ui.bottom.attached.progress.success",
         m(".bar", {
           style: {
-            "transition-duration": "300ms", width: `${attrs.strengthChecker(attrs.model())}%`}}));
+            "transition-duration": "300ms", width: attrs.strengthChecker(attrs.model())+"%"}}));
     };
     ctrl.getClass = function () {
       if (this.hasError()) return "field error";

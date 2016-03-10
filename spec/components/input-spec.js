@@ -21,19 +21,32 @@ describe("Input", function () {
     expect(aView.children[2]).toEqual(attrs.append)
   })
 
-  it("it sets root's class", function () {
+  it("it sets root's class to attrs.class", function () {
+    var attrs = {
+      prepend: 'aPrepend',
+      append: 'aAppend',
+      onclick: 'aCallabck',
+      type: 'hidden',
+      class: "aClass"
+    }
+    var aCtrl = new Input.controller(attrs)
+    var aView = Input.view(aCtrl, attrs)
+    expect(aView.attrs.class).toEqual(attrs.class)
+  })
+
+  it("it sets root's class from ctrl.getClass() if attrs.class is undefined", function () {
     expect(aView.attrs.class).toEqual("ui right labeled input")
   })
 
   it("passes rest of the attributes to input element", function () {
-    var inputAttrs = aView.children[1].attrs;
-    expect(inputAttrs).toEqual({onclick: attrs.onclick, type: 'hidden', class: 'hidden'});
-  });
+    var inputAttrs = aView.children[1].attrs
+    expect(inputAttrs).toEqual({onclick: attrs.onclick, type: 'hidden', class: 'hidden'})
+  })
 
   it("changes class of <input> element to 'hidden' if 'attrs.type' is 'hidden'", function () {
-    var inputAttrs = aView.children[1].attrs;
-    expect(inputAttrs.class).toEqual(attrs.type);
-  });
+    var inputAttrs = aView.children[1].attrs
+    expect(inputAttrs.class).toEqual(attrs.type)
+  })
 
   describe("Input.controller.getClass()", function () {
     var ctrl
@@ -76,4 +89,4 @@ describe("Input", function () {
       expect(ctrl.getClass(attrs)).toEqual("ui left icon right labeled input")
     })
   })
-});
+})

@@ -43,7 +43,7 @@ module.exports = {
     if (inputAttrs.type === 'hidden') {
       inputAttrs.class = 'hidden';
     }
-    return m('div', {class: ctrl.getClass(attrs)},
+    return m('div', {class: attrs.class? attrs.class: ctrl.getClass(attrs)},
       attrs.prepend,
       m('input', inputAttrs),
       attrs.append

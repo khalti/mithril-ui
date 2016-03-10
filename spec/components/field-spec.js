@@ -81,7 +81,7 @@ describe("components/field", function () {
     expect(labelDOM.childNodes[0].nodeValue).toEqual(attrs.label.text);
   });
 
-  it("passes attrs.input to Input component", () => {
+  it("passes attrs.input to Input component", function () {
     mock.requestAnimationFrame.$resolve();
 
     attrs.label = {text: 'Username', append: true};
@@ -93,7 +93,7 @@ describe("components/field", function () {
     expect(inputDOM.class).toEqual(attrs.input.class);
   });
 
-  it("appends the attrs.help", () => {
+  it("appends the attrs.help", function () {
     mock.requestAnimationFrame.$resolve();
 
     attrs.help = 'Username';
@@ -106,7 +106,7 @@ describe("components/field", function () {
     expect(helpDOM.childNodes[0].nodeValue).toEqual(attrs.help);
   });
 
-  it("appends the error text", () => {
+  it("appends the error text", function () {
     mock.requestAnimationFrame.$resolve();
 
     attrs.model.errors = ['An error.'];
@@ -118,7 +118,7 @@ describe("components/field", function () {
     expect(errorDOM.childNodes[0].nodeValue).toEqual(attrs.model.errors[0]);
   });
 
-  it("removes the help text if there is an error", () => {
+  it("removes the help text if there is an error", function () {
     mock.requestAnimationFrame.$resolve();
 
     attrs.help = "A help.";
@@ -131,7 +131,7 @@ describe("components/field", function () {
     expect(errorDOM.childNodes[0].nodeValue).toEqual(attrs.model.errors[0]);
   });
 
-  it("adds 'error' class to the root element if the model as an error", () => {
+  it("adds 'error' class to the root element if the model as an error", function () {
     mock.requestAnimationFrame.$resolve();
 
     attrs.help = "A help.";
@@ -142,7 +142,7 @@ describe("components/field", function () {
     expect(root.childNodes[0].class).toMatch('error');
   });
 
-  it("binds model to value of input", () => {
+  it("binds model to value of input", function () {
     mock.requestAnimationFrame.$resolve();
     attrs.model("1");
 

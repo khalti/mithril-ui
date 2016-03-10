@@ -43,7 +43,7 @@ module.exports = {
   view: function (ctrl, attrs) {
     var checkClass = ".big.green.check.circle.outline.icon";
     attrs.input = {
-      append: ctrl.passwordMatches? m(`i${checkClass}`): undefined,
+      append: ctrl.passwordMatches? m("i"+checkClass): undefined,
       placeholder: attrs.placeholder || "",
       type: "password",
       onkeyup: m.withAttr("value", ctrl.setPasswordMatches),

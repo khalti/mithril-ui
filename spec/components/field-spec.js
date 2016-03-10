@@ -14,19 +14,18 @@ describe("components/field", function () {
     root = mock.document.createElement("div")
     m.deps(mock.window)
     attrs = {
-      class: 'aClass',
       model: aModel,
       input: {class: 'aClass'}
     }
   })
 
-  it("sets the class of root div to attrs.class", function () {
+  it("sets the class of root div to 'field'", function () {
     mock.requestAnimationFrame.$resolve()
 
     var aField = m.component(Field, attrs)
     m.mount(root, aField)
 
-    expect(root.childNodes[0].class).toEqual(attrs.class)
+    expect(root.childNodes[0].class).toEqual('field')
     })
 
   it("prepends the attrs.label if it is a text", function () {

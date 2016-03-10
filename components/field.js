@@ -33,8 +33,8 @@ module.exports = {
         else if (attrs.model.errors.length > 0) {return true}},
 
       getClass: function () {
-        if (this.hasError()) return attrs.class+ " error"
-        return attrs.class}}},
+        if (this.hasError()) return "field error"
+        return "field"}}},
 
   view: function (ctrl, attrs)  {
     attrs.input.value = attrs.model()

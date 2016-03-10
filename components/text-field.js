@@ -16,13 +16,13 @@ var Field = require("./field.js")
 // })
 module.exports = {
   view: function (ctrl, attrs) {
-    attrs.class = "field"
     attrs.input = {
       prepend: attrs.prepend,
       append: attrs.append,
       type: attrs.type || 'text',
       placeholder: attrs.placeholder
     }
+
     if (attrs.update === attrs.validate) {
       attrs.input[attrs.update] = m.withAttr('value', attrs.model.setAndValidate)
     }
@@ -30,6 +30,7 @@ module.exports = {
       attrs.input[attrs.update] = m.withAttr('value', attrs.model)
       attrs.input[attrs.validate] = function () {attrs.model.isValid()}
     }
+
     return m.component(Field, _.omit(attrs, ['placeholder', 'event', 'type']))
   }
 }

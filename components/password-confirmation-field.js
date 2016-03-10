@@ -9,51 +9,39 @@ var Field = require("./field.js")
 //   'label':,
 //   'placeholder':,
 //   'help':,
-//   'event':,
-// });
+//   'update':,
+//   'validate':,
+// })
 module.exports = {
   controller: function (attrs) {
-    var ctrl = Field.controller(attrs);
-    ctrl.setPasswordMatches = function (value) {
-      if (attrs.passwordModel() == value) {
-        ctrl.passwordMatches = true;
-      }
-      else {
-        ctrl.passwordMatches = false;
-      }
-    };
+    var ctrl = Field.controller(attrs)
     ctrl.getClass = function () {
-      if (this.hasError()) return "field error";
-      return "field";
-    };
-    ctrl.getInputClass = function (inputAttrs) {
-      if (!inputAttrs.prepend && !inputAttrs.append) {
-        return "ui input";
-      }
-      else if (inputAttrs.prepend && !inputAttrs.append) {
-        return "ui labeled input";
-      }
-      else if (inputAttrs.append) {
-        return "ui icon input";
-      }
-    };
-    return ctrl;
+      if (this.hasError()) return "field error"
+      return "field"
+    }
+    return ctrl
   },
 
   view: function (ctrl, attrs) {
-    var checkClass = ".big.green.check.circle.outline.icon";
+    var checkClass = ".big.green.check.circle.outline.icon"
     attrs.input = {
-      append: ctrl.passwordMatches? m("i"+checkClass): undefined,
+      append: attrs.model.isValid()? m("i"+checkClass): undefined,
       placeholder: attrs.placeholder || "",
       type: "password",
-      onkeyup: m.withAttr("value", ctrl.setPasswordMatches),
-      // value: attrs.model()
+      value: attrs.model()
     }
-    attrs.input[attrs.event] = m.withAttr("value", attrs.model);
-    attrs.input.class = ctrl.getInputClass(attrs.input);
+
+    if (attrs.update === attrs.validate) {
+      attrs.input[attrs.update] = m.withAttr('value', attrs.model.setAndValidate)
+    }
+    else {
+      attrs.input[attrs.update] = m.withAttr('value', attrs.model)
+      attrs.input[attrs.validate] = function () {attrs.model.isValid()}
+    }
+
     return m('div', {class: ctrl.getClass()},
       ctrl.getPrepend(),
       m.component(Input, attrs.input),
-      ctrl.getAppend());
+      ctrl.getAppend())
   }
-};
+}

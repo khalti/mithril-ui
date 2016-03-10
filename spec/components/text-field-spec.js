@@ -18,14 +18,6 @@ describe("components/text-field", function () {
     }
   })
 
-  it("sets class of root to 'field'", function () {
-    mock.requestAnimationFrame.$resolve()
-
-    m.mount(root, m.component(TextField, attrs))
-
-    expect(root.childNodes[0].class).toEqual('field')
-  })
-
   it("appends the help text.", function () {
     mock.requestAnimationFrame.$resolve()
 
@@ -79,7 +71,7 @@ describe("components/text-field", function () {
 
     m.mount(root, m.component(TextField, attrs))
     var inputDOM = root.childNodes[0].childNodes[1].childNodes[1]
-    inputDOM.value = ""
+    attrs.model("")
     inputDOM[attrs.validate]({})
     expect(attrs.model.errors).toBeDefined()
   })

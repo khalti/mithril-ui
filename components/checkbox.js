@@ -9,7 +9,6 @@ var Field = require("./field.js")
 // });
 module.exports = {
   view: function (ctrl, attrs) {
-    attrs.class = "field";
     attrs.input = {
       class: "ui checkbox",
       type: "checkbox",

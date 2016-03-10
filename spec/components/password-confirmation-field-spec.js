@@ -5,82 +5,67 @@ var m = require("mithril")
 var mock = require("../deps/mock.js")
 
 describe("components/password-confirmation-field", function () {
-  var root, attrs, form;
+  var root, attrs, form
   beforeEach(function () {
-    root = mock.document.createElement("div");
-    m.deps(mock.window);
+    root = mock.document.createElement("div")
+    m.deps(mock.window)
 
     var constrains = {
-      password: {presence: true, default: ""},
-      confirmPassword: {equality: "password", default: ""}
-    };
+      password: {presence: true},
+      confirmPassword: {equality: "password"}
+    }
 
-    form = FormModel(constrains);
+    form = FormModel(constrains)
     attrs = {
       "model": form.confirmPassword,
-      "passwordModel": form.password,
       "label": "Confirm Password",
       "placeholder": "A placeholder",
-      "event": 'onchange',
+      "update": 'onkeyup',
+      "validate": 'onchange',
       "help": "A help."
-    };
-  });
+    }
+  })
 
   it("sets input type to 'password'", function () {
-    spyOn(m, 'component');
+    spyOn(m, 'component')
 
-    PasswordConfirmationField.view(new PasswordConfirmationField.controller(attrs), attrs);
+    PasswordConfirmationField.view(new PasswordConfirmationField.controller(attrs), attrs)
 
-    var secondArg = m.component.calls.argsFor(0)[1];
-    expect(secondArg.type).toEqual("password");
-  });
+    var secondArg = m.component.calls.argsFor(0)[1]
+    expect(secondArg.type).toEqual("password")
+  })
 
   it("sets input's placeholder to attrs.placeholder is present", function () {
-    spyOn(m, 'component');
+    spyOn(m, 'component')
 
-    PasswordConfirmationField.view(new PasswordConfirmationField.controller(attrs), attrs);
+    PasswordConfirmationField.view(new PasswordConfirmationField.controller(attrs), attrs)
 
-    var secondArg = m.component.calls.argsFor(0)[1];
-    expect(secondArg.placeholder).toEqual(attrs.placeholder);
-  });
+    var secondArg = m.component.calls.argsFor(0)[1]
+    expect(secondArg.placeholder).toEqual(attrs.placeholder)
+  })
 
   it("sets input's placeholder to '' is attrs.placeholder is undefined", function () {
-    spyOn(m, 'component');
+    spyOn(m, 'component')
 
     attrs.placeholder = undefined
-    PasswordConfirmationField.view(new PasswordConfirmationField.controller(attrs), attrs);
+    PasswordConfirmationField.view(new PasswordConfirmationField.controller(attrs), attrs)
 
-    var secondArg = m.component.calls.argsFor(0)[1];
-    expect(secondArg.placeholder).toEqual("");
-  });
+    var secondArg = m.component.calls.argsFor(0)[1]
+    expect(secondArg.placeholder).toEqual("")
+  })
 
-  // it("sets the value of input to attrs.model", function () {
-  //   spyOn(m, 'component');
+  it("sets the value of input to attrs.model", function () {
+    spyOn(m, 'component')
 
-  //   attrs.model("a password")
-  //   PasswordConfirmationField.view(new PasswordConfirmationField.controller(attrs), attrs);
+    attrs.model("a password")
+    PasswordConfirmationField.view(new PasswordConfirmationField.controller(attrs), attrs)
 
-  //   var secondArg = m.component.calls.argsFor(0)[1];
-  //   expect(secondArg.value).toEqual("a password");
-  //  });
-
-  it("updates the model if attrs.event is triggered", function () {
-    mock.requestAnimationFrame.$resolve();
-
-    m.mount(root, {
-      view: function () {
-        return m.component(PasswordConfirmationField, attrs)}})
-    var target = root.childNodes[0].childNodes[1].childNodes[1]
-
-    target.value = "yo password"
-    target[attrs.event]({})
-
-    mock.requestAnimationFrame.$resolve()
-    expect(attrs.model()).toEqual("yo password")
-   });
+    var secondArg = m.component.calls.argsFor(0)[1]
+    expect(secondArg.value).toEqual("a password")
+   })
 
   it("shows check mark if password is confirmed", function () {
-    mock.requestAnimationFrame.$resolve();
+    mock.requestAnimationFrame.$resolve()
 
     form.password("apassword")
 
@@ -90,15 +75,15 @@ describe("components/password-confirmation-field", function () {
 
     var input = root.childNodes[0].childNodes[1].childNodes[1]
     input.value = form.password()
-    input.onkeyup({})
+    input[attrs.update]({})
     m.redraw(true)
 
     var append = root.childNodes[0].childNodes[1].childNodes[2]
     expect(append.nodeName).toEqual("I")
-  });
+  })
 
   it("hides check mark if password is not confirmed", function () {
-    mock.requestAnimationFrame.$resolve();
+    mock.requestAnimationFrame.$resolve()
     form.password("apassword")
 
     m.mount(root, {
@@ -107,28 +92,56 @@ describe("components/password-confirmation-field", function () {
 
     var input = root.childNodes[0].childNodes[1].childNodes[1]
     input.value = "bpassword"
-    input.onkeyup({})
+    input[attrs.update]({})
     m.redraw(true)
 
     var append = root.childNodes[0].childNodes[1].childNodes[2]
     expect(append.nodeValue).toEqual("")
-  });
+  })
 
-  describe(".setPasswordMatches()", function () {
-    it("returns true if model is dirty and error free", function () {
-      form.password("apassword");
+  it("updates value on attrs.update", function () {
+    mock.requestAnimationFrame.$resolve()
 
-      var dcontroller = new PasswordConfirmationField.controller(attrs);
-      dcontroller.setPasswordMatches(form.password())
-      expect(dcontroller.passwordMatches).toEqual(true);
-    });
+    m.mount(root, m.component(TextField, attrs))
+    var inputDOM = root.childNodes[0].childNodes[1].childNodes[1]
+    inputDOM.value = "earth"
+    inputDOM[attrs.update]({})
 
-    it("returns false if model has error", function () {
-      form.password("apassword");
+    expect(attrs.model()).toEqual("earth")
+  })
 
-      var dcontroller = new PasswordConfirmationField.controller(attrs);
-      dcontroller.setPasswordMatches("bpassword")
-      expect(dcontroller.passwordMatches).toEqual(false);
-    });
-  });
-});
+  it("validates on attrs.validate", function () {
+    mock.requestAnimationFrame.$resolve()
+
+    m.mount(root, m.component(TextField, attrs))
+    var inputDOM = root.childNodes[0].childNodes[1].childNodes[1]
+
+    form.password("password")
+    form.confirmPassword("bpassword")
+    inputDOM[attrs.validate]({})
+    expect(attrs.model.errors).toBeDefined()
+  })
+
+  it("updates and validates the value if attrs.update and attrs.validate are same", function() {
+    attrs.update = "onchange"
+    mock.requestAnimationFrame.$resolve()
+
+    form.password("password")
+
+    m.mount(root, m.component(TextField, attrs))
+    var inputDOM = root.childNodes[0].childNodes[1].childNodes[1]
+
+    // for valid data
+    inputDOM.value = "password"
+    inputDOM[attrs.validate]({})
+    expect(attrs.model()).toBeDefined("earth")
+    expect(attrs.model.errors).not.toBeDefined()
+
+    // for invalid data
+    inputDOM.value = "x"
+    inputDOM[attrs.validate]({})
+    expect(attrs.model()).toBeDefined("")
+    form.confirmPassword.isValid()
+    expect(attrs.model.errors).toBeDefined()
+  })
+})

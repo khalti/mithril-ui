@@ -17,12 +17,6 @@ describe("components/checkbox", function () {
     aCheckbox = m.component(Checkbox, attrs)
   })
 
-  it("sets class of root to .field", function () {
-    m.mount(root, aCheckbox)
-
-    expect(root.childNodes[0].class).toEqual('field')
-  })
-
   it("sets class of <input> to 'ui checkbox'", function () {
     mock.requestAnimationFrame.$resolve()
 

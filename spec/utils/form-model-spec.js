@@ -26,10 +26,6 @@ describe("FormModel", function () {
     expect(formModel.username()).toEqual('batman')
     })
 
-  it("sets .errors field to 'undefined'", function () {
-    expect(formModel.errors).not.toBeDefined()
-    })
-
   it("sets .isValid() method", function () {
     expect(formModel.isValid).toBeDefined()
     })
@@ -56,7 +52,7 @@ describe("FormModel", function () {
       aform.username('superman');
       expect(aform.username()).toEqual('superman')})
 
-    describe(".aProp.isDirty()", function () {
+    describe(".isDirty()", function () {
       var aform = FormModel({username: {default: 'ausername', presence: true}})
 
       it("returns false if the value has not been altered", function () {
@@ -69,15 +65,7 @@ describe("FormModel", function () {
         })
       })
 
-    })
-
-    describe(".aProp.isValid()", function () {
-      it("assigns errors on amodel.errors[aProp] field", function () {
-        formModel.username("")
-        formModel.username.isValid()
-        expect(formModel.errors.username).toBeDefined()
-        })
-
+    describe(".isValid()", function () {
       it("assigns errors to .errors attribute of itself too", function () {
         formModel.username("")
         formModel.username.isValid()
@@ -98,7 +86,7 @@ describe("FormModel", function () {
         form.password("flash")
         form.confirmPassword("quicksilver")
         form.confirmPassword.isValid()
-        expect(form.errors.confirmPassword).toBeDefined()
+        expect(form.confirmPassword.errors()).toBeDefined()
 
         form.confirmPassword("flash")
         form.confirmPassword.isValid()
@@ -120,53 +108,116 @@ describe("FormModel", function () {
         formModel.username.isValid()
         formModel.username("")
         formModel.username.isValid(false)
-        expect(formModel.username.errors).not.toBeDefined()
+        expect(formModel.username.errors()).not.toBeDefined()
+      })
+     })
+
+    describe(".setAndValidate()", function () {
+      var aform
+      beforeEach(function () {
+        aform = FormModel({username: {presence: true}})
+      })
+
+      it("sets the value", function () {
+        aform.username.setAndValidate("ausername")
+        expect(aform.username()).toEqual("ausername")
+      })
+
+      it("validates the value", function () {
+        aform.username.setAndValidate("")
+        expect(aform.username.errors).toBeDefined()
       })
     })
+
+    describe(".reset()", function () {
+      var aform
+      beforeEach(function () {
+        aform = FormModel({username: {presence: true, default: "baba"}})
+      })
+
+      it("resets the value", function () {
+        aform.username("rara")
+        aform.username.reset()
+        expect(aform.username()).toEqual("baba")
+      })
+
+      it("empties its errors", function () {
+        aform.username("")
+        aform.username.isValid()
+        expect(aform.username.errors()).toBeDefined()
+        aform.username.reset()
+        expect(aform.username.errors()).not.toBeDefined()
+      })
+    })
+
+    describe(".errors()", function () {
+      var aform
+      beforeEach(function () {
+        aform = FormModel({username: {presence: true}})
+      })
+
+      it("gets/sets the errors", function () {
+        aform.username.errors("a error")
+        expect(aform.username.errors()).toEqual("a error")
+      })
+
+      it("can set 'undefined' as an error", function () {
+        aform.username.errors(undefined)
+        expect(aform.username.errors()).toEqual(undefined)
+      })
+    })
+  })
 
   describe(".isValid()", function () {
     var aform
     beforeEach(function () {
-      aform = FormModel({username: {presence: true}})
+      aform = FormModel({
+        username: {presence: true},
+        password: {presence: true}})
     })
 
     it("returns true if form is valid", function () {
       aform.username("ausername")
+      aform.password("apassword")
       expect(aform.isValid()).toEqual(true)
       })
 
     it("returns false if form is invalid", function () {
       aform.username("")
+      aform.password("apassword")
       expect(aform.isValid()).toEqual(false)
       })
 
     it("sets errors if nothing is passed", function () {
       aform.username("")
+      aform.password("apassword")
       aform.isValid()
-      expect(aform.errors).toBeDefined()
+      expect(aform.errors()["username"]).toBeDefined()
+      expect(aform.errors()["password"]).not.toBeDefined()
     })
 
-    it("does not change .errors if 'false' is passed", function () {
+    it("does not change errors if 'false' is passed", function () {
       aform.username("")
+      aform.password("")
       aform.isValid(false)
-      expect(aform.errors).not.toBeDefined()
+      expect(aform.errors()["username"]).not.toBeDefined()
+      expect(aform.errors()["password"]).not.toBeDefined()
     })
 
-    it("sets the .errors to undefined if form validates", function () {
-      aform.username("aname")
+    it("sets each property's errors to undefined if form validates", function () {
+      aform.username("ausername")
+      aform.username("apassword")
       aform.isValid()
-      expect(aform.errors).not.toBeDefined()
+      expect(aform.errors()["username"]).not.toBeDefined()
+      expect(aform.errors()["apassword"]).not.toBeDefined()
     })
 
     it("it sets errors on individual properties", function () {
-      aform = FormModel({
-        username: {presence: true},
-        password: {presence: true}})
       aform.username("")
       aform.password("hello")
       aform.isValid()
-      expect(aform.username.errors).toBeDefined()
-      expect(aform.password.errors).not.toBeDefined()
+      expect(aform.username.errors()).toBeDefined()
+      expect(aform.password.errors()).not.toBeDefined()
     })
   })
 
@@ -187,8 +238,8 @@ describe("FormModel", function () {
     var aform
     beforeAll(function () {
       aform = FormModel(
-        {username: {default: 'ausername'}, password: {default: 'apassword'}}
-        )
+        {username: {default: 'ausername'},
+        password: {default: 'apassword'}})
       })
 
     it("returns the dict with key:value pair for each form field", function () {
@@ -196,19 +247,49 @@ describe("FormModel", function () {
       })
     })
 
-  describe(".setAndValidate()", function () {
+  describe(".errors()", function () {
+    var aform
+    beforeAll(function () {
+      aform = FormModel(
+        {username: {default: 'ausername'},
+        password: {default: 'apassword'}})
+      })
+
+    it("sets errors on each property", function () {
+      aform.errors({username: "a error"})
+      expect(aform.username.errors()).toEqual("a error")
+      expect(aform.password.errors()).not.toBeDefined()
+    })
+
+    it("returns the error of each property", function () {
+      var errors = {username: "a error", password: "a error"}
+      aform.errors(errors)
+      expect(aform.errors()).toEqual(errors)
+    })
+  })
+
+  describe(".reset()", function () {
     var aform
     beforeEach(function () {
-      aform = FormModel({username: {presence: true}})
+      aform = FormModel({
+        username: {presence: true, default: "ausername"},
+        password: {presence: true, default: "apassword"}})
     })
 
-    it("sets the value", function () {
-      aform.username.setAndValidate("ausername")
+    it("resets value of each property", function () {
+      aform.username("busername")
+      aform.password("bpassword")
+      aform.reset()
       expect(aform.username()).toEqual("ausername")
+      expect(aform.password()).toEqual("apassword")
     })
 
-    it("validates the value", function () {aform.username.setAndValidate("")
-      expect(aform.username.errors).toBeDefined()
+    it("empties errors on each property", function () {
+      aform.username.errors("a error")
+      aform.password.errors("b password")
+      aform.reset()
+      expect(aform.username.errors()).not.toBeDefined()
+      expect(aform.password.errors()).not.toBeDefined()
     })
   })
 })

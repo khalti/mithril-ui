@@ -34,12 +34,24 @@ function prop(model, field, defaultValue) {
 
     errors = validate(values, constrains)
     if(attach_errors !== false) {
-      if (!model.errors) model.errors = {} // formModel.isValid() sets it undefined
-      aclosure.errors = model.errors[field] = errors? errors[field]: undefined
+      aclosure.errors(errors? errors[field]: undefined)
     }
 
     return errors === undefined
   }
+
+  aclosure.reset = function () {
+    aclosure(initialState)
+    aclosure.errors(undefined)
+  }
+
+  aclosure.errors = function () {
+    var state
+    return function (errors) {
+      if (arguments.length === 0) return state
+      state = errors
+    }
+  }()
 
   return aclosure
   }
@@ -47,26 +59,14 @@ function prop(model, field, defaultValue) {
 module.exports =  function (config) {
   var formModel = {
     _config: config,
-    errors: undefined,
     isValid: function (attach_errors) {
       var self = this
+      var truthPool = []
+      _.forEach(config, function (avalue, akey) {
+        truthPool.push(self[akey].isValid(attach_errors))
+        })
 
-      var config = {}
-      _.forEach(this._config, function (avalue, akey) {
-        config[akey] = _.omit(avalue, ["default"])
-      })
-
-      var errors = validate(this.values(), config)
-      if (attach_errors !== false){
-        self.errors = errors
-        if (self.errors) {
-          _.forEach(self._config, function (avalue, akey) {
-            self[akey].errors = self.errors[akey]
-            })
-        }
-      }
-
-      return errors === undefined
+      return _.every(truthPool, function (value) { return value === true})
       },
 
     isDirty: function () {
@@ -84,10 +84,32 @@ module.exports =  function (config) {
         })
 
       return dict;
+      },
+
+    errors: function (supplied_errors) {
+      var dict = {}
+      var self = this
+
+      if (arguments.length === 0) {
+        _.forEach(config, function (avalue, akey) {
+          dict[akey] = self[akey].errors()
+          })
+        return dict
+        }
+      else {
+        _.forEach(config, function (avalue, akey) {
+          self[akey].errors(supplied_errors[akey]? supplied_errors[akey]: undefined)
+          })
+        }
+      },
+
+    reset: function () {
+      _.forEach(config, function (avalue, akey) {
+        formModel[akey].reset()
+        formModel[akey].errors(undefined)
+        })
       }
     };
-
-  formModel._config = config
 
   _.forEach(config, function (avalue, akey) {
     formModel[akey] = prop(formModel, akey, avalue.default)

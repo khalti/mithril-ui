@@ -75,7 +75,7 @@ describe("components/password", function () {
     var inputDOM = root.childNodes[0].childNodes[1].childNodes[1]
     attrs.model("")
     inputDOM[attrs.validate]({})
-    expect(attrs.model.errors).toBeDefined()
+    expect(attrs.model.errors()).toBeDefined()
   })
 
   it("updates and validates the value if attrs.update and attrs.validate are same", function() {
@@ -88,12 +88,12 @@ describe("components/password", function () {
     inputDOM.value = "earth"
     inputDOM[attrs.validate]({})
     expect(attrs.model()).toBeDefined("earth")
-    expect(attrs.model.errors).not.toBeDefined()
+    expect(attrs.model.errors()).not.toBeDefined()
     // for invalid data
     inputDOM.value = ""
     inputDOM[attrs.validate]({})
     expect(attrs.model()).toBeDefined("")
-    expect(attrs.model.errors).toBeDefined()
+    expect(attrs.model.errors()).toBeDefined()
   })
 
   describe(".getStrengthMeter()", function () {

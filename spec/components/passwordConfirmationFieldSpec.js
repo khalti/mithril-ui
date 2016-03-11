@@ -119,7 +119,7 @@ describe("components/password-confirmation-field", function () {
     form.password("password")
     form.confirmPassword("bpassword")
     inputDOM[attrs.validate]({})
-    expect(attrs.model.errors).toBeDefined()
+    expect(attrs.model.errors()).toBeDefined()
   })
 
   it("updates and validates the value if attrs.update and attrs.validate are same", function() {
@@ -135,13 +135,13 @@ describe("components/password-confirmation-field", function () {
     inputDOM.value = "password"
     inputDOM[attrs.validate]({})
     expect(attrs.model()).toBeDefined("earth")
-    expect(attrs.model.errors).not.toBeDefined()
+    expect(attrs.model.errors()).not.toBeDefined()
 
     // for invalid data
     inputDOM.value = "x"
     inputDOM[attrs.validate]({})
     expect(attrs.model()).toBeDefined("")
     form.confirmPassword.isValid()
-    expect(attrs.model.errors).toBeDefined()
+    expect(attrs.model.errors()).toBeDefined()
   })
 })

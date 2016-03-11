@@ -108,33 +108,33 @@ describe("components/field", function () {
   it("appends the error text", function () {
     mock.requestAnimationFrame.$resolve()
 
-    attrs.model.errors = ['An error.']
+    attrs.model.errors(['An error.'])
     var aField = m.component(Field, attrs)
     m.mount(root, aField)
 
     var errorDOM = root.childNodes[0].childNodes[2]
 
-    expect(errorDOM.childNodes[0].nodeValue).toEqual(attrs.model.errors[0])
+    expect(errorDOM.childNodes[0].nodeValue).toEqual(attrs.model.errors()[0])
   })
 
   it("removes the help text if there is an error", function () {
     mock.requestAnimationFrame.$resolve()
 
     attrs.help = "A help."
-    attrs.model.errors = ['An error.']
+    attrs.model.errors(['An error.'])
     var aField = m.component(Field, attrs)
     m.mount(root, aField)
 
     var errorDOM = root.childNodes[0].childNodes[2]
 
-    expect(errorDOM.childNodes[0].nodeValue).toEqual(attrs.model.errors[0])
+    expect(errorDOM.childNodes[0].nodeValue).toEqual(attrs.model.errors()[0])
   })
 
   it("adds 'error' class to the root element if the model as an error", function () {
     mock.requestAnimationFrame.$resolve()
 
     attrs.help = "A help."
-    attrs.model.errors = ['An error.']
+    attrs.model.errors(['An error.'])
     var aField = m.component(Field, attrs)
     m.mount(root, aField)
 

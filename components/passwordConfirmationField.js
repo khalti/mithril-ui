@@ -16,7 +16,7 @@ module.exports = {
   controller: function (attrs) {
     var ctrl = Field.controller(attrs)
     ctrl.getClass = function () {
-      if (this.hasError()) return "field error"
+      if (attrs.model.errors()) return "field error"
       return "field"
     }
     return ctrl

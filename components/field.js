@@ -23,17 +23,13 @@ module.exports = {
       getAppend: function () {
         if(_.isObject(attrs.label) && attrs.label.append) {
           return m('label', attrs.label.text)}
-        else if(attrs.help && !attrs.model.errors) {
+        else if(attrs.help && !attrs.model.errors()) {
           return m('label.help', attrs.help)}
-        else if(attrs.model.errors) {
-          return m('label.error', attrs.model.errors[0])}},
-
-      hasError: function () {
-        if (!attrs.model.errors) {return false}
-        else if (attrs.model.errors.length > 0) {return true}},
+        else if(attrs.model.errors()) {
+          return m('label.error', attrs.model.errors()[0])}},
 
       getClass: function () {
-        if (this.hasError()) return "field error"
+        if (attrs.model.errors()) return "field error"
         return "field"}}},
 
   view: function (ctrl, attrs)  {

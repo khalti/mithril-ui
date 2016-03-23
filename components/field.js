@@ -29,8 +29,12 @@ module.exports = {
           return m('label.error', attrs.model.errors()[0])}},
 
       getClass: function () {
-        if (attrs.model.errors()) return "field error"
-        return "field"}}},
+        var dClass = ""
+        if (attrs.model.errors()) dClass = "field error"
+        else dClass = "field"
+        if (attrs.isInline) dClass = "inline " + dClass
+        return dClass
+    }}},
 
   view: function (ctrl, attrs)  {
     attrs.input.value = attrs.model()

@@ -15,10 +15,6 @@ var Field = require("./field.js")
 module.exports = {
   controller: function (attrs) {
     var ctrl = Field.controller(attrs)
-    ctrl.getClass = function () {
-      if (attrs.model.errors()) return "field error"
-      return "field"
-    }
     return ctrl
   },
 

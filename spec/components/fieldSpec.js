@@ -28,6 +28,16 @@ describe("components/field", function () {
     expect(root.childNodes[0].class).toEqual('field')
     })
 
+  it("sets the class of root div to 'inline field' if .isInline set to true", function () {
+    mock.requestAnimationFrame.$resolve()
+
+    attrs.isInline = true
+    var aField = m.component(Field, attrs)
+    m.mount(root, aField)
+
+    expect(root.childNodes[0].class).toEqual('inline field')
+  })
+
   it("prepends the attrs.label if it is a text", function () {
     mock.requestAnimationFrame.$resolve()
 

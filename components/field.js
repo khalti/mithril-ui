@@ -25,7 +25,7 @@ module.exports = {
           return m('label', attrs.label.text)}
         else if(attrs.help && !attrs.model.errors()) {
           return m('label.help', attrs.help)}
-        else if(attrs.model.errors()) {
+        else if(attrs.model.errors() && !attrs.hideError) {
           return m('label.error', attrs.model.errors()[0])}},
 
       getClass: function () {

@@ -117,6 +117,18 @@ describe("components/field", function () {
     expect(errorDOM.childNodes[0].nodeValue).toEqual(attrs.model.errors()[0])
   })
 
+  it("wont show errors if .hideError is true", function () {
+    mock.requestAnimationFrame.$resolve()
+
+    attrs.hideError = true
+    attrs.model.errors(['An error.'])
+    var aField = m.component(Field, attrs)
+    m.mount(root, aField)
+
+    var errorDOM = root.childNodes[0].childNodes[2]
+    expect(errorDOM.nodeValue).toEqual("")
+  })
+
   it("removes the help text if there is an error", function () {
     mock.requestAnimationFrame.$resolve()
 

@@ -1,6 +1,6 @@
 var Field = require("../../components/field.js")
 var Input = require("../../components/input.js")
-var FormModel = require("../../utils/formModel.js")
+var Form = require('mithril-form')
 var m = require("mithril")
 var mock = require("../deps/mock.js")
 
@@ -10,7 +10,7 @@ describe("components/field", function () {
   var aModel
 
   beforeEach(function () {
-    aModel = FormModel({username: {presence: true, default: "1"}}).username
+    aModel = Form({username: {presence: true, default: "1"}}).username
     root = mock.document.createElement("div")
     m.deps(mock.window)
     attrs = {

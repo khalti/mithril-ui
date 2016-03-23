@@ -1,6 +1,6 @@
 var PasswordConfirmationField = require("../../components/passwordConfirmationField.js")
 var TextField = require("../../components/textField.js")
-var FormModel = require("../../utils/formModel.js")
+var Form = require('mithril-form')
 var m = require("mithril")
 var mock = require("../deps/mock.js")
 
@@ -15,7 +15,7 @@ describe("components/password-confirmation-field", function () {
       confirmPassword: {equality: "password"}
     }
 
-    form = FormModel(constrains)
+    form = Form(constrains)
     attrs = {
       "model": form.confirmPassword,
       "label": "Confirm Password",

@@ -1,6 +1,6 @@
 var PasswordField = require("../../components/passwordField.js")
 var TextField = require("../../components/textField.js")
-var FormModel = require("../../utils/formModel.js")
+var Form = require('mithril-form')
 var m = require("mithril")
 var mock = require("../deps/mock.js")
 
@@ -10,7 +10,7 @@ describe("components/password", function () {
     root = mock.document.createElement("div");
     m.deps(mock.window);
     attrs = {
-      "model": FormModel({password: {presence: true}}).password,
+      "model": Form({password: {presence: true}}).password,
       "label": "A label",
       "placeholder": "a placeholder",
       "update": 'onkeyup',

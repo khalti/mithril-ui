@@ -1,6 +1,6 @@
 var TextField = require("../../components/textField.js")
 var m = require('mithril')
-var FormModel = require('../../utils/formModel.js')
+var Form = require('mithril-form')
 var mock = require("../deps/mock.js")
 
 describe("components/text-field", function () {
@@ -10,7 +10,7 @@ describe("components/text-field", function () {
     root = mock.document.createElement("div")
     m.deps(mock.window)
     attrs = {
-      model: FormModel({username: {presence: true}}).username,
+      model: Form({username: {presence: true}}).username,
       placeholder: "Placeholder",
       help: "A help.",
       update: "onkeyup",

@@ -1,7 +1,7 @@
 import m from "mithril";
 import Input from "components/input.js";
 import Field from "components/field.js";
-import FormModel from "utils/formModel.js";
+import Form  from "mithril-form";
 import TextField from "components/textField.js";
 import Checkbox from "components/checkbox.js";
 import PasswordField from "components/passwordField.js";
@@ -9,10 +9,10 @@ import PasswordConfirmationField from "components/passwordConfirmationField.js";
 
 import 'semantic-ui-css/semantic.css!';
 
-const fieldModel = FormModel({name: {presence: true, default: ""}});
-const checkboxModel = FormModel({isFlash:
+const fieldModel = Form({name: {presence: true, default: ""}});
+const checkboxModel = Form({isFlash:
   {exclusion: {within: [false]}}});
-const passwordForm = FormModel({
+const passwordForm = Form({
   password: {presence: true, length: {minimum: 8}},
   confirmPassword: {presence: true, equality: "password"}
 });

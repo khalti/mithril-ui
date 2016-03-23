@@ -1,6 +1,6 @@
 var Checkbox = require("../../components/checkbox.js")
 var m = require('mithril')
-var FormModel = require('../../utils/formModel.js')
+var Form = require('mithril-form')
 var mock = require("../deps/mock.js")
 var _ = require("lodash")
 
@@ -10,7 +10,7 @@ describe("components/checkbox", function () {
     root = mock.document.createElement("div")
     m.deps(mock.window)
     attrs = {
-      model: FormModel({isTrue: {exclusion: {within: [false]}, default: true}}).isTrue,
+      model: Form({isTrue: {exclusion: {within: [false]}, default: true}}).isTrue,
       label: 'A label.'
     }
 

@@ -22,10 +22,6 @@ module.exports = {
           style: {
             "transition-duration": "300ms", width: attrs.strengthChecker(attrs.model())+"%"}}))
     }
-    ctrl.getClass = function () {
-      if (attrs.model.errors()) return "field error"
-      return "field"
-    }
     return ctrl
   },
 

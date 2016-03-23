@@ -1,6 +1,6 @@
 var Field = require("../../components/field.js")
 var Input = require("../../components/input.js")
-var FormModel = require("../../utils/formModel.js")
+var Form = require('mithril-form')
 var m = require("mithril")
 var mock = require("../deps/mock.js")
 
@@ -10,7 +10,7 @@ describe("components/field", function () {
   var aModel
 
   beforeEach(function () {
-    aModel = FormModel({username: {presence: true, default: "1"}}).username
+    aModel = Form({username: {presence: true, default: "1"}}).username
     root = mock.document.createElement("div")
     m.deps(mock.window)
     attrs = {
@@ -27,6 +27,16 @@ describe("components/field", function () {
 
     expect(root.childNodes[0].class).toEqual('field')
     })
+
+  it("sets the class of root div to 'inline field' if .isInline set to true", function () {
+    mock.requestAnimationFrame.$resolve()
+
+    attrs.isInline = true
+    var aField = m.component(Field, attrs)
+    m.mount(root, aField)
+
+    expect(root.childNodes[0].class).toEqual('inline field')
+  })
 
   it("prepends the attrs.label if it is a text", function () {
     mock.requestAnimationFrame.$resolve()
@@ -115,6 +125,18 @@ describe("components/field", function () {
     var errorDOM = root.childNodes[0].childNodes[2]
 
     expect(errorDOM.childNodes[0].nodeValue).toEqual(attrs.model.errors()[0])
+  })
+
+  it("wont show errors if .hideError is true", function () {
+    mock.requestAnimationFrame.$resolve()
+
+    attrs.hideError = true
+    attrs.model.errors(['An error.'])
+    var aField = m.component(Field, attrs)
+    m.mount(root, aField)
+
+    var errorDOM = root.childNodes[0].childNodes[2]
+    expect(errorDOM.nodeValue).toEqual("")
   })
 
   it("removes the help text if there is an error", function () {

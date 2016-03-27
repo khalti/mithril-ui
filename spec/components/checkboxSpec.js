@@ -30,7 +30,7 @@ describe("components/checkbox", function () {
     mock.requestAnimationFrame.$resolve()
 
     m.mount(root, aCheckbox)
-    var inputDOM = root.childNodes[0].childNodes[1].childNodes[1]
+    var inputDOM = root.childNodes[0].childNodes[1].childNodes[0]
     expect(inputDOM.getAttribute('type')).toEqual('checkbox')
   })
 
@@ -38,14 +38,14 @@ describe("components/checkbox", function () {
     mock.requestAnimationFrame.$resolve()
 
     m.mount(root, aCheckbox)
-    var labelDOM = root.childNodes[0].childNodes[1].childNodes[2]
+    var labelDOM = root.childNodes[0].childNodes[1].childNodes[1]
     expect(labelDOM.childNodes[0].nodeValue).toEqual('A label.')})
 
   it("sets the value of input's checked to the model's value", function () {
     mock.requestAnimationFrame.$resolve()
 
     m.mount(root, aCheckbox)
-    var inputDOM = root.childNodes[0].childNodes[1].childNodes[1]
+    var inputDOM = root.childNodes[0].childNodes[1].childNodes[0]
     expect(inputDOM.getAttribute('checked')).toEqual('true')
   })
 
@@ -53,9 +53,18 @@ describe("components/checkbox", function () {
     mock.requestAnimationFrame.$resolve()
 
     m.mount(root, aCheckbox)
-    var inputDOM = root.childNodes[0].childNodes[1].childNodes[1]
+    var inputDOM = root.childNodes[0]
     inputDOM.checked = false
     inputDOM.onclick({})
     expect(attrs.model()).toEqual(false)
+  })
+
+  it("its sets the class of input div to 'ui checkbox checked' if its checked", function () {
+    mock.requestAnimationFrame.$resolve()
+
+    m.mount(root, aCheckbox)
+    var inputDOM = root.childNodes[0].childNodes[1]
+
+    expect(inputDOM.class).toMatch('checked')
   })
 })

@@ -8,14 +8,22 @@ var Field = require("./field.js")
 //   label: ,
 // });
 module.exports = {
-  view: function (ctrl, attrs) {
-    attrs.input = {
-      class: "ui checkbox",
-      type: "checkbox",
-      append: m("label", attrs.label),
-      onclick: m.withAttr("checked", attrs.model.setAndValidate),
-      checked: attrs.model()
+  controller: function (attrs) {
+    var ctrl = Field.controller(attrs)
+    ctrl.toggleState = function () {
+      attrs.model.setAndValidate(!attrs.model())
     }
-    return m.component(Field, _.omit(attrs, ['label']));
+    return ctrl
+  },
+  view: function (ctrl, attrs) {
+    var label = attrs.label
+    delete attrs.label
+
+    return m('div', {class: ctrl.getClass(), onclick: ctrl.toggleState},
+      ctrl.getPrepend(),
+      m(".ui.checkbox", {class: attrs.model()? "checked": ""},
+        m("input.hidden[type=checkbox][tabindex=0]", {checked: attrs.model()}),
+        m("label", label)),
+      ctrl.getAppend())
   }
 }

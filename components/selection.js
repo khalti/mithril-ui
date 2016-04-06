@@ -10,17 +10,36 @@ var _ = require("lodash")
 module.exports = {
   controller: function (attrs) {
     return {
+      disSelect: function (value) {
+        attrs.model(_.difference(attrs.model().split(","), [value]).join(","))
+      },
+      getSelectedItems: function () {
+        if (attrs.model() === "" || attrs.model() === undefined) {
+          return selectedItems = []
+        }
+        else if (attrs.model().indexOf(',') == -1) {
+          return selectedItems = [_.find(attrs.items, function (item) {
+            return item[1] === parseInt(attrs.model())
+          })]
+        }
+        else {
+          return selectedItems = _.filter(attrs.items, function (item) {
+            return _.some(attrs.model().split(","), function (aSelected) {
+              return aSelected == item[1]
+            })
+          })
+        }
+      },
       getMultipleSelections: function () {
+        var self = this
         if (!attrs.multiple || attrs.model() === "") return null
 
-        var selectedItems = _.filter(attrs.items, function (item) {
-          return _.some(attrs.model().split(","), function (aSelected) {
-            return aSelected == item[1]
-          })
-        })
+        var selectedItems = self.getSelectedItems()
 
         return _.map(selectedItems, function (item) {
-          return m("a.ui.label", {"data-value": item[1]}, item[0], m("i.delete.icon"))
+          return m("a.ui.label", {"data-value": item[1]},
+            item[0],
+            m("i.delete.icon", {"data-value": item[1], onclick: m.withAttr("data-value", self.disSelect.bind(self))}))
         })
       },
       getSingleSelection: function () {
@@ -32,9 +51,16 @@ module.exports = {
         }
       },
       getMenu: function () {
+        var disSelectedItems;
+        if (attrs.multiple) {
+          disSelectedItems = _.difference(attrs.items, this.getSelectedItems())
+        }
+        else {
+          disSelectedItems = attrs.items
+        }
         return m(".menu",
-          _.map(attrs.items, function (item) {
-            return m(".item", {"data-value": item[1]},
+          _.map(disSelectedItems , function (item) {
+            return m(".item", {"data-value": item[1], onclick: m.withAttr('data-value', attrs.model)},
               item[0])
           }))
       }

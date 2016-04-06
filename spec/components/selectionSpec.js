@@ -91,12 +91,49 @@ describe("selection", function () {
     expect(selected2.childNodes[0].nodeValue).toEqual("Helium")
   })
 
-  xit("updates model on clicking an item", function () {
-    fail("todo")
+  it("updates model on removing a selected item", function () {
+    mock.requestAnimationFrame.$resolve()
+
+    this.attrs.items = [["Hydrogen", 1], ["Helium", 2], ["Lithium", 3]]
+    this.attrs.multiple = true
+    this.model('1,2')
+
+    var aSelection = m.component(Selection, this.attrs)
+    m.mount(this.root, aSelection)
+
+    var firstRemoveBtn = this.root.childNodes[0].childNodes[1].childNodes[1]
+    firstRemoveBtn.onclick({})
+
+    expect(this.attrs.model()).toEqual('2')
   })
 
-  xit("updates model on removing a selected item", function () {
-    fail("todo")
+  it("updates model on clicking an item", function () {
+    mock.requestAnimationFrame.$resolve()
+
+    this.attrs.items = [["Hydrogen", 1], ["Helium", 2], ["Lithium", 3]]
+
+    var aSelection = m.component(Selection, this.attrs)
+    m.mount(this.root, aSelection)
+
+    var anItem = this.root.childNodes[0].childNodes[4].childNodes[0]
+    anItem.onclick({})
+
+    expect(this.attrs.model()).toEqual('1')
+  })
+
+  it("it removes selected items from the menu in multiselection", function () {
+    mock.requestAnimationFrame.$resolve()
+
+    this.attrs.items = [["Hydrogen", 1], ["Helium", 2], ["Lithium", 3]]
+    this.attrs.multiple = true
+    this.model('1,2')
+
+    var aSelection = m.component(Selection, this.attrs)
+    m.mount(this.root, aSelection)
+
+    var menu = this.root.childNodes[0].childNodes[4]
+
+    expect(menu.childNodes.length).toEqual(1)
   })
 
   xit("it updates item list upon search", function () {

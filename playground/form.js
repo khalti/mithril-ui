@@ -6,6 +6,7 @@ import TextField from "components/textField.js";
 import Checkbox from "components/checkbox.js";
 import PasswordField from "components/passwordField.js";
 import PasswordConfirmationField from "components/passwordConfirmationField.js";
+import Selection from "components/selection.js";
 
 import 'semantic-ui-css/semantic.css!';
 
@@ -16,6 +17,10 @@ const passwordForm = Form({
   password: {presence: true, length: {minimum: 8}},
   confirmPassword: {presence: true, equality: "password"}
 });
+const selectionForm = Form({
+  element: {presence: true},
+  elements: {presence: true}
+})
 
 const app = {
   view: function () {
@@ -72,6 +77,13 @@ const app = {
           help: "Please Confirm the password.",
           update: "onkeyup",
           validate: "onchange"
+        }),
+        m("h1", "Single Selection"),
+        m.component(Selection, {
+          model: selectionForm.element,
+          items: [["Hydrogen", 1], ["Helium", 2], ["Lithium", 3]],
+          placeholder: "Element",
+          // multiple: ,
         })
       )
     );

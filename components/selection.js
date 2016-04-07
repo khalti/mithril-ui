@@ -10,7 +10,16 @@ var _ = require("lodash")
 module.exports = {
   controller: function (attrs) {
     return {
+      updateModel: function (value) {
+        if (attrs.multiple) {
+          attrs.model() == ""? attrs.model(value): attrs.model(attrs.model() + "," + value)
+        }
+        else {
+          attrs.model(value)
+        }
+      },
       disSelect: function (value) {
+        console.log(arguments)
         attrs.model(_.difference(attrs.model().split(","), [value]).join(","))
       },
       getSelectedItems: function () {
@@ -44,31 +53,50 @@ module.exports = {
       },
       getSingleSelection: function () {
         if (!attrs.multiple && attrs.model() !== "") {
-          return _.find(attrs.items, function (item) { return item[1] == attrs.model()})
+          return _.find(attrs.items, function (item) { return item[1] == attrs.model()})[0]
         }
         else {
           return attrs.placeholder
         }
       },
       getMenu: function () {
-        var disSelectedItems;
+        var self = this
+        var disSelectedItems
         if (attrs.multiple) {
           disSelectedItems = _.difference(attrs.items, this.getSelectedItems())
         }
         else {
           disSelectedItems = attrs.items
         }
-        return m(".menu",
+        return m(".menu", {class: this.menuVisible? "transition visible": ""},
           _.map(disSelectedItems , function (item) {
-            return m(".item", {"data-value": item[1], onclick: m.withAttr('data-value', attrs.model)},
+            return m(".item", {"data-value": item[1], onclick: m.withAttr('data-value', self.updateModel)},
               item[0])
           }))
+      },
+      menuVisible: false,
+      toggleMenu: function () {
+        this.menuVisible = !this.menuVisible
+      },
+      getClass: function () {
+        var cls = "";
+        if (attrs.multiple) {
+          cls += "multiple"
+        }
+        else if (this.menuVisible) {
+          cls += " active visible"
+        }
+        return cls
       }
     }
   },
 
   view: function (ctrl, attrs) {
-    return m(".ui.fluid.search.selection.dropdown", {class: attrs.multiple? "multiple": ""},
+    return m(".ui.fluid.search.selection.dropdown",
+      {
+        class: ctrl.getClass(),
+        onclick: ctrl.toggleMenu.bind(ctrl)
+      },
       m("i.dropdown.icon"),
       ctrl.getMultipleSelections(),
       m("input.search[autocomplete=off][tabindex=0]"),

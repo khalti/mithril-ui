@@ -121,7 +121,7 @@ describe("selection", function () {
     expect(this.attrs.model()).toEqual('1')
   })
 
-  it("it removes selected items from the menu in multiselection", function () {
+  it("removes selected items from the menu in multiselection", function () {
     mock.requestAnimationFrame.$resolve()
 
     this.attrs.items = [["Hydrogen", 1], ["Helium", 2], ["Lithium", 3]]
@@ -136,7 +136,7 @@ describe("selection", function () {
     expect(menu.childNodes.length).toEqual(1)
   })
 
-  xit("it updates item list upon search", function () {
+  xit("updates item list upon search", function () {
     fail("todo")
   })
 

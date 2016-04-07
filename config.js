@@ -20,9 +20,9 @@ System.config({
     "core-js": "npm:core-js@1.2.6",
     "css": "github:systemjs/plugin-css@0.1.20",
     "jquery": "npm:jquery@2.2.0",
-    "lodash": "npm:lodash@4.6.1",
+    "lodash": "npm:lodash@4.8.2",
     "mithril": "npm:mithril@0.2.2-rc.1",
-    "mithril-form": "npm:mithril-form@1.0.0",
+    "mithril-form": "npm:mithril-form@1.1.2",
     "semantic-ui-css": "npm:semantic-ui-css@2.1.8",
     "validate.js": "npm:validate.js@0.9.0",
     "github:jspm/nodelibs-assert@0.1.0": {
@@ -63,12 +63,12 @@ System.config({
     "npm:inherits@2.0.1": {
       "util": "github:jspm/nodelibs-util@0.1.0"
     },
-    "npm:lodash@4.6.1": {
+    "npm:lodash@4.8.2": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
-    "npm:mithril-form@1.0.0": {
-      "lodash": "npm:lodash@4.6.1",
+    "npm:mithril-form@1.1.2": {
+      "lodash": "npm:lodash@4.8.2",
       "validate.js": "npm:validate.js@0.9.0"
     },
     "npm:path-browserify@0.0.0": {

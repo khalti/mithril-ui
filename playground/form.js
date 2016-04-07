@@ -89,9 +89,13 @@ const app = {
         m.component(Selection, {
           model: selectionForm.elements,
           items: [["Hydrogen", 1], ["Helium", 2], ["Lithium", 3]],
-          placeholder: "Element",
+          placeholder: "Elements",
           multiple: true,
-        })
+        }),
+        m('br'),
+        m('br'),
+        m('br'),
+        m('br')
       )
     );
   }

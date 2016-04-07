@@ -10,16 +10,22 @@ var _ = require("lodash")
 module.exports = {
   controller: function (attrs) {
     return {
-      updateModel: function (value) {
+      search: m.prop(""),
+      updateModel: function (e) {
+        var value = e.currentTarget.getAttribute("data-value")
+
         if (attrs.multiple) {
           attrs.model() == ""? attrs.model(value): attrs.model(attrs.model() + "," + value)
         }
         else {
+          e.stopPropagation()
           attrs.model(value)
+          this.hideMenu()
         }
+
+        this.search("")
       },
       disSelect: function (value) {
-        console.log(arguments)
         attrs.model(_.difference(attrs.model().split(","), [value]).join(","))
       },
       getSelectedItems: function () {
@@ -46,7 +52,11 @@ module.exports = {
         var selectedItems = self.getSelectedItems()
 
         return _.map(selectedItems, function (item) {
-          return m("a.ui.label", {"data-value": item[1]},
+          return m("a.ui.label",
+            {
+              "data-value": item[1],
+              onclick: function (e) {e.stopPropagation()}
+            },
             item[0],
             m("i.delete.icon", {"data-value": item[1], onclick: m.withAttr("data-value", self.disSelect.bind(self))}))
         })
@@ -61,32 +71,82 @@ module.exports = {
       },
       getMenu: function () {
         var self = this
-        var disSelectedItems
+        var leftOver
         if (attrs.multiple) {
-          disSelectedItems = _.difference(attrs.items, this.getSelectedItems())
+          leftOver = _.difference(attrs.items, this.getSelectedItems())
         }
         else {
-          disSelectedItems = attrs.items
+          leftOver = attrs.items
         }
-        return m(".menu", {class: this.menuVisible? "transition visible": ""},
-          _.map(disSelectedItems , function (item) {
-            return m(".item", {"data-value": item[1], onclick: m.withAttr('data-value', self.updateModel)},
+
+        var filtered = _.filter(leftOver, function (item) {
+          return item[0].toLowerCase().search(self.search()) === 0
+        })
+
+        function getItems(data) {
+          function getClass() {
+
+          }
+
+          var items = _.map(data, function (item) {
+            return m(".item",
+              {
+                "data-value": item[1],
+                onclick: self.updateModel.bind(self),
+                class: getClass()
+              },
               item[0])
-          }))
+          })
+
+          if(items.length == 0) {
+            return m(".message", "No results found.")
+          }
+          else {
+            return items
+          }
+        }
+
+        return m(".menu",
+          {
+            class: this.menuVisible? "transition visible": "",
+            onclick: function (e) {
+              attrs.multiple? e.stopPropagation(): ""}
+          },
+          getItems(filtered))
       },
       menuVisible: false,
-      toggleMenu: function () {
-        this.menuVisible = !this.menuVisible
+      hideMenu: function () {
+        this.menuVisible = false
+      },
+      showMenu: function (e) {
+        e.stopPropagation()
+        this.menuVisible = true
+        this.input.focus()
       },
       getClass: function () {
         var cls = "";
         if (attrs.multiple) {
           cls += "multiple"
         }
-        else if (this.menuVisible) {
+        if (this.menuVisible) {
           cls += " active visible"
         }
         return cls
+      },
+      configInput: function (el, initialized, ctx) {
+        if (!initialized) {
+          this.input = el
+        }
+      },
+      getTextClass: function () {
+        if (this.search().length > 0)
+          return "filtered"
+        else if(attrs.model.isDirty()) {
+          return ""
+        }
+        else {
+          return "default"
+        }
       }
     }
   },
@@ -95,12 +155,18 @@ module.exports = {
     return m(".ui.fluid.search.selection.dropdown",
       {
         class: ctrl.getClass(),
-        onclick: ctrl.toggleMenu.bind(ctrl)
+        onclick: ctrl.showMenu.bind(ctrl)
       },
       m("i.dropdown.icon"),
       ctrl.getMultipleSelections(),
-      m("input.search[autocomplete=off][tabindex=0]"),
-      m(".text", {class: attrs.model.isDirty()? "": "default"}, ctrl.getSingleSelection()),
+      m("input.search[autocomplete=off][tabindex=0]",
+        {
+          config: ctrl.configInput.bind(ctrl),
+          onfocus: ctrl.showMenu.bind(ctrl),
+          onkeyup: m.withAttr("value", ctrl.search),
+          value: ctrl.search()
+        }),
+      m(".text", {class: ctrl.getTextClass.call(ctrl)}, ctrl.getSingleSelection()),
       ctrl.getMenu())
   }
 }

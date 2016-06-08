@@ -1,6 +1,6 @@
-var m = require("mithril")
-var _ = require("lodash")
-var Input = require("./input.js")
+var m = require("mithril");
+var _ = require("lodash");
+var Input = require("./input.js");
 
 // m.component(Field, {
 //   'class': ,
@@ -10,38 +10,64 @@ var Input = require("./input.js")
 // })
 module.exports = {
   controller: function (attrs) {
-    if (!_.isFunction(attrs.model)) throw Error("Please pass a model.")
+    if (!_.isFunction(attrs.model)) throw Error("Please pass a model.");
     return {
-      getPrepend: function () {
+      getLabelPrepend: function () {
         if(_.isString(attrs.label)) {
-          return m('label', attrs.label)}
+          return m('label', attrs.label);
+        }
         else if (_.isObject(attrs.label) && attrs.label.prepend) {
-          return m('label', attrs.label.text)}
+          return m('label', attrs.label.text);
+        }
         else if(_.isObject(attrs.label) && !attrs.label.prepend && !attrs.label.append) {
-          return m('label', attrs.label.text)}},
+          return m('label', attrs.label.text);
+        }
+      },
 
-      getAppend: function () {
+      getLabelAppend: function () {
         if(_.isObject(attrs.label) && attrs.label.append) {
-          return m('label', attrs.label.text)}
+          return m('label', attrs.label.text);
+        }
         else if(attrs.help && !attrs.model.errors()) {
-          return m('label.help', attrs.help)}
+          return m('label.help', attrs.help);
+        }
         else if(attrs.model.errors() && !attrs.hideError) {
-          return m('label.error', attrs.model.errors()[0])}},
+          return m('label.error', attrs.model.errors()[0]);
+        }
+      },
 
       getClass: function () {
-        var dClass = ""
-        if (attrs.model.errors()) dClass = "field error"
-        else dClass = "field"
-        if (attrs.isInline) dClass = "inline " + dClass
-        return dClass
-    }}},
+        var dClass = "";
+        if (attrs.model.errors()) dClass = "field error";
+        else dClass = "field";
+        if (attrs.isInline) dClass = "inline " + dClass;
+        return dClass;
+      }
+    };
+  },
 
   view: function (ctrl, attrs)  {
-    attrs.input.value = attrs.model()
+    //attrs.input.value = attrs.model()
+    attrs.input = {
+      prepend: attrs.prepend,
+      append: attrs.append,
+      type: attrs.type,
+      placeholder: attrs.placeholder,
+      value: attrs.model(),
+      class: attrs.input.class
+    };
+
+    if (attrs.update === attrs.validate) {
+      attrs.input[attrs.update] = m.withAttr('value', attrs.model.setAndValidate);
+    }
+    else {
+      attrs.input[attrs.update] = m.withAttr('value', attrs.model);
+      attrs.input[attrs.validate] = function () {attrs.model.isValid();};
+    }
 
     return m('div', {class: ctrl.getClass()},
-      ctrl.getPrepend(),
-      m.component(Input, attrs.input),
-      ctrl.getAppend())
+             ctrl.getLabelPrepend(),
+             m.component(Input, attrs.input),
+             ctrl.getLabelAppend());
   }
-}
+};

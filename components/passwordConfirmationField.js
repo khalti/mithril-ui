@@ -1,7 +1,7 @@
-var m = require("mithril")
-var _ = require("lodash")
-var Input = require("./input.js")
-var Field = require("./field.js")
+var m = require("mithril");
+var _ = require("lodash");
+var input = require("./input.js");
+var field = require("./field.js");
 
 // m.component(PasswordConfirmationField, {
 //   'model':,
@@ -14,30 +14,33 @@ var Field = require("./field.js")
 // })
 module.exports = {
   controller: function (attrs) {
-    var ctrl = Field.controller(attrs)
-    return ctrl
+    var ctrl = field.controller(attrs);
+    return ctrl;
   },
 
   view: function (ctrl, attrs) {
-    var checkClass = ".big.green.check.circle.outline.icon"
+    var leftAttrs = _.difference(['model', 'update', 'validate', 'passwordModel'], _.keys(attrs));
+    if (leftAttrs.length > 0) throw Error("'" + leftAttrs + "'" + " fields are required.");
+
+    var checkClass = ".big.green.check.circle.outline.icon";
     attrs.input = {
       append: attrs.model.isValid(false)? m("i"+checkClass): undefined,
       placeholder: attrs.placeholder || "",
       type: "password",
       value: attrs.model()
-    }
+    };
 
     if (attrs.update === attrs.validate) {
-      attrs.input[attrs.update] = m.withAttr('value', attrs.model.setAndValidate)
+      attrs.input[attrs.update] = m.withAttr('value', attrs.model.setAndValidate);
     }
     else {
-      attrs.input[attrs.update] = m.withAttr('value', attrs.model)
-      attrs.input[attrs.validate] = function () {attrs.model.isValid()}
+      attrs.input[attrs.update] = m.withAttr('value', attrs.model);
+      attrs.input[attrs.validate] = function () {attrs.model.isValid();};
     }
 
     return m('div', {class: ctrl.getClass()},
-      ctrl.getPrepend(),
-      m.component(Input, attrs.input),
-      ctrl.getAppend())
+             ctrl.getLabelPrepend(),
+             m.component(input, attrs.input),
+             ctrl.getLabelAppend());
   }
 }

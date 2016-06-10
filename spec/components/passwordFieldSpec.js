@@ -1,8 +1,7 @@
-var PasswordField = require("../../components/passwordField.js")
-var TextField = require("../../components/textField.js")
-var Form = require('mithril-form')
-var m = require("mithril")
-var mock = require("../deps/mock.js")
+var passwordField = require("../../components/passwordField.js");
+var form = require('mithril-form');
+var m = require("mithril");
+var mock = require("../deps/mock.js");
 
 describe("components/password", function () {
   var root, attrs;
@@ -10,7 +9,7 @@ describe("components/password", function () {
     root = mock.document.createElement("div");
     m.deps(mock.window);
     attrs = {
-      "model": Form({password: {presence: true}}).password,
+      "model": form({password: {presence: true}}).password,
       "label": "A label",
       "placeholder": "a placeholder",
       "update": 'onkeyup',
@@ -22,7 +21,7 @@ describe("components/password", function () {
   it("sets input type to 'password'", function () {
     spyOn(m, 'component');
 
-    PasswordField.view(new PasswordField.controller(attrs), attrs);
+    passwordField.view(new passwordField.controller(attrs), attrs);
 
     var secondArg = m.component.calls.argsFor(0)[1];
     expect(secondArg.type).toEqual("password");
@@ -31,7 +30,7 @@ describe("components/password", function () {
   it("sets input's placeholder to attrs.placeholder is present", function () {
     spyOn(m, 'component');
 
-    PasswordField.view(new PasswordField.controller(attrs), attrs);
+    passwordField.view(new passwordField.controller(attrs), attrs);
 
     var secondArg = m.component.calls.argsFor(0)[1];
     expect(secondArg.placeholder).toEqual(attrs.placeholder);
@@ -40,8 +39,8 @@ describe("components/password", function () {
   it("sets input's placeholder to '' is attrs.placeholder is undefined", function () {
     spyOn(m, 'component');
 
-    attrs.placeholder = undefined
-    PasswordField.view(new PasswordField.controller(attrs), attrs);
+    attrs.placeholder = undefined;
+    passwordField.view(new passwordField.controller(attrs), attrs);
 
     var secondArg = m.component.calls.argsFor(0)[1];
     expect(secondArg.placeholder).toEqual("");
@@ -50,55 +49,55 @@ describe("components/password", function () {
   it("sets the value of input to attrs.model", function () {
     spyOn(m, 'component');
 
-    attrs.model("a password")
-    PasswordField.view(new PasswordField.controller(attrs), attrs);
+    attrs.model("a password");
+    passwordField.view(new passwordField.controller(attrs), attrs);;
 
     var secondArg = m.component.calls.argsFor(0)[1];
     expect(secondArg.value).toEqual("a password");
    });
 
   it("updates value on attrs.update", function () {
-    mock.requestAnimationFrame.$resolve()
+    mock.requestAnimationFrame.$resolve();
 
-    m.mount(root, m.component(TextField, attrs))
-    var inputDOM = root.childNodes[0].childNodes[1].childNodes[1]
-    inputDOM.value = "earth"
-    inputDOM[attrs.update]({})
+    m.mount(root, m.component(passwordField, attrs));
+    var inputDOM = root.childNodes[0].childNodes[1].childNodes[1];
+    inputDOM.value = "earth";
+    inputDOM[attrs.update]({});
 
-    expect(attrs.model()).toEqual("earth")
-  })
+    expect(attrs.model()).toEqual("earth");
+  });
 
   it("validates on attrs.validate", function () {
-    mock.requestAnimationFrame.$resolve()
+    mock.requestAnimationFrame.$resolve();
 
-    m.mount(root, m.component(TextField, attrs))
-    var inputDOM = root.childNodes[0].childNodes[1].childNodes[1]
-    attrs.model("")
-    inputDOM[attrs.validate]({})
-    expect(attrs.model.errors()).toBeDefined()
-  })
+    m.mount(root, m.component(passwordField, attrs));
+    var inputDOM = root.childNodes[0].childNodes[1].childNodes[1];
+    attrs.model("");
+    inputDOM[attrs.validate]({});
+    expect(attrs.model.errors()).toBeDefined();
+  });
 
   it("updates and validates the value if attrs.update and attrs.validate are same", function() {
-    attrs.update = "onchange"
-    mock.requestAnimationFrame.$resolve()
+    attrs.update = "onchange";
+    mock.requestAnimationFrame.$resolve();
 
-    m.mount(root, m.component(TextField, attrs))
-    var inputDOM = root.childNodes[0].childNodes[1].childNodes[1]
+    m.mount(root, m.component(passwordField, attrs));
+    var inputDOM = root.childNodes[0].childNodes[1].childNodes[1];
     // for valid data
-    inputDOM.value = "earth"
-    inputDOM[attrs.validate]({})
-    expect(attrs.model()).toBeDefined("earth")
-    expect(attrs.model.errors()).not.toBeDefined()
+    inputDOM.value = "earth";
+    inputDOM[attrs.validate]({});
+    expect(attrs.model()).toBeDefined("earth");
+    expect(attrs.model.errors()).not.toBeDefined();
     // for invalid data
-    inputDOM.value = ""
-    inputDOM[attrs.validate]({})
-    expect(attrs.model()).toBeDefined("")
-    expect(attrs.model.errors()).toBeDefined()
-  })
+    inputDOM.value = "";
+    inputDOM[attrs.validate]({});
+    expect(attrs.model()).toBeDefined("");
+    expect(attrs.model.errors()).toBeDefined();
+  });
 
   describe(".getStrengthMeter()", function () {
     it("returns undefined if attrs.strengthChecker() is undefined", function () {
-      var dController = new PasswordField.controller(attrs);
+      var dController = new passwordField.controller(attrs);
       expect(dController.getStrengthMeter()).not.toBeDefined();
     });
 
@@ -108,7 +107,7 @@ describe("components/password", function () {
         return 100;
       };
 
-      var dController = new PasswordField.controller(attrs);
+      var dController = new passwordField.controller(attrs);
       expect(dController.getStrengthMeter()).not.toBeDefined();
     });
 
@@ -118,7 +117,7 @@ describe("components/password", function () {
       };
 
       attrs.model("batword");
-      var strengthDOM = new PasswordField.controller(attrs).getStrengthMeter();
+      var strengthDOM = new passwordField.controller(attrs).getStrengthMeter();
       expect(strengthDOM.children[0].attrs.style.width).toEqual("100%");
     });
   });

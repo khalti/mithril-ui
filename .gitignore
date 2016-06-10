@@ -3,3 +3,4 @@ node_modules/
 semantic/
 npm-debug.log
 .brofile
+.tern-port

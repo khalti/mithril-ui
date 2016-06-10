@@ -37,7 +37,7 @@ module.exports = {
 
       getClass: function () {
         var dClass = "";
-        if (attrs.model.errors()) dClass = "field error";
+        if (attrs.model.errors() && !attrs.hideError) dClass = "field error";
         else dClass = "field";
         if (attrs.isInline) dClass = "inline " + dClass;
         return dClass;

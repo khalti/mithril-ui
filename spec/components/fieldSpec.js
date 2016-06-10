@@ -165,6 +165,18 @@ describe("components/field", function () {
     expect(root.childNodes[0].class).toMatch('error');
   });
 
+  it("does not add 'error' class if hideError set to truthy", function () {
+    mock.requestAnimationFrame.$resolve();
+
+    attrs.help = "A help.";
+    attrs.hideError = true;
+    attrs.model.errors(['An error.']);
+    var aField = m.component(Field, attrs);
+    m.mount(root, aField);
+
+    expect(root.childNodes[0].class).not.toMatch('error');
+  });
+
   it("binds model to value of input", function () {
     mock.requestAnimationFrame.$resolve();
     attrs.model("1");
@@ -244,4 +256,24 @@ describe("components/field", function () {
     expect(attrs.model.errors()).toBeDefined();
   });
 
+  it("can be used multiple times", function () {
+    var amodel = Form({mobile: {presence: true, numericality: true, length: {is: 10}},
+                       code: {presence: true, numericality: true, length: {is: 10}}});
+    var mobileAttrs = {model: amodel.mobile,
+                       placeholder: "mobile",
+                       help: "A help.",
+                       update: "onchange",
+                       validate: "onchange",
+                       input: {class: 'aClass'},
+                       type: 'text'};
+
+    var codeAttrs = {model: amodel.code,
+                     placeholder: "code",
+                     help: "A help.",
+                     update: "onchange",
+                     validate: "onchange",
+                     input: {class: 'aClass'},
+                     type: 'text'};
+
+  });
 });

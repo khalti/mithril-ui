@@ -10,9 +10,6 @@ var Input = require("./input.js");
 // })
 module.exports = {
   controller: function (attrs) {
-    var leftAttrs = _.difference(['model', 'update', 'validate', 'type'], _.keys(attrs));
-    if (leftAttrs.length > 0) throw Error("'" + leftAttrs + "'" + " fields are required.");
-
     return {
       getLabelPrepend: function () {
         if(_.isString(attrs.label)) {
@@ -38,17 +35,20 @@ module.exports = {
         }
       },
 
-      getClass: function ()}; {
+      getClass: function () {
         var dClass = "";
         if (attrs.model.errors()) dClass = "field error";
         else dClass = "field";
         if (attrs.isInline) dClass = "inline " + dClass;
         return dClass;
       }
-
+    };
   },
 
   view: function (ctrl, attrs)  {
+    var leftAttrs = _.difference(['model', 'update', 'validate', 'type'], _.keys(attrs));
+    if (leftAttrs.length > 0) throw Error("'" + leftAttrs + "'" + " fields are required.");
+
     //attrs.input.value = attrs.model()
     attrs.input = {
       prepend: attrs.prepend,

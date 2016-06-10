@@ -39,6 +39,9 @@ module.exports = {
     };
   },
   view: function (ctrl, attrs)  {
+    var leftAttrs = _.difference(['type'], _.keys(attrs));
+    if (leftAttrs.length > 0) throw Error("'" + leftAttrs + "'" + " fields are required.");
+
     var inputAttrs = _.omit(attrs, ['prepend', 'append']);
     if (inputAttrs.type === 'hidden') {
       inputAttrs.class = 'hidden';

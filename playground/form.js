@@ -2,7 +2,6 @@ import m from "mithril";
 import Input from "components/input.js";
 import Field from "components/field.js";
 import Form  from "mithril-form";
-import TextField from "components/textField.js";
 import Checkbox from "components/checkbox.js";
 import PasswordField from "components/passwordField.js";
 import PasswordConfirmationField from "components/passwordConfirmationField.js";
@@ -30,17 +29,6 @@ const app = {
           placeholder: "Number"}),
         m("h1", "Field"),
         m.component(Field, {
-          class: "ui field",
-          model: fieldModel.name,
-          input: {
-            class: "ui icon input",
-            onchange: m.withAttr("value", fieldModel.name),
-            append: m("i.search.icon"),
-            type: "text",
-            placeholder: "Name"},
-          label: "The is a label."}),
-        m("h1", "TextField"),
-        m.component(TextField, {
           model: fieldModel.name,
           label: "Text Field",
           placeholder: "TextField",

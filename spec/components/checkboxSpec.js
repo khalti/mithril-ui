@@ -21,7 +21,7 @@ describe("components/checkbox", function () {
     mock.requestAnimationFrame.$resolve();
 
     m.mount(root, aCheckbox);
-    var inputDOM = root.childNodes[0].childNodes[1];
+    var inputDOM = root.childNodes[0].childNodes[0];
 
     expect(inputDOM.class).toMatch('ui checkbox');
   });
@@ -30,7 +30,7 @@ describe("components/checkbox", function () {
     mock.requestAnimationFrame.$resolve();
 
     m.mount(root, aCheckbox);
-    var inputDOM = root.childNodes[0].childNodes[1].childNodes[0];
+    var inputDOM = root.childNodes[0].childNodes[0].childNodes[0];
     expect(inputDOM.getAttribute('type')).toEqual('checkbox');
   });
 
@@ -38,7 +38,7 @@ describe("components/checkbox", function () {
     mock.requestAnimationFrame.$resolve();
 
     m.mount(root, aCheckbox);
-    var labelDOM = root.childNodes[0].childNodes[1].childNodes[1];
+    var labelDOM = root.childNodes[0].childNodes[0].childNodes[1];
     expect(labelDOM.childNodes[0].nodeValue).toEqual('A label.');
   });
 
@@ -46,7 +46,7 @@ describe("components/checkbox", function () {
     mock.requestAnimationFrame.$resolve();
 
     m.mount(root, aCheckbox);
-    var inputDOM = root.childNodes[0].childNodes[1].childNodes[0];
+    var inputDOM = root.childNodes[0].childNodes[0].childNodes[0];
     expect(inputDOM.getAttribute('checked')).toEqual('true');
   });
 
@@ -64,7 +64,7 @@ describe("components/checkbox", function () {
     mock.requestAnimationFrame.$resolve();
 
     m.mount(root, aCheckbox);
-    var inputDOM = root.childNodes[0].childNodes[1];
+    var inputDOM = root.childNodes[0].childNodes[0];
 
     expect(inputDOM.class).toMatch('checked');
   });

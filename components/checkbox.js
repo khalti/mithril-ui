@@ -28,7 +28,7 @@ module.exports = {
     if (leftAttrs.length > 0) throw Error("'" + leftAttrs + "'" + " fields are required.");
 
     return m('div', {class: ctrl.getClass(), onclick: ctrl.toggleState},
-             ctrl.getLabelPrepend(),
+             //ctrl.getLabelPrepend(),
              m(".ui.checkbox", {class: attrs.model()? "checked": ""},
                m("input.hidden[type=checkbox][tabindex=0]", {checked: attrs.model()}),
                m("label", attrs.label)),

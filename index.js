@@ -5,5 +5,6 @@ module.exports = {
   passwordField: require('./components/passwordField.js'),
   passwordConfirmationField: require('./components/passwordConfirmationField.js'),
   select: require('./components/select.js'),
-  container: require('./components/container.js')
+  container: require('./components/container.js'),
+  grid: require('./components/grid.js')
 };

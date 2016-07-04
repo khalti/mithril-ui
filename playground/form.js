@@ -1,34 +1,37 @@
-import m from "mithril";
-import Input from "components/input.js";
-import Field from "components/field.js";
-import Form  from "mithril-form";
-import Checkbox from "components/checkbox.js";
-import PasswordField from "components/passwordField.js";
-import PasswordConfirmationField from "components/passwordConfirmationField.js";
-
-import 'semantic-ui-css/semantic.css!';
-
-const fieldModel = Form({name: {presence: true, default: ""}});
-const checkboxModel = Form({isFlash:
+var fieldModel = Form({name: {presence: true, default: ""}});
+var checkboxModel = Form({isFlash:
   {exclusion: {within: [false]}}});
-const passwordForm = Form({
+var passwordForm = Form({
   password: {presence: true, length: {minimum: 8}},
   confirmPassword: {presence: true, equality: "password"}
 });
 
-const app = {
+var superheroes = [{label: "-- Superheroes --", value: ""},
+                  {label: "Batman", value: 1},
+                  {label: "Superman", value: 2},
+                  {label: "Flash", value: 3}];
+var selectModel = Form({superhero: {presence: true, default: ""}}).superhero;
+
+var app = {
   view: function () {
-    return m('.ui.container',
+    return m(ui.container, {},
       m("form.ui.form",
+        m("h1", "Select"),
+        m.component(ui.select, {
+          model: selectModel,
+          label: "Superhero",
+          help: "Please choose a superhero.",
+          options: superheroes
+        }),
         m('h1', "Input"),
-        m.component(Input, {
+        m.component(ui.input, {
           class: "ui labeled icon input",
           prepend: m(".ui.label", m("i.users.icon")),
           append: m("i.search.icon"),
           type: "number",
           placeholder: "Number"}),
         m("h1", "Field"),
-        m.component(Field, {
+        m.component(ui.field, {
           model: fieldModel.name,
           label: "Text Field",
           placeholder: "TextField",
@@ -38,12 +41,12 @@ const app = {
           type: "text"
         }),
         m("h1", "Checkbox"),
-        m.component(Checkbox, {
+        m.component(ui.checkbox, {
           model: checkboxModel.isFlash,
           label: "Is flash"
         }),
         m("h1", "Password"),
-        m.component(PasswordField, {
+        m.component(ui.passwordField, {
           model: passwordForm.password,
           label: "Password",
           placeholder: "Password",
@@ -52,7 +55,7 @@ const app = {
           validate: "onchange"
         }),
         m("h1", "Password"),
-        m.component(PasswordConfirmationField, {
+        m.component(ui.passwordConfirmationField, {
           model: passwordForm.confirmPassword,
           passwordModel: passwordForm.password,
           label: "Confirm Password",

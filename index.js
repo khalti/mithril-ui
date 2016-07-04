@@ -4,5 +4,6 @@ module.exports = {
   checkbox: require('./components/checkbox.js'),
   passwordField: require('./components/passwordField.js'),
   passwordConfirmationField: require('./components/passwordConfirmationField.js'),
-  select: require('./components/select.js')
+  select: require('./components/select.js'),
+  container: require('./components/container.js')
 };

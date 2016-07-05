@@ -47,5 +47,10 @@ module.exports = {
     justified: "justified"
   },
   visibleClassMap: {
+    mobile: "mobile only",
+    tablet: "tablet only",
+    computer: "computer only",
+    largeScreen: "large screen only",
+    widescreen: "widescreen only"
   }
 };

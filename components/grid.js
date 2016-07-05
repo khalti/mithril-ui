@@ -3,12 +3,12 @@ var base = require("./base.js");
 var _ = require("lodash");
 var helpers = require("./../helpers.js");
 
-var dividedClassMap = {
+var divideClassMap = {
   "horizontally": "divided",
   "vertically": "vertically divided"
 };
 
-var celledClassMap = {
+var cellClassMap = {
   "externally": "celled",
   "internally": "internally celled"
 };
@@ -33,18 +33,6 @@ var centeredClassMap = {
   false: ""
 };
 
-var textAlignedClassMap = {
-  left: "",
-  right: "right aligned",
-  center: "center aligned",
-  justified: "justified"
-};
-
-var verticalAlignedClassMap = {
-  true: "middle aligned",
-  false: ""
-};
-
 var doublingClassMap = {
   true: "doubling",
   false: ""
@@ -64,27 +52,27 @@ var reversedClassMap = {
 var attrSchema = {
   columns: {inclusion: {within: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
                         message: "^Invalid column count '%{value}'."}},
-  divided: {inclusion: {within: _.keys(dividedClassMap),
-                        message: "^Invalid value '%{value}'."}},
-  celled: {inclusion: {within: _.keys(celledClassMap),
+  divide: {inclusion: {within: _.keys(divideClassMap),
                        message: "^Invalid value '%{value}'."}},
+  cell: {inclusion: {within: _.keys(cellClassMap),
+                     message: "^Invalid value '%{value}'."}},
   equalWidth: {inclusion: {within: [true, false],
-                           message: "'%{value}' is not a boolean."}},
+                           message: "^'%{value}' is not a boolean."}},
   padded: {inclusion: {within: [true, false],
-                       message: "'%{value}' is not a boolean."}},
+                       message: "^'%{value}' is not a boolean."}},
   relaxed: {inclusion: {within: [true, false],
                         message: "'%{value}' is not a boolean."}},
   centered: {inclusion: {within: [true, false],
-                         message: "'%{value}' is not a boolean."}},
-  textAligned: {inclusion: {within: _.keys(textAlignedClassMap),
+                         message: "^'%{value}' is not a boolean."}},
+  textAlignment: {inclusion: {within: _.keys(helpers.textlignmentClassMap),
                             message: "^Invalid value '%{value}'."}},
-  verticalAligned: {inclusion: {within: [true, false],
-                                message: "'%{value}' is not a boolean."}},
+  verticalAlignment: {inclusion: {within: _.keys(helpers.verticalAlignmentClassMap),
+                                  message: "^Invalid value '%{value}'."}},
   doubling: {inclusion: {within: [true, false],
-                         message: "'%{value}' is not a boolean."}},
+                         message: "^'%{value}' is not a boolean."}},
   stackable: {inclusion: {within: [true, false],
-                          message: "'%{value}' is not a boolean."}},
-  reversed: {inclusion: {within: _.keys(reversedClassMap),
+                          message: "^'%{value}' is not a boolean."}},
+  reverse: {inclusion: {within: _.keys(helpers.reverseClassMap),
                          message: "^Invalid value '%{value}'."}}
 };
 
@@ -93,31 +81,31 @@ var grid = {
     var ctrl = {
       attrSchema: attrSchema,
       columnsClassMap: helpers.columnsClassMap,
-      dividedClassMap: dividedClassMap,
-      celledClassMap: celledClassMap,
+      divideClassMap: divideClassMap,
+      cellClassMap: cellClassMap,
       equalWidthClassMap: equalWidthClassMap,
       paddedClassMap: paddedClassMap,
       relaxedClassMap: relaxedClassMap,
       centeredClassMap: centeredClassMap,
-      textAlignedClassMap: textAlignedClassMap,
-      verticalAlignedClassMap: verticalAlignedClassMap,
+      textAlignmentClassMap: helpers.textAlignmentClassMap,
+      verticalAlignmentClassMap: helpers.verticalAlignmentClassMap,
       doublingClassMap: doublingClassMap,
       stackableClassMap: stackableClassMap,
-      reversedClassMap: reversedClassMap,
+      reverseClassMap: helpers.reverseClassMap,
       getClassList: function (attrs) {
         return ["ui",
                 ctrl.columnsClassMap[attrs.columns],
-                ctrl.dividedClassMap[attrs.divided],
-                ctrl.celledClassMap[attrs.celled],
+                ctrl.divideClassMap[attrs.divide],
+                ctrl.cellClassMap[attrs.cell],
                 ctrl.equalWidthClassMap[attrs.equalWidth],
                 ctrl.paddedClassMap[attrs.padded],
                 ctrl.relaxedClassMap[attrs.relaxed],
                 ctrl.centeredClassMap[attrs.centered],
-                ctrl.textAlignedClassMap[attrs.textAligned],
-                ctrl.verticalAlignedClassMap[attrs.verticalAligned],
+                ctrl.textAlignmentClassMap[attrs.textAlignment],
+                ctrl.verticalAlignmentClassMap[attrs.verticalAlignment],
                 ctrl.doublingClassMap[attrs.doubling],
                 ctrl.stackableClassMap[attrs.stackable],
-                ctrl.reversedClassMap[attrs.reversed],
+                ctrl.reverseClassMap[attrs.reverse],
                 "grid"];
       }
     };

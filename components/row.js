@@ -27,13 +27,15 @@ module.exports = {
       },
       colorClassMap: helpers.colorClassMap,
       textAlignmentClassMap: helpers.textAlignmentClassMap,
-      verticalAlignedClassMap: helpers.verticalAlignmentClassMap,
+      verticalAlignmentClassMap: helpers.verticalAlignmentClassMap,
       visibleClassMap: helpers.visibleClassMap,
       getClassList: function (attrs) {
         return [this.columnsClassMap[attrs.columns],
                 this.stretchedClassMap[attrs.stretched],
                 this.colorClassMap[attrs.color],
+                this.textAlignmentClassMap[attrs.textAlignment],
                 this.verticalAlignmentClassMap[attrs.verticalAlignment],
+                this.visibleClassMap[attrs.visible],
                 "row"];
       }
     };

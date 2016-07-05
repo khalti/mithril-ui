@@ -29,14 +29,14 @@ describe("components/grid", function () {
         expect(classList[1]).toEqual(ctrl.columnsClassMap[1]);
       });
 
-      it("should return proper 'divided' class", function () {
-        var classList = ctrl.getClassList({divided: "vertically"});
-        expect(classList[2]).toEqual(ctrl.dividedClassMap.vertically);
+      it("should return proper 'divide' class", function () {
+        var classList = ctrl.getClassList({divide: "vertically"});
+        expect(classList[2]).toEqual(ctrl.divideClassMap.vertically);
       });
 
-      it("should return proper 'celled' class", function () {
-        var classList = ctrl.getClassList({celled: "internally"});
-        expect(classList[3]).toEqual(ctrl.celledClassMap.internally);
+      it("should return proper 'cell' class", function () {
+        var classList = ctrl.getClassList({cell: "internally"});
+        expect(classList[3]).toEqual(ctrl.cellClassMap.internally);
       });
 
       it("should return proper 'equalWidth' class", function () {
@@ -59,14 +59,14 @@ describe("components/grid", function () {
         expect(classList[7]).toEqual(ctrl.centeredClassMap.true);
       });
 
-      it("should return proper 'textAligned' class", function () {
-        var classList = ctrl.getClassList({textAligned: "right"});
-        expect(classList[8]).toEqual(ctrl.textAlignedClassMap.right);
+      it("should return proper 'textAlignment' class", function () {
+        var classList = ctrl.getClassList({textAlignment: "right"});
+        expect(classList[8]).toEqual(ctrl.textAlignmentClassMap.right);
       });
 
-      it("should return proper 'verticalAligned' class", function () {
-        var classList = ctrl.getClassList({verticalAligned: true});
-        expect(classList[9]).toEqual(ctrl.verticalAlignedClassMap.true);
+      it("should return proper 'verticalAlignment' class", function () {
+        var classList = ctrl.getClassList({verticalAlignment: true});
+        expect(classList[9]).toEqual(ctrl.verticalAlignmentClassMap.true);
       });
 
       it("should return proper 'doubling' class", function () {
@@ -79,9 +79,9 @@ describe("components/grid", function () {
         expect(classList[11]).toEqual(ctrl.stackableClassMap.true);
       });
 
-      it("should return proper 'reversed' class", function () {
-        var classList = ctrl.getClassList({reversed: "mobile"});
-        expect(classList[12]).toEqual(ctrl.reversedClassMap.mobile);
+      it("should return proper 'reverse' class", function () {
+        var classList = ctrl.getClassList({reverse: "mobile"});
+        expect(classList[12]).toEqual(ctrl.reverseClassMap.mobile);
       });
     });
   });

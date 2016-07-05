@@ -3,7 +3,7 @@ var m = require("mithril");
 var mock = require("../deps/mock.js");
 var _ = require("lodash");
 
-describe("components/container", function () {
+describe("components/grid", function () {
   describe(".controller", function () {
     it("should be a function", function () {
       expect(_.isFunction(grid.controller)).toEqual(true);

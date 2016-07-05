@@ -1,25 +1,7 @@
 var m = require("mithril");
 var base = require("./base.js");
 var _ = require("lodash");
-
-var columnsClassMap = {
-  1: "one column",
-  2: "two column",
-  3: "three column",
-  4: "four column",
-  5: "five column",
-  6: "six column",
-  7: "seven column",
-  8: "eight column",
-  9: "nine column",
-  10: "ten column",
-  11: "eleven column",
-  12: "twelve column",
-  13: "thirteen column",
-  14: "fourteen column",
-  15: "fifteen column",
-  16: "sixteen column"
-};
+var helpers = require("./../helpers.js");
 
 var dividedClassMap = {
   "horizontally": "divided",
@@ -110,7 +92,7 @@ var grid = {
   controller: function (attrs) {
     var ctrl = {
       attrSchema: attrSchema,
-      columnsClassMap: columnsClassMap,
+      columnsClassMap: helpers.columnsClassMap,
       dividedClassMap: dividedClassMap,
       celledClassMap: celledClassMap,
       equalWidthClassMap: equalWidthClassMap,

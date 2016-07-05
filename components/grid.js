@@ -1,5 +1,5 @@
 var m = require("mithril");
-var container = require("./container.js");
+var base = require("./base.js");
 
 var columnsClassMap = {
   1: "one column",
@@ -74,6 +74,12 @@ var stackableClassMap = {
   false: ""
 };
 
+var reversedClassMap = {
+  mobile: "mobile reversed ",
+  tablet: "tablet reversed",
+  computer: "computer reversed"
+};
+
 var attrSchema = {
   columns: {inclusion: {within: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
                         message: "^Invalid column count '%{value}'."}},
@@ -96,7 +102,9 @@ var attrSchema = {
   doubling: {inclusion: {within: [true, false],
                          message: "'%{value}' is not a boolean."}},
   stackable: {inclusion: {within: [true, false],
-                          message: "'%{value}' is not a boolean."}}
+                          message: "'%{value}' is not a boolean."}},
+  reversed: {inclusion: {within: _.keys(reversedClassMap),
+                         message: "^Invalid value '%{value}'."}}
 };
 
 var grid = {
@@ -117,6 +125,7 @@ var grid = {
                        this.mapClass(verticalAlignedClassMap, attrs.verticalAligned),
                        this.mapClass(doublingClassMap, attrs.doubling),
                        this.mapClass(stackableClassMap, attrs.stackable),
+                       this.mapClass(reversedClassMap, attrs.reversed),
                        "grid"];
       return classList;
     };

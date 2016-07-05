@@ -1,5 +1,5 @@
 var m = require("mithril");
-var validate = require("validate.js");
+var base = require("./base.js");
 
 module.exports = {
   controller: function (attrs) {
@@ -34,7 +34,9 @@ module.exports = {
       },
       getClass: function (attrs) {
         var validList = _.filter(this.getClassList(attrs), function (aClass) {
-          return aClass !== undefined || aClass !== "";
+          if (aClass === undefined) return false;
+          if (aClass === "") return false;
+          return true;
         });
 
         return validList.join(" ");

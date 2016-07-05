@@ -15,7 +15,7 @@ var selectModel = Form({superhero: {presence: true, default: ""}}).superhero;
 var app = {
   view: function () {
     return m(ui.container, {},
-             m(ui.grid, {doubling: true}),
+             m(ui.grid, {reversed: "tablet"}),
       m("form.ui.form",
         m("h1", "Select"),
         m.component(ui.select, {

@@ -6,14 +6,10 @@ module.exports = {
   controller: function (attrs) {
     return {
       attrSchema: {},
-      getTuples: function (attrs) {
+      getClassList: function (attrs) {
         return [];
       },
-      getClassList: function (tuples) {
-        var classList = _.map(tuples, function (tuple) {
-          return tuple[0][tuple[1]];
-        });
-
+      filterClassList: function (classList) {
         return _.filter(classList, function (aClass) {
           if (aClass === undefined) return false;
           if (aClass === "") return false;
@@ -21,7 +17,7 @@ module.exports = {
         });
       },
       getClass: function (attrs) {
-        return this.getClassList(this.getTuples(attrs)).join(" ");
+        return this.filterClassList(this.getClassList(attrs)).join(" ");
       },
       validateAttrs: function (attrs, schema) {
         if (!schema) return undefined;

@@ -1,5 +1,6 @@
 var m = require("mithril");
 var base = require("./base.js");
+var _ = require("lodash");
 
 var columnsClassMap = {
   1: "one column",
@@ -62,12 +63,10 @@ var verticalAlignedClassMap = {
   false: ""
 };
 
-
 var doublingClassMap = {
   true: "doubling",
   false: ""
 };
-
 
 var stackableClassMap = {
   true: "stackable",
@@ -109,28 +108,39 @@ var attrSchema = {
 
 var grid = {
   controller: function (attrs) {
-    var ctrl = new container.controller(attrs);
-    ctrl.attrSchema = attrSchema;
-
-    ctrl.getClassList = function (attrs) {
-      var classList = ["ui",
-                       this.mapClass(columnsClassMap, attrs.columns),
-                       this.mapClass(dividedClassMap, attrs.divided),
-                       this.mapClass(celledClassMap, attrs.celled),
-                       this.mapClass(equalWidthClassMap, attrs.equalWidth),
-                       this.mapClass(paddedClassMap, attrs.padded),
-                       this.mapClass(relaxedClassMap, attrs.relaxed),
-                       this.mapClass(centeredClassMap, attrs.centered),
-                       this.mapClass(textAlignedClassMap, attrs.textAligned),
-                       this.mapClass(verticalAlignedClassMap, attrs.verticalAligned),
-                       this.mapClass(doublingClassMap, attrs.doubling),
-                       this.mapClass(stackableClassMap, attrs.stackable),
-                       this.mapClass(reversedClassMap, attrs.reversed),
-                       "grid"];
-      return classList;
+    var ctrl = {
+      attrSchema: attrSchema,
+      columnsClassMap: columnsClassMap,
+      dividedClassMap: dividedClassMap,
+      celledClassMap: celledClassMap,
+      equalWidthClassMap: equalWidthClassMap,
+      paddedClassMap: paddedClassMap,
+      relaxedClassMap: relaxedClassMap,
+      centeredClassMap: centeredClassMap,
+      textAlignedClassMap: textAlignedClassMap,
+      verticalAlignedClassMap: verticalAlignedClassMap,
+      doublingClassMap: doublingClassMap,
+      stackableClassMap: stackableClassMap,
+      reversedClassMap: reversedClassMap,
+      getClassList: function (attrs) {
+        return ["ui",
+                ctrl.columnsClassMap[attrs.columns],
+                ctrl.dividedClassMap[attrs.divided],
+                ctrl.celledClassMap[attrs.celled],
+                ctrl.equalWidthClassMap[attrs.equalWidth],
+                ctrl.paddedClassMap[attrs.padded],
+                ctrl.relaxedClassMap[attrs.relaxed],
+                ctrl.centeredClassMap[attrs.centered],
+                ctrl.textAlignedClassMap[attrs.textAligned],
+                ctrl.verticalAlignedClassMap[attrs.verticalAligned],
+                ctrl.doublingClassMap[attrs.doubling],
+                ctrl.stackableClassMap[attrs.stackable],
+                ctrl.reversedClassMap[attrs.reversed],
+                "grid"];
+      }
     };
 
-    return ctrl;
+    return _.assign(new base.controller(attrs), ctrl);
   },
   view: function (c, attrs) {
     c.validateAttrs(attrs);

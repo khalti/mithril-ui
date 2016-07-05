@@ -66,9 +66,8 @@ describe("components/base", function () {
       ctrl = new base.controller();
       attrs = {"alignment": "left", "fluid": true};
       ctrl.attrSchema = schema;
-      ctrl.getTuples = function (attrs) {
-        return [[alignmentClassMap, attrs.alignment],
-                [fluidClassMap, attrs.fluid]];
+      ctrl.getClassList = function (attrs) {
+        return [alignmentClassMap[attrs.alignment], fluidClassMap[attrs.fluid]];
       };
     });
 
@@ -80,20 +79,16 @@ describe("components/base", function () {
       expect(_.isObject(base.controller())).toEqual(true);
     });
 
-    describe(".getTuples", function () {
+    describe(".getClassList", function () {
       it("should return a list", function () {
-        expect(_.isArray(ctrl.getTuples(attrs))).toEqual(true);
+        expect(_.isArray(ctrl.getClassList(attrs))).toEqual(true);
       });
     });
 
-    describe(".getClassList", function () {
-      it("should return a list of classes as per supplied tuples", function () {
-        expect(ctrl.getClassList(ctrl.getTuples(attrs))).toEqual(["left aligned", "fluid"]);
-      });
-
+    describe(".filterClassList", function () {
       it("should exclude undefined values", function () {
         attrs.fluid = "invalid value";
-        expect(ctrl.getClassList(ctrl.getTuples(attrs))).toEqual(["left aligned"]);
+        expect(ctrl.filterClassList(ctrl.getClassList(attrs))).toEqual(["left aligned"]);
       });
     });
 

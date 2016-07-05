@@ -1,19 +1,10 @@
 var m = require("mithril");
 var base = require("./base.js");
+var _ = require("lodash");
 
 module.exports = {
   controller: function (attrs) {
-    return {
-      typeClassMap: {
-        "text": "text",
-        "fluid": "fluid"
-      },
-      alignmentClassMap: {
-        "left": "left aligned",
-        "center": "center aligned",
-        "right": "right aligned",
-        "justified": "justified"
-      },
+    var ctrl = {
       attrSchema: {
         type: {presence: false,
                inclusion: {within: ["text", "fluid"],
@@ -22,41 +13,25 @@ module.exports = {
                     inclusion: {within: ["left", "center", "right", "justified"],
                                 message: "^Invalid value '%{value}' for attribute 'alignment'."}}
       },
-      mapClass: function (map, key) {
-        return map[key];
+      typeClassMap: {
+        "text": "text",
+        "fluid": "fluid"
+      },
+      alignmentClassMap: {
+        "left": "",
+        "center": "center aligned",
+        "right": "right aligned",
+        "justified": "justified"
       },
       getClassList: function (attrs) {
-        var classList = ["ui",
-                         this.mapClass(this.typeClassMap, attrs.type),
-                         this.mapClass(this.alignmentClassMap, attrs.alignment),
-                        "container"];
-        return classList;
-      },
-      getClass: function (attrs) {
-        var validList = _.filter(this.getClassList(attrs), function (aClass) {
-          if (aClass === undefined) return false;
-          if (aClass === "") return false;
-          return true;
-        });
-
-        return validList.join(" ");
-      },
-      validateAttrs: function (attrs) {
-        var errors = validate(attrs, this.attrSchema);
-        if (errors) throw(JSON.stringify(errors));
-      },
-      getChildren: function (args) {
-        var argsArray = [];
-        for (var i = 0; i <= args.length; i ++) {
-          argsArray.push(args[i]);
-        }
-
-        return argsArray.splice(2);
+        return ["ui",
+                this.typeClassMap[attrs.type],
+                this.alignmentClassMap[attrs.alignment],
+                "container"];
       }
     };
+
+    return _.assign(base.controller(attrs), ctrl);
   },
-  view: function (ctrl, attrs) {
-    ctrl.validateAttrs(attrs);
-    return m("div", {class: ctrl.getClass(attrs)}, ctrl.getChildren(arguments));
-  }
+  view: base.view
 };

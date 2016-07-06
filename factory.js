@@ -1,4 +1,3 @@
-var base = require("./components/base.js");
 var _ = require("lodash");
 
 module.exports = function (base, mixin) {

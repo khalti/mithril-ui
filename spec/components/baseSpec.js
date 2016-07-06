@@ -3,6 +3,8 @@ var m = require("mithril");
 var mock = require("../deps/mock.js");
 var _ = require("lodash");
 
+var noop = function () {};
+
 describe("components/base", function () {
   var attrs, root, aModel;
 
@@ -137,7 +139,8 @@ describe("components/base", function () {
     });
 
     describe(".hasAttrs", function () {
-      it("should return false if arguments length is < 2", function () {
+      // the arguments received by view are being tested here
+      it("should return false if arguments length to view is 1", function () {
         var args;
         (function () {args = arguments;})(1);
         expect(ctrl.hasAttrs(args)).toEqual(false);
@@ -145,13 +148,19 @@ describe("components/base", function () {
 
       it("should return true if argument at index 1 is valid attribute.", function () {
         var args;
-        (function () {args = arguments;})("controller", {}, "children");
+        (function () {args = arguments;})("controller", {});
         expect(ctrl.hasAttrs(args)).toEqual(true);
       });
 
-      it("should return false if argument at index 1 is invalid attribute.", function () {
+      it("should return false if argument at index 1 is a component.", function () {
         var args;
-        (function () {args = arguments;})("controller", "children");
+        (function () {args = arguments;})("controller", {view: noop});
+        expect(ctrl.hasAttrs(args)).toEqual(false);
+      });
+
+      it("should return false if argument at index 1 is a vdom.", function () {
+        var args;
+        (function () {args = arguments;})("controller", {tag: "anode"});
         expect(ctrl.hasAttrs(args)).toEqual(false);
       });
     });

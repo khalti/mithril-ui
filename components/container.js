@@ -1,6 +1,4 @@
-var m = require("mithril");
 var base = require("./base.js");
-var _ = require("lodash");
 var factory = require("./../factory.js");
 
 var component = {

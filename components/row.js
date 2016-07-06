@@ -1,4 +1,3 @@
-var m = require("mithril");
 var base = require("./base.js");
 var _ = require("lodash");
 var helpers = require("./../helpers.js");

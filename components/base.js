@@ -50,13 +50,14 @@ module.exports = {
       },
       getChildren: function (args) {
         var flatArgs = _.flattenDeep(this.argsToList(args));
-        if (flatArgs.length < 1) return [];
+        if (flatArgs.length === 1) return [];
         return this.hasAttrs(flatArgs)? flatArgs.splice(2): flatArgs.splice(1);
       },
       hasAttrs: function (args) {
         var argsList = this.argsToList(args);
-        if (argsList.length < 1) return false;
-        return _.isObject(argsList[1]) && !_.isFunction(argsList[1])? true: false;
+        if (argsList.length === 1) return false;
+        var secArg = argsList[1];
+        return _.isObject(secArg) && !secArg.tag && !secArg.view? true: false;
       },
       getAttrs: function (args) {
         var argsList = this.argsToList(args);

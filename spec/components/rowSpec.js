@@ -35,19 +35,29 @@ describe("components/row", function () {
         expect(classList[2]).toEqual(ctrl.colorClassMap.blue);
       });
 
+      it("should return proper 'centered' class", function () {
+        var classList = ctrl.getClassList({centered: true});
+        expect(classList[3]).toEqual(ctrl.centeredClassMap.true);
+      });
+
       it("should return proper 'textAlignment' class", function () {
         var classList = ctrl.getClassList({textAlignment: "center"});
-        expect(classList[3]).toEqual(ctrl.textAlignmentClassMap.center);
+        expect(classList[4]).toEqual(ctrl.textAlignmentClassMap.center);
       });
 
       it("should return proper 'verticalAlignment' class", function () {
         var classList = ctrl.getClassList({verticalAlignment: "bottom"});
-        expect(classList[4]).toEqual(ctrl.verticalAlignmentClassMap.bottom);
+        expect(classList[5]).toEqual(ctrl.verticalAlignmentClassMap.bottom);
       });
 
       it("should return proper 'visible' class", function () {
         var classList = ctrl.getClassList({visible: "mobile"});
-        expect(classList[5]).toEqual(ctrl.visibleClassMap.mobile);
+        expect(classList[6]).toEqual(ctrl.visibleClassMap.mobile);
+      });
+
+      it("should return proper 'reverse' class", function () {
+        var classList = ctrl.getClassList({reverse: "mobile"});
+        expect(classList[7]).toEqual(ctrl.reverseClassMap.mobile);
       });
     });
   });

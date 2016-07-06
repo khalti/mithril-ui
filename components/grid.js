@@ -18,6 +18,7 @@ var equalWidthClassMap = {
   false: ""
 };
 
+/*TODO vertically, horizontally, all*/
 var paddedClassMap = {
   true: "padded",
   false: ""
@@ -25,11 +26,6 @@ var paddedClassMap = {
 
 var relaxedClassMap = {
   true: "relaxed",
-  false: ""
-};
-
-var centeredClassMap = {
-  true: "centered",
   false: ""
 };
 
@@ -41,12 +37,6 @@ var doublingClassMap = {
 var stackableClassMap = {
   true: "stackable",
   false: ""
-};
-
-var reversedClassMap = {
-  mobile: "mobile reversed ",
-  tablet: "tablet reversed",
-  computer: "computer reversed"
 };
 
 var attrSchema = {
@@ -86,7 +76,7 @@ var grid = {
       equalWidthClassMap: equalWidthClassMap,
       paddedClassMap: paddedClassMap,
       relaxedClassMap: relaxedClassMap,
-      centeredClassMap: centeredClassMap,
+      centeredClassMap: helpers.centeredClassMap,
       textAlignmentClassMap: helpers.textAlignmentClassMap,
       verticalAlignmentClassMap: helpers.verticalAlignmentClassMap,
       doublingClassMap: doublingClassMap,

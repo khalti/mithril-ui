@@ -14,10 +14,10 @@ var selectModel = Form({superhero: {presence: true, default: ""}}).superhero;
 
 var app = {
   view: function () {
-    return m(ui.container, {},
+    return m(ui.container,
              m(ui.grid, {reverse: "tablet"},
                m(ui.row, {class: "myclass"},
-                 m(ui.column,
+                 m(ui.column, {mobile: 16, tablet: 8, computer: 4, largeScreen: 4, widescreen: 4},
                    m("form.ui.form",
                      m("h1", "Select"),
                      m.component(ui.select, {model: selectModel,

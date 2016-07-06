@@ -8,6 +8,18 @@ var floatClassMap = {
   "right": "right floated"
 };
 
+var properKeys = function (obj) {
+  return _.map(_.keys(obj), function (akey) {
+    var properKey = parseInt(akey);
+    if(properKey) {
+      return properKey;
+    }
+    else {
+      return akey;
+    }
+  });
+};
+
 var component = {
   controller: function (attrs) {
     return {
@@ -15,7 +27,7 @@ var component = {
       attrSchema: {
         float: {inclusion: {within: _.keys(floatClassMap),
                             message: "^Invalid value '%{value}'."}},
-        width: {inclusion: {within: _.keys(helpers.widthClassMap),
+        width: {inclusion: {within: properKeys(helpers.widthClassMap),
                            message: "^Invalid value '%{value}'."}},
         color: {inclusion: {within: _.keys(helpers.colorClassMap),
                             message: "^Invalid value '%{value}'."}},
@@ -23,15 +35,15 @@ var component = {
                                     message: "^Invalid value '%{value}'."}},
         visible: {inclusion: {within: _.keys(helpers.visibleClassMap),
                               message: "^Invalid value '%{value}'."}},
-        mobile: {inclusion: {within: _.keys(helpers.widthClassMap),
+        mobile: {inclusion: {within: properKeys(helpers.widthClassMap),
                              message: "^Invalid value '%{value}'."}},
-        tablet: {inclusion: {within: _.keys(helpers.widthClassMap),
+        tablet: {inclusion: {within: properKeys(helpers.widthClassMap),
                              message: "^Invalid value '%{value}'."}},
-        computer: {inclusion: {within: _.keys(helpers.widthClassMap),
+        computer: {inclusion: {within: properKeys(helpers.widthClassMap),
                                message: "^Invalid value '%{value}'."}},
-        largeScreen: {inclusion: {within: _.keys(helpers.widthClassMap),
+        largeScreen: {inclusion: {within: properKeys(helpers.widthClassMap),
                                   message: "^Invalid value '%{value}'."}},
-        widescreen: {inclusion: {within: _.keys(helpers.widthClassMap),
+        widescreen: {inclusion: {within: properKeys(helpers.widthClassMap),
                                  message: "^Invalid value '%{value}'."}}
       },
       floatClassMap: floatClassMap,

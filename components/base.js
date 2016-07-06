@@ -6,8 +6,6 @@ module.exports = {
   controller: function (attrs) {
     return {
       attrSchema: {},
-      // TODO: let user override the class, allows user to have feature that is present in semantic-ui
-      // but not implemented in mithril-ui
       getClassList: function (attrs) {
         return [];
       },

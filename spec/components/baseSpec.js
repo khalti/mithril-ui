@@ -176,15 +176,46 @@ describe("components/base", function () {
       });
     });
 
-    describe(".getFinalAttrs", function () {
-      it("should append user supplied class", function () {
+    describe(".insertUserClass", function () {
+      it("should insert user supplied class if classList is empty.", function () {
+        ctrl.getClassList = function () {
+          return [];
+        };
         attrs.class = "myclass";
-        expect(ctrl.getFinalAttrs(attrs).class).toEqual("left aligned fluid myclass");
+        expect(ctrl.insertUserClass(ctrl.getClassList(attrs), attrs.class)).toEqual([attrs.class]);
       });
 
-      it("should remove keys which are common to attribute-schema and attributes passed by user", function () {
-        attrs["data-name"] = "aName";
-        expect(ctrl.getFinalAttrs(attrs)).toEqual({"data-name": "aName"});
+      it("should insert user supplied class at the tip if classList has single item.", function () {
+        ctrl.getClassList = function () {
+          return ["default"];
+        };
+        attrs.class = "myclass";
+        expect(ctrl.insertUserClass(ctrl.getClassList(attrs), attrs.class)).toEqual([attrs.class, "default"]);
+      });
+
+      it("should insert user supplied class at the second position.", function () {
+        ctrl.getClassList = function () {
+          return ["one", "two"];
+        };
+        attrs.class = "three";
+        expect(ctrl.insertUserClass(ctrl.getClassList(attrs), attrs.class)).toEqual(["one", "three", "two"]);
+      });
+
+      describe(".getFinalAttrs", function () {
+        var finalAttrs;
+        beforeEach(function () {
+          attrs["data-name"] = "aName";
+          finalAttrs = ctrl.getFinalAttrs(attrs);
+        });
+
+        it("should include class", function () {
+          expect(finalAttrs.class).toEqual("left aligned fluid");
+        });
+
+        it("should remove common properties between attrSchema and attributes.", function () {
+          var expected = {"data-name": "aName", class: "left aligned fluid"};
+          expect(finalAttrs).toEqual(expected);
+        });
       });
     });
   });

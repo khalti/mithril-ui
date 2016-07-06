@@ -2,15 +2,17 @@ var m = require("mithril");
 var base = require("./base.js");
 var _ = require("lodash");
 var helpers = require("./../helpers.js");
+var factory = require("./../factory.js");
 
 var floatClassMap = {
   "left": "left floated",
   "right": "right floated"
 };
 
-module.exports = {
+var component = {
   controller: function (attrs) {
-    var ctrl = {
+    return {
+      classAppend: undefined,
       attrSchema: {
         float: {inclusion: {within: _.keys(floatClassMap),
                             message: "^Invalid value '%{value}'."}},
@@ -52,8 +54,7 @@ module.exports = {
                 "column"];
       }
     };
-
-    return _.assign(base.controller(attrs), ctrl);
-  },
-  view: base.view
+  }
 };
+
+module.exports =  factory(base, component);

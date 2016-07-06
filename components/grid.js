@@ -2,6 +2,7 @@ var m = require("mithril");
 var base = require("./base.js");
 var _ = require("lodash");
 var helpers = require("./../helpers.js");
+var factory = require("./../factory.js");
 
 var divideClassMap = {
   "horizontally": "divided",
@@ -66,9 +67,9 @@ var attrSchema = {
                          message: "^Invalid value '%{value}'."}}
 };
 
-var grid = {
+var component = {
   controller: function (attrs) {
-    var ctrl = {
+    return {
       attrSchema: attrSchema,
       columnsClassMap: helpers.columnsClassMap,
       divideClassMap: divideClassMap,
@@ -84,28 +85,22 @@ var grid = {
       reverseClassMap: helpers.reverseClassMap,
       getClassList: function (attrs) {
         return ["ui",
-                ctrl.columnsClassMap[attrs.columns],
-                ctrl.divideClassMap[attrs.divide],
-                ctrl.cellClassMap[attrs.cell],
-                ctrl.equalWidthClassMap[attrs.equalWidth],
-                ctrl.paddedClassMap[attrs.padded],
-                ctrl.relaxedClassMap[attrs.relaxed],
-                ctrl.centeredClassMap[attrs.centered],
-                ctrl.textAlignmentClassMap[attrs.textAlignment],
-                ctrl.verticalAlignmentClassMap[attrs.verticalAlignment],
-                ctrl.doublingClassMap[attrs.doubling],
-                ctrl.stackableClassMap[attrs.stackable],
-                ctrl.reverseClassMap[attrs.reverse],
+                this.columnsClassMap[attrs.columns],
+                this.divideClassMap[attrs.divide],
+                this.cellClassMap[attrs.cell],
+                this.equalWidthClassMap[attrs.equalWidth],
+                this.paddedClassMap[attrs.padded],
+                this.relaxedClassMap[attrs.relaxed],
+                this.centeredClassMap[attrs.centered],
+                this.textAlignmentClassMap[attrs.textAlignment],
+                this.verticalAlignmentClassMap[attrs.verticalAlignment],
+                this.doublingClassMap[attrs.doubling],
+                this.stackableClassMap[attrs.stackable],
+                this.reverseClassMap[attrs.reverse],
                 "grid"];
       }
     };
-
-    return _.assign(new base.controller(attrs), ctrl);
-  },
-  view: function (c, attrs) {
-    c.validateAttrs(attrs);
-    return m("div", {class: c.getClass(attrs)}, c.getChildren(attrs));
   }
 };
 
-module.exports = grid;
+module.exports = factory(base, component);

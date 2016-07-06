@@ -7,7 +7,22 @@ module.exports = {
     return {
       attrSchema: {},
       getClassList: function (attrs) {
+        // this is a function instead of an attribute
+        // coz we need attributes while resolving class
         return [];
+      },
+      insertUserClass: function (classList, userClass) {
+        if (classList.length == 0) {
+          return [userClass];
+        }
+        else if (classList.length == 1) {
+          classList.unshift(userClass);
+          return classList;
+        }
+        else {
+          classList.splice(1,0, userClass);
+          return classList;
+        }
       },
       filterClassList: function (classList) {
         return _.filter(classList, function (aClass) {
@@ -17,7 +32,9 @@ module.exports = {
         });
       },
       getClass: function (attrs) {
-        return this.filterClassList(this.getClassList(attrs)).join(" ");
+        return this.filterClassList(
+          this.insertUserClass(
+            this.getClassList(attrs), attrs.class)).join(" ");
       },
       validateAttrs: function (attrs, schema) {
         if (!schema) return undefined;
@@ -46,10 +63,7 @@ module.exports = {
         return this.hasAttrs(argsList)? argsList[1]: {};
       },
       getFinalAttrs: function (attrs) {
-        if (attrs.class) {
-          var className = attrs.class;
-          attrs.class = this.getClass(attrs) + " " + className;
-        }
+        attrs.class = this.getClass(attrs);
         return _.omit(attrs, _.keys(this.attrSchema));
       }
     };

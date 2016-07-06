@@ -1,10 +1,11 @@
 var m = require("mithril");
 var base = require("./base.js");
 var _ = require("lodash");
+var factory = require("./../factory.js");
 
-module.exports = {
+var component = {
   controller: function (attrs) {
-    var ctrl = {
+    return {
       attrSchema: {
         type: {presence: false,
                inclusion: {within: ["text", "fluid"],
@@ -30,8 +31,7 @@ module.exports = {
                 "container"];
       }
     };
-
-    return _.assign(base.controller(attrs), ctrl);
-  },
-  view: base.view
+  }
 };
+
+module.exports = factory(base, component);

@@ -7,7 +7,7 @@ var component = {
   controller: function (attrs) {
     return {
       attrSchema: {
-        columns: {inclusion: {within: _.keys(helpers.columnsClassMap),
+        columns: {inclusion: {within: helpers.properKeys(helpers.columnsClassMap),
                               message: "^Invalid value '%{value}'."}},
         stretched: {inclusion: {within: [true, false],
                                 message: "^%{value} is not a boolean value."}},

@@ -1,3 +1,5 @@
+var _ = require("lodash");
+
 module.exports = {
   columnsClassMap: {
     1: "one column",
@@ -74,5 +76,16 @@ module.exports = {
   centeredClassMap: {
     true: "centered",
     false: ""
+  },
+  properKeys: function (obj) {
+    return _.map(_.keys(obj), function (akey) {
+      var properKey = parseInt(akey);
+      if(properKey) {
+        return properKey;
+      }
+      else {
+        return akey;
+      }
+    });
   }
 };

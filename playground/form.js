@@ -14,7 +14,7 @@ var selectModel = Form({superhero: {presence: true, default: ""}}).superhero;
 
 var app = {
   view: function () {
-    return m(ui.container,
+    return m(ui.container, {onclick: function() {alert('you clicked');}},
              m(ui.grid, {reverse: "tablet"},
                m(ui.row, {class: "myclass"},
                  m(ui.column, {mobile: 16, tablet: 8, computer: 4, largeScreen: 4, widescreen: 4},

@@ -40,7 +40,7 @@ var stackableClassMap = {
 };
 
 var attrSchema = {
-  columns: {inclusion: {within: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
+  columns: {inclusion: {within: helpers.properKeys(helpers.widthClassMap),
                         message: "^Invalid column count '%{value}'."}},
   divide: {inclusion: {within: _.keys(divideClassMap),
                        message: "^Invalid value '%{value}'."}},

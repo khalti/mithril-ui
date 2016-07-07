@@ -15,9 +15,10 @@ module.exports = {
     mithril: "m",
     jquery: "$",
     lodash: "_",
-    "mithril-form": "Form"
+    "mithril-form": "Form",
+    "validate.js": "validate"
   },
   plugins: [
     new UglifyJsPlugin()
   ]
-}
+};

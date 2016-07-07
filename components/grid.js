@@ -1,7 +1,7 @@
 var base = require("./base.js");
 var _ = require("lodash");
-var helpers = require("./../helpers.js");
-var factory = require("./../factory.js");
+var enums = require("./../helpers/enums.js");
+var factory = require("./../helpers/factory.js");
 
 var divideClassMap = {
   "horizontally": "divided",
@@ -40,7 +40,7 @@ var stackableClassMap = {
 };
 
 var attrSchema = {
-  columns: {inclusion: {within: helpers.properKeys(helpers.widthClassMap),
+  columns: {inclusion: {within: enums.properKeys(enums.widthClassMap),
                         message: "^Invalid column count '%{value}'."}},
   divide: {inclusion: {within: _.keys(divideClassMap),
                        message: "^Invalid value '%{value}'."}},
@@ -54,15 +54,15 @@ var attrSchema = {
                         message: "'%{value}' is not a boolean."}},
   centered: {inclusion: {within: [true, false],
                          message: "^'%{value}' is not a boolean."}},
-  textAlignment: {inclusion: {within: _.keys(helpers.textlignmentClassMap),
+  textAlignment: {inclusion: {within: _.keys(enums.textlignmentClassMap),
                             message: "^Invalid value '%{value}'."}},
-  verticalAlignment: {inclusion: {within: _.keys(helpers.verticalAlignmentClassMap),
+  verticalAlignment: {inclusion: {within: _.keys(enums.verticalAlignmentClassMap),
                                   message: "^Invalid value '%{value}'."}},
   doubling: {inclusion: {within: [true, false],
                          message: "^'%{value}' is not a boolean."}},
   stackable: {inclusion: {within: [true, false],
                           message: "^'%{value}' is not a boolean."}},
-  reverse: {inclusion: {within: _.keys(helpers.reverseClassMap),
+  reverse: {inclusion: {within: _.keys(enums.reverseClassMap),
                          message: "^Invalid value '%{value}'."}}
 };
 
@@ -70,18 +70,18 @@ var component = {
   controller: function (attrs) {
     return {
       attrSchema: attrSchema,
-      columnsClassMap: helpers.columnsClassMap,
+      columnsClassMap: enums.columnsClassMap,
       divideClassMap: divideClassMap,
       cellClassMap: cellClassMap,
       equalWidthClassMap: equalWidthClassMap,
       paddedClassMap: paddedClassMap,
       relaxedClassMap: relaxedClassMap,
-      centeredClassMap: helpers.centeredClassMap,
-      textAlignmentClassMap: helpers.textAlignmentClassMap,
-      verticalAlignmentClassMap: helpers.verticalAlignmentClassMap,
+      centeredClassMap: enums.centeredClassMap,
+      textAlignmentClassMap: enums.textAlignmentClassMap,
+      verticalAlignmentClassMap: enums.verticalAlignmentClassMap,
       doublingClassMap: doublingClassMap,
       stackableClassMap: stackableClassMap,
-      reverseClassMap: helpers.reverseClassMap,
+      reverseClassMap: enums.reverseClassMap,
       getClassList: function (attrs) {
         return ["ui",
                 this.columnsClassMap[attrs.columns],

@@ -1,6 +1,6 @@
 module.exports = {
-  factory: require("./factory.js"),
-  shortcutFactory: require("./shortcutFactory.js"),
+  factory: require("./helpers/factory.js"),
+  shortcutFactory: require("./helpers/shortcutFactory.js"),
   input: require('./components/input.js'),
   field: require('./components/field.js'),
   checkbox: require('./components/checkbox.js'),

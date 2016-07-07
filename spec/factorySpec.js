@@ -1,4 +1,4 @@
-var factory = require("./../factory.js");
+var factory = require("./../helpers/factory.js");
 var _ = require("lodash");
 
 var noop = function() {};

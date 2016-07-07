@@ -9,8 +9,8 @@
   "files": [
     "components",
     "index.js",
-    "utils",
-    "dist"
+    "dist",
+    "helpers"
   ],
   "repository": {
     "type": "git",

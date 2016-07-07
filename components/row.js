@@ -1,40 +1,40 @@
 var base = require("./base.js");
 var _ = require("lodash");
-var helpers = require("./../helpers.js");
-var factory = require("./../factory.js");
+var enums = require("./../helpers/enums.js");
+var factory = require("./../helpers/factory.js");
 
 var component = {
   controller: function (attrs) {
     return {
       attrSchema: {
-        columns: {inclusion: {within: helpers.properKeys(helpers.columnsClassMap),
+        columns: {inclusion: {within: enums.properKeys(enums.columnsClassMap),
                               message: "^Invalid value '%{value}'."}},
         stretched: {inclusion: {within: [true, false],
                                 message: "^%{value} is not a boolean value."}},
-        color: {inclusion: {within: _.keys(helpers.colorClassMap),
+        color: {inclusion: {within: _.keys(enums.colorClassMap),
                             message: "^Invalid value '%{value}'."}},
         centered: {inclusion: {within: [true, false],
                                message: "^%{value} is not a boolean value."}},
-        textAlignment: {inclusion: {within: _.keys(helpers.textAlignmentClassMap),
+        textAlignment: {inclusion: {within: _.keys(enums.textAlignmentClassMap),
                                     message: "^Invalid value '%{value}'."}},
-        verticalAlignment: {inclusion: {within: _.keys(helpers.verticalAlignmentClassMap),
+        verticalAlignment: {inclusion: {within: _.keys(enums.verticalAlignmentClassMap),
                                         message: "^Invalid value '%{value}'."}},
-        visible: {inclusion: {within: _.keys(helpers.visibleClassMap),
+        visible: {inclusion: {within: _.keys(enums.visibleClassMap),
                               message: "^Invalid value '%{value}'."}},
-        reverse: {inclusion: {within: _.keys(helpers.reverseClassMap),
+        reverse: {inclusion: {within: _.keys(enums.reverseClassMap),
                               message: "^Invalid value '%{value}'."}}
       },
-      columnsClassMap: helpers.columnsClassMap,
+      columnsClassMap: enums.columnsClassMap,
       stretchedClassMap: {
         true: "stretched",
         false: ""
       },
-      colorClassMap: helpers.colorClassMap,
-      centeredClassMap: helpers.centeredClassMap,
-      textAlignmentClassMap: helpers.textAlignmentClassMap,
-      verticalAlignmentClassMap: helpers.verticalAlignmentClassMap,
-      visibleClassMap: helpers.visibleClassMap,
-      reverseClassMap: helpers.reverseClassMap,
+      colorClassMap: enums.colorClassMap,
+      centeredClassMap: enums.centeredClassMap,
+      textAlignmentClassMap: enums.textAlignmentClassMap,
+      verticalAlignmentClassMap: enums.verticalAlignmentClassMap,
+      visibleClassMap: enums.visibleClassMap,
+      reverseClassMap: enums.reverseClassMap,
       getClassList: function (attrs) {
         return [this.columnsClassMap[attrs.columns],
                 this.stretchedClassMap[attrs.stretched],

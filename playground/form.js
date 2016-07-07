@@ -12,38 +12,53 @@ var superheroes = [{label: "-- Superheroes --", value: ""},
                   {label: "Flash", value: 3}];
 var selectModel = Form({superhero: {presence: true, default: ""}}).superhero;
 
+var container = ui.shortcutFactory(ui.container);
+var grid = ui.shortcutFactory(ui.grid);
+var row = ui.shortcutFactory(ui.row);
+var column = ui.shortcutFactory(ui.column);
+var divider = ui.shortcutFactory(ui.divider);
+var menu = ui.shortcutFactory(ui.menu);
+var item = ui.shortcutFactory(ui.item);
 var card = ui.shortcutFactory(ui.card);
+var content = ui.shortcutFactory(ui.content);
+var header = ui.shortcutFactory(ui.header);
+var icon = ui.shortcutFactory(ui.icon);
+var meta = ui.shortcutFactory(ui.meta);
+var subHeader = ui.shortcutFactory(ui.subHeader);
+var description = ui.shortcutFactory(ui.description);
+var button = ui.shortcutFactory(ui.button);
 
 var app = {
   view: function () {
-    return m(ui.container,
-             m(ui.grid, {reverse: "tablet"},
-               m(ui.row, {class: "myclass"},
-                 m(ui.column, {mobile: 16, tablet: 8, computer: 8, largeScreen: 4, widescreen: 4},
-                   m(ui.divider),
-                   m(ui.menu, {class: "vertical"},
-                     m(ui.item, "Home"),
-                     m(ui.item, "About"),
-                     m(ui.item, "Contact Us")),
-                   m(ui.divider),
-                   m(ui.card, {class: "centered"},
-                     m(ui.content,
-                       m(ui.header,
-                         m(ui.icon, {class: "right floated like", node: "i"}),
-                         "This is an awesome header",
-                         m(ui.subHeader, "This is a sub header."),
-                         m(ui.meta, m("span", "meta1"), m("span", "meta2")))),
-                     m(ui.content,
-                       m(ui.description, "This is a description.")),
-                     m(ui.content,
-                       m(ui.button, {class: "fluid"}, "Click Me"))),
-                   m(ui.divider),
-                   m("form.ui.form",
-                     m("h1", "Select"),
-                     m.component(ui.select, {model: selectModel,
-                                             label: "Superhero",
-                                             help: "Please choose a superhero.",
-                                             options: superheroes
+    return container(
+      grid({reverse: "tablet"},
+           row({class: "myclass"},
+               column({mobile: 16, tablet: 8, computer: 8, largeScreen: 4, widescreen: 4},
+                      divider(),
+                      menu({class: "vertical"},
+                           item("Home"),
+                           item("About"),
+                           item("Contact Us")),
+                      divider(),
+                      card({class: "centered"},
+                           content(
+                             header(
+                               icon({class: "right floated like", node: "i"}),
+                               "This is an awesome header",
+                               subHeader("This is a sub header."),
+                               meta(
+                                 m("span", "meta1"), m("span", "meta2")))),
+                           content(
+                             description("This is a description.")),
+                           content(
+                             button({class: "fluid"}, "Click Me"))),
+                      divider(),
+                      m("form.ui.form",
+                        m("h1", "Select"),
+                        m.component(ui.select, {model: selectModel,
+                                                label: "Superhero",
+                                                help: "Please choose a superhero.",
+                                                options: superheroes
                                             }),
                      m('h1', "Input"),
                      m.component(ui.input, {class: "ui labeled icon input",

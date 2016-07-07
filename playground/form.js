@@ -12,12 +12,32 @@ var superheroes = [{label: "-- Superheroes --", value: ""},
                   {label: "Flash", value: 3}];
 var selectModel = Form({superhero: {presence: true, default: ""}}).superhero;
 
+var card = ui.shortcutFactory(ui.card);
+
 var app = {
   view: function () {
-    return m(ui.container, {onclick: function() {alert('you clicked');}},
+    return m(ui.container,
              m(ui.grid, {reverse: "tablet"},
                m(ui.row, {class: "myclass"},
-                 m(ui.column, {mobile: 16, tablet: 8, computer: 4, largeScreen: 4, widescreen: 4},
+                 m(ui.column, {mobile: 16, tablet: 8, computer: 8, largeScreen: 4, widescreen: 4},
+                   m(ui.divider),
+                   m(ui.menu, {class: "vertical"},
+                     m(ui.item, "Home"),
+                     m(ui.item, "About"),
+                     m(ui.item, "Contact Us")),
+                   m(ui.divider),
+                   m(ui.card, {class: "centered"},
+                     m(ui.content,
+                       m(ui.header,
+                         m(ui.icon, {class: "right floated like", node: "i"}),
+                         "This is an awesome header",
+                         m(ui.subHeader, "This is a sub header."),
+                         m(ui.meta, m("span", "meta1"), m("span", "meta2")))),
+                     m(ui.content,
+                       m(ui.description, "This is a description.")),
+                     m(ui.content,
+                       m(ui.button, {class: "fluid"}, "Click Me"))),
+                   m(ui.divider),
                    m("form.ui.form",
                      m("h1", "Select"),
                      m.component(ui.select, {model: selectModel,

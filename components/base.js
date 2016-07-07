@@ -65,12 +65,13 @@ module.exports = {
       },
       getFinalAttrs: function (attrs) {
         attrs.class = this.getClass(attrs);
+        delete attrs.node;
         return _.omit(attrs, _.keys(this.attrSchema));
       }
     };
   },
   view: function (c, attrs) {
     c.validateAttrs(attrs, c.attrSchema);
-    return m("div", c.getFinalAttrs(c.getAttrs(arguments)), c.getChildren(arguments));
+    return m(attrs && attrs.node? attrs.node: "div", c.getFinalAttrs(c.getAttrs(arguments)), c.getChildren(arguments));
   }
 };

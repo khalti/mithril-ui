@@ -46,6 +46,9 @@ describe("components/base", function () {
     it("should set children", function () {
       expect(fakeController.getChildren).toHaveBeenCalled();
     });
+
+    it("should exclude attrs.node from root's attributes.");
+    it("should set 'div' as root tag if attrs.node is absent.");
   });
 
   describe(".controller", function () {
@@ -225,6 +228,8 @@ describe("components/base", function () {
           var expected = {"data-name": "aName", class: "left aligned fluid"};
           expect(finalAttrs).toEqual(expected);
         });
+
+        it("should set attrs.node as root tag.");
       });
     });
   });

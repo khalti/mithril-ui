@@ -1,6 +1,6 @@
 {
   "name": "mithril-ui",
-  "version": "0.10.2",
+  "version": "0.10.3",
   "description": "UI components for Mithril.js",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,8 @@
     "components",
     "index.js",
     "dist",
-    "helpers"
+    "helpers",
+    "shortcuts.js"
   ],
   "repository": {
     "type": "git",

@@ -12,21 +12,24 @@ var superheroes = [{label: "-- Superheroes --", value: ""},
                   {label: "Flash", value: 3}];
 var selectModel = Form({superhero: {presence: true, default: ""}}).superhero;
 
-var container = ui.shortcutFactory(ui.container);
-var grid = ui.shortcutFactory(ui.grid);
-var row = ui.shortcutFactory(ui.row);
-var column = ui.shortcutFactory(ui.column);
-var divider = ui.shortcutFactory(ui.divider);
-var menu = ui.shortcutFactory(ui.menu);
-var item = ui.shortcutFactory(ui.item);
-var card = ui.shortcutFactory(ui.card);
-var content = ui.shortcutFactory(ui.content);
-var header = ui.shortcutFactory(ui.header);
-var icon = ui.shortcutFactory(ui.icon);
-var meta = ui.shortcutFactory(ui.meta);
-var subHeader = ui.shortcutFactory(ui.subHeader);
-var description = ui.shortcutFactory(ui.description);
-var button = ui.shortcutFactory(ui.button);
+var container = ui.shortcuts.container;
+var grid = ui.shortcuts.grid;
+var row = ui.shortcuts.row;
+var column = ui.shortcuts.column;
+var divider = ui.shortcuts.divider;
+var menu = ui.shortcuts.menu;
+var item = ui.shortcuts.item;
+var card = ui.shortcuts.card;
+var content = ui.shortcuts.content;
+var header = ui.shortcuts.header;
+var icon = ui.shortcuts.icon;
+var meta = ui.shortcuts.meta;
+var subHeader = ui.shortcuts.subHeader;
+var description = ui.shortcuts.description;
+var button = ui.shortcuts.button;
+var h1 = ui.shortcuts.h1;
+var span = ui.shortcuts.span;
+var form = ui.shortcuts.form;
 
 var app = {
   view: function () {
@@ -47,20 +50,20 @@ var app = {
                                "This is an awesome header",
                                subHeader("This is a sub header."),
                                meta(
-                                 m("span", "meta1"), m("span", "meta2")))),
+                                 span({style: {color: "red"}}, "meta1"), span("meta2")))),
                            content(
                              description("This is a description.")),
                            content(
                              button({class: "fluid"}, "Click Me"))),
                       divider(),
-                      m("form.ui.form",
-                        m("h1", "Select"),
+                      form(
+                        h1("Select"),
                         m.component(ui.select, {model: selectModel,
                                                 label: "Superhero",
                                                 help: "Please choose a superhero.",
                                                 options: superheroes
                                             }),
-                     m('h1', "Input"),
+                        h1("Input"),
                      m.component(ui.input, {class: "ui labeled icon input",
                                             prepend: m(".ui.label", m("i.users.icon")),
                                             append: m("i.search.icon"),

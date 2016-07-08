@@ -25,5 +25,6 @@ module.exports = {
   item: require('./components/item.js'),
   segment: require('./components/segment.js'),
   segments: require('./components/segments.js'),
-  form: require('./components/form.js')
+  form: require('./components/form.js'),
+  fields: require('./components/fields.js')
 };

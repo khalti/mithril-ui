@@ -23,6 +23,7 @@ var menu = require("./components/menu.js");
 var row = require("./components/row.js");
 var subHeader = require("./components/subHeader.js");
 var form = require("./components/form.js");
+var fields = require("./components/fields.js");
 
 module.exports = {
   // elements
@@ -67,5 +68,6 @@ module.exports = {
   menu: sf(menu),
   row: sf(row),
   subHeader: sf(subHeader),
-  form: sf(form)
+  form: sf(form),
+  fields: sf(fields)
 };

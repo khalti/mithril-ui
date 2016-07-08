@@ -24,6 +24,7 @@ var row = require("./components/row.js");
 var subHeader = require("./components/subHeader.js");
 var form = require("./components/form.js");
 var fields = require("./components/fields.js");
+var image = require("./components/image.js");
 
 module.exports = {
   // elements
@@ -69,5 +70,6 @@ module.exports = {
   row: sf(row),
   subHeader: sf(subHeader),
   form: sf(form),
-  fields: sf(fields)
+  fields: sf(fields),
+  image: sf(image)
 };

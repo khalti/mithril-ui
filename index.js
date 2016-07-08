@@ -1,4 +1,5 @@
 module.exports = {
+  shortcuts: require("./shortcuts.js"),
   factory: require("./helpers/factory.js"),
   shortcutFactory: require("./helpers/shortcutFactory.js"),
   input: require('./components/input.js'),
@@ -23,5 +24,6 @@ module.exports = {
   menu: require('./components/menu.js'),
   item: require('./components/item.js'),
   segment: require('./components/segment.js'),
-  segments: require('./components/segments.js')
+  segments: require('./components/segments.js'),
+  form: require('./components/form.js')
 };

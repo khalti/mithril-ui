@@ -10,7 +10,8 @@
     "components",
     "index.js",
     "dist",
-    "helpers"
+    "helpers",
+    "shortcuts.js"
   ],
   "repository": {
     "type": "git",

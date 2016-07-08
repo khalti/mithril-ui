@@ -1,5 +1,6 @@
 var base = require("./base.js");
 var factory = require("./../helpers/factory.js");
+var m = require("mithril");
 
 var component = {
   controller: function (attrs) {

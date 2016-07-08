@@ -8,6 +8,10 @@ var component = {
         return ["icon"];
       }
     };
+  },
+  view: function (c, attrs) {
+    c.validateAttrs(attrs, c.attrSchema);
+    return m(attrs && attrs.node? attrs.node: "i", c.getFinalAttrs(c.getAttrs(arguments)), c.getChildren(arguments));
   }
 };
 

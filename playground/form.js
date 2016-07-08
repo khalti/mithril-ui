@@ -46,7 +46,7 @@ var app = {
                       card({class: "centered"},
                            content(
                              header(
-                               icon({class: "right floated like", node: "i"}),
+                               icon({class: "right floated like"}),
                                "This is an awesome header",
                                subHeader("This is a sub header."),
                                meta(

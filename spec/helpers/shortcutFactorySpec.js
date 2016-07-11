@@ -1,5 +1,5 @@
-var shortcutFactory = require("./../helpers/shortcutFactory.js");
-var base = require("./../components/base.js");
+var shortcutFactory = require("./../../helpers/shortcutFactory.js");
+var base = require("./../../components/base.js");
 var _ = require("lodash");
 
 describe("shortcutFactory", function () {

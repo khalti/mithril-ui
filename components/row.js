@@ -1,9 +1,10 @@
 var base = require("./base.js");
 var _ = require("lodash");
 var enums = require("./../helpers/enums.js");
-var factory = require("./../helpers/factory.js");
+var component = require("./../helpers/component.js");
 
-var component = {
+var struct = {
+  extend: base,
   controller: function (attrs) {
     return {
       attrSchema: {
@@ -50,4 +51,4 @@ var component = {
   }
 };
 
-module.exports = factory(base, component);
+module.exports = component(struct);

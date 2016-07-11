@@ -1,7 +1,8 @@
 var base = require("./base.js");
-var factory = require("./../helpers/factory.js");
+var component = require("./../helpers/component.js");
 
-var component = {
+var struct = {
+  extend: base,
   controller: function (attrs) {
     return {
       getClassList: function (attrs) {
@@ -11,4 +12,4 @@ var component = {
   }
 };
 
-module.exports = factory(base, component);
+module.exports = component(struct);

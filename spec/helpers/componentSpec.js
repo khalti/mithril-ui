@@ -16,35 +16,6 @@ describe("helpers/component.js", function () {
     expect(component.bind(component, {})).toThrowError(Error);
   });
 
-  it("should return a function", function () {
-    var aCom = component({view: function () {}});
-    expect(_.isFunction(aCom)).toEqual(true);
-  });
-
-  it("should attach the view to the returned function", function () {
-    var base = {
-      view: function () {
-        return "baseView";
-      }
-    };
-    var aCom = component({extend: base});
-
-    expect(aCom.view()).toEqual("baseView");
-  });
-
-  it("should attach the controller to the returned function", function () {
-    var base = {
-      view: noop,
-      controller: function () {
-        return {one: 1};
-      }
-    };
-    var ctrl = component({extend: base}).controller();
-    delete ctrl.base;
-
-    expect(ctrl).toEqual({one: 1});
-  });
-
   it("should merge the controllers", function () {
     var base = {
       view: noop,
@@ -129,14 +100,14 @@ describe("helpers/component.js", function () {
     expect(aCom.view()).toEqual("baseView");
   });
 
-  it("should return a function which returns the processed component.", function () {
+  it("should return proper mithril component", function () {
     var struct = {
       view: function () {
         return "view";
       }
     };
     var aCom = component(struct);
-
-    expect(aCom().view.$original()).toEqual("view");
+    expect(_.isFunction(aCom.controller)).toEqual(true);
+    expect(_.isFunction(aCom.view)).toEqual(true);
   });
 });

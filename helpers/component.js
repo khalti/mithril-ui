@@ -1,9 +1,4 @@
 var _ = require("lodash");
-var m = require("mithril");
-
-var isEmpty = function (array) {
-  return array.length === 0;
-};
 
 var validateComponent = function (component) {
   if (!_.isObject(component)) {
@@ -30,29 +25,14 @@ module.exports = function (struct) {
     throw Erro("Either base or new component must have a view.");
   }
 
-  var func = function () {
-    var argList = [];
-    for(var i = 0; i < arguments.length; i++) {
-      argList.push(arguments[i]);
-    }
-
-    var com = {
-      controller: func.controller,
-      view: func.view
-    };
-
-    return m.apply(m, [com].concat(argList));
+  return {
+    controller: function (attrs) {
+      var baseCtrl = s.extend && s.extend.controller? new s.extend.controller(attrs) : {};
+      var structCtrl = s && s.controller? new s.controller(attrs) : {};
+      var newCtrl = _.clone(_.assign(baseCtrl, structCtrl));
+      newCtrl.base = baseCtrl;
+      return newCtrl;
+    },
+    view: s.view || s.extend.view
   };
-
-  func.controller = function (attrs) {
-    var baseCtrl = s.extend && s.extend.controller? new s.extend.controller(attrs) : {};
-    var structCtrl = s && s.controller? new s.controller(attrs) : {};
-    var newCtrl = _.clone(_.assign(baseCtrl, structCtrl));
-    newCtrl.base = baseCtrl;
-    return newCtrl;
-  };
-
-  func.view = s.view || s.extend.view;
-
-  return func;
 };

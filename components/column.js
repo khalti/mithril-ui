@@ -1,7 +1,7 @@
 var base = require("./base.js");
 var _ = require("lodash");
 var enums = require("./../helpers/enums.js");
-var factory = require("./../helpers/factory.js");
+var component = require("./../helpers/component.js");
 
 var floatClassMap = {
   "left": "left floated",
@@ -9,7 +9,8 @@ var floatClassMap = {
 };
 
 
-var component = {
+var struct = {
+  extend: base,
   controller: function (attrs) {
     return {
       classAppend: undefined,
@@ -57,4 +58,4 @@ var component = {
   }
 };
 
-module.exports =  factory(base, component);
+module.exports =  component(struct);

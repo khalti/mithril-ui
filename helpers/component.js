@@ -36,12 +36,17 @@ module.exports = function (struct) {
       argList.push(arguments[i]);
     }
 
-    return m.apply(m, [func].concat(argList));
+    var com = {
+      controller: func.controller,
+      view: func.view
+    };
+
+    return m.apply(m, [com].concat(argList));
   };
 
   func.controller = function (attrs) {
-    var baseCtrl = s.extend.controller? new s.extend.controller(attrs) : {};
-    var structCtrl = s.controller? new s.controller(attrs) : {};
+    var baseCtrl = s.extend && s.extend.controller? new s.extend.controller(attrs) : {};
+    var structCtrl = s && s.controller? new s.controller(attrs) : {};
     var newCtrl = _.clone(_.assign(baseCtrl, structCtrl));
     newCtrl.base = baseCtrl;
     return newCtrl;

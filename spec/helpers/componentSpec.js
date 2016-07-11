@@ -129,6 +129,14 @@ describe("helpers/component.js", function () {
     expect(aCom.view()).toEqual("baseView");
   });
 
-  it("should return a function which returns the processed component.");
-  it("should return a valid component.");
+  it("should return a function which returns the processed component.", function () {
+    var struct = {
+      view: function () {
+        return "view";
+      }
+    };
+    var aCom = component(struct);
+
+    expect(aCom().view.$original()).toEqual("view");
+  });
 });

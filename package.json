@@ -4,7 +4,9 @@
   "description": "UI components for Mithril.js",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine"
+    "test": "mocha --compilers js:babel-register spec/*",
+    "build": "babel --plugins transform-es2015-modules-commonjs index.js --out-dir lib",
+    "prepublish": "npm run test && npm run build"
   },
   "files": [
     "components",
@@ -29,14 +31,21 @@
   },
   "homepage": "https://github.com/ludbek/mithril-ui#readme",
   "devDependencies": {
-    "jasmine": "^2.4.1",
+    "babel-cli": "^6.11.4",
+    "babel-core": "^6.11.4",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.11.5",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-register": "^6.11.5",
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3",
     "webpack": "^1.13.1"
   },
   "dependencies": {
-    "jquery": "^2.2.0",
     "lodash": "^4.0.0",
     "mithril": "^0.2.3",
-    "mithril-form": "^1.3.2",
+    "mithril-componentx": "^0.1.3",
+    "powerform": "^1.0.3",
     "validate.js": "^0.10.0"
   }
 }

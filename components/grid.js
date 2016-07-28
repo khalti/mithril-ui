@@ -1,45 +1,45 @@
-var base = require("./base.js");
-var _ = require("lodash");
-var enums = require("./../helpers/enums.js");
-var component = require("./../helpers/component.js");
+import {base} from "./base.js";
+import component from "mithril-componentx";
+import _ from "lodash";
+import enums from "./../helpers/enums.js";
 
-var divideClassMap = {
+let divideClassMap = {
   "horizontally": "divided",
   "vertically": "vertically divided"
 };
 
-var cellClassMap = {
+let cellClassMap = {
   "externally": "celled",
   "internally": "internally celled"
 };
 
-var equalWidthClassMap = {
+let equalWidthClassMap = {
   true: "equal width",
   false: ""
 };
 
 /*TODO vertically, horizontally, all*/
-var paddedClassMap = {
+let paddedClassMap = {
   true: "padded",
   false: ""
 };
 
-var relaxedClassMap = {
+let relaxedClassMap = {
   true: "relaxed",
   false: ""
 };
 
-var doublingClassMap = {
+let doublingClassMap = {
   true: "doubling",
   false: ""
 };
 
-var stackableClassMap = {
+let stackableClassMap = {
   true: "stackable",
   false: ""
 };
 
-var attrSchema = {
+let attrSchema = {
   columns: {inclusion: {within: enums.properKeys(enums.widthClassMap),
                         message: "^Invalid column count '%{value}'."}},
   divide: {inclusion: {within: _.keys(divideClassMap),
@@ -66,41 +66,35 @@ var attrSchema = {
                          message: "^Invalid value '%{value}'."}}
 };
 
-var struct = {
-  extend: base,
-  controller: function (attrs) {
-    return {
-      attrSchema: attrSchema,
-      columnsClassMap: enums.columnsClassMap,
-      divideClassMap: divideClassMap,
-      cellClassMap: cellClassMap,
-      equalWidthClassMap: equalWidthClassMap,
-      paddedClassMap: paddedClassMap,
-      relaxedClassMap: relaxedClassMap,
-      centeredClassMap: enums.centeredClassMap,
-      textAlignmentClassMap: enums.textAlignmentClassMap,
-      verticalAlignmentClassMap: enums.verticalAlignmentClassMap,
-      doublingClassMap: doublingClassMap,
-      stackableClassMap: stackableClassMap,
-      reverseClassMap: enums.reverseClassMap,
-      getClassList: function (attrs) {
-        return ["ui",
-                this.columnsClassMap[attrs.columns],
-                this.divideClassMap[attrs.divide],
-                this.cellClassMap[attrs.cell],
-                this.equalWidthClassMap[attrs.equalWidth],
-                this.paddedClassMap[attrs.padded],
-                this.relaxedClassMap[attrs.relaxed],
-                this.centeredClassMap[attrs.centered],
-                this.textAlignmentClassMap[attrs.textAlignment],
-                this.verticalAlignmentClassMap[attrs.verticalAlignment],
-                this.doublingClassMap[attrs.doubling],
-                this.stackableClassMap[attrs.stackable],
-                this.reverseClassMap[attrs.reverse],
-                "grid"];
-      }
-    };
-  }
-};
-
-module.exports = component(struct);
+export const grid = component({
+  base: base,
+	attrSchema: attrSchema,
+	columnsClassMap: enums.columnsClassMap,
+	divideClassMap: divideClassMap,
+	cellClassMap: cellClassMap,
+	equalWidthClassMap: equalWidthClassMap,
+	paddedClassMap: paddedClassMap,
+	relaxedClassMap: relaxedClassMap,
+	centeredClassMap: enums.centeredClassMap,
+	textAlignmentClassMap: enums.textAlignmentClassMap,
+	verticalAlignmentClassMap: enums.verticalAlignmentClassMap,
+	doublingClassMap: doublingClassMap,
+	stackableClassMap: stackableClassMap,
+	reverseClassMap: enums.reverseClassMap,
+	getClassList: function (attrs) {
+		return ["ui",
+						this.columnsClassMap[attrs.columns],
+						this.divideClassMap[attrs.divide],
+						this.cellClassMap[attrs.cell],
+						this.equalWidthClassMap[attrs.equalWidth],
+						this.paddedClassMap[attrs.padded],
+						this.relaxedClassMap[attrs.relaxed],
+						this.centeredClassMap[attrs.centered],
+						this.textAlignmentClassMap[attrs.textAlignment],
+						this.verticalAlignmentClassMap[attrs.verticalAlignment],
+						this.doublingClassMap[attrs.doubling],
+						this.stackableClassMap[attrs.stackable],
+						this.reverseClassMap[attrs.reverse],
+						"grid"];
+	}
+});

@@ -1,21 +1,15 @@
-var base = require("./base.js");
-var component = require("./../helpers/component.js");
-var m = require("mithril");
+import {base} from "./base.js";
+import component from "mithril-componentx";
+import m from "mithril";
 
-var struct = {
-  extend: base,
-  controller: function (attrs) {
-    return {
-      getClassList: function (attrs) {
-        return ["ui",
-                "form"];
-      }
-    };
-  },
-  view: function (c, attrs) {
-    c.validateAttrs(attrs, c.attrSchema);
-    return m("form", c.getFinalAttrs(c.getAttrs(arguments)), c.getChildren(arguments));
+
+export const from = component({
+	base: base,
+	getClassList (attrs) {
+		return ["ui",
+						"form"];
+	},
+  view (vnode) {
+    return m("form", vnode.attrs.dom, vnode.children);
   }
-};
-
-module.exports = component(struct);
+});

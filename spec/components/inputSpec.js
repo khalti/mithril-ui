@@ -1,92 +1,92 @@
-var input = require("../../components/input.js");
-var m = require('mithril');
-var mock = require("../deps/mock.js");
+import {input} from "../../src/components/input.js";
+import m from 'mithril';
+import chai from "chai";
+import classnames from "classnames";
 
-describe("input", function () {
-  var attrs = {
-    prepend: 'aPrepend',
-    append: 'aAppend',
-    onclick: 'aCallabck',
-    type: 'hidden'
-  };
+let expect = chai.expect;
 
-  var aCtrl = new input.controller(attrs);
-  var aView = input.view(aCtrl, attrs);
+let $ = (vdom) => {
+	if (vdom.view) {
+		return vdom.view();
+	}
+	return vdom;
+};
 
-  it("it appends", function () {
-    expect(aView.children[0]).toEqual(attrs.prepend);
-  });
+let getClass = (attrs) => {
+	return classnames(input.getClassList(attrs));
+};
 
-  it("it prepends", function () {
-    expect(aView.children[2]).toEqual(attrs.append);
-  });
 
-  it("it sets root's class to attrs.class", function () {
-    var attrs = {
-      prepend: 'aPrepend',
-      append: 'aAppend',
-      onclick: 'aCallabck',
-      type: 'hidden',
-      class: "aClass"
-    };
-    var aCtrl = new input.controller(attrs);
-    var aView = input.view(aCtrl, attrs);
-    expect(aView.attrs.class).toEqual(attrs.class);
-  });
+describe("input", () => {
+	describe(".view", () => {
+		let attrs, vdom;
 
-  it("it sets root's class from ctrl.getClass() if attrs.class is undefined", function () {
-    expect(aView.attrs.class).toEqual("ui right labeled input");
-  });
+		beforeEach(() => {
+			attrs = {
+				prepend: 'aPrepend',
+				append: 'aAppend',
+				onclick: 'aCallabck',
+				type: 'hidden'
+			};
+			vdom = $(m(input, attrs));
+		});
 
-  it("passes rest of the attributes to input element", function () {
-    var inputAttrs = aView.children[1].attrs;
-    expect(inputAttrs).toEqual({onclick: attrs.onclick, type: 'hidden', class: 'hidden'});
-  });
+		it("'s root dom is a div", () => {
+			expect(vdom.tag).to.equal('div');
+		});
 
-  it("changes class of <input> element to 'hidden' if 'attrs.type' is 'hidden'", function () {
-    var inputAttrs = aView.children[1].attrs;
-    expect(inputAttrs.class).toEqual(attrs.type);
-  });
+		it("it appends", function () {
+			expect(vdom.children[2]).to.equal(attrs.append);
+		});
 
-  describe("input.controller.getClass()", function () {
-    var ctrl;
-    beforeEach(function () {
-      ctrl = new input.controller();
+		it("it prepends", function () {
+			expect(vdom.children[0]).to.equal(attrs.prepend);
+		});
+
+		it("'s root element has 'ui' and 'input' in its class", () => {
+			expect(vdom.attrs.className).to.have.string('ui');
+			expect(vdom.attrs.className).to.have.string('input');
+		});
+
+		it("changes class of 'input' element to 'hidden' if 'attrs.type' is 'hidden'", () => {
+			expect(vdom.children[1]);
+		});
+	});
+
+  describe(".getClass",  () => {
+    it("returns '.ui.input' if there is nothing to prepend or append", () => {
+      let attrs = {};
+      expect(getClass(attrs)).to.equal("ui input");
     });
 
-    it("returns '.ui.input' if there is nothing to prepend or append", function () {
-      var attrs = {};
-      expect(ctrl.getClass(attrs)).toEqual("ui input");
-    });
-
-    it("returns '.ui.icon.input' if an icon is being appended", function () {
+    it("returns '.ui.icon.input' if an icon is being appended", () => {
       var attrs = {append: m("i")};
-      expect(ctrl.getClass(attrs)).toEqual("ui icon input");
+      expect(getClass(attrs)).to.equal("ui icon input");
     });
 
-    it("returns '.ui.left.icon.input' if an icon is being prepended", function () {
+    it("returns '.ui.left.icon.input' if an icon is being prepended", () => {
       var attrs = {prepend: m("i")};
-      expect(ctrl.getClass(attrs)).toEqual("ui left icon input");
+      expect(getClass(attrs)).to.equal("ui left icon input");
     });
 
-    it("returns '.ui.labeled.input' if a label is being prepended", function () {
+    it("returns '.ui.labeled.input' if a label is being prepended", () => {
       var attrs = {prepend: m("div")};
-      expect(ctrl.getClass(attrs)).toEqual("ui labeled input");
+      expect(getClass(attrs)).to.equal("ui labeled input");
     });
 
-    it("returns '.ui.right.labeled.input' if a label is being appended", function () {
+    it("returns '.ui.right.labeled.input' if a label is being appended", () => {
       var attrs = {append: m("div")};
-      expect(ctrl.getClass(attrs)).toEqual("ui right labeled input");
+      expect(getClass(attrs)).to.equal("ui right labeled input");
     });
 
-    it("returns '.ui.labeled.icon.input' if a label is being prepended and icon is being appended", function () {
+    it("returns '.ui.labeled.icon.input' if a label is being prepended and icon is being appended", ()  => {
       var attrs = {prepend: m("div"), append: m("i")};
-      expect(ctrl.getClass(attrs)).toEqual("ui labeled icon input");
+      expect(getClass(attrs)).to.equal("ui icon labeled input");
     });
 
-    it("returns '.ui.left.icon.right.labeled.input' if an icon is being prepended and a label is being appended", function () {
+    it("returns '.ui.left.icon.right.labeled.input' if an icon is being prepended and a label is being appended", () => {
       var attrs = {prepend: m("i"), append: m("div")};
-      expect(ctrl.getClass(attrs)).toEqual("ui left icon right labeled input");
+      expect(getClass(attrs)).to.equal("ui left icon right labeled input");
     });
   });
 });

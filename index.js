@@ -1,6 +1,4 @@
 module.exports = {
-  shortcuts: require("./shortcuts.js"),
-  component: require("./helpers/component.js"),
   shortcutFactory: require("./helpers/shortcutFactory.js"),
   input: require('./components/input.js'),
   field: require('./components/field.js'),

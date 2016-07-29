@@ -1,9 +1,13 @@
-var passwordField = require("../../components/passwordField.js");
-var form = require('mithril-form');
-var m = require("mithril");
-var mock = require("../deps/mock.js");
+import {passwordField} from "../../src/components/passwordField.js";
+import m from "mithril";
+import chai from "chai";
+import {getVdom} from "./../utils.js";
 
-describe("components/password", function () {
+let expect = chai.expect;
+
+console.log(getVdom(m(passwordField)));
+
+xdescribe("components/password", function () {
   var root, attrs;
   beforeEach(function () {
     root = mock.document.createElement("div");

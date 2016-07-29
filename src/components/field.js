@@ -1,76 +1,71 @@
-var m = require("mithril");
-var _ = require("lodash");
-var Input = require("./input.js");
+import m from "mithril";
+import  isObject from "lodash/isObject";
+import isString from "lodash/isString";
+import {input}  from "./input.js";
+import component from "mithril-componentx";
+import {base} from "./base.js";
 
-// m.component(Field, {
-//   'class': ,
-//   'model': a FormModel instance,
-//   'input': ,
-//   'label': {text: , append: , prepend: },
-// })
-module.exports = {
-  controller: function (attrs) {
-    return {
-      getLabelPrepend: function () {
-        if(_.isString(attrs.label)) {
-          return m('label', attrs.label);
-        }
-        else if (_.isObject(attrs.label) && attrs.label.prepend) {
-          return m('label', attrs.label.text);
-        }
-        else if(_.isObject(attrs.label) && !attrs.label.prepend && !attrs.label.append) {
-          return m('label', attrs.label.text);
-        }
-      },
+export const field = component({
+	base: base,
+	attrSchema: {
+		model: {presence: true},
+		type: {presence: true}
+	},
+	getLabelPrepend (attrs) {
+		if(isString(attrs.label)) {
+			return m('label', attrs.label);
+		}
+		else if (isObject(attrs.label) && attrs.label.prepend) {
+			return m('label', attrs.label.text);
+		}
+		else if(isObject(attrs.label) && !attrs.label.prepend && !attrs.label.append) {
+			return m('label', attrs.label.text);
+		}
+	},
+	getLabelAppend (attrs) {
+		if(isObject(attrs.label) && attrs.label.append) {
+			return m('label', attrs.label.text);
+		}
+		else if(attrs.help && !attrs.model.error()) {
+			return m('label.help', attrs.help);
+		}
+		else if(attrs.model.error() && !attrs.hideError) {
+			return m('label.error', attrs.model.error());
+		}
+	},
+	getClassList (attrs) {
+		return [
+			{inline: attrs.isInline},
+			"field",
+			{error: attrs.model.error() && ! attrs.hideError}
+		];
+	},
+  view (vnode)  {
+		let attrs = vnode.attrs;
 
-      getLabelAppend: function () {
-        if(_.isObject(attrs.label) && attrs.label.append) {
-          return m('label', attrs.label.text);
-        }
-        else if(attrs.help && !attrs.model.errors()) {
-          return m('label.help', attrs.help);
-        }
-        else if(attrs.model.errors() && !attrs.hideError) {
-          return m('label.error', attrs.model.errors()[0]);
-        }
-      },
-
-      getClass: function () {
-        var dClass = "";
-        if (attrs.model.errors() && !attrs.hideError) dClass = "field error";
-        else dClass = "field";
-        if (attrs.isInline) dClass = "inline " + dClass;
-        return dClass;
-      }
-    };
-  },
-
-  view: function (ctrl, attrs)  {
-    var leftAttrs = _.difference(['model', 'update', 'validate', 'type'], _.keys(attrs));
-    if (leftAttrs.length > 0) throw Error("'" + leftAttrs + "'" + " fields are required.");
-
-    //attrs.input.value = attrs.model()
-    attrs.input = {
+    let inputAttrs = {
       prepend: attrs.prepend,
       append: attrs.append,
       type: attrs.type,
       placeholder: attrs.placeholder,
       value: attrs.model(),
-      class: attrs.input? attrs.input.class : false
+			dom: {
+				className: attrs.input? attrs.input.class : ""
+			}
     };
 
 
     if (attrs.update === attrs.validate) {
-      attrs.input[attrs.update] = m.withAttr('value', attrs.model.setAndValidate);
+      inputAttrs[attrs.update] = m.withAttr('value', attrs.model.setAndValidate);
     }
     else {
-      attrs.input[attrs.update] = m.withAttr('value', attrs.model);
-      attrs.input[attrs.validate] = function () {attrs.model.isValid();};
+      inputAttrs[attrs.update] = m.withAttr('value', attrs.model);
+      inputAttrs[attrs.validate] = () => {attrs.model.isValid();};
     }
 
-    return m('div', {class: ctrl.getClass()},
-             ctrl.getLabelPrepend(),
-             m.component(Input, attrs.input),
-             ctrl.getLabelAppend());
+    return m('div', attrs.dom,
+             this.getLabelPrepend(attrs),
+             m(input, inputAttrs),
+             this.getLabelAppend(attrs));
   }
-};
+});

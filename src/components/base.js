@@ -4,7 +4,6 @@ import _ from "lodash";
 import component from "mithril-componentx";
 
 export const base = component({
-  base: base,
   validateAttrs (attrs) {
     let errors = validate(attrs, this.attrSchema);
     if (errors) throw Error(JSON.stringify(errors));

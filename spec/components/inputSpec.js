@@ -2,15 +2,9 @@ import {input} from "../../src/components/input.js";
 import m from 'mithril';
 import chai from "chai";
 import classnames from "classnames";
+import getVdom from "./../utils.js";
 
 let expect = chai.expect;
-
-let $ = (vdom) => {
-	if (vdom.view) {
-		return vdom.view();
-	}
-	return vdom;
-};
 
 let getClass = (attrs) => {
 	return classnames(input.getClassList(attrs));
@@ -23,16 +17,16 @@ describe("input", () => {
 
 		beforeEach(() => {
 			attrs = {
-				prepend: 'aPrepend',
-				append: 'aAppend',
-				onclick: 'aCallabck',
-				type: 'hidden'
+				prepend: "aPrepend",
+				append: "aAppend",
+				onclick: "aCallabck",
+				type: "hidden"
 			};
-			vdom = $(m(input, attrs));
+			vdom = getVdom(m(input, attrs));
 		});
 
 		it("'s root dom is a div", () => {
-			expect(vdom.tag).to.equal('div');
+			expect(vdom.tag).to.equal("div");
 		});
 
 		it("it appends", function () {
@@ -44,8 +38,8 @@ describe("input", () => {
 		});
 
 		it("'s root element has 'ui' and 'input' in its class", () => {
-			expect(vdom.attrs.className).to.have.string('ui');
-			expect(vdom.attrs.className).to.have.string('input');
+			expect(vdom.attrs.className).to.have.string("ui");
+			expect(vdom.attrs.className).to.have.string("input");
 		});
 
 		it("changes class of 'input' element to 'hidden' if 'attrs.type' is 'hidden'", () => {

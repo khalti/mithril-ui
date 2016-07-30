@@ -1,20 +1,22 @@
-var base = require("./base.js");
-var component = require("./../helpers/component.js");
-var m = require("mithril");
+import {base} from "./base.js";
+import component from "mithril-componentx";
+import m from "mithril";
+import omit from "lodash/omit";
 
-var struct = {
+export const item = component({
   extend: base,
-  controller: function (attrs) {
-    return {
-      getClassList: function (attrs) {
-        return ["item"];
-      }
-    };
-  },
-  view: function (c, attrs) {
-    c.validateAttrs(attrs, c.attrSchema);
-    return m(attrs && attrs.node? attrs.node: "a", c.getFinalAttrs(c.getAttrs(arguments)), c.getChildren(arguments));
+	getDefaultAttrs () {
+		return {
+			dom: {
+				tagName: "a"
+			}
+		};
+	},
+	getClassList (attrs) {
+		return ["item"];
+	},
+  view (vnode) {
+		let attrs = vnode.attrs;
+    return m(attrs.dom.tagName, omit(attrs.dom, ['tagName']), vnode.children);
   }
-};
-
-module.exports = component(struct);
+});

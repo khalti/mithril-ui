@@ -1,4 +1,4 @@
-import {column} from "./../../components/column.js";
+import {column} from "./../../src/components/column.js";
 import m from "mithril";
 var mock = require("../deps/mock.js");
 var _ = require("lodash");

@@ -81,7 +81,7 @@ export const grid = component({
 	doublingClassMap: doublingClassMap,
 	stackableClassMap: stackableClassMap,
 	reverseClassMap: enums.reverseClassMap,
-	getClassList: function (attrs) {
+	getClassList (attrs) {
 		return ["ui",
 						this.columnsClassMap[attrs.columns],
 						this.divideClassMap[attrs.divide],

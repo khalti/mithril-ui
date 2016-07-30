@@ -6,5 +6,4 @@ export const subHeader = component({
 	getClassList (attrs) {
 			return ["sub header"];
 		}
-	}
 });

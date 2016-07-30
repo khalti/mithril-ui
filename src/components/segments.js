@@ -1,16 +1,11 @@
-var base = require("./base.js");
-var component = require("./../helpers/component.js");
+import {base} from "./base.js";
+import component from "mithril-componentx";
 
-var struct = {
-  extend: base,
-  controller: function (attrs) {
-    return {
-      getClassList: function (attrs) {
-        return ["ui",
-                "segments"];
-      }
-    };
-  }
-};
 
-module.exports = component(struct);
+export const segment = component({
+	extend: base,
+	getClassList (attrs) {
+		return ["ui",
+						"segments"];
+	}
+});

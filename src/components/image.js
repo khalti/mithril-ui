@@ -13,7 +13,8 @@ export const image = component({
 		return ["ui",
 						"image"];
 	},
-  view (c, attrs) {
+  view (vdom) {
+		let attrs = vdom;
     return m(attrs.dom.tagName, omit(attrs.dom, ["tagName"]), attrs.children);
   }
 });

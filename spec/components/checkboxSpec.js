@@ -1,71 +1,56 @@
-var checkbox = require("../../components/checkbox.js");
-var m = require('mithril');
-var form = require('mithril-form');
-var mock = require("../deps/mock.js");
-var _ = require("lodash");
+import {checkbox} from "../../src/components/checkbox.js";
+import m from "mithril";
+import powerform from "powerform";
+import {getVdom, presence} from "./../utils.js";
+import chai from "chai";
 
-describe("components/checkbox", function () {
-  var aCheckbox, root, vdom, attrs;
-  beforeEach(function () {
-    root = mock.document.createElement("div");
-    m.deps(mock.window);
+let expect = chai.expect;
+
+let truth = presence;
+
+describe("checkbox", () => {
+  let vdom, attrs;
+  beforeEach(() => {
     attrs = {
-      model: form({isTrue: {exclusion: {within: [false]}, default: true}}).isTrue,
+      model: powerform({isTrue: {validator: truth, default: false}}).isTrue,
       label: 'A label.'
     };
 
-    aCheckbox = m.component(checkbox, attrs);
+    vdom = getVdom(m(checkbox, attrs));
   });
 
-  it("sets class of <input> to 'ui checkbox'", function () {
-    mock.requestAnimationFrame.$resolve();
+  it("sets class of <input> to 'ui checkbox'", () => {
+    let input = vdom.children[0];
 
-    m.mount(root, aCheckbox);
-    var inputDOM = root.childNodes[0].childNodes[0];
-
-    expect(inputDOM.class).toMatch('ui checkbox');
+    expect(input.attrs.className).to.equal("ui checkbox");
   });
 
-  it("sets input type to checkbox", function () {
-    mock.requestAnimationFrame.$resolve();
-
-    m.mount(root, aCheckbox);
-    var inputDOM = root.childNodes[0].childNodes[0].childNodes[0];
-    expect(inputDOM.getAttribute('type')).toEqual('checkbox');
+  it("sets input type to checkbox", () => {
+    let input = vdom.children[0].children[0];
+    expect(input.attrs.type).to.equal('checkbox');
   });
 
-  it("creates <label> out of attrs.label", function () {
-    mock.requestAnimationFrame.$resolve();
-
-    m.mount(root, aCheckbox);
-    var labelDOM = root.childNodes[0].childNodes[0].childNodes[1];
-    expect(labelDOM.childNodes[0].nodeValue).toEqual('A label.');
+  it("creates <label> out of attrs.label", () => {
+    let label = vdom.children[0].children[1];
+    expect(label.children[0]).to.equal('A label.');
   });
 
-  it("sets the value of input's checked to the model's value", function () {
-    mock.requestAnimationFrame.$resolve();
-
-    m.mount(root, aCheckbox);
-    var inputDOM = root.childNodes[0].childNodes[0].childNodes[0];
-    expect(inputDOM.getAttribute('checked')).toEqual('true');
+  it("sets the value of input's checked to the model's value", () => {
+		attrs.model(true);
+		let vdom = getVdom(m(checkbox, attrs));
+    let input = vdom.children[0].children[0];
+    expect(input.attrs.checked).to.equal(true);
   });
 
-  it("updates the value on click", function () {
-    mock.requestAnimationFrame.$resolve();
-
-    m.mount(root, aCheckbox);
-    var inputDOM = root.childNodes[0];
-    inputDOM.checked = false;
-    inputDOM.onclick({});
-    expect(attrs.model()).toEqual(false);
+  it("updates the value on click", () => {
+    vdom.attrs.onclick({});
+    expect(attrs.model()).to.equal(true);
   });
 
-  it("its sets the class of input div to 'ui checkbox checked' if its checked", function () {
-    mock.requestAnimationFrame.$resolve();
-
-    m.mount(root, aCheckbox);
-    var inputDOM = root.childNodes[0].childNodes[0];
-
-    expect(inputDOM.class).toMatch('checked');
+  it("its sets the class of input div to 'ui checkbox checked' if its checked", () => {
+		attrs.model(true);
+		let vdom = getVdom(m(checkbox, attrs));
+    let input = vdom.children[0];
+    expect(input.attrs.className).to.have.string('checked');
   });
 });

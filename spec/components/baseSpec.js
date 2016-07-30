@@ -1,4 +1,4 @@
-import {base}  from "./../../components/base.js";
+import {base}  from "./../../src/components/base.js";
 import component from "mithril-componentx";
 import chai from "chai";
 

@@ -45,7 +45,7 @@
   "dependencies": {
     "lodash": "^4.0.0",
     "mithril": "^0.2.3",
-    "mithril-componentx": "^0.1.3",
+    "mithril-componentx": "^0.1.5",
     "powerform": "^1.0.3",
     "validate.js": "^0.10.0"
   }

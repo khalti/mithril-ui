@@ -2,13 +2,10 @@ import {field} from "../../src/components/field.js";
 import powerform from "powerform";
 import m from "mithril";
 import chai from "chai";
-import {getVdom} from "./../utils.js";
+import {getVdom, presence} from "./../utils.js";
 import classnames from "classnames";
 
 let expect = chai.expect;
-let presence = (value) => {
-	if (!value) return "This field is required.";
-};
 
 describe("field", () => {
 	describe(".getLabelPrepend", () => {

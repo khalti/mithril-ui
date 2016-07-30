@@ -1,4 +1,4 @@
-import {card} from "./../../components/card.js";
+import {card} from "./../../src/components/card.js";
 import chai from "chai";
 
 let expect = chai.expect;

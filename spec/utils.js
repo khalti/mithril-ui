@@ -1,5 +1,10 @@
 import map from "lodash/map";
 
+
+let presence = (value) => {
+	if (!value) return "This field is required.";
+};
+
 let getVdom = (component) => {
 	let vdom;
 	if (component && component.view) {
@@ -17,4 +22,4 @@ let getVdom = (component) => {
 	return vdom;
 };
 
-export {getVdom}
+export {getVdom, presence}

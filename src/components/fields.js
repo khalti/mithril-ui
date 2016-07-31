@@ -1,5 +1,6 @@
-var base = require("./base.js");
-var component = require("./../helpers/component.js");
+import {base} from "./base.js";
+import component from "mithril-componentx";
+
 
 export const feilds = component({
 	extend: base,

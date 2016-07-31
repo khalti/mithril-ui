@@ -13,9 +13,8 @@ module.exports = {
   },
   externals: {
     mithril: "m",
-    jquery: "$",
-    lodash: "_",
-    "mithril-form": "Form",
+    powerfrom: "powerform",
+		"component-componentx": "component",
     "validate.js": "validate"
   },
   plugins: [

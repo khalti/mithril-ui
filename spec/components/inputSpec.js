@@ -2,7 +2,7 @@ import {input} from "../../src/components/input.js";
 import m from 'mithril';
 import chai from "chai";
 import classnames from "classnames";
-import getVdom from "./../utils.js";
+import {getVdom} from "./../utils.js";
 
 let expect = chai.expect;
 

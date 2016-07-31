@@ -1,70 +1,53 @@
-var row = require("./../../components/row.js");
-var m = require("mithril");
-var mock = require("../deps/mock.js");
-var _ = require("lodash");
+import {row} from "./../../src/components/row.js";
+import chai from "chai";
 
-describe("components/row", function () {
-  describe(".controller", function () {
-    it("should be a function", function () {
-      expect(_.isFunction(row.controller)).toEqual(true);
-    });
+let expect = chai.expect;
 
-    describe(".getClassList", function () {
-      var ctrl;
-      beforeEach(function () {
-        ctrl = new row.controller({});
-      });
+describe("row", () => {
+	describe(".getClassList", () => {
+		it("should return list where 'container' is the last item.", () => {
+			let classList = row.getClassList({});
+			expect(classList[classList.length - 1]).to.equal("row");
+		});
 
-      it("should return list where 'container' is the last item.", function () {
-        var classList = ctrl.getClassList({});
-        expect(classList[classList.length - 1]).toEqual("row");
-      });
+		it("should return proper 'columns' class", () => {
+			let classList = row.getClassList({columns: 1});
+			expect(classList[0]).to.equal(row.columnsClassMap[1]);
+		});
 
-      it("should return proper 'columns' class", function () {
-        var classList = ctrl.getClassList({columns: 1});
-        expect(classList[0]).toEqual(ctrl.columnsClassMap[1]);
-      });
+		it("should return proper 'stretched' class", () => {
+			let classList = row.getClassList({stretched: true});
+			expect(classList[1]).to.equal(row.stretchedClassMap.true);
+		});
 
-      it("should return proper 'stretched' class", function () {
-        var classList = ctrl.getClassList({stretched: true});
-        expect(classList[1]).toEqual(ctrl.stretchedClassMap.true);
-      });
+		it("should return proper 'color' class", () => {
+			let classList = row.getClassList({color: "blue"});
+			expect(classList[2]).to.equal(row.colorClassMap.blue);
+		});
 
-      it("should return proper 'color' class", function () {
-        var classList = ctrl.getClassList({color: "blue"});
-        expect(classList[2]).toEqual(ctrl.colorClassMap.blue);
-      });
+		it("should return proper 'centered' class", () => {
+			let classList = row.getClassList({centered: true});
+			expect(classList[3]).to.equal(row.centeredClassMap.true);
+		});
 
-      it("should return proper 'centered' class", function () {
-        var classList = ctrl.getClassList({centered: true});
-        expect(classList[3]).toEqual(ctrl.centeredClassMap.true);
-      });
+		it("should return proper 'textAlignment' class", () => {
+			let classList = row.getClassList({textAlignment: "center"});
+			expect(classList[4]).to.equal(row.textAlignmentClassMap.center);
+		});
 
-      it("should return proper 'textAlignment' class", function () {
-        var classList = ctrl.getClassList({textAlignment: "center"});
-        expect(classList[4]).toEqual(ctrl.textAlignmentClassMap.center);
-      });
+		it("should return proper 'verticalAlignment' class", () => {
+			let classList = row.getClassList({verticalAlignment: "bottom"});
+			expect(classList[5]).to.equal(row.verticalAlignmentClassMap.bottom);
+		});
 
-      it("should return proper 'verticalAlignment' class", function () {
-        var classList = ctrl.getClassList({verticalAlignment: "bottom"});
-        expect(classList[5]).toEqual(ctrl.verticalAlignmentClassMap.bottom);
-      });
+		it("should return proper 'visible' class", () => {
+			let classList = row.getClassList({visible: "mobile"});
+			expect(classList[6]).to.equal(row.visibleClassMap.mobile);
+		});
 
-      it("should return proper 'visible' class", function () {
-        var classList = ctrl.getClassList({visible: "mobile"});
-        expect(classList[6]).toEqual(ctrl.visibleClassMap.mobile);
-      });
-
-      it("should return proper 'reverse' class", function () {
-        var classList = ctrl.getClassList({reverse: "mobile"});
-        expect(classList[7]).toEqual(ctrl.reverseClassMap.mobile);
-      });
-    });
-  });
-
-  describe(".view", function () {
-    it("should be a function", function () {
-      expect(_.isFunction(row.view)).toEqual(true);
-    });
-  });
+		it("should return proper 'reverse' class", () => {
+			let classList = row.getClassList({reverse: "mobile"});
+			expect(classList[7]).to.equal(row.reverseClassMap.mobile);
+		});
+	});
 });

@@ -11,11 +11,9 @@
     "prepublish": "npm run test && npm run build"
   },
   "files": [
-    "components",
+    "lib",
     "index.js",
     "dist",
-    "helpers",
-    "shortcuts.js"
   ],
   "repository": {
     "type": "git",
@@ -24,7 +22,7 @@
   "keywords": [
     "mithril",
     "ui",
-    "semantic"
+    "semantic-ui"
   ],
   "author": "ludbek",
   "license": "ISC",

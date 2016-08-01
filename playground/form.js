@@ -32,26 +32,26 @@ var selectModel = powerform({
 		},
 		default: ""}}).superhero;
 
-var container = ui.container.container;
-var grid = ui.grid.grid;
-var row = ui.row.row;
-var column = ui.column.column;
-var divider = ui.divider.divider;
-var menu = ui.menu.menu;
-var item = ui.item.item;
-var card = ui.card.card;
-var content = ui.content.content;
-var header = ui.header.header;
-var icon = ui.icon.icon;
-var meta = ui.meta.meta;
-var subHeader = ui.subHeader.subHeader;
-var description = ui.description.description;
-var button = ui.button.button;
-var form = ui.form.form;
-var select = ui.select.select;
-var input = ui.input.input;
-var field = ui.field.field;
-var checkbox = ui.checkbox.checkbox;
+var container = ui.container;
+var grid = ui.grid;
+var row = ui.row;
+var column = ui.column;
+var divider = ui.divider;
+var menu = ui.menu;
+var item = ui.item;
+var card = ui.card;
+var content = ui.content;
+var header = ui.header;
+var icon = ui.icon;
+var meta = ui.meta;
+var subHeader = ui.subHeader;
+var description = ui.description;
+var button = ui.button;
+var form = ui.form;
+var select = ui.select;
+var input = ui.input;
+var field = ui.field;
+var checkbox = ui.checkbox;
 
 var app = {
   view: function () {

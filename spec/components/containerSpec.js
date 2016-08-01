@@ -1,44 +1,27 @@
-var container = require("./../../components/container.js");
-var m = require("mithril");
-var mock = require("../deps/mock.js");
-var _ = require("lodash");
+import {container} from "./../../src/components/container.js";
+import chai from "chai";
 
-describe("components/container", function () {
-  describe(".controller", function () {
-    it("should be a function", function () {
-      expect(_.isFunction(container.controller)).toEqual(true);
-    });
+let expect = chai.expect;
 
-    describe(".getClassList", function () {
-      var ctrl;
-      beforeEach(function () {
-        ctrl = new container.controller({});
-      });
+describe("container", () => {
+	describe(".getClassList", () => {
+		it("should return list where 'ui' is the first item.", () => {
+			expect(container.getClassList({})[0]).to.equal("ui");
+		});
 
-      it("should return list where 'ui' is the first item.", function () {
-        expect(ctrl.getClassList({})[0]).toEqual("ui");
-      });
+		it("should return list where 'container' is the last item.", () => {
+			let classList = container.getClassList({});
+			expect(classList[classList.length - 1]).to.equal("container");
+		});
 
-      it("should return list where 'container' is the last item.", function () {
-        var classList = ctrl.getClassList({});
-        expect(classList[classList.length - 1]).toEqual("container");
-      });
+		it("should return proper type class", () => {
+			let classList = container.getClassList({type: "text"});
+			expect(classList[1]).to.equal(container.typeClassMap.text);
+		});
 
-      it("should return proper type class", function () {
-        var classList = ctrl.getClassList({type: "text"});
-        expect(classList[1]).toEqual(ctrl.typeClassMap.text);
-      });
-
-      it("should return proper alignment class", function () {
-        var classList = ctrl.getClassList({alignment: "center"});
-        expect(classList[2]).toEqual(ctrl.alignmentClassMap.center);
-      });
-    });
-  });
-
-  describe(".view", function () {
-    it("should be a function", function () {
-      expect(_.isFunction(container.view)).toEqual(true);
-    });
-  });
+		it("should return proper alignment class", () => {
+			let classList = container.getClassList({alignment: "center"});
+			expect(classList[2]).to.equal(container.alignmentClassMap.center);
+		});
+	});
 });

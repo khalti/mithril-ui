@@ -1,46 +1,47 @@
-var selection = require("../../components/select.js");
-var m = require('mithril');
-var mock = require("../deps/mock.js");
-var form = require("mithril-form");
+import {select} from "../../src/components/select.js";
+import m from 'mithril';
+import powerform from "powerform";
+import {getVdom, presence} from "./../utils.js";
+import chai from "chai";
 
-describe("selection", function () {
-  var attrs, root, model, superheroes;
+let expect = chai.expect;
 
-  beforeEach(function () {
+describe("selection", () => {
+  let attrs, vdom, model, superheroes;
+
+  beforeEach(() => {
     superheroes = [{value: "", label: "Select superheroes"},
                    {value: 1, label: "Batman", icon: "aicon"},
                    {value: 2, label: "Superman", icon: "aicon"},
                    {value: 3, label: "flash", icon: "aicon"}];
-    model = form({superhero: {presence: true}}).superhero;
+    model = powerform({superhero: {validator: presence}}).superhero;
     attrs = {
       label: "Superheroes",
       model: model,
       options: superheroes
     };
-    root = mock.document.createElement("div");
-    m.deps(mock.window);
+		vdom = getVdom(m(select, attrs));
   });
 
-  it("lists options", function () {
-    var view = selection.view(new selection.controller(attrs), attrs);
-    var item1 = view.children[1].children[0];
+  it("lists options", () => {
+    let item1 = vdom.children[1].children[0];
 
-    expect(item1.attrs.value).toEqual("");
-    expect(item1.children[0]).toEqual("Select superheroes");
+    expect(item1.attrs.value).to.equal("");
+    expect(item1.children[0]).to.equal("Select superheroes");
   });
 
-  it("shows errors", function () {
+  it("shows errors", () => {
     attrs.model.isValid();
-    var view = selection.view(new selection.controller(attrs), attrs);
-    var error = view.children[2];
+		let vdom = getVdom(m(select, attrs));
+    let error = vdom.children[2];
 
-    expect(error.children[0]).toEqual("Superhero can\'t be blank");
+    expect(error.children[0]).to.equal("This field is required.");
   });
 
   it("gets red colored if error exists in its model", function () {
     attrs.model.isValid();
-    var view = selection.view(new selection.controller(attrs), attrs);
+		let vdom = getVdom(m(select, attrs));
 
-    expect(view.attrs.class || view.attrs.className).toEqual("field error");
+    expect(vdom.attrs.className).to.equal("field error");
   });
 });

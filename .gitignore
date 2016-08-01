@@ -4,3 +4,4 @@ semantic/
 npm-debug.log
 .brofile
 .tern-port
+lib/

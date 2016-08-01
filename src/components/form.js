@@ -3,7 +3,7 @@ import component from "mithril-componentx";
 import m from "mithril";
 
 
-export const from = component({
+export const form = component({
 	base: base,
 	getClassList (attrs) {
 		return ["ui",

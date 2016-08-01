@@ -8,7 +8,7 @@ export const base = component({
     let errors = validate(attrs, this.attrSchema);
     if (errors) throw Error(JSON.stringify(errors));
   },
-  view: function (vnode) {
+  view (vnode) {
     let attrs = vnode.attrs;
 
     return m(attrs.dom.tagName, _.omit(attrs.dom, ['tagName']), vnode.children);

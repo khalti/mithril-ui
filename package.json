@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --compilers js:babel-register spec/*",
-		"build:browser": "webpack",
+    "build:browser": "webpack",
     "build:commonjs": "babel --plugins transform-es2015-modules-commonjs src --out-dir lib",
-		"build": "npm run build:commonjs && npm run build:browser",
+    "build": "npm run build:commonjs && npm run build:browser",
     "prepublish": "npm run test && npm run build"
   },
   "files": [
@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "lodash": "^4.0.0",
-    "mithril": "^0.2.3",
+    "mithril": "^0.2.5",
     "mithril-componentx": "^0.1.5",
     "powerform": "^1.0.3",
     "validate.js": "^0.10.0"

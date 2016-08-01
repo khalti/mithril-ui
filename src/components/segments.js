@@ -3,7 +3,7 @@ import component from "mithril-componentx";
 
 
 export const segment = component({
-	extend: base,
+	base: base,
 	getClassList (attrs) {
 		return ["ui",
 						"segments"];

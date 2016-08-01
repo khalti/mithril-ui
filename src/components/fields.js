@@ -3,7 +3,7 @@ import component from "mithril-componentx";
 
 
 export const feilds = component({
-	extend: base,
+	base: base,
 	getClassList (attrs) {
 		return ["fields"];
 	}

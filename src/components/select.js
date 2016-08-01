@@ -19,7 +19,6 @@ export const select = component({
 	},
   view (vdom)  {
 		let attrs = vdom.attrs;
-
     return m("div", attrs.dom,
              this.getLabelPrepend(attrs),
              m("select", {value: attrs.model(),

@@ -10,7 +10,7 @@ export const base = component({
   },
   view (vnode) {
     let attrs = vnode.attrs;
-
+		//console.log(vnode);
     return m(attrs.dom.tagName, _.omit(attrs.dom, ['tagName']), vnode.children);
   }
 });

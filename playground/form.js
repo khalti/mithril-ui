@@ -8,7 +8,7 @@ var fieldModel = powerform({
 
 var checkboxModel = powerform({
 	isFlash: function (value) {
-		return validate.single(value, {within: [false]});
+		if(!value) return "This field cannot be false.";
 	}
 });
 
@@ -48,23 +48,27 @@ var subHeader = ui.subHeader.subHeader;
 var description = ui.description.description;
 var button = ui.button.button;
 var form = ui.form.form;
+var select = ui.select.select;
+var input = ui.input.input;
+var field = ui.field.field;
+var checkbox = ui.checkbox.checkbox;
 
 var app = {
   view: function () {
     return m(container,
 						 m(grid, {reverse: "tablet"},
-							 m(row, {class: "myclass"},
+							 m(row, {dom: {className: "myclass"}},
 								 m(column, {mobile: 16, tablet: 8, computer: 8, largeScreen: 4, widescreen: 4},
                    m(divider),
-									 m(menu, {class: "vertical"},
+									 m(menu, {dom: {className: "vertical"}},
 										 m(item, "Home"),
 										 m(item, "About"),
 										 m(item, "Contact Us")),
                    m(divider),
-									 m(card, {class: "centered"},
+									 m(card, {dom: {className: "centered"}},
 										 m(content,
 											 m(header,
-												 m(icon, {class: "right floated like"}),
+												 m(icon, {dom: {className: "right floated like"}}),
 												 "This is an awesome header",
 												 m(subHeader, "This is a sub header."),
 												 m(meta,
@@ -72,22 +76,22 @@ var app = {
 										 m(content,
 											 m(description, "This is a description.")),
 										 m(content,
-											 m(button, {class: "fluid"}, "Click Me"))),
+											 m(button, {dom: {className: "fluid"}}, "Click Me"))),
 									 m(divider),
 									 m(form,
 										 m("h1", "Select"),
-										 m(ui.select, {model: selectModel,
+										 m(select, {model: selectModel,
 																	 label: "Superhero",
 																	 help: "Please choose a superhero.",
 																	 options: superheroes}),
 										 m("h1", "Input"),
-										 m(ui.input, {class: "ui labeled icon input",
-																	prepend: m(".ui.label", m("i.users.icon")),
-																	append: m("i.search.icon"),
-																	type: "number",
-																	placeholder: "Number"}),
+										 m(input, {dom: {className: "ui labeled icon input"},
+															 prepend: m(".ui.label", m("i.users.icon")),
+															 append: m("i.search.icon"),
+															 type: "number",
+															 placeholder: "Number"}),
 										 m("h1", "Field"),
-										 m(ui.field, {model: fieldModel.name,
+										 m(field, {model: fieldModel.name,
 																	label: "Text Field",
 																	placeholder: "TextField",
 																	update: "onchange",
@@ -95,7 +99,7 @@ var app = {
 																	help: "This is a text field.",
 																	type: "text"}),
 										 m("h1", "Checkbox"),
-										 m(ui.checkbox, {model: checkboxModel.isFlash,
+										 m(checkbox, {model: checkboxModel.isFlash,
 																		 label: "Is flash"}))))));
   }
 };

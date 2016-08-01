@@ -8,8 +8,5 @@ export const form = component({
 	getClassList (attrs) {
 		return ["ui",
 						"form"];
-	},
-  view (vnode) {
-    return m("form", vnode.attrs.dom, vnode.children);
-  }
+	}
 });

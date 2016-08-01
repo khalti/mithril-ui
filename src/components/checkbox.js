@@ -16,7 +16,7 @@ export const checkbox = component({
 			return m('label.help', attrs.help);
 		}
 		else if(attrs.model.error() && !attrs.hideError) {
-			return m('label.error', attrs.model.error()[0]);
+			return m('label.error', attrs.model.error());
 		}
 		return null;
 	},

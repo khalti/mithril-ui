@@ -13,7 +13,7 @@
   "files": [
     "lib",
     "index.js",
-    "dist",
+    "dist"
   ],
   "repository": {
     "type": "git",

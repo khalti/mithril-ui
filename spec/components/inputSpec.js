@@ -63,6 +63,11 @@ describe("input", () => {
       expect(getClass(attrs)).to.equal("ui left icon input");
     });
 
+    it("returns '.ui.both.icon.input' if an icon is being prepended", () => {
+      var attrs = {prepend: m("i"), append: m("i")};
+      expect(getClass(attrs)).to.equal("ui both icon input");
+    });
+
     it("returns '.ui.labeled.input' if a label is being prepended", () => {
       var attrs = {prepend: m("div")};
       expect(getClass(attrs)).to.equal("ui labeled input");

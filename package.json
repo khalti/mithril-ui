@@ -1,6 +1,6 @@
 {
   "name": "mithril-ui",
-  "version": "0.10.11",
+  "version": "0.10.12",
   "description": "UI components for Mithril.js",
   "main": "index.js",
   "scripts": {
@@ -45,7 +45,7 @@
   "dependencies": {
     "lodash": "^4.0.0",
     "mithril": "^0.2.5",
-    "mithril-componentx": "^0.1.9",
+    "mithril-componentx": "^0.2.1",
     "powerform": "^1.0.3",
     "validate.js": "^0.10.0"
   }

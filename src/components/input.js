@@ -8,7 +8,8 @@ export const input = component({
 	attrSchema: {type: {presence: true}},
 	getClassList (attrs) {
 		return ["ui",
-						{left: attrs.prepend && attrs.prepend.tag === "i"},
+						{both: (attrs.prepend && attrs.prepend.tag === "i") && (attrs.append && attrs.append.tag === "i")},
+						{left: (attrs.prepend && attrs.prepend.tag === "i") && !(attrs.append && attrs.append.tag === "i")},
 						{icon: (attrs.prepend && attrs.prepend.tag == "i") || (attrs.append && attrs.append.tag === "i")},
 						{right: attrs.append && attrs.append.tag !== "i"},
 						{labeled: (attrs.prepend && attrs.prepend.tag !== "i") || (attrs.append && attrs.append.tag !== "i")},

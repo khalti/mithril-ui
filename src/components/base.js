@@ -4,6 +4,9 @@ import _ from "lodash";
 import component from "mithril-componentx";
 
 export const base = component({
+	getDefaultAttrs (attrs) {
+		return {dom: {tagName: "div"}};
+	},
   validateAttrs (attrs) {
     let errors = validate(attrs, this.attrSchema);
     if (errors) throw Error(JSON.stringify(errors));

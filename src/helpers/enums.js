@@ -55,7 +55,7 @@ module.exports = {
     largeScreen: "large screen only",
     widescreen: "widescreen only"
   },
-  widthClassMap: {
+  sizeClassMap: {
     1: "one wide",
     2: "two wide",
     3: "three wide",

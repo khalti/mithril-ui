@@ -1,6 +1,6 @@
 import m from "mithril";
 import validate from "validate.js";
-import _ from "lodash";
+import omit from "lodash/omit.js";
 import component from "mithril-componentx";
 
 export const base = component({
@@ -13,7 +13,6 @@ export const base = component({
   },
   view (vnode) {
     let attrs = vnode.attrs;
-		//console.log(vnode);
     return m(attrs.dom.tagName, _.omit(attrs.dom, ['tagName']), vnode.children);
   }
 });

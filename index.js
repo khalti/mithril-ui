@@ -15,7 +15,6 @@ module.exports = {
   icon: require('./lib/components/icon.js').icon,
   description: require('./lib/components/description.js').description,
   button: require('./lib/components/button.js').button,
-  buttons: require('./lib/components/buttons.js').buttons,
   divider: require('./lib/components/divider.js').divider,
   menu: require('./lib/components/menu.js').menu,
   item: require('./lib/components/item.js').item,

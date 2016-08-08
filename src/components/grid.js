@@ -40,7 +40,7 @@ let stackableClassMap = {
 };
 
 let attrSchema = {
-  columns: {inclusion: {within: enums.properKeys(enums.widthClassMap),
+  columns: {inclusion: {within: enums.properKeys(enums.columnsClassMap),
                         message: "^Invalid column count '%{value}'."}},
   divide: {inclusion: {within: _.keys(divideClassMap),
                        message: "^Invalid value '%{value}'."}},

@@ -4,6 +4,7 @@ import isString from "lodash/isString";
 import {input}  from "./input.js";
 import component from "mithril-componentx";
 import {base} from "./base.js";
+import {sizeClassMap} from "./../helpers/enums.js";
 
 export const field = component({
 	base: base,
@@ -35,9 +36,11 @@ export const field = component({
 	},
 	getClassList (attrs) {
 		return [
-			{inline: attrs.isInline},
+			{inline: attrs.inline},
 			"field",
-			{error: attrs.model.error() && ! attrs.hideError}
+			{disabled: attrs.disabled},
+			{error: attrs.model.error() && ! attrs.hideError},
+			sizeClassMap[attrs.size]
 		];
 	},
   view (vnode)  {
@@ -53,6 +56,10 @@ export const field = component({
 				className: attrs.input? attrs.input.class : ""
 			}
     };
+
+		if (attrs.readOnly) {
+			inputAttrs.readonly = "";
+		}
 
 
     if (attrs.update === attrs.validate) {

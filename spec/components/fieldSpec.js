@@ -120,7 +120,7 @@ describe("field", () => {
 		});
 
 		it("adds 'inline' if attrs.isInline is true", () => {
-			attrs.isInline = true;
+			attrs.inline = true;
 			let classList = field.getClassList(attrs);
 			expect(classnames(classList)).to.equal("inline field");
 		});

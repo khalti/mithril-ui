@@ -10,6 +10,13 @@ export const form = component({
 	},
 	getClassList (attrs) {
 		return ["ui",
+						{"loading": attrs.loading},
+						{"success": attrs.success},
+						{"error": attrs.error},
+						attrs.size? attrs.size: "",
+						{inverted: attrs.inverted},
+						{"equal width": attrs.equalWidth},
+						{"warning": attrs.warning},
 						"form"];
 	}
 });

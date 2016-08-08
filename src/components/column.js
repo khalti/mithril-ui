@@ -33,21 +33,21 @@ export const column = component({
 															message: "^Invalid value '%{value}'."}}
 	},
 	floatClassMap: floatClassMap,
-	widthClassMap: enums.widthClassMap,
+	sizeClassMap: enums.sizeClassMap,
 	colorClassMap: enums.colorClassMap,
 	textAlignmentClassMap: enums.textAlignmentClassMap,
 	visibleClassMap: enums.visibleClassMap,
 	getClassList (attrs) {
 		return [this.floatClassMap[attrs.float],
-						this.widthClassMap[attrs.width],
+						this.sizeClassMap[attrs.size],
 						this.colorClassMap[attrs.color],
 						this.textAlignmentClassMap[attrs.textAlignment],
 						this.visibleClassMap[attrs.visible],
-						attrs.mobile? this.widthClassMap[attrs.mobile] + " mobile": "",
-						attrs.tablet? this.widthClassMap[attrs.tablet] + " tablet": "",
-						attrs.computer? this.widthClassMap[attrs.computer] + " computer": "",
-						attrs.largeScreen? this.widthClassMap[attrs.largeScreen] + " large screen": "",
-						attrs.widescreen? this.widthClassMap[attrs.widescreen] + " widescreen": "",
+						attrs.mobile? this.sizeClassMap[attrs.mobile] + " mobile": "",
+						attrs.tablet? this.sizeClassMap[attrs.tablet] + " tablet": "",
+						attrs.computer? this.sizeClassMap[attrs.computer] + " computer": "",
+						attrs.largeScreen? this.sizeClassMap[attrs.largeScreen] + " large screen": "",
+						attrs.widescreen? this.sizeClassMap[attrs.widescreen] + " widescreen": "",
 						"column"];
 	}
 });

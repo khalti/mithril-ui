@@ -43,7 +43,7 @@ module.exports = {
     bottom: "bottom aligned"
   },
   textAlignmentClassMap: {
-    left: "",
+    left: "left aligned",
     right: "right aligned",
     center: "center aligned",
     justified: "justified"
@@ -77,6 +77,17 @@ module.exports = {
     true: "centered",
     false: ""
   },
+	attachmentMap: {
+		true: "attached",
+		"top": "top attached",
+		"bottom": "bottom attached",
+		"right": "right attached",
+		"left": "left attached"
+	},
+	floatMap: {
+		right: "right floated",
+		left: "left floated"
+	},
   properKeys: function (obj) {
     return _.map(_.keys(obj), function (akey) {
       var properKey = parseInt(akey);

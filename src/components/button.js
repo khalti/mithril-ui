@@ -2,12 +2,7 @@ import {base} from "./base.js";
 import component from "mithril-componentx";
 import m from "mithril";
 import omit from "lodash/omit";
-import {colorClassMap} from "./../helpers/enums.js";
-
-let floatMap = {
-	right: "right floated",
-	left: "left floated"
-};
+import {colorClassMap, floatMap} from "./../helpers/enums.js";
 
 export const button = component({
   base: base,

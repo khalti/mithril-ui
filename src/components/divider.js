@@ -16,8 +16,5 @@ export const divider = component({
 						{section: attrs.section},
 						{clearing: attrs.clearing},
 						"divider"];
-	},
-	view (vnode) {
-		return m("div", vnode.attrs.dom, vnode.children);
 	}
 });

@@ -13,6 +13,6 @@ export const base = component({
   },
   view (vnode) {
     let attrs = vnode.attrs;
-    return m(attrs.dom.tagName, _.omit(attrs.dom, ['tagName']), vnode.children);
+    return m(attrs.dom.tagName, omit(attrs.dom, ['tagName']), vnode.children);
   }
 });

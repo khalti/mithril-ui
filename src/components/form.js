@@ -8,9 +8,11 @@ export const form = component({
 	base: base,
 	getDefaultAttrs (attrs) {
 		let defaultAttrs = {dom: {}};
+
 		if (attrs.onsubmit) {
 			defaultAttrs.dom.onsubmit = attrs.onsubmit;
 		}
+
 		return defaultAttrs;
 	},
 	getClassList (attrs) {
@@ -27,7 +29,6 @@ export const form = component({
 	view (vnode) {
 		let attrs = vnode.attrs;
 
-		return m("form", omit(attrs.dom, ["tagName"]),
-						vnode.children);
+		return m("form", attrs.dom, vnode.children);
 	}
 });

@@ -95,6 +95,7 @@ export const grid = component({
 						this.doublingClassMap[attrs.doubling],
 						this.stackableClassMap[attrs.stackable],
 						this.reverseClassMap[attrs.reverse],
+						{inverted: attrs.inverted},
 						"grid"];
 	}
 });

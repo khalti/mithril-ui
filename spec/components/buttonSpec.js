@@ -98,5 +98,10 @@ describe("button", () => {
 			let got = classnames(button.getClassList({circular: true}));
 			expect(got).to.have.string("circular");
 		});
+
+		it("adds emphasis.", () => {
+			let got = classnames(button.getClassList({emphasis: "primary"}));
+			expect(got).to.have.string("primary");
+		});
 	});
 });

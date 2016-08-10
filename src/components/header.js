@@ -34,7 +34,7 @@ export const header = component({
 						{block: attrs.block},
 						attachmentMap[attrs.attach],
 						floatMap[attrs.float],
-						textAlignmentClassMap[attrs.textAligment],
+						textAlignmentClassMap[attrs.textAlignment],
 						colorClassMap[attrs.color],
 						{inverted: attrs.inverted},
 						"header"];

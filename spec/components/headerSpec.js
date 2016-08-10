@@ -55,7 +55,7 @@ describe("header", () => {
 		});
 
 		it("includes proper text aligment.", () => {
-			let className = classnames(header.getClassList({textAligment: "left"}));
+			let className = classnames(header.getClassList({textAlignment: "left"}));
 			expect(className).to.have.string("left aligned");
 		});
 

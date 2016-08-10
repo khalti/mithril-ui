@@ -88,6 +88,11 @@ module.exports = {
 		right: "right floated",
 		left: "left floated"
 	},
+	emphasisMap: {
+		primary: "primary",
+		secondary: "secondary",
+		tertiary: "tertiary"
+	},
   properKeys: function (obj) {
     return _.map(_.keys(obj), function (akey) {
       var properKey = parseInt(akey);

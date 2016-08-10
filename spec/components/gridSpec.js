@@ -1,5 +1,6 @@
 import {grid} from "./../../src/components/grid.js";
 import chai from "chai";
+import classnames from "classnames";
 
 let expect = chai.expect;
 
@@ -73,6 +74,11 @@ describe("grid", () =>{
 		it("should return proper 'reverse' class", () => {
 			let classList = grid.getClassList({reverse: "mobile"});
 			expect(classList[12]).to.equal(grid.reverseClassMap.mobile);
+		});
+
+		it("includes 'inverted'.", () => {
+			let className = classnames(grid.getClassList({inverted: true}));
+			expect(className).to.have.string("inverted");
 		});
 	});
 });

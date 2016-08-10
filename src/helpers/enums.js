@@ -55,7 +55,7 @@ module.exports = {
     largeScreen: "large screen only",
     widescreen: "widescreen only"
   },
-  sizeClassMap: {
+  widthClassMap: {
     1: "one wide",
     2: "two wide",
     3: "three wide",
@@ -92,6 +92,15 @@ module.exports = {
 		primary: "primary",
 		secondary: "secondary",
 		tertiary: "tertiary"
+	},
+	sizeMap: {
+		mini: "mini",
+		tiny: "tiny",
+		small: "small",
+		large: "large",
+		big: "big",
+		huge: "huge",
+		massive: "massive"
 	},
   properKeys: function (obj) {
     return _.map(_.keys(obj), function (akey) {

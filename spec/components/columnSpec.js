@@ -17,8 +17,8 @@ describe("column", () => {
 		});
 
 		it("should return proper 'width' class", () => {
-			let classList = column.getClassList({size: 8});
-			expect(classList[1]).to.equal(column.sizeClassMap[8]);
+			let classList = column.getClassList({width: 8});
+			expect(classList[1]).to.equal(column.widthClassMap[8]);
 		});
 
 		it("should return proper 'color' class", () => {
@@ -38,27 +38,27 @@ describe("column", () => {
 
 		it("should return proper 'mobile' class", () => {
 			let classList = column.getClassList({mobile: 8});
-			expect(classList[5]).to.equal(column.sizeClassMap[8] + " mobile");
+			expect(classList[5]).to.equal(column.widthClassMap[8] + " mobile");
 		});
 
 		it("should return proper 'tablet' class", () => {
 			let classList = column.getClassList({tablet: 8});
-			expect(classList[6]).to.equal(column.sizeClassMap[8] + " tablet");
+			expect(classList[6]).to.equal(column.widthClassMap[8] + " tablet");
 		});
 
 		it("should return proper 'computer' class", () => {
 			let classList = column.getClassList({computer: 8});
-			expect(classList[7]).to.equal(column.sizeClassMap[8] + " computer");
+			expect(classList[7]).to.equal(column.widthClassMap[8] + " computer");
 		});
 
 		it("should return proper 'largeScreen' class", () => {
 			let classList = column .getClassList({largeScreen: 8});
-			expect(classList[8]).to.equal(column.sizeClassMap[8] + " large screen");
+			expect(classList[8]).to.equal(column.widthClassMap[8] + " large screen");
 		});
 
 		it("should return proper 'widescreen' class", () => {
 			let classList = column.getClassList({widescreen: 8});
-			expect(classList[9]).to.equal(column.sizeClassMap[8] + " widescreen");
+			expect(classList[9]).to.equal(column.widthClassMap[8] + " widescreen");
 		});
 	});
 });

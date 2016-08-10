@@ -58,7 +58,6 @@ describe("divider", () => {
 	describe("view", () => {
 		it("renders children", () => {
 			let aDivider = m(divider, 1, 2).view();
-			console.log(aDivider);
 			expect(aDivider.children[0]).to.equal(1);
 			expect(aDivider.children[1]).to.equal(2);
 		});

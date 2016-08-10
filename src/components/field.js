@@ -4,7 +4,7 @@ import isString from "lodash/isString";
 import {input}  from "./input.js";
 import component from "mithril-componentx";
 import {base} from "./base.js";
-import {sizeClassMap} from "./../helpers/enums.js";
+import {widthClassMap} from "./../helpers/enums.js";
 
 export const field = component({
 	base: base,
@@ -40,7 +40,7 @@ export const field = component({
 			"field",
 			{disabled: attrs.disabled},
 			{error: attrs.model.error() && ! attrs.hideError},
-			sizeClassMap[attrs.size]
+			widthClassMap[attrs.size]
 		];
 	},
   view (vnode)  {

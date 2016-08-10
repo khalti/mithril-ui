@@ -2,11 +2,15 @@ import {base} from "./base.js";
 import component from "mithril-componentx";
 import m from "mithril";
 import omit from "lodash/omit";
-import {colorClassMap, floatMap, emphasisMap} from "./../helpers/enums.js";
+import keys from "lodash/keys";
+import {colorClassMap, floatMap, emphasisMap, sizeMap} from "./../helpers/enums.js";
 
 export const button = component({
   base: base,
-	attrSchema: {},
+	attrSchema: {
+		size: {inclusion: {within: keys(sizeMap),
+											 message: "^Invalid size '%{value}'."}}
+	},
 	getDefaultAttrs (attrs) {
 		let defaultAttrs = {dom: {tagName: "button"}};
 		if (attrs.type) {
@@ -17,7 +21,7 @@ export const button = component({
 	getClassList (attrs) {
 		return [
 			"ui",
-			attrs.size,
+			sizeMap[attrs.size],
 			floatMap[attrs.float],
 			colorClassMap[attrs.color],
 			emphasisMap[attrs.emphasis],

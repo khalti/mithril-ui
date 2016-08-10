@@ -7,14 +7,9 @@ let expect = chai.expect;
 
 
 describe("button", () => {
-	it("complains if label is not passed", () => {
-		let aButton = m(button);
+	it("complains if size is invalid.", () => {
+		let aButton = m(button, {size: "extra-large"});
 		expect(aButton.view.bind(aButton)).to.throw(Error);
-	});
-
-	it("wont complain if label is present", () => {
-		let aButton = m(button, {label: "aLabel"});
-		expect(aButton.view.bind(aButton)).not.to.throw(Error);
 	});
 
 	describe("getDefaultAttrs", () => {

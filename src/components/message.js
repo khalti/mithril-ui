@@ -13,7 +13,7 @@ export const message = component({
 	base: base,
 	visible: false,
 	attrSchema: {
-		attach: {inclusion: {within: [true, "top", "bottom", "right", "left"],
+		attach: {inclusion: {within: keys(attachmentMap),
 												 message: "^Invalid attachment '%{value}'."}},
 		type: {inclusion: {within: types,
 											 message: "^Invalid type '%{value}'."}},

@@ -6,7 +6,13 @@ import m from "mithril";
 export const form = component({
 	base: base,
 	getDefaultAttrs (attrs) {
-		return {dom: {tagName: "form"}};
+		let defaultAttrs = {dom: {tagName: "form"}};
+
+		if (attrs.onsubmit) {
+			defaultAttrs.dom.onsubmit = attrs.onsubmit;
+		}
+
+		return defaultAttrs;
 	},
 	getClassList (attrs) {
 		return ["ui",

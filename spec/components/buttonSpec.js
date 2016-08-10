@@ -104,4 +104,23 @@ describe("button", () => {
 			expect(got).to.have.string("primary");
 		});
 	});
+
+	describe("view", () => {
+		it("renders passed children.", () => {
+			let dom = m(button, 1, 2).view();
+			expect(dom.children[0]).to.equal(1);
+			expect(dom.children[1]).to.equal(2);
+		});
+
+		it("renders icon.", () => {
+			let dom = m(button, {icon: "icon"}).view();
+			console.log(dom);
+			expect(dom.children[0]).to.equal("icon");
+		});
+
+		it("renders label.", () => {
+			let dom = m(button, {label: "label"}).view();
+			expect(dom.children[1]).to.equal("label");
+		});
+	});
 });

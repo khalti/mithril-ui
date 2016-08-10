@@ -6,9 +6,7 @@ import {colorClassMap, floatMap, emphasisMap} from "./../helpers/enums.js";
 
 export const button = component({
   base: base,
-	attrSchema: {
-		label: {presence: true}
-	},
+	attrSchema: {},
 	getDefaultAttrs (attrs) {
 		let defaultAttrs = {dom: {tagName: "button"}};
 		if (attrs.type) {
@@ -38,9 +36,12 @@ export const button = component({
 	},
 	view (vnode) {
 		let attrs = vnode.attrs;
+		let children = vnode.children || [];
 
-		return m(attrs.dom.tagName, omit(attrs.dom, ["tagName"]),
-						 attrs.icon,
-						 attrs.label);
+		if (attrs.label || attrs.icon) {
+			children = [attrs.icon, attrs.label];
+		}
+
+		return m(attrs.dom.tagName, omit(attrs.dom, ["tagName"]), children);
 	}
 });

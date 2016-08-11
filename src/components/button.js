@@ -12,9 +12,9 @@ export const button = component({
 											 message: "^Invalid size '%{value}'."}}
 	},
 	getDefaultAttrs (attrs) {
-		let defaultAttrs = {dom: {tagName: "button"}};
+		let defaultAttrs = {root: "button"};
 		if (attrs.type) {
-			defaultAttrs.dom.type = attrs.type;
+			defaultAttrs.rootAttrs = {type : attrs.type};
 		}
 		return defaultAttrs;
 	},
@@ -46,6 +46,6 @@ export const button = component({
 			children = [attrs.icon, attrs.label];
 		}
 
-		return m(attrs.dom.tagName, omit(attrs.dom, ["tagName"]), children);
+		return m(attrs.root, attrs.rootAttrs, children);
 	}
 });

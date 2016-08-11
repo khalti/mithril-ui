@@ -59,6 +59,6 @@ export const message = component({
 			children.unshift(m("i.close.icon", {onclick: this.dismiss.bind(this)}));
 		}
 
-		return m("div", vnode.attrs.dom, children);
+		return m("div", vnode.attrs.rootAttrs, children);
 	}
 });

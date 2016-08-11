@@ -27,13 +27,14 @@ describe("base", () => {
 		let vdom ;
 		beforeEach(() => {
 			let attrs = {
-				dom: {tagName: "i", "data-name": "aName"}
+				root: "i",
+				"data-name": "aName"
 			};
 
 			vdom = base.view("ctrl", attrs, "child1");
 		});
 
-		it("creates vdom with given tagName", () => {
+		it("creates vdom with given attrs.tag", () => {
 			expect(vdom.tag).to.equal("i");
 		});
 

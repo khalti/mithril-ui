@@ -19,7 +19,7 @@ export const select = component({
 	},
   view (vdom)  {
 		let attrs = vdom.attrs;
-    return m("div", attrs.dom,
+    return m("div", attrs.rootAttrs,
              this.getLabelPrepend(attrs),
              m("select", {value: attrs.model(),
 													onchange: m.withAttr("value", attrs.model.setAndValidate)},

@@ -6,7 +6,7 @@ import omit from "lodash/omit";
 export const icon = component({
 	base: base,
 	getDefaultAttrs () {
-		return {dom: {tagName: "i"}};
+		return {root: "i"};
 	},
 	getClassList (attrs) {
 		return ["icon"];
@@ -14,6 +14,6 @@ export const icon = component({
   view (vnode) {
 		let attrs = vnode.attrs;
 
-    return m(attrs.dom.tagName, omit(attrs.dom, ["tagName"]), vnode.children);
+    return m(attrs.root, attrs.rootAttrs, vnode.children);
   }
 });

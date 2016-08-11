@@ -35,10 +35,10 @@ export const image = component({
 		let attrs = vdom.attrs;
 
 		if(attrs.link) {
-			return m("a", attrs.dom,
+			return m("a", attrs.rootAttrs,
 							 m("img", {src: attrs.src}));
 		}
 
-    return m("img", attrs.dom);
+    return m("img", attrs.rootAttrs);
   }
 });

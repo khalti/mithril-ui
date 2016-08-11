@@ -42,6 +42,6 @@ export const header = component({
 	view (vnode) {
 		let attrs = vnode.attrs;
 
-		return m(levelMap[attrs.level] || "div", attrs.dom, vnode.children);
+		return m(levelMap[attrs.level] || "div", attrs.rootAttrs, vnode.children);
 	}
 });

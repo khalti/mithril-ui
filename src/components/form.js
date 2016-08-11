@@ -13,13 +13,7 @@ export const form = component({
 											 message: "^Invalid size '%{value}'."}}
 	},
 	getDefaultAttrs (attrs) {
-		let defaultAttrs = {dom: {}};
-
-		if (attrs.onsubmit) {
-			defaultAttrs.dom.onsubmit = attrs.onsubmit;
-		}
-
-		return defaultAttrs;
+		return {};
 	},
 	getClassList (attrs) {
 		return ["ui",
@@ -31,10 +25,5 @@ export const form = component({
 						{inverted: attrs.inverted},
 						{"equal width": attrs.equalWidth},
 						"form"];
-	},
-	view (vnode) {
-		let attrs = vnode.attrs;
-
-		return m("form", attrs.dom, vnode.children);
 	}
 });

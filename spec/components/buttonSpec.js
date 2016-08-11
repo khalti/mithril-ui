@@ -13,9 +13,14 @@ describe("button", () => {
 	});
 
 	describe("getDefaultAttrs", () => {
-		it("returns dom with tag name button.", () => {
+		it("returns button as root.", () => {
 			let got = button.getDefaultAttrs({});
-			expect(got.dom.tagName).to.equal("button");
+			expect(got.root).to.equal("button");
+		});
+
+		it("sets type of root to attrs.type", () => {
+			let got = button.getDefaultAttrs({type: "submit"});
+			expect(got.rootAttrs.type).to.equal("submit");
 		});
 	});
 
@@ -109,7 +114,6 @@ describe("button", () => {
 
 		it("renders icon.", () => {
 			let dom = m(button, {icon: "icon"}).view();
-			console.log(dom);
 			expect(dom.children[0]).to.equal("icon");
 		});
 

@@ -5,7 +5,7 @@ import component from "mithril-componentx";
 
 export const base = component({
 	getDefaultAttrs (attrs) {
-		return {dom: {tagName: "div"}};
+		return {root: "div"};
 	},
   validateAttrs (attrs) {
     let errors = validate(attrs, this.attrSchema);
@@ -13,6 +13,6 @@ export const base = component({
   },
   view (vnode) {
     let attrs = vnode.attrs;
-    return m(attrs.dom.tagName, omit(attrs.dom, ['tagName']), vnode.children);
+    return m(attrs.root, attrs.rootAttrs, vnode.children);
   }
 });

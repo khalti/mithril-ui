@@ -22,9 +22,9 @@ export const checkbox = component({
 	},
   view (vnode) {
 		let attrs = vnode.attrs;
-		attrs.dom.onclick = this.toggleState.bind(this, attrs);
+		attrs.rootAttrs.onclick = this.toggleState.bind(this, attrs);
 
-    return m('div', attrs.dom,
+    return m('div', attrs.rootAttrs,
              m(".ui.checkbox", {className: attrs.model()? "checked": ""},
                m("input.hidden[type=checkbox][tabindex=0]", {checked: attrs.model()}),
                m("label", attrs.label)),

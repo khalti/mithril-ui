@@ -68,7 +68,7 @@ export const field = component({
       inputAttrs[attrs.validate] = () => {attrs.model.isValid();};
     }
 
-    return m('div', attrs.dom,
+    return m('div', attrs.rootAttrs,
              this.getLabelPrepend(attrs),
              m(input, inputAttrs),
              this.getLabelAppend(attrs));

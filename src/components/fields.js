@@ -2,7 +2,7 @@ import {base} from "./base.js";
 import component from "mithril-componentx";
 
 
-export const feilds = component({
+export const fields = component({
 	base: base,
 	getClassList (attrs) {
 		return [

@@ -6,7 +6,7 @@ import omitBy from "lodash/omitBy";
 
 
 let isEventHandler = (value, key) => {
-	return /^on*$/.test(key);
+	return /^on.*$/.test(key);
 };
 
 export const input = component({
@@ -24,10 +24,10 @@ export const input = component({
 	},
   view (vnode) {
 		let attrs = vnode.attrs;
-		let inputAttrs = omit(attrs, ['prepend', 'append', 'dom']);
+		let inputAttrs = omit(attrs, ['prepend', 'append', 'rootAttrs']);
 		inputAttrs.className = attrs.type === "hidden"? "hidden": "";
 
-    return m('div', omitBy(attrs.dom, isEventHandler),
+    return m('div', omitBy(attrs.rootAttrs, isEventHandler),
 						 attrs.prepend,
 						 m('input', inputAttrs),
 						 attrs.append

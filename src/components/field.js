@@ -52,9 +52,7 @@ export const field = component({
       type: attrs.type,
       placeholder: attrs.placeholder,
       value: attrs.model(),
-			dom: {
-				className: attrs.input? attrs.input.class : ""
-			}
+			class: attrs.input? attrs.input.class : ""
     };
 
 		if (attrs.readOnly) {

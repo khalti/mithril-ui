@@ -2,6 +2,12 @@ import m from 'mithril';
 import component from "mithril-componentx";
 import {base} from "./base.js";
 import omit from "lodash/omit";
+import omitBy from "lodash/omitBy";
+
+
+let isEventHandler = (value, key) => {
+	return /^on*$/.test(key);
+};
 
 export const input = component({
 	base: base,
@@ -21,7 +27,7 @@ export const input = component({
 		let inputAttrs = omit(attrs, ['prepend', 'append', 'dom']);
 		inputAttrs.className = attrs.type === "hidden"? "hidden": "";
 
-    return m('div', attrs.dom,
+    return m('div', omitBy(attrs.dom, isEventHandler),
 						 attrs.prepend,
 						 m('input', inputAttrs),
 						 attrs.append

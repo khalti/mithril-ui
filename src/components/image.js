@@ -12,9 +12,9 @@ export const image = component({
 	},
 	getDefaultAttrs (attrs) {
 		if (attrs.link) {
-			return {dom: {href: attrs.link}};
+			return {rootAttrs: {href: attrs.link}};
 		}
-		return {dom: {src: attrs.src}};
+		return {rootAttrs: {src: attrs.src}};
 	},
 	getClassList (attrs) {
 		return ["ui",

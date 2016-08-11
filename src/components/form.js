@@ -13,7 +13,7 @@ export const form = component({
 											 message: "^Invalid size '%{value}'."}}
 	},
 	getDefaultAttrs (attrs) {
-		return {};
+		return {root: "form"};
 	},
 	getClassList (attrs) {
 		return ["ui",

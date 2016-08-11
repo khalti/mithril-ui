@@ -4,7 +4,7 @@ import m from "mithril";
 import omit from "lodash/omit";
 
 export const item = component({
-  extend: base,
+	base: base,
 	getDefaultAttrs () {
 		return {root: "a"};
 	},

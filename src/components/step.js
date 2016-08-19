@@ -20,14 +20,13 @@ export const step = component({
 	},
 	getClassList(attrs) {
 		return [
-			attrs.state,
+			this.getState(attrs.state, attrs.index),
 			"step"
 		];
 	},
 	getDefaultAttrs(attrs) {
 		return {
-			root: attrs.link? "a": "div",
-			state: this.getState(attrs.state(), attrs.index)
+			root: attrs.link? "a": "div"
 		};
 	},
 	view (vnode) {

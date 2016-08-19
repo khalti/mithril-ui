@@ -68,7 +68,7 @@ describe("steps", () => {
 	describe("getDefaultAttrs", () => {
 		it("sets state to '0'.", () => {
 			let attrs = steps.getDefaultAttrs({});
-			expect(attrs.state()).to.equal(0);
+			expect(attrs.state).to.equal(0);
 		});
 
 		it("sets state to one which is passed", () => {
@@ -82,25 +82,9 @@ describe("steps", () => {
 			let step1 = {title: "a title"};
 			let step2 = {title: "a title"};
 
-			let content1 = {
-				view (attrs) {
-					return m("div", {onclick: attrs.state(1)});
-				}
-			};
-			let content2 = {
-				view (attrs) {
-					return m("div", {onclick: attrs.state(2)});
-				}
-			};
-
-			let dStepsCom = m(steps, {
-				steps: [
-					[step1, content1],
-					[step2, content2]
-				]
-			});
+			let dStepsCom = m(steps, { steps: [step1, step2] });
 			let vdom = dStepsCom.view();
-			expect(vdom.children.length).to.equal(4);
+			expect(vdom.children.length).to.equal(2);
 		});
 	});
 });

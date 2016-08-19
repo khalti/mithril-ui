@@ -28,7 +28,7 @@ describe("step", () => {
 		});
 
 		it("includes state.", () => {
-			let className = classnames(step.getClassList({state: "active"}));
+			let className = classnames(step.getClassList({state: 1, index: 1}));
 			expect(className).to.have.string("active");
 
 			// TODO: test rest of the states
@@ -36,28 +36,13 @@ describe("step", () => {
 	});
 
 	describe("getDefaultAttrs", () => {
-		it("sets state to 'completed'.", () => {
-			let attrs = step.getDefaultAttrs({state: m.prop(2), index: 1});
-			expect(attrs.state).to.equal("completed");
-		});
-
-		it("sets state to 'active'.", () => {
-			let attrs = step.getDefaultAttrs({state: m.prop(1), index: 1});
-			expect(attrs.state).to.equal("active");
-		});
-
-		it("sets state to 'disabled'.", () => {
-			let attrs = step.getDefaultAttrs({state: m.prop(1), index: 2});
-			expect(attrs.state).to.equal("disabled");
-		});
-
 		it("sets root to 'a'.", () => {
-			let attrs = step.getDefaultAttrs({link: true, state: m.prop()});
+			let attrs = step.getDefaultAttrs({link: true});
 			expect(attrs.root).to.equal("a");
 		});
 
 		it("sets root to 'div'.", () => {
-			let attrs = step.getDefaultAttrs({link: false, state: m.prop()});
+			let attrs = step.getDefaultAttrs({link: false});
 			expect(attrs.root).to.equal("div");
 		})
 	});
@@ -82,7 +67,7 @@ describe("step", () => {
 				icon: "a icon",
 				title: "a title",
 				description: "a description",
-				state: m.prop(1),
+				state: 1,
 				index: 1
 			});
 			let vdom = aStep.view();
@@ -104,7 +89,7 @@ describe("step", () => {
 			let aStep = m(step, {
 				title: "a title",
 				description: "a description",
-				state: m.prop(1),
+				state: 1,
 				index: 1
 			});
 			let vdom = aStep.view();
@@ -121,7 +106,7 @@ describe("step", () => {
 				link: true,
 				title: "a title",
 				description: "a description",
-				state: m.prop(1),
+				state: 1,
 				index: 1
 			});
 			let vdom = aStep.view();
@@ -133,7 +118,7 @@ describe("step", () => {
 			let aStep = m(step, {
 				title: "a title",
 				description: "a description",
-				state: m.prop(1),
+				state: 1,
 				index: 1
 			});
 			let vdom = aStep.view();

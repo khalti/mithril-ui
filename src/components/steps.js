@@ -25,7 +25,7 @@ export const steps = component({
 		}
 	},
 	getDefaultAttrs (attrs) {
-		return {state: attrs.state || m.prop(0)};
+		return {state: attrs.state || 0};
 	},
 	getClassList (attrs) {
 		return [
@@ -42,17 +42,12 @@ export const steps = component({
 	view (vnode) {
 		let attrs = vnode.attrs;
 
-		let titles = map(attrs.steps, (astep, index) => {
-			let aTitle = astep[0];
-			aTitle.state = attrs.state();
-			aTitle.index = index + 1;
-			return m(step, aTitle);
-		});
-		let contents = map(attrs.steps, (astep, index) => {
-			let aContent = astep[1];
-			return m(aContent, {state: attrs.state, index: index + 1});
+		let steps = map(attrs.steps, (stepAttrs, index) => {
+			stepAttrs.state = attrs.state + 1;
+			stepAttrs.index = index + 1;
+			return m(step, stepAttrs);
 		});
 
-		return m("div", vnode.attrs.rootAttrs, flattenDeep([titles, contents]))
+		return m("div", vnode.attrs.rootAttrs, steps)
 	}
 });

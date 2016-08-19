@@ -6,7 +6,7 @@ import keys from "lodash/keys";
 export const segment = component({
 	base: base,
 	attrSchema: {
-		attach: {inclusion: {within: keys(attachmentMap),
+		attach: {inclusion: {within: [true, "top", "bottop", "left", "right"],
 												 message: "^Invalid attachment '%{value}'."}},
 		color: {inclusion: {within: keys(colorClassMap),
 												message: "^Invalid color '%{value}'."}},

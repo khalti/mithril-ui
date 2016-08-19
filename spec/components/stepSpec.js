@@ -6,18 +6,18 @@ import {expect} from "chai";
 
 
 describe("step", () => {
-	it("complains if title is absent.", () => {
-		let aStep = m(step, {description: "yo description"});
+	it("complains if 'title' is absent.", () => {
+		let aStep = m(step, {state: m.prop(0), index: 1});
 		expect(aStep.view.bind(aStep, {})).to.throw(Error);
 	});
 
-	it("complains if description is absent.", () => {
-		let aStep = m(step, {title: "yo title"});
+	it("complains if 'state' is absent.", () => {
+		let aStep = m(step, {title: "yo title", index: 1});
 		expect(aStep.view.bind(aStep, {})).to.throw(Error);
 	});
 
-	it("complains if state is invalid.", () => {
-		let aStep = m(step, {title: "yo title", state: "invisible"});
+	it("complains if 'index' is absent.", () => {
+		let aStep = m(step, {title: "yo title", state: m.prop(0)});
 		expect(aStep.view.bind(aStep, {})).to.throw(Error);
 	});
 
@@ -35,9 +35,56 @@ describe("step", () => {
 		});
 	});
 
+	describe("getDefaultAttrs", () => {
+		it("sets state to 'completed'.", () => {
+			let attrs = step.getDefaultAttrs({state: m.prop(2), index: 1});
+			expect(attrs.state).to.equal("completed");
+		});
+
+		it("sets state to 'active'.", () => {
+			let attrs = step.getDefaultAttrs({state: m.prop(1), index: 1});
+			expect(attrs.state).to.equal("active");
+		});
+
+		it("sets state to 'disabled'.", () => {
+			let attrs = step.getDefaultAttrs({state: m.prop(1), index: 2});
+			expect(attrs.state).to.equal("disabled");
+		});
+
+		it("sets root to 'a'.", () => {
+			let attrs = step.getDefaultAttrs({link: true, state: m.prop()});
+			expect(attrs.root).to.equal("a");
+		});
+
+		it("sets root to 'div'.", () => {
+			let attrs = step.getDefaultAttrs({link: false, state: m.prop()});
+			expect(attrs.root).to.equal("div");
+		})
+	});
+
+	describe("getState", () => {
+		it("returns completed.", () => {
+			expect(step.getState(2, 1)).to.equal("completed");
+		});
+
+		it("returns active.", () => {
+			expect(step.getState(1, 1)).to.equal("active");
+		});
+
+		it("returns disabled.", () => {
+			expect(step.getState(1, 2)).to.equal("disabled");
+		});
+	});
+
 	describe("view", () => {
 		it("wraps title and description in content if icon is present.", () => {
-			let aStep = m(step, {icon: "a icon", title: "a title", description: "a description"});
+			let aStep = m(step, {
+				icon: "a icon",
+				title: "a title",
+				description: "a description",
+				state: m.prop(1),
+				index: 1
+			});
 			let vdom = aStep.view();
 
 			let dIcon = vdom.children[0];
@@ -54,7 +101,12 @@ describe("step", () => {
 		});
 
 		it("won't wrap title and description in content if icon is absent.", () => {
-			let aStep = m(step, {title: "a title", description: "a description"});
+			let aStep = m(step, {
+				title: "a title",
+				description: "a description",
+				state: m.prop(1),
+				index: 1
+			});
 			let vdom = aStep.view();
 
 			let titleVdom = vdom.children[0].view();
@@ -65,14 +117,25 @@ describe("step", () => {
 		});
 
 		it("sets root dom to 'a' if attrs.link is true.", () => {
-			let aStep = m(step, {link: true, title: "a title", description: "a description"});
+			let aStep = m(step, {
+				link: true,
+				title: "a title",
+				description: "a description",
+				state: m.prop(1),
+				index: 1
+			});
 			let vdom = aStep.view();
 
 			expect(vdom.tag).to.equal("a");
 		});
 
 		it("sets root dom to 'div' if attrs.link is falsey.", () => {
-			let aStep = m(step, {title: "a title", description: "a description"});
+			let aStep = m(step, {
+				title: "a title",
+				description: "a description",
+				state: m.prop(1),
+				index: 1
+			});
 			let vdom = aStep.view();
 
 			expect(vdom.tag).to.equal("div");

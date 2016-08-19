@@ -10,13 +10,13 @@ export const step = component({
 	base: base,
 	attrSchema: {
 		title: {presence: true},
-		description: {presence: true},
-		state: {
-			inclusion: {
-				within: ["active", "completed", "disabled"],
-				message: "Invalid state."
-			}
-		}
+		state: {presence: true},
+		index: {presence: true}
+	},
+	getState (state, index) {
+		if (index < state) return "completed";
+		if (index === state) return "active";
+		if (index > state) return "disabled";
 	},
 	getClassList(attrs) {
 		return [
@@ -26,7 +26,8 @@ export const step = component({
 	},
 	getDefaultAttrs(attrs) {
 		return {
-			root: attrs.link? "a": "div"
+			root: attrs.link? "a": "div",
+			state: this.getState(attrs.state(), attrs.index)
 		};
 	},
 	view (vnode) {

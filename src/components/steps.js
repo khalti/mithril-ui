@@ -43,7 +43,7 @@ export const steps = component({
 		let attrs = vnode.attrs;
 
 		let steps = map(attrs.steps, (stepAttrs, index) => {
-			stepAttrs.state = attrs.state + 1;
+			stepAttrs.state = attrs.state;
 			stepAttrs.index = index + 1;
 			return m(step, stepAttrs);
 		});

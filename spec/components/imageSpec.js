@@ -12,12 +12,12 @@ describe("image", () => {
 	describe("getDefaultAttrs", () => {
 		it("includes 'src' if link is absent.", () => {
 			let attrs = image.getDefaultAttrs({src: "http://something.com"});
-			expect(attrs.dom.src).to.equal("http://something.com");
+			expect(attrs.rootAttrs.src).to.equal("http://something.com");
 		});
 
 		it("includes 'href' if link is given.", () => {
 			let attrs = image.getDefaultAttrs({link: "http://somewhere.com"});
-			expect(attrs.dom.href).to.equal("http://somewhere.com");
+			expect(attrs.rootAttrs.href).to.equal("http://somewhere.com");
 		});
 	});
 

@@ -2,6 +2,12 @@ import {base} from "./base.js";
 import component from "mithril-componentx";
 import keys from "lodash/keys";
 import enums from "./../helpers/enums.js";
+import reduce from "lodash/reduce";
+
+let stretchedMap = {
+	true: "stretched",
+	false: ""
+};
 
 export const row = component({
 	base: base,
@@ -18,31 +24,29 @@ export const row = component({
 																message: "^Invalid value '%{value}'."}},
 		verticalAlignment: {inclusion: {within: keys(enums.verticalAlignmentClassMap),
 																		message: "^Invalid value '%{value}'."}},
-		visible: {inclusion: {within: keys(enums.visibleClassMap),
+		visible: {inclusion: {within: keys(enums.devices),
 													message: "^Invalid value '%{value}'."}},
 		reverse: {inclusion: {within: keys(enums.reverseClassMap),
 													message: "^Invalid value '%{value}'."}}
 	},
-	columnsClassMap: enums.columnsClassMap,
-	stretchedClassMap: {
-		true: "stretched",
-		false: ""
-	},
-	colorClassMap: enums.colorClassMap,
-	centeredClassMap: enums.centeredClassMap,
-	textAlignmentClassMap: enums.textAlignmentClassMap,
-	verticalAlignmentClassMap: enums.verticalAlignmentClassMap,
-	visibleClassMap: enums.visibleClassMap,
-	reverseClassMap: enums.reverseClassMap,
 	getClassList (attrs) {
-		return [this.columnsClassMap[attrs.columns],
-						this.stretchedClassMap[attrs.stretched],
-						this.colorClassMap[attrs.color],
-						this.centeredClassMap[attrs.centered],
-						this.textAlignmentClassMap[attrs.textAlignment],
-						this.verticalAlignmentClassMap[attrs.verticalAlignment],
-						this.visibleClassMap[attrs.visible],
-						this.reverseClassMap[attrs.reverse],
+		let visibleClass;
+		attrs.visible = attrs.visible || [];
+		if (attrs.visible.length > 0) {
+			attrs.visible.push("only");
+			visibleClass = reduce(attrs.visible, (className, device) => {
+				return `${className} ${device}`;
+			})
+		}
+
+		return [enums.columnsClassMap[attrs.columns],
+						stretchedMap[attrs.stretched],
+						enums.colorClassMap[attrs.color],
+						enums.centeredClassMap[attrs.centered],
+						enums.textAlignmentClassMap[attrs.textAlignment],
+						enums.verticalAlignmentClassMap[attrs.verticalAlignment],
+						visibleClass,
+						enums.reverseClassMap[attrs.reverse],
 						"row"];
 	}
 });

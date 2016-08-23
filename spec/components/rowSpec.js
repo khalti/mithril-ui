@@ -1,53 +1,58 @@
 import {row} from "./../../src/components/row.js";
 import chai from "chai";
+import classnames from "classnames";
+
 
 let expect = chai.expect;
 
 describe("row", () => {
 	describe(".getClassList", () => {
-		it("should return list where 'container' is the last item.", () => {
-			let classList = row.getClassList({});
-			expect(classList[classList.length - 1]).to.equal("row");
+		it("should include 'container'.", () => {
+			let className = classnames(row.getClassList({}));
+			expect(className).to.have.string("row");
 		});
 
-		it("should return proper 'columns' class", () => {
-			let classList = row.getClassList({columns: 1});
-			expect(classList[0]).to.equal(row.columnsClassMap[1]);
+		it("should include proper 'columns' class", () => {
+			let className = classnames(row.getClassList({columns: 1}));
+			expect(className).to.have.string("one column");
 		});
 
-		it("should return proper 'stretched' class", () => {
-			let classList = row.getClassList({stretched: true});
-			expect(classList[1]).to.equal(row.stretchedClassMap.true);
+		it("should include proper 'stretched' class", () => {
+			let className = classnames(row.getClassList({stretched: true}));
+			expect(className).to.have.string("stretched");
 		});
 
-		it("should return proper 'color' class", () => {
-			let classList = row.getClassList({color: "blue"});
-			expect(classList[2]).to.equal(row.colorClassMap.blue);
+		it("should include proper 'color' class", () => {
+			let className = classnames(row.getClassList({color: "blue"}));
+			expect(className).to.have.string("blue");
 		});
 
-		it("should return proper 'centered' class", () => {
-			let classList = row.getClassList({centered: true});
-			expect(classList[3]).to.equal(row.centeredClassMap.true);
+		it("should include proper 'centered' class", () => {
+			let className = classnames(row.getClassList({centered: true}));
+			expect(className).to.have.string("centered");
 		});
 
-		it("should return proper 'textAlignment' class", () => {
-			let classList = row.getClassList({textAlignment: "center"});
-			expect(classList[4]).to.equal(row.textAlignmentClassMap.center);
+		it("should include proper 'textAlignment' class", () => {
+			let className = classnames(row.getClassList({textAlignment: "center"}));
+			expect(className).to.have.string("center aligned");
 		});
 
-		it("should return proper 'verticalAlignment' class", () => {
-			let classList = row.getClassList({verticalAlignment: "bottom"});
-			expect(classList[5]).to.equal(row.verticalAlignmentClassMap.bottom);
+		it("should include proper 'verticalAlignment' class", () => {
+			let className = classnames(row.getClassList({verticalAlignment: "bottom"}));
+			expect(className).to.have.string("bottom aligned");
 		});
 
-		it("should return proper 'visible' class", () => {
-			let classList = row.getClassList({visible: "mobile"});
-			expect(classList[6]).to.equal(row.visibleClassMap.mobile);
+		it("should include proper 'visible' class", () => {
+			let className = classnames(row.getClassList({visible: ["mobile"]}));
+			expect(className).to.have.string("mobile only");
+
+			className = classnames(row.getClassList({visible: ["mobile", "computer"]}));
+			expect(className).to.have.string("mobile computer only");
 		});
 
-		it("should return proper 'reverse' class", () => {
-			let classList = row.getClassList({reverse: "mobile"});
-			expect(classList[7]).to.equal(row.reverseClassMap.mobile);
+		it("should include proper 'reverse' class", () => {
+			let className = classnames(row.getClassList({reverse: "mobile"}));
+			expect(className).to.have.string("mobile reversed");
 		});
 	});
 });

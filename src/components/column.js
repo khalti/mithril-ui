@@ -1,25 +1,22 @@
 import {base} from "./base.js";
-import _ from "lodash";
+import keys from "lodash/keys";
+import reduce from "lodash/reduce";
 import enums from "./../helpers/enums.js";
 import component from "mithril-componentx";
 
-var floatClassMap = {
-  "left": "left floated",
-  "right": "right floated"
-};
 
 export const column = component({
   base: base,
 	attrSchema: {
-		float: {inclusion: {within: _.keys(floatClassMap),
+		float: {inclusion: {within: keys(enums.floatMap),
 												message: "^Invalid value '%{value}'."}},
 		width: {inclusion: {within: enums.properKeys(enums.widthClassMap),
 												message: "^Invalid value '%{value}'."}},
-		color: {inclusion: {within: _.keys(enums.colorClassMap),
+		color: {inclusion: {within: keys(enums.colorClassMap),
 												message: "^Invalid value '%{value}'."}},
-		textAlignment: {inclusion: {within: _.keys(enums.textAlignmentClassMap),
+		textAlignment: {inclusion: {within: keys(enums.textAlignmentClassMap),
 																message: "^Invalid value '%{value}'."}},
-		visible: {inclusion: {within: _.keys(enums.visibleClassMap),
+		visible: {inclusion: {within: keys(enums.visibleClassMap),
 													message: "^Invalid value '%{value}'."}},
 		mobile: {inclusion: {within: enums.properKeys(enums.widthClassMap),
 													message: "^Invalid value '%{value}'."}},
@@ -32,22 +29,26 @@ export const column = component({
 		widescreen: {inclusion: {within: enums.properKeys(enums.widthClassMap),
 															message: "^Invalid value '%{value}'."}}
 	},
-	floatClassMap: floatClassMap,
-	widthClassMap: enums.widthClassMap,
-	colorClassMap: enums.colorClassMap,
-	textAlignmentClassMap: enums.textAlignmentClassMap,
-	visibleClassMap: enums.visibleClassMap,
 	getClassList (attrs) {
-		return [this.floatClassMap[attrs.float],
-						this.widthClassMap[attrs.width],
-						this.colorClassMap[attrs.color],
-						this.textAlignmentClassMap[attrs.textAlignment],
-						this.visibleClassMap[attrs.visible],
-						attrs.mobile? this.widthClassMap[attrs.mobile] + " mobile": "",
-						attrs.tablet? this.widthClassMap[attrs.tablet] + " tablet": "",
-						attrs.computer? this.widthClassMap[attrs.computer] + " computer": "",
-						attrs.largeScreen? this.widthClassMap[attrs.largeScreen] + " large screen": "",
-						attrs.widescreen? this.widthClassMap[attrs.widescreen] + " widescreen": "",
+		let visibleClass;
+		attrs.visible = attrs.visible || [];
+		if (attrs.visible.length > 0) {
+			attrs.visible.push("only");
+			visibleClass = reduce(attrs.visible, (className, device) => {
+				return `${className} ${device}`;
+			})
+		}
+
+		return [enums.floatMap[attrs.float],
+						enums.widthClassMap[attrs.width],
+						enums.colorClassMap[attrs.color],
+						enums.textAlignmentClassMap[attrs.textAlignment],
+						visibleClass,
+						attrs.mobile? enums.widthClassMap[attrs.mobile] + " mobile": "",
+						attrs.tablet? enums.widthClassMap[attrs.tablet] + " tablet": "",
+						attrs.computer? enums.widthClassMap[attrs.computer] + " computer": "",
+						attrs.largeScreen? enums.widthClassMap[attrs.largeScreen] + " large screen": "",
+						attrs.widescreen? enums.widthClassMap[attrs.widescreen] + " widescreen": "",
 						"column"];
 	}
 });

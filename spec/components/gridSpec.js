@@ -7,73 +7,74 @@ let expect = chai.expect;
 
 describe("grid", () =>{
 	describe(".getClassList", () => {
-		it("should return list where 'ui' is the first item.", () => {
-			expect(grid.getClassList({})[0]).to.equal("ui");
+		it("should include list where 'ui' is the first item.", () => {
+			let className = classnames(grid.getClassList({}));
+			expect(className).to.have.string("ui");
 		});
 
-		it("should return list where 'container' is the last item.", () => {
-			let classList = grid.getClassList({});
-			expect(classList[classList.length - 1]).to.equal("grid");
+		it("should include list where 'container' is the last item.", () => {
+			let className = classnames(grid.getClassList({}));
+			expect(className).to.have.string("grid");
 		});
 
-		it("should return proper 'columns' class", () => {
-			let classList = grid.getClassList({columns: 1});
-			expect(classList[1]).to.equal(grid.columnsClassMap[1]);
+		it("should include proper 'columns' class", () => {
+			let className = classnames(grid.getClassList({columns: 1}));
+			expect(className).to.have.string("one column");
 		});
 
-		it("should return proper 'divide' class", () => {
-			let classList = grid.getClassList({divide: "vertically"});
-			expect(classList[2]).to.equal(grid.divideClassMap.vertically);
+		it("should include proper 'divide' class", () => {
+			let className = classnames(grid.getClassList({divide: "vertically"}));
+			expect(className).to.have.string("vertically divided")
 		});
 
-		it("should return proper 'cell' class", () => {
-			var classList = grid.getClassList({cell: "internally"});
-			expect(classList[3]).to.equal(grid.cellClassMap.internally);
+		it("should include proper 'cell' class", () => {
+			var className = classnames(grid.getClassList({cell: "internally"}));
+			expect(className).to.have.string("internally celled");
 		});
 
-		it("should return proper 'equalWidth' class", () => {
-			let classList = grid.getClassList({equalWidth: true});
-			expect(classList[4]).to.equal(grid.equalWidthClassMap.true);
+		it("should include proper 'equalWidth' class", () => {
+			let className = classnames(grid.getClassList({equalWidth: true}));
+			expect(className).to.have.string("equal width");
 		});
 
-		it("should return proper 'padded' class", () => {
-			let classList = grid.getClassList({padded: true});
-			expect(classList[5]).to.equal(grid.paddedClassMap.true);
+		it("should include proper 'padded' class", () => {
+			let className = classnames(grid.getClassList({padded: true}));
+			expect(className).to.have.string("padded");
 		});
 
-		it("should return proper 'relaxed' class", () => {
-			let classList = grid.getClassList({relaxed: true});
-			expect(classList[6]).to.equal(grid.relaxedClassMap.true);
+		it("should include proper 'relaxed' class", () => {
+			let className = classnames(grid.getClassList({relaxed: true}));
+			expect(className).to.have.string("relaxed");
 		});
 
-		it("should return proper 'centered' class", () => {
-			let classList = grid.getClassList({centered: true});
-			expect(classList[7]).to.equal(grid.centeredClassMap.true);
+		it("should include proper 'centered' class", () => {
+			let className = classnames(grid.getClassList({centered: true}));
+			expect(className).to.have.string("centered");
 		});
 
-		it("should return proper 'textAlignment' class", () => {
-			let classList = grid.getClassList({textAlignment: "right"});
-			expect(classList[8]).to.equal(grid.textAlignmentClassMap.right);
+		it("should include proper 'textAlignment' class", () => {
+			let className = classnames(grid.getClassList({textAlignment: "right"}));
+			expect(className).to.have.string("right aligned");
 		});
 
-		it("should return proper 'verticalAlignment' class", () => {
-			let classList = grid.getClassList({verticalAlignment: true});
-			expect(classList[9]).to.equal(grid.verticalAlignmentClassMap.true);
+		it("should include proper 'verticalAlignment' class", () => {
+			let className = classnames(grid.getClassList({verticalAlignment: "middle"}));
+			expect(className).to.have.string("middle aligned");
 		});
 
-		it("should return proper 'doubling' class", () => {
-			let classList = grid.getClassList({doubling: true});
-			expect(classList[10]).to.equal(grid.doublingClassMap.true);
+		it("should include proper 'doubling' class", () => {
+			let className = classnames(grid.getClassList({doubling: true}));
+			expect(className).to.have.string("doubling");
 		});
 
-		it("should return proper 'stackable' class", () => {
-			let classList = grid.getClassList({stackable: true});
-			expect(classList[11]).to.equal(grid.stackableClassMap.true);
+		it("should include proper 'stackable' class", () => {
+			let className = classnames(grid.getClassList({stackable: true}));
+			expect(className).to.have.string("stackable");
 		});
 
-		it("should return proper 'reverse' class", () => {
-			let classList = grid.getClassList({reverse: "mobile"});
-			expect(classList[12]).to.equal(grid.reverseClassMap.mobile);
+		it("should include proper 'reverse' class", () => {
+			let className = classnames(grid.getClassList({reverse: "mobile"}));
+			expect(className).to.have.string("mobile reversed");
 		});
 
 		it("includes 'inverted'.", () => {

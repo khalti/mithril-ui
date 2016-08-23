@@ -66,13 +66,6 @@ module.exports = {
     center: "center aligned",
     justified: "justified"
   },
-  visibleClassMap: {
-    mobile: "mobile only",
-    tablet: "tablet only",
-    computer: "computer only",
-    largeScreen: "large screen only",
-    widescreen: "widescreen only"
-  },
   widthClassMap: {
     1: "one wide",
     2: "two wide",
@@ -130,5 +123,6 @@ module.exports = {
         return akey;
       }
     });
-  }
+  },
+	devices: ["mobile", "tablet", "computer", "large screen", "widescreen"]
 };

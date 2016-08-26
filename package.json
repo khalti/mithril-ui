@@ -4,7 +4,7 @@
   "description": "UI components for Mithril.js",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --compilers js:babel-register spec/*",
+    "test": "mocha --compilers js:babel-register --recursive spec/*",
     "build:browser": "webpack",
     "build:commonjs": "babel --plugins transform-es2015-modules-commonjs src --out-dir lib",
     "build": "npm run build:commonjs && npm run build:browser",

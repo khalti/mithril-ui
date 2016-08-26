@@ -135,5 +135,15 @@ describe("menu", () => {
 			let className = classnames(menu.getClassList({borderless: true}));
 			expect(className).to.have.string("borderless");
 		});
+
+		it("includes 'icon'.", () => {
+			let className = classnames(menu.getClassList({icon: true}));
+			expect(className).to.have.string("icon");
+		});
+
+		it("includes 'labeled icon'.", () => {
+			let className = classnames(menu.getClassList({labeledIcon: true}));
+			expect(className).to.have.string("labeled icon");
+		});
 	});
 });

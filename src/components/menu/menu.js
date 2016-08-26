@@ -80,6 +80,8 @@ export const menu = component({
 						enums.attachmentMap[attrs.attach],
 						enums.sizeMap[attrs.size],
 						fittedMap[attrs.fitted],
+						{icon: attrs.icon},
+						{"labeled icon": attrs.labeledIcon},
 						{borderless: attrs.borderless},
 						"menu"];
 	}

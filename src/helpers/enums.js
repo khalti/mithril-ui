@@ -124,5 +124,11 @@ module.exports = {
       }
     });
   },
-	devices: ["mobile", "tablet", "computer", "large screen", "widescreen"]
+	deviceMap: {
+		mobile: "mobile",
+		tablet: "tablet",
+		computer: "computer",
+		largeScreen: "large screen",
+		widescreen: "widescreen"
+	}
 };

@@ -3,6 +3,8 @@ import component from "mithril-componentx";
 import keys from "lodash/keys";
 import enums from "./../helpers/enums.js";
 import reduce from "lodash/reduce";
+import clone from "lodash/clone";
+
 
 let stretchedMap = {
 	true: "stretched",
@@ -24,18 +26,17 @@ export const row = component({
 																message: "^Invalid value '%{value}'."}},
 		verticalAlignment: {inclusion: {within: keys(enums.verticalAlignmentClassMap),
 																		message: "^Invalid value '%{value}'."}},
-		visible: {inclusion: {within: keys(enums.devices),
-													message: "^Invalid value '%{value}'."}},
+		 // visible: {inclusion: {within: enums.devices,
+		 // 											message: "^Invalid value '%{value}'."}},
 		reverse: {inclusion: {within: keys(enums.reverseClassMap),
 													message: "^Invalid value '%{value}'."}}
 	},
 	getClassList (attrs) {
 		let visibleClass;
-		attrs.visible = attrs.visible || [];
-		if (attrs.visible.length > 0) {
-			attrs.visible.push("only");
-			visibleClass = reduce(attrs.visible, (className, device) => {
-				return `${className} ${device}`;
+		let visibility = clone(attrs.visible || []);
+		if (visibility.length > 0) {
+			visibleClass = reduce(visibility, (className, device) => {
+				return `${className} ${enums.deviceMap[device]}`;
 			})
 		}
 
@@ -45,7 +46,7 @@ export const row = component({
 						enums.centeredClassMap[attrs.centered],
 						enums.textAlignmentClassMap[attrs.textAlignment],
 						enums.verticalAlignmentClassMap[attrs.verticalAlignment],
-						visibleClass,
+						visibleClass + " only",
 						enums.reverseClassMap[attrs.reverse],
 						"row"];
 	}

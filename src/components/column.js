@@ -3,6 +3,7 @@ import keys from "lodash/keys";
 import reduce from "lodash/reduce";
 import enums from "./../helpers/enums.js";
 import component from "mithril-componentx";
+import clone from "lodash/clone";
 
 
 export const column = component({
@@ -16,8 +17,8 @@ export const column = component({
 												message: "^Invalid value '%{value}'."}},
 		textAlignment: {inclusion: {within: keys(enums.textAlignmentClassMap),
 																message: "^Invalid value '%{value}'."}},
-		visible: {inclusion: {within: keys(enums.visibleClassMap),
-													message: "^Invalid value '%{value}'."}},
+		// visible: {inclusion: {within: enums.devices,
+		// 											message: "^Invalid value '%{value}'."}},
 		mobile: {inclusion: {within: enums.properKeys(enums.widthClassMap),
 													message: "^Invalid value '%{value}'."}},
 		tablet: {inclusion: {within: enums.properKeys(enums.widthClassMap),
@@ -31,11 +32,10 @@ export const column = component({
 	},
 	getClassList (attrs) {
 		let visibleClass;
-		attrs.visible = attrs.visible || [];
-		if (attrs.visible.length > 0) {
-			attrs.visible.push("only");
-			visibleClass = reduce(attrs.visible, (className, device) => {
-				return `${className} ${device}`;
+		let visibility = clone(attrs.visible || []);
+		if (visibility.length > 0) {
+			visibleClass = reduce(visibility, (className, device) => {
+				return `${className} ${enums.deviceMap[device]}`;
 			})
 		}
 
@@ -43,7 +43,7 @@ export const column = component({
 						enums.widthClassMap[attrs.width],
 						enums.colorClassMap[attrs.color],
 						enums.textAlignmentClassMap[attrs.textAlignment],
-						visibleClass,
+						visibleClass + " only",
 						attrs.mobile? enums.widthClassMap[attrs.mobile] + " mobile": "",
 						attrs.tablet? enums.widthClassMap[attrs.tablet] + " tablet": "",
 						attrs.computer? enums.widthClassMap[attrs.computer] + " computer": "",

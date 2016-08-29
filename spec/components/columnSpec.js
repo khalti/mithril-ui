@@ -36,8 +36,8 @@ describe("column", () => {
 			let className = classnames(column.getClassList({visible: ["mobile"]}));
 			expect(className).to.have.string("mobile only");
 
-			className = classnames(column.getClassList({visible: ["mobile", "computer"]}));
-			expect(className).to.have.string("mobile computer only");
+			className = classnames(column.getClassList({visible: ["mobile", "computer", "largeScreen", "widescreen"]}));
+			expect(className).to.have.string("mobile computer large screen widescreen only");
 		});
 
 		it("should include proper 'mobile' class", () => {

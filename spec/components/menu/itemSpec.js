@@ -43,9 +43,14 @@ describe("item", () => {
 	});
 
 	describe("getDefaultAttrs", () => {
-		it("sets root to 'a'", () => {
-			let attrs = item.getDefaultAttrs({});
+		it("sets root to 'a' if 'href' is present", () => {
+			let attrs = item.getDefaultAttrs({href: "/somewhere/"});
 			expect(attrs.root).to.equal('a');
+		});
+
+		it("sets root to 'div' if 'href' is absent.", () => {
+			let attrs = item.getDefaultAttrs({});
+			expect(attrs.root).to.equal('div');
 		});
 	});
 });

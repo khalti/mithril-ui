@@ -46,7 +46,7 @@ export const row = component({
 						enums.centeredClassMap[attrs.centered],
 						enums.textAlignmentClassMap[attrs.textAlignment],
 						enums.verticalAlignmentClassMap[attrs.verticalAlignment],
-						visibleClass + " only",
+						visibleClass? visibleClass + " only": "",
 						enums.reverseClassMap[attrs.reverse],
 						"row"];
 	}

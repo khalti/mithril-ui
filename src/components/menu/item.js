@@ -28,9 +28,9 @@ export const item = component({
 	},
 	getDefaultAttrs (attrs) {
 		return {
-			root: "a",
+			root: attrs.href? "a": "div",
 			rootAttrs: {
-				href: attrs.href
+				href: attrs.href || ""
 			}
 		};
 	},

@@ -43,7 +43,7 @@ export const column = component({
 						enums.widthClassMap[attrs.width],
 						enums.colorClassMap[attrs.color],
 						enums.textAlignmentClassMap[attrs.textAlignment],
-						visibleClass + " only",
+						visibleClass? visibleClass + " only": "",
 						attrs.mobile? enums.widthClassMap[attrs.mobile] + " mobile": "",
 						attrs.tablet? enums.widthClassMap[attrs.tablet] + " tablet": "",
 						attrs.computer? enums.widthClassMap[attrs.computer] + " computer": "",

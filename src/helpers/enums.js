@@ -1,4 +1,5 @@
-var _ = require("lodash");
+import keys from "lodash/keys";
+import map from "lodash/map";
 
 module.exports = {
 	numberMap: {
@@ -114,7 +115,7 @@ module.exports = {
 		massive: "massive"
 	},
   properKeys: function (obj) {
-    return _.map(_.keys(obj), function (akey) {
+    return map(keys(obj), function (akey) {
       var properKey = parseInt(akey);
       if(properKey) {
         return properKey;

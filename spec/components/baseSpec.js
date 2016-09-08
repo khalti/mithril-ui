@@ -1,6 +1,8 @@
 import {base}  from "./../../src/components/base.js";
 import component from "mithril-componentx";
 import chai from "chai";
+import {required} from "validatex";
+
 
 let expect = chai.expect;
 
@@ -10,7 +12,7 @@ describe("base", () => {
 		beforeEach(() => {
 			profile = component({
 				base: base,
-				attrSchema: {name: {presence: true}}
+				attrSchema: {name: required(true)}
 			});
 		});
 

@@ -47,6 +47,6 @@
     "mithril": "^0.2.5",
     "mithril-componentx": "^0.2.4",
     "powerform": "^1.0.3",
-    "validate.js": "^0.10.0"
+    "validatex": "^0.1.1"
   }
 }

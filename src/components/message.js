@@ -3,6 +3,7 @@ import {base} from "./../components/base.js";
 import m from "mithril";
 import {attachmentMap, colorClassMap, sizeMap} from "./../helpers/enums.js";
 import keys from "lodash/keys";
+import {required, within} from "validatex";
 
 
 let types = ["warning", "info", "positive", "success", "negative", "error"];
@@ -13,16 +14,12 @@ export const message = component({
 	base: base,
 	visible: false,
 	attrSchema: {
-		attach: {inclusion: {within: keys(attachmentMap),
-												 message: "^Invalid attachment '%{value}'."}},
-		type: {inclusion: {within: types,
-											 message: "^Invalid type '%{value}'."}},
-		color: {inclusion: {within: keys(colorClassMap),
-												message: "^Invalid color '%{value}'."}},
-		size: {inclusion: {within: keys(sizeMap),
-											 message: "^Invalid size '%{value}'."}},
-		state: {inclusion: {within: states,
-												message: "^Invalid state '%{value}'."}}
+		attach: [required(false), within(keys(attachmentMap),
+																		"^Invalid attachment '{value}'.")],
+		type: [required(false), within(types, "Invalid type '{value}'.")],
+		color: [required(false), within(keys(colorClassMap), "Invalid color '{value}'.")],
+		size: [required(false), within(keys(sizeMap), "Invalid size '{value}'.")],
+		state: [required(false), within(states, "Invalid state '{value}'.")]
 	},
 	getDefaultAttrs (attrs) {
 		return {};

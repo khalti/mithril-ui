@@ -6,6 +6,7 @@ import {properKeys,
 				floatMap,
 				textAlignmentClassMap,
 				colorClassMap} from "./../helpers/enums.js";
+import {required, within} from "validatex";
 
 
 let levelMap = {
@@ -20,8 +21,7 @@ let levelMap = {
 export const header = component({
   base: base,
 	attrSchema: {
-		level: {inclusion: {within: properKeys(levelMap),
-												message: "^Invalid level '%{value}.'"}}
+		level: [required(false), within(properKeys(levelMap), "Invalid level '{value}.'")]
 	},
 	getDefaultAttrs (attrs) {
 		return {};

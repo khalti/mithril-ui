@@ -4,14 +4,15 @@ import {content} from "./content.js";
 import {title} from "./title.js";
 import {description} from "./description.js";
 import m from "mithril";
+import {required} from "validatex";
 
 
 export const step = component({
 	base: base,
 	attrSchema: {
-		title: {presence: true},
-		state: {presence: true},
-		index: {presence: true}
+		title: required(true),
+		state: required(true),
+		index: required(true)
 	},
 	getState (state, index) {
 		if (index < state) return "completed";

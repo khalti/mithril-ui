@@ -3,12 +3,13 @@ import component from "mithril-componentx";
 import m from "mithril";
 import omit from "lodash/omit";
 import {verticalAlignmentClassMap, floatMap} from "./../helpers/enums.js";
+import {required} from "validatex";
 
 
 export const image = component({
   base: base,
 	attrSchema: {
-		src: {presence: true}
+		src: required(true)
 	},
 	getDefaultAttrs (attrs) {
 		if (attrs.link) {

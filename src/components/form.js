@@ -4,13 +4,13 @@ import m from "mithril";
 import omit from "lodash/omit";
 import keys from "lodash/keys";
 import {sizeMap} from "./../helpers/enums.js";
+import {required, within} from "validatex";
 
 
 export const form = component({
 	base: base,
 	attrSchema: {
-		size: {inclusion: {within: keys(sizeMap),
-											 message: "^Invalid size '%{value}'."}}
+		size: [required(false), within(keys(sizeMap), "^Invalid size '%{value}'.")]
 	},
 	getDefaultAttrs (attrs) {
 		return {root: "form"};

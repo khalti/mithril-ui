@@ -4,6 +4,7 @@ import keys from "lodash/keys";
 import enums from "./../helpers/enums.js";
 import reduce from "lodash/reduce";
 import clone from "lodash/clone";
+import {required, within} from "validatex";
 
 
 let stretchedMap = {
@@ -14,22 +15,22 @@ let stretchedMap = {
 export const row = component({
 	base: base,
 	attrSchema: {
-		columns: {inclusion: {within: enums.properKeys(enums.columnsClassMap),
-													message: "^Invalid value '%{value}'."}},
-		stretched: {inclusion: {within: [true, false],
-														message: "^%{value} is not a boolean value."}},
-		color: {inclusion: {within: keys(enums.colorClassMap),
-												message: "^Invalid value '%{value}'."}},
-		centered: {inclusion: {within: [true, false],
-														message: "^%{value} is not a boolean value."}},
-		textAlignment: {inclusion: {within: keys(enums.textAlignmentClassMap),
-																message: "^Invalid value '%{value}'."}},
-		verticalAlignment: {inclusion: {within: keys(enums.verticalAlignmentClassMap),
-																		message: "^Invalid value '%{value}'."}},
+		columns: [required(false), within(enums.properKeys(enums.columnsClassMap),
+																			"Invalid value '{value}'.")],
+		stretched: [required(false), within([true, false],
+																				"'{value}' is not a boolean value.")],
+		color: [required(false), within(keys(enums.colorClassMap),
+																		"Invalid value '%{value}'.")],
+		centered: [required(false), within([true, false],
+																			"'{value}' is not a boolean value.")],
+		textAlignment: [required(false), within(keys(enums.textAlignmentClassMap),
+																						"Invalid value '{value}'.")],
+		verticalAlignment: [required(false), within(keys(enums.verticalAlignmentClassMap),
+																								"Invalid value '{value}'.")],
 		 // visible: {inclusion: {within: enums.devices,
 		 // 											message: "^Invalid value '%{value}'."}},
-		reverse: {inclusion: {within: keys(enums.reverseClassMap),
-													message: "^Invalid value '%{value}'."}}
+		reverse: [required(false), within(keys(enums.reverseClassMap),
+																			"Invalid value '{value}'.")]
 	},
 	getClassList (attrs) {
 		let visibleClass;

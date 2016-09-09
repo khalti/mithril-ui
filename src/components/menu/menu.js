@@ -2,6 +2,7 @@ import {base} from "./../base.js";
 import component from "mithril-componentx";
 import keys from "lodash/keys";
 import enums from "./../../helpers/enums.js";
+import {required, within} from "validatex";
 
 let fixedMap = {
 	top: "top fixed",
@@ -19,48 +20,14 @@ let fittedMap = {
 export const menu = component({
 	base: base,
 	attrSchema: {
-		state: {
-			inclusion: {
-				within: ["down", "active"],
-				message: "^Invalid state."
-			}	
-		},
-		color: {
-			inclusion: {
-				within: keys(enums.colorClassMap),
-				message: "^Invalid color."
-			}
-		},
-		fixed: {
-			inclusion: {
-				within: keys(fixedMap),
-				message: "^Invalid position to fix."
-			}
-		},
-		itemCount: {
-			inclusion: {
-				within: keys(enums.numberMap),
-				message: "^Invalid item count."
-			}
-		},
-		attach: {
-			inclusion: {
-				within: keys(enums.attachmentMap),
-				message: "^Invalid attachment.."
-			}
-		},
-		size: {
-			inclusion: {
-				within: keys(enums.sizeMap),
-				message: "^Invalid size.."
-			}
-		},
-		fitted: {
-			inclusion: {
-				within: [true, "vertically", "horizontally"],
-				message: "^Invalid value for 'fitted'."
-			}
-		}
+		state: [required(false), within(["down", "active"], "Invalid state.")],
+		color: [required(false), within(keys(enums.colorClassMap), "Invalid color.")],
+		fixed: [required(false), within(keys(fixedMap), "Invalid position to fix.")],
+		itemCount: [required(false), within(keys(enums.numberMap), "Invalid item count.")],
+		attach: [required(false), within(keys(enums.attachmentMap), "Invalid attachment.")],
+		size: [required(false), within(keys(enums.sizeMap), "Invalid size.")],
+		fitted: [required(false), within([true, "vertically", "horizontally"],
+																		"Invalid value for 'fitted'.")]
 	},
 	getClassList (attrs) {
 		return ["ui",

@@ -2,18 +2,20 @@ import {base} from "./base.js";
 import component from "mithril-componentx";
 import {attachmentMap, colorClassMap, emphasisMap, textAlignmentClassMap} from "./../helpers/enums.js";
 import keys from "lodash/keys";
+import {required, within} from "validatex";
+
 
 export const segment = component({
 	base: base,
 	attrSchema: {
-		attach: {inclusion: {within: [true, "top", "bottop", "left", "right"],
-												 message: "^Invalid attachment '%{value}'."}},
-		color: {inclusion: {within: keys(colorClassMap),
-												message: "^Invalid color '%{value}'."}},
-		emphasis: {inclusion: {within: keys(emphasisMap),
-													 message: "^Invalid emphasis '%{value}'."}},
-		textAlignment: {inclusion: {within: keys(textAlignmentClassMap),
-												message: "^Invalid text alignment '%{value}'."}}
+		attach: [required(false), within([true, "top", "bottop", "left", "right"],
+																		"^Invalid attachment '{value}'.")],
+		color: [required(false), within(keys(colorClassMap),
+																		"Invalid color '{value}'.")],
+		emphasis: [required(false), within(keys(emphasisMap),
+																			"Invalid emphasis '{value}'.")],
+		textAlignment: [required(false), within(keys(textAlignmentClassMap),
+																						"Invalid text alignment '{value}'.")]
 	},
 	getClassList (attrs) {
 		return ["ui",

@@ -2,6 +2,7 @@ import {base} from "./../base.js";
 import component from "mithril-componentx";
 import enums from "./../../helpers/enums.js";
 import keys from "lodash/keys";
+import {required, within} from "validatex";
 
 
 let fittedMap = {
@@ -13,18 +14,9 @@ let fittedMap = {
 export const item = component({
 	base: base,
 	attrSchema: {
-		color: {
-			inclusion: {
-				within: keys(enums.colorClassMap),
-				message: "^Invalid color."
-			}
-		},
-		fitted: {
-			inclusion: {
-				within: [true, "vertically", "horizontally"],
-				message: "^Invalid value for 'fitted'."
-			}
-		}
+		color: [required(false), within(keys(enums.colorClassMap), "Invalid color.")],
+		fitted: [required(false), within([true, "vertically", "horizontally"],
+																		"^Invalid value for 'fitted'.")]
 	},
 	getDefaultAttrs (attrs) {
 		return {

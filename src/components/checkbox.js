@@ -1,12 +1,14 @@
 import m from "mithril";
 import {field} from "./field.js";
 import component from "mithril-componentx";
+import {required} from "validatex";
+
 
 export const checkbox = component({
 	base: field,
 	attrSchema: {
-		model: {presence: true},
-		label: {presence: true}
+		model: required(true),
+		label: required(true)
 	},
 	toggleState (attrs) {
 		attrs.model.setAndValidate(!attrs.model());

@@ -6,23 +6,15 @@ import keys from "lodash/keys";
 import map from "lodash/map";
 import flattenDeep from "lodash/flattenDeep";
 import m from "mithril";
+import {required, within} from "validatex";
 
 export const steps = component({
 	base: base,
 	attrSchema: {
-		attach: {
-			inclusion: {
-				within: keys(enum.attachmentMap),
-				message: "Invalid value for attachment."
-			}
-		},
-		steps: {presence: true},
-		size: {
-			inclusion: {
-				within: keys(enum.sizeMap),
-				message: "Invalid value for size."
-			}
-		}
+		attach: [required(false), within(keys(enum.attachmentMap),
+																		"Invalid value for attachment.")],
+		steps: required(true),
+		size: [required(false), within(keys(enum.sizeMap), "Invalid value for size.")]
 	},
 	getDefaultAttrs (attrs) {
 		return {state: attrs.state || 0};

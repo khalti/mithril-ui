@@ -4,12 +4,13 @@ import m from "mithril";
 import omit from "lodash/omit";
 import keys from "lodash/keys";
 import {colorClassMap, floatMap, emphasisMap, sizeMap} from "./../helpers/enums.js";
+import {within, required} from "validatex";
 
 export const button = component({
   base: base,
 	attrSchema: {
-		size: {inclusion: {within: keys(sizeMap),
-											 message: "^Invalid size '%{value}'."}}
+		size: [ required(false),
+						within(keys(sizeMap), "Invalid size {value}.")],
 	},
 	getDefaultAttrs (attrs) {
 		let defaultAttrs = {root: "button"};

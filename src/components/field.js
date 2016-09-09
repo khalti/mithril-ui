@@ -5,12 +5,13 @@ import {input}  from "./input.js";
 import component from "mithril-componentx";
 import {base} from "./base.js";
 import {widthClassMap} from "./../helpers/enums.js";
+import {required} from "validatex";
 
 export const field = component({
 	base: base,
 	attrSchema: {
-		model: {presence: true},
-		type: {presence: true}
+		model: required(true),
+		type: required(true)
 	},
 	getLabelPrepend (attrs) {
 		if(isString(attrs.label)) {

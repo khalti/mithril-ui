@@ -3,6 +3,7 @@ import component from "mithril-componentx";
 import {base} from "./base.js";
 import omit from "lodash/omit";
 import omitBy from "lodash/omitBy";
+import {required} from "validatex";
 
 
 let isEventHandler = (value, key) => {
@@ -11,7 +12,9 @@ let isEventHandler = (value, key) => {
 
 export const input = component({
 	base: base,
-	attrSchema: {type: {presence: true}},
+	attrSchema: {
+		type: required(true)
+	},
 	getClassList (attrs) {
 		return ["ui",
 						{both: (attrs.prepend && attrs.prepend.tag === "i") && (attrs.append && attrs.append.tag === "i")},

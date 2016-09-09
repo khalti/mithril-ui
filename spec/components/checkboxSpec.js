@@ -19,6 +19,16 @@ describe("checkbox", () => {
     vdom = getVdom(m(checkbox, attrs));
   });
 
+	it("complains if 'model' is absent.", () => {
+		let aCheckbox = m(checkbox, {label: "A label"});
+		expect(aCheckbox.view.bind(aCheckbox)).to.throw(Error);
+	});
+
+	it("complains if 'label' is absent.", () => {
+		let aCheckbox = m(checkbox, {model: "A model"});
+		expect(aCheckbox.view.bind(aCheckbox)).to.throw(Error);
+	});
+
   it("sets class of <input> to 'ui checkbox'", () => {
     let input = vdom.children[0];
 

@@ -2,6 +2,8 @@ import {base} from "./base.js";
 import component from "mithril-componentx";
 import keys from "lodash/keys";
 import enums from "./../helpers/enums.js";
+import {required, within} from "validatex";
+
 
 let divideClassMap = {
   "horizontally": "divided",
@@ -25,34 +27,28 @@ let stackableClassMap = {
 };
 
 let attrSchema = {
-  columns: {inclusion: {within: enums.properKeys(enums.columnsClassMap),
-                        message: "^Invalid column count '%{value}'."}},
-  divide: {inclusion: {within: keys(divideClassMap),
-                       message: "^Invalid value '%{value}'."}},
-  cell: {inclusion: {within: keys(cellClassMap),
-                     message: "^Invalid value '%{value}'."}},
-  equalWidth: {inclusion: {within: [true, false],
-                           message: "^'%{value}' is not a boolean."}},
-  padded: {inclusion: {within: [true, false],
-                       message: "^'%{value}' is not a boolean."}},
-  relaxed: {inclusion: {within: [true, false],
-                        message: "'%{value}' is not a boolean."}},
-  centered: {inclusion: {within: [true, false],
-                         message: "^'%{value}' is not a boolean."}},
-  textAlignment: {inclusion: {within: keys(enums.textlignmentClassMap),
-                            message: "^Invalid value '%{value}'."}},
-  verticalAlignment: {inclusion: {within: keys(enums.verticalAlignmentClassMap),
-                                  message: "^Invalid value '%{value}'."}},
-  doubling: {inclusion: {within: [true, false],
-                         message: "^'%{value}' is not a boolean."}},
-  stackable: {inclusion: {within: [true, false],
-                          message: "^'%{value}' is not a boolean."}},
-  reverse: {inclusion: {within: keys(enums.reverseClassMap),
-                         message: "^Invalid value '%{value}'."}}
+  columns: [required(false),
+						within(enums.properKeys(enums.columnsClassMap),
+									"Invalid column count '{value}'.")],
+  divide: [required(false), within(keys(divideClassMap), "Invalid value '{value}'.")],
+  cell: [required(false), within(keys(cellClassMap), "Invalid value '{value}'.")],
+  equalWidth: [required(false), within([true, false], "'{value}' is not a boolean.")],
+  padded: [required(false), within([true, false], "'{value}' is not a boolean.")],
+  relaxed: [required(false), within([true, false], "'{value}' is not a boolean.")],
+  centered: [required(false), within([true, false], "'{value}' is not a boolean.")],
+  textAlignment: [required(false), within(keys(enums.textlignmentClassMap),
+																					"Invalid value '{value}'.")],
+  verticalAlignment: [required(false), within(keys(enums.verticalAlignmentClassMap),
+																							"^Invalid value '%{value}'.")],
+  doubling: [required(false), within([true, false], "'{value}' is not a boolean.")],
+  stackable: [required(false), within([true, false], "'{value}' is not a boolean.")],
+  reverse: [required(false), within(keys(enums.reverseClassMap),
+																		"Invalid value '{value}'.")]
 };
 
 export const grid = component({
   base: base,
+	attrSchema: attrSchema,
 	getClassList (attrs) {
 		return ["ui",
 						enums.columnsClassMap[attrs.columns],

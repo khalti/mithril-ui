@@ -8,6 +8,16 @@ import classnames from "classnames";
 let expect = chai.expect;
 
 describe("field", () => {
+	it("complains if 'model' is absent.", () => {
+		let aField = m(field, {label: "A label"});
+		expect(aField.view.bind(aField)).to.throw(Error);
+	});
+
+	it("complains if 'label' is absent.", () => {
+		let aField = m(field, {model: "A model"});
+		expect(aField.view.bind(aField)).to.throw(Error);
+	});
+
 	describe(".getLabelPrepend", () => {
 		let attrs;
 

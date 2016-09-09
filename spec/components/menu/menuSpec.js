@@ -21,7 +21,7 @@ describe("menu", () => {
 	});
 
 	it("complains if item count is invalid.", () => {
-		let vdom = m(menu, {itemCount: 0});
+		let vdom = m(menu, {itemCount: 17});
 		expect(vdom.view.bind(vdom)).to.throw(Error);
 	});
 

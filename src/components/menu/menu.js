@@ -44,7 +44,7 @@ export const menu = component({
 						enums.colorClassMap[attrs.color],
 						{fluid: attrs.fluid},
 						{compact: attrs.compact},
-						enums.numberMap[attrs.itemCount],
+						enums.numberMap[attrs.itemCount] && enums.numberMap[attrs.itemCount] + " item",
 						enums.attachmentMap[attrs.attach],
 						enums.sizeMap[attrs.size],
 						fittedMap[attrs.fitted],

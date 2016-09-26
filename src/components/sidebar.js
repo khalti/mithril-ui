@@ -1,0 +1,40 @@
+import component from "mithril-componentx";
+import {base} from "./base.js";
+import {within, required} from "validatex";
+import m from "mithril";
+
+
+export const sidebar = component({
+	base: base,
+	attrSchema: {
+		inverted: [required(false), within([true])],
+		vertical: [required(false), within([true])],
+		menu: [required(false), within([true])],
+		icon: [required(false), within([true])],
+		labeled: [required(false), within([true])],
+		direction: [required(true), within(["top", "right", "bottom", "left"])],
+		width: [required(false), within(["thin", "very thin", "wide", "very wide"])],
+		state: [required(false), within(["visible", "invisible"])]
+	},
+	getClassList (attrs) {
+		return [
+			"ui",
+			{inverted: attrs.inverted},
+			{vertical: attrs.vertical},
+			{menu: attrs.menu},
+			{icon: attrs.menu},
+			{labeled: attrs.labeled},
+			attrs.direction,
+			attrs.width,
+			{"uncover": attrs.state === "visible" && attrs.direction === "left"},
+			{"uncover": attrs.state === "visible" && attrs.direction === "right"},
+			{"overlay": attrs.state === "visible" && attrs.direction === "top"},
+			{"overlay": attrs.state === "visible" && attrs.direction === "bottom"},
+			{"visible": attrs.state === "visible"},
+			"sidebar"
+		];
+	},
+	view ({attrs, children, state}) {
+		return m("div", attrs.rootAttrs, children);
+	}
+});

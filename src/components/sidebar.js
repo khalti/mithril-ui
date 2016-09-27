@@ -14,7 +14,7 @@ export const sidebar = component({
 		labeled: [required(false), within([true])],
 		direction: [required(true), within(["top", "right", "bottom", "left"])],
 		width: [required(false), within(["thin", "very thin", "wide", "very wide"])],
-		state: [required(false), within(["visible", "invisible"])]
+		visible: [required(false), within([true, false])]
 	},
 	getClassList (attrs) {
 		return [
@@ -26,11 +26,11 @@ export const sidebar = component({
 			{labeled: attrs.labeled},
 			attrs.direction,
 			attrs.width,
-			{"uncover": attrs.state === "visible" && attrs.direction === "left"},
-			{"uncover": attrs.state === "visible" && attrs.direction === "right"},
-			{"overlay": attrs.state === "visible" && attrs.direction === "top"},
-			{"overlay": attrs.state === "visible" && attrs.direction === "bottom"},
-			{"visible": attrs.state === "visible"},
+			{"uncover": attrs.visible && attrs.direction === "left"},
+			{"uncover": attrs.visible && attrs.direction === "right"},
+			{"overlay": attrs.visible && attrs.direction === "top"},
+			{"overlay": attrs.visible && attrs.direction === "bottom"},
+			{"visible": attrs.visible},
 			"sidebar"
 		];
 	},

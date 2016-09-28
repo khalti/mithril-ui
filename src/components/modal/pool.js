@@ -28,17 +28,13 @@ export const modalPool = component({
 		return [
 			"ui",
 			{"inverted": attrs.inverted},
-			"dimmer",
 			"page",
-			this.modals.length === 0? "hidden": "visible active"
+			"dimmer",
+			this.modals.length === 0? undefined: "active"
 		];
 	},
 	view ({attrs, children, state}) {
-		if (this.modals.length === 0) {
-			return m("div", attrs.rootAttrs);
-		}
-		else {
-			return m("div", attrs.rootAttrs, this.modals);
-		}
+		let modals = this.modals.length;
+		return m("div", attrs.rootAttrs, modals === 0? null: this.modals);
 	}
 });

@@ -18,11 +18,11 @@ export const modalPool = component({
 		
 	},
 	add (modal) {
-		this.modals.push(modal);
+		modalPool.modals.push(modal);
 	},
 	remove (modal) {
-		let index = this.modals.indexOf(modal);
-		this.modals.splice(index, 1);
+		let index = modalPool.modals.indexOf(modal);
+		modalPool.modals.splice(index, 1);
 	},
 	getClassList (attrs) {
 		return [
@@ -30,11 +30,11 @@ export const modalPool = component({
 			{"inverted": attrs.inverted},
 			"page",
 			"dimmer",
-			this.modals.length === 0? undefined: "active"
+			modalPool.modals.length === 0? undefined: "active"
 		];
 	},
 	view ({attrs, children, state}) {
-		let modals = this.modals.length;
-		return m("div", attrs.rootAttrs, modals === 0? null: this.modals);
+		let modals = modalPool.modals.length;
+		return m("div", attrs.rootAttrs, modals === 0? null: modalPool.modals);
 	}
 });

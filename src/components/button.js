@@ -7,6 +7,7 @@ import {colorClassMap, floatMap, emphasisMap, sizeMap} from "./../helpers/enums.
 import {within, required} from "validatex";
 
 export const button = component({
+	name: "button",
   base: base,
 	attrSchema: {
 		size: [ required(false),

@@ -4,6 +4,7 @@ import m from "mithril";
 import omit from "lodash/omit";
 
 export const icon = component({
+	name: "icon",
 	base: base,
 	getDefaultAttrs () {
 		return {root: "i"};

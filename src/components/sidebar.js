@@ -5,6 +5,7 @@ import m from "mithril";
 
 
 export const sidebar = component({
+	name: "sidebar",
 	base: base,
 	attrSchema: {
 		inverted: [required(false), within([true])],

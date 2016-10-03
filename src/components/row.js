@@ -13,6 +13,7 @@ let stretchedMap = {
 };
 
 export const row = component({
+	name: "row",
 	base: base,
 	attrSchema: {
 		columns: [required(false), within(enums.properKeys(enums.columnsClassMap),

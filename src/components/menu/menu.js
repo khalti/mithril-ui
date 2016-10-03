@@ -18,6 +18,7 @@ let fittedMap = {
 };
 
 export const menu = component({
+	name: "menu",
 	base: base,
 	attrSchema: {
 		state: [required(false), within(["down", "active"], "Invalid state.")],
@@ -31,6 +32,7 @@ export const menu = component({
 																		"Invalid value for 'fitted'.")]
 	},
 	getClassList (attrs) {
+		console.log(attrs);
 		return ["ui",
 						{secondary: attrs.secondary},
 						{pointing: attrs.pointing},

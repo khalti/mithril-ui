@@ -5,6 +5,7 @@ import {required, within} from "validatex";
 
 
 export const divider = component({
+	name: "divider",
   base: base,
 	attrSchema: {
 		type: [required(false),

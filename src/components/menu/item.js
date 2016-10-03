@@ -12,6 +12,7 @@ let fittedMap = {
 };
 
 export const item = component({
+	name: "menuItem",
 	base: base,
 	attrSchema: {
 		color: [required(false), within(keys(enums.colorClassMap), "Invalid color.")],

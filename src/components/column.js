@@ -8,6 +8,7 @@ import {required, within} from "validatex";
 
 
 export const column = component({
+	name: "column",
   base: base,
 	attrSchema: {
 		float: [required(false),

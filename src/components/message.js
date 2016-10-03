@@ -11,6 +11,7 @@ let types = ["warning", "info", "positive", "success", "negative", "error"];
 let states = ["hidden", "visible"];
 
 export const message = component({
+	name: "message",
 	base: base,
 	visible: false,
 	attrSchema: {

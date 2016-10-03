@@ -6,6 +6,7 @@ import {required, within} from "validatex";
 
 
 export const segment = component({
+	name: "segment",
 	base: base,
 	attrSchema: {
 		attach: [required(false), within([true, "top", "bottop", "left", "right"],

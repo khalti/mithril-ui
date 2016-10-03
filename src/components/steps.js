@@ -9,6 +9,7 @@ import m from "mithril";
 import {required, within} from "validatex";
 
 export const steps = component({
+	name: "steps",
 	base: base,
 	attrSchema: {
 		attach: [required(false), within(keys(enum.attachmentMap),

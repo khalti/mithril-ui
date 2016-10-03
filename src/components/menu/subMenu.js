@@ -3,6 +3,7 @@ import component from "mithril-componentx";
 import {required, within} from "validatex";
 
 export const subMenu = component({
+	name: "subMenu",
 	base: base,
 	attrSchema: {
 		right: [required(false), within([true, false])]

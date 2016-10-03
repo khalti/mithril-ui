@@ -4,6 +4,7 @@ import {required, within} from "validatex";
 
 
 export const container = component({
+	name: "container",
   base: base,
 	attrSchema: {
 		type: [ required(false),

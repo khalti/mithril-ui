@@ -1,10 +1,12 @@
 import m from "mithril";
 import component from "mithril-componentx";
 import {required, within} from "validatex";
+import {base} from "./../base.js";
 
 
 export const modalPool = component({
 	name: "modalPool",
+	base: base,
 	modals: [],
 	getStyle ({attrs, children, state}) {
 		return {

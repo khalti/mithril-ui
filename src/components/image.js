@@ -7,6 +7,7 @@ import {required} from "validatex";
 
 
 export const image = component({
+	name: "image",
   base: base,
 	attrSchema: {
 		src: required(true)

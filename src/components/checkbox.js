@@ -5,6 +5,7 @@ import {required} from "validatex";
 
 
 export const checkbox = component({
+	name: "checkbox",
 	base: field,
 	attrSchema: {
 		model: required(true),

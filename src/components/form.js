@@ -8,6 +8,7 @@ import {required, within} from "validatex";
 
 
 export const form = component({
+	name: "form",
 	base: base,
 	attrSchema: {
 		size: [required(false), within(keys(sizeMap), "^Invalid size '%{value}'.")]

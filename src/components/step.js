@@ -8,6 +8,7 @@ import {required} from "validatex";
 
 
 export const step = component({
+	name: "step",
 	base: base,
 	attrSchema: {
 		title: required(true),

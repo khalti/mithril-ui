@@ -47,6 +47,7 @@ let attrSchema = {
 };
 
 export const grid = component({
+	name: "grid",
   base: base,
 	attrSchema: attrSchema,
 	getClassList (attrs) {

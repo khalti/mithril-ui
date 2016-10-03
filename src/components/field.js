@@ -8,6 +8,7 @@ import {widthClassMap} from "./../helpers/enums.js";
 import {required} from "validatex";
 
 export const field = component({
+	name: "field",
 	base: base,
 	attrSchema: {
 		model: required(true),

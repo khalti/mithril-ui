@@ -1,9 +1,12 @@
 import component from "mithril-componentx";
 import m from "mithril";
 import {required, within} from "validatex";
+import {base} from "./base.js";
 
 
 export const dimmer = component({
+	name: "dimmer",
+	base: base,
 	attrSchema: {
 		page: [required(false), within([true, false])],
 		state: [required(false), within(["active", "disabled"])],

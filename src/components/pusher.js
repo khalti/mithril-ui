@@ -5,6 +5,7 @@ import m from "mithril";
 
 
 export const pusher = component({
+	name: "pusher",
 	base: base,
 	attrSchema: {
 		dimmed: [required(false), within([true, false])]

@@ -5,6 +5,7 @@ import component from "mithril-componentx";
 
 
 export const select = component({
+	name: "select",
 	base: field,
 	attrSchema: {
 		model: {presence: true},

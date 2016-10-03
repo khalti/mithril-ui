@@ -11,6 +11,7 @@ let isEventHandler = (value, key) => {
 };
 
 export const input = component({
+	name: "input",
 	base: base,
 	attrSchema: {
 		type: required(true)

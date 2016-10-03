@@ -19,6 +19,7 @@ let levelMap = {
 };
 
 export const header = component({
+	name: "header",
   base: base,
 	attrSchema: {
 		level: [required(false), within(properKeys(levelMap), "Invalid level '{value}.'")]

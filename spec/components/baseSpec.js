@@ -1,12 +1,15 @@
 import {base}  from "./../../src/components/base.js";
+import {getVdom} from "./../utils.js";
 import component from "mithril-componentx";
 import chai from "chai";
 import {required} from "validatex";
+import m from "mithril";
+import mq from "mithril-query";
 
 
 let expect = chai.expect;
 
-describe("base", () => {
+describe.only("base", () => {
 	describe("validateAttrs", () => {
 		let profile;
 		beforeEach(() => {
@@ -17,11 +20,12 @@ describe("base", () => {
 		});
 
 		it("throws errors if attributes are invalid", () => {
-			expect(profile.view.bind(profile)).to.throw(Error);
+			expect(profile.view.bind(profile, new profile.controller())).to.throw(Error);
 		});
 
 		it("does not throw errors if attributes are valid", () => {
-			expect(profile.view.bind(profile, "ctrl", {name: "aName"})).not.to.throw(Error);
+			let attrs = {name: "aName"};
+			expect(profile.view.bind(profile, new profile.controller(attrs), attrs)).not.to.throw(Error);
 		});
 	});
 
@@ -33,7 +37,7 @@ describe("base", () => {
 				"data-name": "aName"
 			};
 
-			vdom = base.view("ctrl", attrs, "child1");
+			vdom = m(base , attrs, "child1").view();
 		});
 
 		it("creates vdom with given attrs.tag", () => {

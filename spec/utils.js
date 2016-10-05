@@ -8,7 +8,9 @@ let presence = (value) => {
 let getVdom = (component) => {
 	let vdom;
 	if (component && component.view) {
-		vdom = component.view();
+		vdom = component.controller
+			? component.view(new component.controller())
+			: component.view();
 
 		if (vdom.children && vdom.children.length > 0) {
 			vdom.children = map(vdom.children, (child) => {

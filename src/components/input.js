@@ -17,14 +17,19 @@ export const input = component({
 		type: required(true)
 	},
 	getClassList (attrs) {
+		let {prepend, append} = attrs;
 		return ["ui",
-						{both: (attrs.prepend && attrs.prepend.tag === "i") && (attrs.append && attrs.append.tag === "i")},
-						{left: (attrs.prepend && attrs.prepend.tag === "i") && !(attrs.append && attrs.append.tag === "i")},
-						{icon: (attrs.prepend && attrs.prepend.tag == "i") || (attrs.append && attrs.append.tag === "i")},
-						{right: attrs.append && attrs.append.tag !== "i"},
-						{labeled: (attrs.prepend && attrs.prepend.tag !== "i") || (attrs.append && attrs.append.tag !== "i")},
-						{disabled: attrs.disabled},
-						"input"];
+			{"left icon": prepend && prepend.is("icon") && (!append || !append.is("icon"))},
+			{"right icon": (!prepend || !prepend.is("icon")) && append && append.is("icon")},
+			{"left right icon": prepend && prepend.is("icon") && append && append.is("icon")},
+			{"left labeled": prepend && prepend.is("label") && (!append || !append.is("label"))},
+			{"right labeled": (!prepend || !prepend.is("label")) && append && append.is("label")},
+			{"left right labeled": prepend && prepend.is("label") && append && append.is("label")},
+			{"left action": prepend && prepend.is("button") && (!append || !append.is("button"))},
+			{"right action": (!prepend || !prepend.is("button")) && append && append.is("button")},
+			{"left right action": prepend && prepend.is("button") && append && append.is("button")},
+			{disabled: attrs.disabled},
+			"input"];
 	},
   view (vnode) {
 		let attrs = vnode.attrs;
@@ -32,9 +37,8 @@ export const input = component({
 		inputAttrs.className = attrs.type === "hidden"? "hidden": "";
 
     return m('div', omitBy(attrs.rootAttrs, isEventHandler),
-						 attrs.prepend,
+						 m(attrs.prepend),
 						 m('input', inputAttrs),
-						 attrs.append
-    );
+						 m(attrs.append));
   }
 });

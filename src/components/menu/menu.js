@@ -32,7 +32,6 @@ export const menu = component({
 																		"Invalid value for 'fitted'.")]
 	},
 	getClassList (attrs) {
-		console.log(attrs);
 		return ["ui",
 						{secondary: attrs.secondary},
 						{pointing: attrs.pointing},

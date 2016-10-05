@@ -1,8 +1,12 @@
-import {input} from "../../src/components/input.js";
+import {input} from "./../../src/components/input.js";
 import m from 'mithril';
 import chai from "chai";
 import classnames from "classnames";
 import {getVdom} from "./../utils.js";
+import {icon} from "./../../src/components/icon.js";
+import {label} from "./../../src/components/label.js";
+import {button} from "./../../src/components/button.js";
+
 
 let expect = chai.expect;
 
@@ -10,15 +14,14 @@ let getClass = (attrs) => {
 	return classnames(input.getClassList(attrs));
 };
 
-
 describe("input", () => {
 	describe(".view", () => {
 		let attrs, vdom;
 
 		beforeEach(() => {
 			attrs = {
-				prepend: "aPrepend",
-				append: "aAppend",
+				prepend: icon,
+				append: icon,
 				onclick: "aCallabck",
 				type: "hidden"
 			};
@@ -30,16 +33,16 @@ describe("input", () => {
 		});
 
 		it("it appends", function () {
-			expect(vdom.children[2]).to.equal(attrs.append);
+			expect(vdom.children[2]).to.exist;
 		});
 
 		it("it prepends", function () {
-			expect(vdom.children[0]).to.equal(attrs.prepend);
+			expect(vdom.children[0]).to.exist;
 		});
 
 		it("'s root element has 'ui' and 'input' in its class", () => {
-			expect(vdom.attrs.className).to.have.string("ui");
-			expect(vdom.attrs.className).to.have.string("input");
+			expect(vdom.attrs.class).to.have.string("ui");
+			expect(vdom.attrs.class).to.have.string("input");
 		});
 
 		it("changes class of 'input' element to 'hidden' if 'attrs.type' is 'hidden'", () => {
@@ -53,39 +56,49 @@ describe("input", () => {
       expect(getClass(attrs)).to.equal("ui input");
     });
 
-    it("returns '.ui.icon.input' if an icon is being appended", () => {
-      var attrs = {append: m("i")};
-      expect(getClass(attrs)).to.equal("ui icon input");
+    it("returns '.ui.right.icon.input' if an icon is being appended", () => {
+      var attrs = {append: icon};
+      expect(getClass(attrs)).to.equal("ui right icon input");
     });
 
     it("returns '.ui.left.icon.input' if an icon is being prepended", () => {
-      var attrs = {prepend: m("i")};
+      var attrs = {prepend: icon};
       expect(getClass(attrs)).to.equal("ui left icon input");
     });
 
-    it("returns '.ui.both.icon.input' if an icon is being prepended", () => {
-      var attrs = {prepend: m("i"), append: m("i")};
-      expect(getClass(attrs)).to.equal("ui both icon input");
+    it("returns '.ui.left.right.icon.input' if input is surrounded by icons", () => {
+      var attrs = {prepend: icon, append: icon};
+      expect(getClass(attrs)).to.equal("ui left right icon input");
     });
 
-    it("returns '.ui.labeled.input' if a label is being prepended", () => {
-      var attrs = {prepend: m("div")};
-      expect(getClass(attrs)).to.equal("ui labeled input");
+    it("returns '.ui.left.labeled.input' if a label is being prepended", () => {
+      var attrs = {prepend: label};
+      expect(getClass(attrs)).to.equal("ui left labeled input");
     });
 
     it("returns '.ui.right.labeled.input' if a label is being appended", () => {
-      var attrs = {append: m("div")};
+      var attrs = {append: label};
       expect(getClass(attrs)).to.equal("ui right labeled input");
     });
 
-    it("returns '.ui.labeled.icon.input' if a label is being prepended and icon is being appended", ()  => {
-      var attrs = {prepend: m("div"), append: m("i")};
-      expect(getClass(attrs)).to.equal("ui icon labeled input");
+    it("returns '.ui.left.right.labeled.input'", () => {
+      var attrs = {prepend: label, append: label};
+      expect(getClass(attrs)).to.equal("ui left right labeled input");
     });
 
-    it("returns '.ui.left.icon.right.labeled.input' if an icon is being prepended and a label is being appended", () => {
-      var attrs = {prepend: m("i"), append: m("div")};
-      expect(getClass(attrs)).to.equal("ui left icon right labeled input");
+    it("returns '.ui.left.action.input'", () => {
+      var attrs = {prepend: button};
+      expect(getClass(attrs)).to.equal("ui left action input");
+    });
+
+    it("returns '.ui.right.labeled.input'", () => {
+      var attrs = {append: button};
+      expect(getClass(attrs)).to.equal("ui right action input");
+    });
+
+    it("returns '.ui.left.right.labeled.input'", () => {
+      var attrs = {prepend: button, append: button};
+      expect(getClass(attrs)).to.equal("ui left right action input");
     });
   });
 });

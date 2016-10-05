@@ -107,18 +107,20 @@ describe("button", () => {
 
 	describe("view", () => {
 		it("renders passed children.", () => {
-			let dom = m(button, 1, 2).view();
+			let dom = button.view(button.controller({}), 1, 2);
 			expect(dom.children[0]).to.equal(1);
 			expect(dom.children[1]).to.equal(2);
 		});
 
 		it("renders icon.", () => {
-			let dom = m(button, {icon: "icon"}).view();
+			let attrs = {icon: "icon"};
+			let dom = button.view(button.controller(attrs), attrs);
 			expect(dom.children[0]).to.equal("icon");
 		});
 
 		it("renders label.", () => {
-			let dom = m(button, {label: "label"}).view();
+			let attrs = {label: "label"};
+			let dom = button.view(button.controller(attrs), attrs);
 			expect(dom.children[1]).to.equal("label");
 		});
 	});

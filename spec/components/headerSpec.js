@@ -72,18 +72,18 @@ describe("header", () => {
 
 	describe("view", () => {
 		it("sets 'div' as root element if no level is specified.", () => {
-			let aHeader = m(header);
-			let rootElement = aHeader.view();
-			expect(rootElement.tag).to.equal('div');
+			let aHeader = header.view(header.controller());
+			expect(aHeader.tag).to.equal('div');
 		});
 
 		it("sets root element to appropriate level.", () => {
-			let dom = m(header, {level: 6}).view();
+			let attrs = {level: 6};
+			let dom = header.view(header.controller(attrs), attrs);
 			expect(dom.tag).to.equal("h6");
 		});
 
 		it("renders children", () => {
-			let dom = m(header, 1, 2, 3).view();
+			let dom = header.view(header.controller(), 1, 2, 3);
 
 			expect(dom.children[0]).to.equal(1);
 			expect(dom.children[1]).to.equal(2);

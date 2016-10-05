@@ -90,12 +90,14 @@ describe("image", () => {
 
 	describe("view", () => {
 		it("returns image if link is absent.", () => {
-			let dom = m(image, {src: "http://something.com"}).view();
+			let attrs = {src: "http://something.com"};
+			let dom = image.view(image.controller(attrs), attrs);
 			expect(dom.tag).to.equal('img');
 		});
 
 		it("returns anchor if link is present.", () => {
-			let dom = m(image, {link: "http://somewhere.com", src: "http://something.com"}).view();
+			let attrs = {link: "http://somewhere.com", src: "http://something.com"};
+			let dom = image.view(image.controller(attrs), attrs);
 			expect(dom.tag).to.equal('a');
 		});
 	});

@@ -5,7 +5,7 @@ let expect = chai.expect;
 
 describe("card", () => {
 	it("creates vdom with 'ui card' class.", () => {
-		let vdom = card.view();
-		expect(vdom.attrs.className).to.equal("ui card");
+		let vdom = card.view(card.controller());
+		expect(vdom.attrs.class).to.equal("ui card");
 	});
 });

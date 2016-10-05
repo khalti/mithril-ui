@@ -42,6 +42,6 @@ describe("selection", () => {
     attrs.model.isValid();
 		let vdom = getVdom(m(select, attrs));
 
-    expect(vdom.attrs.className).to.equal("field error");
+    expect(vdom.attrs.class).to.equal("field error");
   });
 });

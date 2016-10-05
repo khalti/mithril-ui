@@ -70,19 +70,22 @@ describe("step", () => {
 				state: 1,
 				index: 1
 			});
-			let vdom = aStep.view();
+			let vdom = aStep.view(aStep.controller());
 
 			let dIcon = vdom.children[0];
 			expect(dIcon.tag).to.equal("a icon");
 
-			let contentVdom = vdom.children[1].view();
-			expect(contentVdom.attrs.className).to.equal("content");
+			let content = vdom.children[1];
+			let contentVdom = content.view(content.controller());
+			expect(contentVdom.attrs.class).to.equal("content");
 
-			let titleVdom = contentVdom.children[0].view();
-			expect(titleVdom.attrs.className).to.equal("title");
+			let title = contentVdom.children[0];
+			let titleVdom = title.view(title.controller());
+			expect(titleVdom.attrs.class).to.equal("title");
 
-			let descriptionVdom = contentVdom.children[1].view();
-			expect(descriptionVdom.attrs.className).to.equal("description");
+			let description = contentVdom.children[1];
+			let descriptionVdom = description.view(description.controller());
+			expect(descriptionVdom.attrs.class).to.equal("description");
 		});
 
 		it("won't wrap title and description in content if icon is absent.", () => {
@@ -92,13 +95,15 @@ describe("step", () => {
 				state: 1,
 				index: 1
 			});
-			let vdom = aStep.view();
+			let vdom = aStep.view(aStep.controller());
 
-			let titleVdom = vdom.children[0].view();
-			expect(titleVdom.attrs.className).to.equal("title");
+			let title = vdom.children[0];
+			let titleVdom = title.view(title.controller());
+			expect(titleVdom.attrs.class).to.equal("title");
 
-			let descriptionVdom = vdom.children[1].view();
-			expect(descriptionVdom.attrs.className).to.equal("description");
+			let description = vdom.children[1];
+			let descriptionVdom = description.view(description.controller());
+			expect(descriptionVdom.attrs.class).to.equal("description");
 		});
 
 		it("sets root dom to 'a' if attrs.link is true.", () => {
@@ -109,7 +114,7 @@ describe("step", () => {
 				state: 1,
 				index: 1
 			});
-			let vdom = aStep.view();
+			let vdom = aStep.view(aStep.controller());
 
 			expect(vdom.tag).to.equal("a");
 		});
@@ -121,7 +126,7 @@ describe("step", () => {
 				state: 1,
 				index: 1
 			});
-			let vdom = aStep.view();
+			let vdom = aStep.view(aStep.controller());
 
 			expect(vdom.tag).to.equal("div");
 		});

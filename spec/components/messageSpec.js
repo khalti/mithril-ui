@@ -7,11 +7,11 @@ import classnames from "classnames";
 describe("message", () => {
 	it("can be dismissed.", () => {
 		let aMessage = m(message, {dismissable: true});
-		let dismisser = aMessage.view().children[0];
+		let dismisser = aMessage.view(aMessage.controller()).children[0];
 		dismisser.attrs.onclick({});
 
-		let view = m(aMessage).view();
-		expect(view.attrs.className).to.have.string("hidden");
+		let view = aMessage.view(aMessage.controller());
+		expect(view.attrs.class).to.have.string("hidden");
 	});
 
 	it("complains on invalid attachment.", () => {
@@ -97,19 +97,21 @@ describe("message", () => {
 
 	describe("view", () => {
 		it("renders children", () => {
-			let aMessage = m(message, 1, 2).view();
+			let aMessage = message.view(message.controller(), 1, 2);
 			expect(aMessage.children[0]).to.equal(1);
 			expect(aMessage.children[1]).to.equal(2);
 		});
 
 		it("renders icon and content.", () => {
-			let aMessage = m(message, {icon: "icon", content: "content"}).view();
+			let attrs = {icon: "icon", content: "content"};
+			let aMessage = message.view(message.controller(attrs), attrs);
 			expect(aMessage.children[0]).to.equal("icon");
 			expect(aMessage.children[1]).to.equal("content");
 		});
 
 		it("renders dismiss icon.", () => {
-			let aMessage = m(message, {dismissable: true}).view();
+			let attrs = {dismissable: true};
+			let aMessage = message.view(message.controller(attrs), attrs);
 			expect(aMessage.children[0].attrs.className).to.equal("close icon");
 		});
 	});

@@ -83,7 +83,7 @@ describe("steps", () => {
 			let step2 = {title: "a title"};
 
 			let dStepsCom = m(steps, { steps: [step1, step2] });
-			let vdom = dStepsCom.view();
+			let vdom = dStepsCom.view(dStepsCom.controller());
 			expect(vdom.children.length).to.equal(2);
 		});
 	});

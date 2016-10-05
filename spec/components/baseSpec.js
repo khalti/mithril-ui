@@ -9,7 +9,7 @@ import mq from "mithril-query";
 
 let expect = chai.expect;
 
-describe.only("base", () => {
+describe("base", () => {
 	describe("validateAttrs", () => {
 		let profile;
 		beforeEach(() => {
@@ -37,7 +37,7 @@ describe.only("base", () => {
 				"data-name": "aName"
 			};
 
-			vdom = m(base , attrs, "child1").view();
+			vdom = base.view(new base.controller(attrs), attrs, "child1");
 		});
 
 		it("creates vdom with given attrs.tag", () => {

@@ -154,7 +154,7 @@ describe("field", () => {
 
 		it("passes attrs.input to Input component", () => {
 			let vdom = getVdom(m(field, attrs));
-			expect(vdom.children[1].attrs.className).to.equal("ui aClass input");
+			expect(vdom.children[1].attrs.class).to.equal("ui aClass input");
 		});
 
 		it("binds model to value of input", () => {

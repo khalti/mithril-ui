@@ -37,8 +37,8 @@ export const input = component({
 		inputAttrs.className = attrs.type === "hidden"? "hidden": "";
 
     return m('div', omitBy(attrs.rootAttrs, isEventHandler),
-						 m(attrs.prepend),
+						 attrs.prepend? m(attrs.prepend): undefined,
 						 m('input', inputAttrs),
-						 m(attrs.append));
+						 attrs.append? m(attrs.append): undefined);
   }
 });

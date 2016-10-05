@@ -4,7 +4,6 @@ import component from "mithril-componentx";
 import chai from "chai";
 import {required} from "validatex";
 import m from "mithril";
-import mq from "mithril-query";
 
 
 let expect = chai.expect;

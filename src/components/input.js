@@ -10,11 +10,19 @@ let isEventHandler = (value, key) => {
 	return /^on.*$/.test(key);
 };
 
+let isComponent = (comp) => {
+	if (!comp.is) {
+		return "Please pass a 'mithril-componentx' component which has not been passed through m."
+	}
+}
+
 export const input = component({
 	name: "input",
 	base: base,
 	attrSchema: {
-		type: required(true)
+		type: required(true),
+		prepend: [required(false), isComponent],
+		append: [required(false), isComponent]
 	},
 	getClassList (attrs) {
 		let {prepend, append} = attrs;

@@ -60,15 +60,23 @@ export const field = component({
 		if (attrs.readOnly) {
 			inputAttrs.readonly = "";
 		}
+		else {
+			if (!attrs.update && !attrs.validate) {
+				throw Error("Either set fields as read only or set 'update' and 'validate' fields.");
+			}
 
-
-    if (attrs.update === attrs.validate) {
-      inputAttrs[attrs.update] = m.withAttr('value', attrs.model.setAndValidate);
-    }
-    else {
-      inputAttrs[attrs.update] = m.withAttr('value', attrs.model);
-      inputAttrs[attrs.validate] = () => {attrs.model.isValid();};
-    }
+			if (attrs.update === attrs.validate) {
+				inputAttrs[attrs.update] = m.withAttr('value', attrs.model.setAndValidate);
+			}
+			else {
+				if (attrs.update) {
+					inputAttrs[attrs.update] = m.withAttr('value', attrs.model);
+				}
+				if (attrs.validate) {
+					inputAttrs[attrs.validate] = () => {attrs.model.isValid();};
+				}
+			}
+		}
 
     return m('div', attrs.rootAttrs,
              this.getLabelPrepend(attrs),

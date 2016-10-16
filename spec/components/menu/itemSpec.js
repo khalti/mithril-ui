@@ -40,6 +40,11 @@ describe("item", () => {
 			let className = classnames(item.getClassList({borderless: true}));
 			expect(className).to.have.string("borderless");
 		});
+
+		it("includes 'active'.", () => {
+			let className = classnames(item.getClassList({active: true}));
+			expect(className).to.have.string("active");
+		});
 	});
 
 	describe("getDefaultAttrs", () => {

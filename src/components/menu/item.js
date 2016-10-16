@@ -19,6 +19,13 @@ export const item = component({
 		fitted: [required(false), within([true, "vertically", "horizontally"],
 																		"^Invalid value for 'fitted'.")]
 	},
+	getStyle (attrs) {
+		return {
+			".item": {
+				"cursor": "pointer"
+			}
+		};
+	},
 	getDefaultAttrs (attrs) {
 		return {
 			root: attrs.href? "a": "div",
@@ -32,7 +39,8 @@ export const item = component({
 						enums.colorClassMap[attrs.color],
 						fittedMap[attrs.fitted],
 						{header: attrs.header},
-						{borderless: attrs.borderless}
+						{borderless: attrs.borderless},
+						{active: attrs.active}
 		];
 	}
 });

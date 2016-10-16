@@ -1,0 +1,80 @@
+#!/bin/sh
+
+# # Fort test
+# - `$ git clone https://github.com/ludbek/mithril-ui.git`
+# - `$ cd mithril-ui`
+# - `$ jspm install`
+# - `$ npm install -g http-server`
+# - `$ http-server`
+# - visit localhost:8080/test
+
+# #Builds
+# ## Modular, exclude dependencies
+# `$ jspm bundle-sfx index.js - mithril - lodash - velocity dist/components/selection.js --globals "{mithril:'m',lodash:'_'}" --global-name Selection`
+# ## Single mega bundle
+# `$ jspm bundle-sfx index.js dist/sm.js --global-name sm`
+
+
+# https://github.com/ludbek/bro
+# please do not edit codes below
+project=$1
+task=$2
+shift
+full_cmd=$@
+# please do not edit codes above
+
+case $task in
+  setup)
+    # Edit this section for setting up a project.
+    # Commands here are executed only during project creation.
+    # 'bro create <project>' executes commands here.
+
+    echo "Make sure 'nvm' is installed. If not get it with 'npm install -g nvm'."
+
+    # git
+    git init
+    echo ".brofile" >> .gitignore
+
+    # setup project
+    npm init
+
+    # boot project
+    bro boot
+    ;;
+  boot)
+    # Edit this section to launch necessary tools for a project.
+    # Commands here are the first to be executed during project startup.
+    # 'bro <project> boot' executes commands here.
+
+    bro default
+
+    # launch necessary tools
+    subl &
+    google-chrome &
+    nemo &
+    ;;
+	default)
+		structure $project
+		  window editor
+			  run "nvim"
+			window terminal
+			  run "bro env"
+		focus editor
+		connect $project
+		;;
+  env)
+    nvm use 4.2.3
+    ;;
+  publish)
+    npm publish
+    git add --all
+    git commit -m "built for browser"
+    git push --all
+    git push --tags
+    ;;
+	exit)
+		tmux kill-session -t $project
+		;;
+  *)
+    bro_usage
+ esac

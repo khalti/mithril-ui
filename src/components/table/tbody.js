@@ -8,8 +8,6 @@ export const tbody = component({
 	base: base,
 	attrSchema: {
 	},
-	getClassList (attrs) {
-	},
 	getDefaultAttrs (attrs) {
 		return {root: "tbody"};
 	}

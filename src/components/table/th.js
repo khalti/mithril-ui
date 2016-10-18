@@ -22,6 +22,16 @@ export const th = component({
 		width: [required(false), within(keys(widthClassMap))],
 		sorte: [required(false), within(keys(sortMap))]
 	},
+	isRootAttr (value, key) {
+		try {
+			return /^(id|style|on.*|data-.*|config|rowspan|colspan)$/.test(key)? true: false;
+		}
+		catch (err) {
+			if (err instanceof TypeError) {
+				return false;
+			}
+		}
+	},
 	getClassList (attrs) {
 		return [
 			verticalAlignmentClassMap[attrs.verticalAlignment],

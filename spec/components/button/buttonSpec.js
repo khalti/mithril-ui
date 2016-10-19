@@ -1,4 +1,4 @@
-import {button} from "./../../src/components/button.js";
+import {button} from "./../../../src/components/button/button.js";
 import m from "mithril";
 import chai from "chai";
 import classnames from "classnames";

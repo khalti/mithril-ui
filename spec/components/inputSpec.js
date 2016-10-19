@@ -5,7 +5,7 @@ import classnames from "classnames";
 import {getVdom} from "./../utils.js";
 import {icon} from "./../../src/components/icon.js";
 import {label} from "./../../src/components/label.js";
-import {button} from "./../../src/components/button.js";
+import {button} from "./../../src/components/button/button.js";
 
 
 let expect = chai.expect;

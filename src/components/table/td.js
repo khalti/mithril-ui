@@ -21,7 +21,7 @@ export const td = component({
 	},
 	isRootAttr (value, key) {
 		try {
-			return /^(id|style|on.*|data-.*|config|rowspan|colspan)$/.test(key)? true: false;
+			return /^(key|id|style|on.*|data-.*|config|rowspan|colspan)$/.test(key)? true: false;
 		}
 		catch (err) {
 			if (err instanceof TypeError) {

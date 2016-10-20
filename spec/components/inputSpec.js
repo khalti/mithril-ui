@@ -100,5 +100,9 @@ describe("input", () => {
       var attrs = {prepend: button, append: button};
       expect(getClass(attrs)).to.equal("ui left right action input");
     });
+
+		it("includes 'fluid'", () => {
+			expect(getClass({fluid: true})).to.have.string("fluid");
+		});
   });
 });

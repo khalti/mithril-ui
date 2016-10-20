@@ -37,6 +37,7 @@ export const input = component({
 			{"right action": (!prepend || !prepend.is("button")) && append && append.is("button")},
 			{"left right action": prepend && prepend.is("button") && append && append.is("button")},
 			{disabled: attrs.disabled},
+			{fluid: attrs.fluid},
 			"input"];
 	},
   view (vnode) {

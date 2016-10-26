@@ -22,6 +22,7 @@ export const buttons = component({
 			colorClassMap[attrs.color],
 			{basic: attrs.basic},
 			sizeMap[attrs.size],
+			{fluid: attrs.fluid},
 			"buttons"
 		];
 	},

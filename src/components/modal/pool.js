@@ -20,11 +20,10 @@ export const modalPool = component({
 		
 	},
 	add (modal) {
-		modalPool.modals.push(modal);
+		modalPool.modals.unshift(modal);
 	},
-	remove (modal) {
-		let index = modalPool.modals.indexOf(modal);
-		modalPool.modals.splice(index, 1);
+	shift (modal) {
+		modalPool.modals.shift();
 	},
 	getClassList (attrs) {
 		return [

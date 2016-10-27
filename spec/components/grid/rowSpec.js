@@ -1,4 +1,4 @@
-import {row} from "./../../src/components/row.js";
+import {row} from "./../../../src/components/grid/row.js";
 import chai from "chai";
 import classnames from "classnames";
 

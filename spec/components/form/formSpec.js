@@ -1,4 +1,4 @@
-import {form} from "./../../src/components/form.js";
+import {form} from "./../../../src/components/form/form.js";
 import {expect} from "chai";
 import classnames from "classnames";
 import m from "mithril";

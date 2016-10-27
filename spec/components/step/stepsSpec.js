@@ -1,4 +1,4 @@
-import {steps} from "./../../src/components/steps.js";
+import {steps} from "./../../../src/components/step/steps.js";
 import {expect} from "chai";
 import m from "mithril";
 import classnames from "classnames";

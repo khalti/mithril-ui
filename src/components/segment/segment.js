@@ -1,6 +1,10 @@
-import {base} from "./base.js";
+import {base} from "./../base.js";
 import component from "mithril-componentx";
-import {attachmentMap, colorClassMap, emphasisMap, textAlignmentClassMap} from "./../helpers/enums.js";
+import {
+	attachmentMap,
+	colorClassMap,
+	emphasisMap,
+	textAlignmentClassMap} from "./../../helpers/enums.js";
 import keys from "lodash/keys";
 import {required, within} from "validatex";
 

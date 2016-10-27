@@ -1,7 +1,7 @@
-import {select} from "../../src/components/select.js";
+import {select} from "../../../src/components/form/select.js";
 import m from 'mithril';
 import powerform from "powerform";
-import {getVdom, presence} from "./../utils.js";
+import {getVdom, presence} from "./../../utils.js";
 import chai from "chai";
 
 let expect = chai.expect;

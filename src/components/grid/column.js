@@ -1,7 +1,7 @@
-import {base} from "./base.js";
+import {base} from "./../base.js";
 import keys from "lodash/keys";
 import reduce from "lodash/reduce";
-import enums from "./../helpers/enums.js";
+import enums from "./../../helpers/enums.js";
 import component from "mithril-componentx";
 import clone from "lodash/clone";
 import {required, within} from "validatex";

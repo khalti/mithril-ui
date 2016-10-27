@@ -1,8 +1,8 @@
-import {field} from "../../src/components/field.js";
+import {field} from "../../../src/components/form/field.js";
 import powerform from "powerform";
 import m from "mithril";
 import chai from "chai";
-import {getVdom, presence} from "./../utils.js";
+import {getVdom, presence} from "./../../utils.js";
 import classnames from "classnames";
 
 let expect = chai.expect;

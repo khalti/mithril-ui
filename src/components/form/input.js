@@ -1,6 +1,6 @@
 import m from 'mithril';
 import component from "mithril-componentx";
-import {base} from "./base.js";
+import {base} from "./../base.js";
 import omit from "lodash/omit";
 import omitBy from "lodash/omitBy";
 import {required} from "validatex";

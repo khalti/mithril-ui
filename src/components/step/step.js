@@ -1,8 +1,8 @@
 import component from "mithril-componentx";
-import {base} from "./base.js";
-import {content} from "./content.js";
-import {title} from "./title.js";
-import {description} from "./description.js";
+import {base} from "./../base.js";
+import {content} from "./../content.js";
+import {title} from "./../title.js";
+import {description} from "./../description.js";
 import m from "mithril";
 import {required} from "validatex";
 

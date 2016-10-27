@@ -3,8 +3,8 @@ import  isObject from "lodash/isObject";
 import isString from "lodash/isString";
 import {input}  from "./input.js";
 import component from "mithril-componentx";
-import {base} from "./base.js";
-import {widthClassMap} from "./../helpers/enums.js";
+import {base} from "./../base.js";
+import {widthClassMap} from "./../../helpers/enums.js";
 import {required} from "validatex";
 
 export const field = component({

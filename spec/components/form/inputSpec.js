@@ -1,11 +1,11 @@
-import {input} from "./../../src/components/input.js";
+import {input} from "./../../../src/components/form/input.js";
 import m from 'mithril';
 import chai from "chai";
 import classnames from "classnames";
-import {getVdom} from "./../utils.js";
-import {icon} from "./../../src/components/icon.js";
-import {label} from "./../../src/components/label.js";
-import {button} from "./../../src/components/button/button.js";
+import {getVdom} from "./../../utils.js";
+import {icon} from "./../../../src/components/icon.js";
+import {label} from "./../../../src/components/label.js";
+import {button} from "./../../../src/components/button/button.js";
 
 
 let expect = chai.expect;

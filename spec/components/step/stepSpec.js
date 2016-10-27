@@ -1,4 +1,4 @@
-import {step} from "./../../src/components/step.js";
+import {step} from "./../../../src/components/step/step.js";
 import component from "mithril-componentx";
 import classnames from "classnames";
 import m from "mithril";

@@ -1,7 +1,7 @@
-import {checkbox} from "../../src/components/checkbox.js";
+import {checkbox} from "../../../src/components/form/checkbox.js";
 import m from "mithril";
 import powerform from "powerform";
-import {getVdom, presence} from "./../utils.js";
+import {getVdom, presence} from "./../../utils.js";
 import chai from "chai";
 
 let expect = chai.expect;

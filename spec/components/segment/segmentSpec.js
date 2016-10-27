@@ -1,4 +1,4 @@
-import {segment} from "./../../src/components/segment.js";
+import {segment} from "./../../../src/components/segment/segment.js";
 import {expect} from "chai";
 import classnames from "classnames";
 import m from "mithril";

@@ -1,4 +1,4 @@
-import {column} from "./../../src/components/column.js";
+import {column} from "./../../../src/components/grid/column.js";
 import m from "mithril";
 import chai from "chai";
 import classnames from "classnames";

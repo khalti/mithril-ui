@@ -5,3 +5,5 @@ npm-debug.log
 .brofile
 .tern-port
 lib/
+dist/mithri.ui.js.map
+.brotasks

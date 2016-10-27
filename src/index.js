@@ -6,8 +6,8 @@ import {content} from "./components/content.js";
 import {description} from "./components/description.js";
 import {dimmer} from "./components/dimmer.js";
 import {divider} from "./components/divider.js";
-import {form} from "./components/form";
-import {grid} from "./components/grid";
+import {checkbox, field, fields, form, input, select} from "./components/form";
+import {grid, row, column} from "./components/grid";
 import {header} from "./components/header.js";
 import {icon} from "./components/icon.js";
 import {image} from "./components/image.js";
@@ -15,11 +15,56 @@ import {label} from "./components/label.js";
 import {menu} from "./components/menu";
 import {message} from "./components/message.js";
 import {meta} from "./components/meta.js";
-import {modal} from "./components/modal";
+import {modal, modalPool} from "./components/modal";
 import {pusher} from "./components/pusher.js";
-import {segment} from "./components/segment";
+import {segment, segments} from "./components/segment";
 import {sidebar} from "./components/sidebar.js";
-import {step} from "./components/step";
+import {step, steps} from "./components/step";
 import {subHeader} from "./components/subHeader.js";
-import {table} from "./components/table";
+import {table, tbody, td, tfoot, thead, th, tr} from "./components/table";
 import {title} from "./components/title.js";
+
+
+export {
+	base,
+	button,
+	buttons,
+	card,
+	container,
+	content,
+	description,
+	dimmer,
+	divider,
+	checkbox,
+	field,
+	fields,
+	form,
+	input,
+	select,
+	grid,
+	row,
+	column,
+	header,
+	icon,
+	image,
+	label,
+	menu,
+	message,
+	meta,
+	modal,
+	modalPool,
+	pusher,
+	segment,
+	segments,
+	sidebar,
+	step,
+	subHeader,
+	table,
+	tbody,
+	td,
+	tfoot,
+	thead,
+	th,
+	tr,
+	title
+};

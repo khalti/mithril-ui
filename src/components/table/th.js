@@ -20,7 +20,7 @@ export const th = component({
 		verticalAlignment: [required(false), within(keys(verticalAlignmentClassMap))],
 		textAlignment: [required(false), within(keys(textAlignmentClassMap))],
 		width: [required(false), within(keys(widthClassMap))],
-		sorte: [required(false), within(keys(sortMap))]
+		sort: [required(false), within(keys(sortMap))]
 	},
 	isRootAttr (value, key) {
 		try {
@@ -38,7 +38,7 @@ export const th = component({
 			textAlignmentClassMap[attrs.textAlignment],
 			widthClassMap[attrs.width],
 			{collapsing: attrs.collapsing},
-			sortMap[attrs.sorte]
+			sortMap[attrs.sort]
 		];
 	},
 	getDefaultAttrs (attrs) {

@@ -9,7 +9,7 @@ import {
 import keys from "lodash/keys";
 
 
-const sortMap = {
+export const sortMap = {
 	"ascending": "sorted ascending",
 	"descending": "sorted descending"
 };

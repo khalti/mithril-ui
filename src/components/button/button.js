@@ -48,6 +48,12 @@ export const button = component({
 			children = [attrs.icon, attrs.label];
 		}
 
+		if (attrs.href) {
+			attrs.root = "a";
+			attrs.rootAttrs.href = attrs.href;
+			attrs.rootAttrs.config = m.route;
+		}
+
 		return m(attrs.root, attrs.rootAttrs, children);
 	}
 });

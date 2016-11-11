@@ -2,14 +2,16 @@ import m from "mithril";
 import map from "lodash/map";
 import {field} from "./field.js";
 import component from "mithril-componentx";
+import {required} from "validatex";
 
 
 export const select = component({
 	name: "select",
 	base: field,
 	attrSchema: {
-		model: {presence: true},
-		options: {presence: true}
+		model: required(true),
+		options: required(true),
+		multiple: required(false)
 	},
 	menuVisible: false,
 	toggleMenu () {

@@ -5,6 +5,7 @@ import component from "mithril-componentx";
 
 
 export const base = component({
+	name: "UI",
 	getDefaultAttrs (attrs) {
 		return {root: "div"};
 	},

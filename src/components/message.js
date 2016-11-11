@@ -3,7 +3,8 @@ import {base} from "./../components/base.js";
 import m from "mithril";
 import {attachmentMap, colorClassMap, sizeMap} from "./../helpers/enums.js";
 import keys from "lodash/keys";
-import {required, within} from "validatex";
+import {required, within, isFunction} from "validatex";
+import {componentIs} from "./../helpers/misc.js";
 
 
 let types = ["warning", "info", "positive", "success", "negative", "error"];
@@ -20,23 +21,16 @@ export const message = component({
 		type: [required(false), within(types, "Invalid type '{value}'.")],
 		color: [required(false), within(keys(colorClassMap), "Invalid color '{value}'.")],
 		size: [required(false), within(keys(sizeMap), "Invalid size '{value}'.")],
-		state: [required(false), within(states, "Invalid state '{value}'.")]
-	},
-	getDefaultAttrs (attrs) {
-		return {};
-	},
-	dismiss (e) {
-		this.visible = false;
-	},
-	getState (attrs) {
-		if (attrs.state) return attrs.state;
-		return this.visible? "visible": "hidden";
+		state: [required(false), within(states, "Invalid state '{value}'.")],
+		icon: [required(false), componentIs("icon")],
+		content: [required(true)],
+		onDismiss: [required(false), isFunction(true)]
 	},
 	getClassList (attrs) {
 		let self = this;
 		return ["ui",
 						{icon: attrs.icon},
-						this.getState(attrs),
+						attrs.state,
 						{floating: attrs.floating},
 						{compact: attrs.compact},
 						{warning: attrs.warning},
@@ -46,17 +40,13 @@ export const message = component({
 						sizeMap[attrs.size],
 						"message"];
 	},
-	view (vnode) {
-		let children = vnode.children || [];
+	view ({attrs, children, state}) {
+		let body = [attrs.icon, attrs.content];
 
-		if (vnode.attrs.icon) {
-			children = [vnode.attrs.icon, vnode.attrs.content];
+		if (attrs.onDismiss) {
+			body.unshift(m("i.close.icon", {onclick: attrs.onDismiss}));
 		}
 
-		if (vnode.attrs.dismissable) {
-			children.unshift(m("i.close.icon", {onclick: this.dismiss.bind(this)}));
-		}
-
-		return m("div", vnode.attrs.rootAttrs, children);
+		return m("div", attrs.rootAttrs, body);
 	}
 });

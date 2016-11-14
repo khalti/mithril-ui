@@ -19,13 +19,6 @@ export const item = component({
 		fitted: [required(false), within([true, "vertically", "horizontally"],
 																		"^Invalid value for 'fitted'.")]
 	},
-	getStyle (attrs) {
-		return {
-			".item": {
-				"cursor": "pointer"
-			}
-		};
-	},
 	getDefaultAttrs (attrs) {
 		return {
 			root: attrs.href? "a": "div",

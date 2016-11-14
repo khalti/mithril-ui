@@ -40,7 +40,8 @@ export const item = component({
 						fittedMap[attrs.fitted],
 						{header: attrs.header},
 						{borderless: attrs.borderless},
-						{active: attrs.active}
+						{active: attrs.active},
+						{disabled: attrs.disabled}
 		];
 	}
 });

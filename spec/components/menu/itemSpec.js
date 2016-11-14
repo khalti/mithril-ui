@@ -45,6 +45,11 @@ describe("item", () => {
 			let className = classnames(item.getClassList({active: true}));
 			expect(className).to.have.string("active");
 		});
+
+		it("includes 'disabled'.", () => {
+			let className = classnames(item.getClassList({disabled: true}));
+			expect(className).to.have.string("disabled");
+		});
 	});
 
 	describe("getDefaultAttrs", () => {

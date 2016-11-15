@@ -79,7 +79,7 @@ export const pagination = component({
 
 	getClickHandler (pageChangeHandler, pageNumber, currentPage) {
 		return (e) => {
-			if (pageNumber === currentPage) return;
+			if (pageNumber === currentPage || pageNumber === undefined) return;
 			e.preventDefault();
 			pageChangeHandler(pageNumber);
 		};
@@ -97,7 +97,10 @@ export const pagination = component({
 
 		return _(item, {href: disabled? "": "#",
 										disabled: disabled,
-										onclick: this.getClickHandler(onPageChange, nextPage, currentPage)},
+										onclick: this.getClickHandler(
+												onPageChange,
+												nextPage <= pageCount ? nextPage: undefined,
+												currentPage)},
 						_(icon, {class: "angle right large icon"}));
 	},
 
@@ -107,7 +110,10 @@ export const pagination = component({
 
 		return _(item, {href: disabled? "": "#",
 										disabled: disabled,
-										onclick: this.getClickHandler(onPageChange, previousPage, currentPage)},
+										onclick: this.getClickHandler(
+												onPageChange,
+												previousPage > 0? previousPage: undefined,
+												currentPage)},
 						_(icon, {class: "angle left large icon"}));
 	},
 

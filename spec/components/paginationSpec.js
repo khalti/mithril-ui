@@ -270,6 +270,7 @@ describe("pagination", () => {
 		let pageCheck, onPageChange;
 
 		beforeEach(() => {
+			pageCheck = undefined;
 			onPageChange = (page) => {
 				pageCheck = page;
 			};
@@ -285,6 +286,12 @@ describe("pagination", () => {
 			let clickHandler = pagination.getClickHandler(onPageChange, 2, 1);
 			clickHandler(clickEvent);
 			expect(pageCheck).to.equal(2);
+		});
+
+		it("won't call page change handler if pageNumber is 'undefined'.", () => {
+			let clickHandler = pagination.getClickHandler(onPageChange, undefined, 1);
+			clickHandler(clickEvent);
+			expect(pageCheck).to.equal(undefined);
 		});
 	});
 
@@ -346,6 +353,15 @@ describe("pagination", () => {
 
 			expect(clickedPage).to.equal(9);
 		});
+
+		it("won't change page if next page is greater than pageCount", () => {
+			attrs.currentPage = 10 
+			let nextBtn = pagination.getNextPageBtn(attrs);
+			let vdom = getVdom(nextBtn);
+			vdom.attrs.onclick(clickEvent);
+
+			expect(clickedPage).to.equal(undefined);
+		});
 	});
 
 	describe(".getPreviousPageBtn", () => {
@@ -391,6 +407,15 @@ describe("pagination", () => {
 			vdom.attrs.onclick(clickEvent);
 
 			expect(clickedPage).to.equal(7);
+		});
+
+		it("won't change page if next page is greater than pageCount", () => {
+			attrs.currentPage = 1 
+			let nextBtn = pagination.getPreviousPageBtn(attrs);
+			let vdom = getVdom(nextBtn);
+			vdom.attrs.onclick(clickEvent);
+
+			expect(clickedPage).to.equal(undefined);
 		});
 	});
 });

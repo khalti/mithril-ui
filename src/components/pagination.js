@@ -111,7 +111,7 @@ export const pagination = component({
 
 	getItems (attrs) {
 		let {onPageChange, pageCount, currentPage} = attrs;
-		let items = this.getPagesBtn(attrs);
+		let items = this.getPagesBtns(attrs);
 
 		// add ... at either side of visible pages
 		this.showLeft3dotsBtn(pageCount, currentPage)? items.unshift(this.get3dotsBtn()): null;

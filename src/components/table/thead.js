@@ -5,6 +5,7 @@ import keys from "lodash/keys";
 
 
 export const thead = component({
+	name: "thead",
 	base: base,
 	attrSchema: {
 	},

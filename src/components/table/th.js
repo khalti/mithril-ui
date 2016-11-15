@@ -15,6 +15,7 @@ export const sortMap = {
 };
 
 export const th = component({
+	name: "th",
 	base: base,
 	attrSchema: {
 		verticalAlignment: [required(false), within(keys(verticalAlignmentClassMap))],

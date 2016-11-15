@@ -5,6 +5,7 @@ import keys from "lodash/keys";
 
 
 export const tfoot = component({
+	name: "tfoot",
 	base: base,
 	attrSchema: {
 	},

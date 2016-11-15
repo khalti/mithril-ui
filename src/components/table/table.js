@@ -10,6 +10,7 @@ import {required, within} from "validatex";
 
 
 export const table = component({
+	name: "table",
 	base: base,
 	attrSchema: {
 		columnCount: [required(false), within(keys(columnsClassMap))],

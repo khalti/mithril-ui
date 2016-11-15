@@ -12,6 +12,7 @@ import keys from "lodash/keys";
 const states = ["positive", "negative", "error", "warning", "active", "disabled"];
 
 export const td = component({
+	name: "td",
 	base: base,
 	attrSchema: {
 		state: [required(false), within(states)],

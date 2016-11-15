@@ -7,6 +7,7 @@ import keys from "lodash/keys";
 
 
 export const tr = component({
+	name: "tr",
 	base: base,
 	attrSchema: {
 		verticalAlignment: [required(false), within(keys(verticalAlignmentClassMap))],

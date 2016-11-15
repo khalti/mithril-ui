@@ -6,6 +6,8 @@ import {icon} from "./icon.js";
 
 
 export const pagination = component({
+	name: "pagination",
+
 	base: menu,
 
 	attrSchema: {

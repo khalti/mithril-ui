@@ -43,7 +43,7 @@ export const pagination = component({
 		return _(item, {disabled: isCurrentPage,
 										href: isCurrentPage? "" : "#",
 										onclick: this.getClickHandler(onPageChange, 1, currentPage) },
-							_(icon, {class: "angle double left large icon"}));
+							_(icon, {class: "angle double left icon"}));
 	},
 
 	getLastPageBtn ({onPageChange, pageCount, currentPage}) {
@@ -52,7 +52,7 @@ export const pagination = component({
 		return _(item, {href: isCurrentPage? "": "#",
 										disabled: isCurrentPage,
 										onclick: this.getClickHandler(onPageChange, pageCount, currentPage) },
-							_(icon, {class: "angle double right large icon"}));
+							_(icon, {class: "angle double right icon"}));
 	},
 
 	showLeft3dotsBtn(pageCount, currentPage) {
@@ -65,7 +65,7 @@ export const pagination = component({
 
 	get3dotsBtn () {
 		return _(item, {disabled: true},
-						_(icon, {class: "ellipsis horizontal large icon"}));
+						_(icon, {class: "ellipsis horizontal icon"}));
 	},
 
 	getPageBtn (onPageChange, pageNumber, currentPage) {
@@ -101,7 +101,7 @@ export const pagination = component({
 												onPageChange,
 												nextPage <= pageCount ? nextPage: undefined,
 												currentPage)},
-						_(icon, {class: "angle right large icon"}));
+						_(icon, {class: "angle right icon"}));
 	},
 
 	getPreviousPageBtn ({onPageChange, pageCount, currentPage}) {
@@ -114,7 +114,7 @@ export const pagination = component({
 												onPageChange,
 												previousPage > 0? previousPage: undefined,
 												currentPage)},
-						_(icon, {class: "angle left large icon"}));
+						_(icon, {class: "angle left icon"}));
 	},
 
 	getItems (attrs) {

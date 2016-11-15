@@ -145,5 +145,10 @@ describe("menu", () => {
 			let className = classnames(menu.getClassList({labeledIcon: true}));
 			expect(className).to.have.string("labeled icon");
 		});
+
+		it("includes proper float.", () => {
+			let className = classnames(menu.getClassList({float: "right"}));
+			expect(className).to.have.string("right floated");
+		});
 	});
 });

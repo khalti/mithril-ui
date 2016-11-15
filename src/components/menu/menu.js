@@ -52,6 +52,7 @@ export const menu = component({
 						{icon: attrs.icon},
 						{"labeled icon": attrs.labeledIcon},
 						{borderless: attrs.borderless},
+						enums.floatMap[attrs.float],
 						"menu"];
 	}
 });

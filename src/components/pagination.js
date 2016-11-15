@@ -72,7 +72,7 @@ export const pagination = component({
 		return _(item, {active: isCurrentPage,
 										href: isCurrentPage? "": "#",
 										onclick: this.getClickHandler(onPageChange, pageNumber, currentPage)},
-							page)
+							pageNumber)
 	},
 
 	getClickHandler (pageChangeHandler, pageNumber, currentPage) {
@@ -84,14 +84,14 @@ export const pagination = component({
 	},
 
 	getPagesBtns ({onPageChange, pageCount, currentPage}) {
-		return this.getPages(pageCount).map((page) => {
+		return this.getVisiblePages(pageCount, currentPage).map((page) => {
 			return this.getPageBtn(onPageChange, page, currentPage);
 		});
 	},
 
 	getNextPageBtn ({onPageChange, pageCount, currentPage}) {
 		let nextPage = currentPage + 1;
-		let disabled = nextPage === pageCount;
+		let disabled = currentPage === pageCount;
 
 		return _(item, {href: disabled? "": "#",
 										disabled: disabled,
@@ -101,7 +101,7 @@ export const pagination = component({
 
 	getPreviousPageBtn ({onPageChange, pageCount, currentPage}) {
 		let previousPage = currentPage - 1;
-		let disabled = nextPage === pageCount;
+		let disabled = currentPage === 1;
 
 		return _(item, {href: disabled? "": "#",
 										disabled: disabled,

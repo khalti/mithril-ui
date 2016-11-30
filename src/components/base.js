@@ -13,8 +13,7 @@ export const base = component({
     let errors = validate(attrs, this.attrSchema);
     if (errors) throw Error(JSON.stringify(errors));
   },
-  view (vnode) {
-    let attrs = vnode.attrs;
-    return m(attrs.root, attrs.rootAttrs, vnode.children);
+  view ({attrs, children, state}) {
+    return m(attrs.root, attrs.rootAttrs, children);
   }
 });

@@ -78,6 +78,10 @@ export const field = component({
 			}
 		}
 
+		if (attrs.name) {
+			inputAttrs.name = attrs.name;
+		}
+
     return m('div', attrs.rootAttrs,
              this.getLabelPrepend(attrs),
              m(input, inputAttrs),

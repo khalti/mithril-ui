@@ -16,6 +16,16 @@ export const form = component({
 	getDefaultAttrs (attrs) {
 		return {root: "form"};
 	},
+	isRootAttr (value, key) {
+		try {
+			return /^(key|id|style|on.*|data-.*|config|method|action)$/.test(key)? true: false;
+		}
+		catch (err) {
+			if (err instanceof TypeError) {
+				return false;
+			}
+		}
+	},
 	getClassList (attrs) {
 		return ["ui",
 						{"loading": attrs.loading},
@@ -25,8 +35,6 @@ export const form = component({
 						sizeMap[attrs.size],
 						{inverted: attrs.inverted},
 						{"equal width": attrs.equalWidth},
-						attrs.action,
-						attrs.method,
 						"form"];
 	}
 });

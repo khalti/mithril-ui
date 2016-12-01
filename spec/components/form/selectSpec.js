@@ -18,7 +18,8 @@ describe("selection", () => {
     attrs = {
       label: "Superheroes",
       model: model,
-      options: superheroes
+      options: superheroes,
+			name: "superhero"
     };
 		vdom = getVdom(m(select, attrs));
   });
@@ -44,4 +45,10 @@ describe("selection", () => {
 
     expect(vdom.attrs.class).to.equal("field error");
   });
+
+	it("adds name", () => {
+		let selectDom = vdom.children[1];
+		console.log(selectDom);
+		expect(selectDom.attrs.name).to.equal("superhero");
+	});
 });

@@ -148,7 +148,8 @@ describe("field", () => {
 				update: "onkeyup",
 				validate: "onchange",
 				input: {class: 'aClass'},
-				type: 'text'
+				type: 'text',
+				name: "aName"
 			};
 		});
 
@@ -207,6 +208,12 @@ describe("field", () => {
 			input.attrs[attrs.validate]({});
 			expect(attrs.model()).to.equal("");
 			expect(attrs.model.error()).to.exist;
+		});
+
+		it("includes name", () => {
+			let vdom = getVdom(m(field, attrs));
+			let inputDom = vdom.children[1].children[1];
+			expect(inputDom.attrs.name).to.equal(attrs.name);
 		});
 	});
 });

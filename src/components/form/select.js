@@ -22,10 +22,14 @@ export const select = component({
 	},
   view (vdom)  {
 		let attrs = vdom.attrs;
+		let selectRootAttr = {value: attrs.model(),
+													onchange: m.withAttr("value", attrs.model.setAndValidate)};
+		if (attrs.name) {
+			selectRootAttr.name = attrs.name;
+		}
     return m("div", attrs.rootAttrs,
              this.getLabelPrepend(attrs),
-             m("select", {value: attrs.model(),
-													onchange: m.withAttr("value", attrs.model.setAndValidate)},
+             m("select", selectRootAttr,
                map(attrs.options, (option) => {
                  return m("option",
                           {value: option.value},

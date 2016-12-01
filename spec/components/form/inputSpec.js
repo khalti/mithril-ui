@@ -23,9 +23,15 @@ describe("input", () => {
 				prepend: icon,
 				append: icon,
 				onclick: "aCallabck",
-				type: "hidden"
+				type: "hidden",
+				name: "aName"
 			};
 			vdom = getVdom(m(input, attrs));
+		});
+
+		it("includes name", () => {
+			let inputDom = vdom.children[1];
+			expect(inputDom.attrs.name).to.equal(attrs.name);
 		});
 
 		it("'s root dom is a div", () => {

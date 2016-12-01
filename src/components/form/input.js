@@ -45,6 +45,10 @@ export const input = component({
 		let inputAttrs = omit(attrs, ['prepend', 'append', 'rootAttrs']);
 		inputAttrs.className = attrs.type === "hidden"? "hidden": "";
 
+		if (attrs.name) {
+			inputAttrs.name = attrs.name;
+		}
+
     return m('div', omitBy(attrs.rootAttrs, isEventHandler),
 						 attrs.prepend? m(attrs.prepend): undefined,
 						 m('input', inputAttrs),

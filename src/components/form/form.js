@@ -25,6 +25,8 @@ export const form = component({
 						sizeMap[attrs.size],
 						{inverted: attrs.inverted},
 						{"equal width": attrs.equalWidth},
+						attrs.action,
+						attrs.method,
 						"form"];
 	}
 });

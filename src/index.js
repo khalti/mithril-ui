@@ -23,6 +23,7 @@ import {step, steps} from "./components/step";
 import {subHeader} from "./components/subHeader.js";
 import {table, tbody, td, tfoot, thead, th, tr} from "./components/table";
 import {title} from "./components/title.js";
+import {progress} from "./components/progress.js";
 
 
 export {
@@ -66,5 +67,6 @@ export {
 	thead,
 	th,
 	tr,
-	title
+	title,
+	progress
 };

@@ -11,7 +11,8 @@ export const bar = component({
 	name: "progressBar",
 	base: base,
 	attrSchema: {
-		percent: [required(true), isNumber()]
+		percent: [required(true), isNumber()],
+		state: [required(false), within(states)]
 	},
 	view ({attrs, children, state}) {
 		return _("div.bar", {style: {width: `${attrs.percent}%`}});
@@ -32,6 +33,7 @@ export const progress = component({
 			{inverted: attrs.inverted},
 			attachmentMap[attrs.attach],
 			sizeMap[attrs.size],
+			attrs.state,
 			colorClassMap[attrs.color],
 			"progress"
 		];

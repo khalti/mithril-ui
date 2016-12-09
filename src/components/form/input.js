@@ -49,6 +49,12 @@ export const input = component({
 			inputAttrs.name = attrs.name;
 		}
 
+		if (attrs.disabled) {
+			inputAttrs.tabIndex = -1
+		}
+
+		delete inputAttrs.root;
+
     return m('div', omitBy(attrs.rootAttrs, isEventHandler),
 						 attrs.prepend? m(attrs.prepend): undefined,
 						 m('input', inputAttrs),

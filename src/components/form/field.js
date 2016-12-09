@@ -54,7 +54,8 @@ export const field = component({
       type: attrs.type,
       placeholder: attrs.placeholder,
       value: attrs.model(),
-			class: attrs.input? attrs.input.class : ""
+			class: attrs.input? attrs.input.class : "",
+			disabled: attrs.disabled
     };
 
 		if (attrs.readOnly) {

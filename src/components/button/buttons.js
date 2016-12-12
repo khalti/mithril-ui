@@ -6,6 +6,7 @@ import {required, within} from "validatex";
 
 
 export const buttons = component({
+	name: "buttons",
 	base: base,
 	attrSchema: {
 		buttonCount: [required(false), within(properKeys(numberMap))],

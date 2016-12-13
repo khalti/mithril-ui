@@ -16,9 +16,6 @@ export const modalPool = component({
 			},
 		};
 	},
-	validateAttrs (attrs) {
-		
-	},
 	add (modal) {
 		modalPool.modals.unshift(modal);
 	},
@@ -31,7 +28,7 @@ export const modalPool = component({
 			{"inverted": attrs.inverted},
 			"page",
 			"dimmer",
-			modalPool.modals.length === 0? undefined: "active"
+			modalPool.modals.length === 0? undefined: "visible active"
 		];
 	},
 	view ({attrs, children, state}) {

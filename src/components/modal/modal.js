@@ -11,6 +11,9 @@ export const modal = component({
 	remove () {
 		modalPool.shift();
 	},
+	onremove (vdom) {
+		this.remove();
+	},
 	view ({attrs, children, state}) {
 		return m(".content", attrs.rootAttrs,
 				m(".center", children));

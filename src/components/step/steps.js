@@ -1,7 +1,7 @@
 import component from "mithril-componentx";
 import {base} from "./../base.js";
 import {step} from "./step.js";
-import enum from "./../../helpers/enums.js";
+import enums from "./../../helpers/enums.js";
 import keys from "lodash/keys";
 import map from "lodash/map";
 import flattenDeep from "lodash/flattenDeep";
@@ -12,10 +12,10 @@ export const steps = component({
 	name: "steps",
 	base: base,
 	attrSchema: {
-		attach: [required(false), within(keys(enum.attachmentMap),
+		attach: [required(false), within(keys(enums.attachmentMap),
 																		"Invalid value for attachment.")],
 		steps: required(true),
-		size: [required(false), within(keys(enum.sizeMap), "Invalid value for size.")]
+		size: [required(false), within(keys(enums.sizeMap), "Invalid value for size.")]
 	},
 	getDefaultAttrs (attrs) {
 		return {state: attrs.state || 0};
@@ -26,9 +26,9 @@ export const steps = component({
 			{ordered: attrs.ordered},
 			{vertical: attrs.vertical},
 			{fluid: attrs.fluid},
-			enum.attachmentMap[attrs.attach],
-			enum.numberMap[attrs.steps.length],
-			enum.sizeMap[attrs.size],
+			enums.attachmentMap[attrs.attach],
+			enums.numberMap[attrs.steps.length],
+			enums.sizeMap[attrs.size],
 			"steps"
 		];
 	},

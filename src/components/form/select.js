@@ -20,20 +20,23 @@ export const select = component({
 	hideMenu () {
 		this.menuVisible = false;
 	},
-  view (vdom)  {
+  view (vdom) {
 		let attrs = vdom.attrs;
 		let selectRootAttr = {value: attrs.model(),
 													onchange: m.withAttr("value", attrs.model.setAndValidate)};
 		if (attrs.name) {
 			selectRootAttr.name = attrs.name;
 		}
+
     return m("div", attrs.rootAttrs,
              this.getLabelPrepend(attrs),
              m("select", selectRootAttr,
                map(attrs.options, (option) => {
-                 return m("option",
-                          {value: option.value},
-                          option.label);
+								 let optionAttrs = {value: option.value};
+								 if (option.value === attrs.model()) {
+									 optionAttrs.selected = "selected";
+								 }
+                 return m("option", optionAttrs, option.label);
                })),
              this.getLabelAppend(attrs));
   }

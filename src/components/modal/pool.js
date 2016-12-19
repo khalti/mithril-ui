@@ -27,6 +27,7 @@ export const modalPool = component({
 			"ui",
 			{"inverted": attrs.inverted},
 			"page",
+			"modals",
 			"dimmer",
 			modalPool.modals.length === 0? undefined: "visible active"
 		];

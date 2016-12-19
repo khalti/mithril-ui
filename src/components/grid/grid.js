@@ -65,6 +65,7 @@ export const grid = component({
 						{"stackable": attrs.stackable},
 						enums.reverseClassMap[attrs.reverse],
 						{inverted: attrs.inverted},
+						{container: attrs.container},
 						"grid"];
 	}
 });

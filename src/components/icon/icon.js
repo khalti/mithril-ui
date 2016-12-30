@@ -4,7 +4,7 @@ import m from "mithril";
 import omit from "lodash/omit";
 import keys from "lodash/keys";
 import {sizeMap, colorClassMap} from "./../../helpers/enums.js";
-import {required, within} from "validatex";
+import {required, within, isString} from "validatex";
 
 
 const states = ["loading", "disabled"];
@@ -22,6 +22,8 @@ export const icon = component({
 	name: "icon",
 	base: base,
 	attrSchema: {
+		// TODO: make name required
+		name: [required(false), isString()],
 		fitted: [required(false), within(booleans)],
 		size: [required(false), within(keys(sizeMap))],
 		state: [required(false), within(states)],
@@ -46,6 +48,7 @@ export const icon = component({
 			attrs.color,
 			{inverted: attrs.inverted},
 			{corner: attrs.corner},
+			attrs.name,
 			"icon",
 		];
 	},

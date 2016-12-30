@@ -1,8 +1,9 @@
-import {base} from "./base.js";
+import {base} from "./../base.js";
 import component from "mithril-componentx";
 import m from "mithril";
 import keys from "lodash/keys";
 import {sizeMap} from "./../../helpers/enums.js";
+import {required, within} from "validatex";
 
 
 export const icons = component({

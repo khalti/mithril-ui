@@ -2,7 +2,7 @@ import component from "mithril-componentx";
 import {menu, item} from "./menu";
 import _ from "mithril";
 import {required, isNumber, isFunction} from "validatex";
-import {icon} from "./icon.js";
+import {icon} from "./../index.js";
 
 
 export const pagination = component({

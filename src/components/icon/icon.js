@@ -1,9 +1,10 @@
-import {base} from "./base.js";
+import {base} from "./../base.js";
 import component from "mithril-componentx";
 import m from "mithril";
 import omit from "lodash/omit";
 import keys from "lodash/keys";
 import {sizeMap, colorClassMap} from "./../../helpers/enums.js";
+import {required, within} from "validatex";
 
 
 const states = ["loading", "disabled"];
@@ -21,10 +22,10 @@ export const icon = component({
 	name: "icon",
 	base: base,
 	attrSchema: {
-		fitted: [required(false), winthin(booleans)],
-		size: [required(false), within(keys(sizeMap))]
+		fitted: [required(false), within(booleans)],
+		size: [required(false), within(keys(sizeMap))],
 		state: [required(false), within(states)],
-		link: [required(false), winthin(booleans)],
+		link: [required(false), within(booleans)],
 		flip: [required(false), within(keys(flipMap))],
 		rotate: [required(false), within(keys(rotateMap))],
 		circular: [required(false), within(booleans)],
@@ -44,7 +45,7 @@ export const icon = component({
 			{link: attrs.link},
 			attrs.color,
 			{inverted: attrs.inverted},
-			{corner: attrs.corner}
+			{corner: attrs.corner},
 			"icon",
 		];
 	},

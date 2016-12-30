@@ -1,16 +1,24 @@
 import {base} from "./base.js";
 import component from "mithril-componentx";
 import m from "mithril";
-import omit from "lodash/omit";
+import keys from "lodash/keys";
+import {sizeMap} from "./../../helpers/enums.js";
 
-export const icon = component({
-	name: "icon",
+
+export const icons = component({
+	name: "icons",
 	base: base,
+	attrSchema: {
+		size: [required(false), within(keys(sizeMap))]
+	},
 	getDefaultAttrs () {
 		return {root: "i"};
 	},
 	getClassList (attrs) {
-		return ["icon"];
+		return [
+			attrs.size,
+			"icons",
+		];
 	},
   view (vnode) {
 		let attrs = vnode.attrs;

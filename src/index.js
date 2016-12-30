@@ -9,7 +9,8 @@ import {divider} from "./components/divider.js";
 import {checkbox, field, fields, form, input, select} from "./components/form";
 import {grid, row, column} from "./components/grid";
 import {header} from "./components/header.js";
-import {icon} from "./components/icon.js";
+import {icon} from "./components/icon/icon.js";
+import {icons} from "./components/icon/icons.js";
 import {image} from "./components/image.js";
 import {label} from "./components/label.js";
 import {menu} from "./components/menu";
@@ -47,6 +48,7 @@ export {
 	column,
 	header,
 	icon,
+	icons,
 	image,
 	label,
 	menu,

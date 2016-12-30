@@ -38,6 +38,7 @@ module.exports = {
     15: "fifteen column",
     16: "sixteen column"
   },
+	// TODO: rename to colorMap
   colorClassMap: {
     "red": "red",
     "orange": "orange",

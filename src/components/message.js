@@ -23,7 +23,7 @@ export const message = component({
 		size: [required(false), within(keys(sizeMap), "Invalid size '{value}'.")],
 		state: [required(false), within(states, "Invalid state '{value}'.")],
 		icon: [required(false), componentIs("icon")],
-		content: [required(true)],
+		content: [required(false)],
 		onDismiss: [required(false), isFunction(true)]
 	},
 	getClassList (attrs) {

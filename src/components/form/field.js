@@ -14,6 +14,17 @@ export const field = component({
 		model: required(true),
 		type: required(true)
 	},
+	getStyle () {
+		return {
+			"div.field > label.help": {
+				"font-weight": 100,
+				"color": "rgba(0, 0, 0, 0.5)",
+			},
+			"div.field > label.error": {
+				"font-weight": 100
+			}
+		};
+	},
 	getLabelPrepend (attrs) {
 		if(isString(attrs.label)) {
 			return m('label', attrs.label);
@@ -29,7 +40,7 @@ export const field = component({
 		if(isObject(attrs.label) && attrs.label.append) {
 			return m('label', attrs.label.text);
 		}
-		else if(attrs.help && !attrs.model.error()) {
+		else if(attrs.help && !attrs.model.error() && !attrs.model()) {
 			return m('label.help', attrs.help);
 		}
 		else if(attrs.model.error() && !attrs.hideError) {

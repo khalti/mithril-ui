@@ -11,7 +11,10 @@ export const base = component({
 	},
   validateAttrs (attrs) {
     let errors = validate(attrs, this.attrSchema);
-    if (errors) throw Error(JSON.stringify(errors));
+		if (errors) {
+			console.log(`@ ${this.name}`);
+			throw Error(JSON.stringify(errors));
+		}
   },
   view ({attrs, children, state}) {
     return m(attrs.root, attrs.rootAttrs, children);

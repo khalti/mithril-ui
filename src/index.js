@@ -60,6 +60,7 @@ export {
 	segment,
 	segments,
 	sidebar,
+	steps,
 	step,
 	subHeader,
 	table,

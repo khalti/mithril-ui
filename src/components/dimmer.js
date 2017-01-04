@@ -1,12 +1,9 @@
-import component from "mithril-componentx";
 import m from "mithril";
 import {required, within} from "validatex";
-import {base} from "./base.js";
+import {Base} from "./base.js";
 
 
-export const dimmer = component({
-	name: "dimmer",
-	base: base,
+export class Dimmer extends Base {
 	attrSchema: {
 		page: [required(false), within([true, false])],
 		state: [required(false), within(["active", "disabled"])],
@@ -15,10 +12,9 @@ export const dimmer = component({
 	getClassList (attrs) {
 		return [
 			"ui",
-			{page: attrs.page},
-			{active: attrs.state === "active"},
-			{disabled: attrs.state === "disabled"},
-			{inverted: attrs.inverted},
+			attrs.page && "page",
+			attrs.state,
+			attrs.inverted && inverted,
 			"dimmer"
 		];
 	},
@@ -27,4 +23,6 @@ export const dimmer = component({
 				m(".content",
 					m(".center", children)));
 	}
-});
+}
+
+export const dimmer = new Dimmer();

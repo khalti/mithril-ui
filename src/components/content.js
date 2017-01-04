@@ -1,10 +1,10 @@
-import {base} from "./base.js";
-import component from "mithril-componentx";
+import {Base} from "./base.js";
 
-export const content = component({
-	name: "content",
-  base: base,
+
+export class Content extends Base {
 	getClassList: function (attrs) {
 		return ["content"];
 	}
-});
+}
+
+export const content = new Content();

@@ -1,29 +1,32 @@
-import {base} from "./../base.js";
-import component from "mithril-componentx";
-import m from "mithril";
+import {Base} from "./../base.js";
+import _ from "mithril";
 import keys from "lodash/keys";
 import {sizeMap} from "./../../helpers/enums.js";
 import {required, within} from "validatex";
 
 
-export const icons = component({
-	name: "icons",
-	base: base,
-	attrSchema: {
+export class Icons extends Base {
+	attrSchema = {
 		size: [required(false), within(keys(sizeMap))]
-	},
-	getDefaultAttrs () {
+	}
+
+	getDefaultAttrs (vnode) {
 		return {root: "i"};
-	},
+	}
+
 	getClassList (attrs) {
 		return [
 			attrs.size,
 			"icons",
 		];
-	},
+	}
+
   view (vnode) {
 		let attrs = vnode.attrs;
 
-    return m(attrs.root, attrs.rootAttrs, vnode.children);
+    return _(attrs.root, attrs.rootAttrs, vnode.children);
   }
-});
+}
+
+
+export const icons = new Icons();

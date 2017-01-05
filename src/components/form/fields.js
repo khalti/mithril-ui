@@ -3,9 +3,7 @@ import component from "mithril-componentx";
 import {numberMap} from "./../../helpers/enums.js";
 
 
-export const fields = component({
-	name: "fields",
-	base: base,
+export class Fields extends Base {
 	getClassList (attrs) {
 		return [
 			{grouped: attrs.grouped},
@@ -15,4 +13,6 @@ export const fields = component({
 			"fields"
 		];
 	}
-});
+}
+
+export const fields = new Fields();

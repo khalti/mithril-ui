@@ -1,13 +1,10 @@
-import component from "mithril-componentx";
-import {base} from "./base.js";
+import {Base} from "./base.js";
 import {within, required} from "validatex";
-import m from "mithril";
+import _ from "mithril";
 
 
-export const sidebar = component({
-	name: "sidebar",
-	base: base,
-	attrSchema: {
+export class Sidebar extends Base {
+	attrSchema = {
 		inverted: [required(false), within([true])],
 		vertical: [required(false), within([true])],
 		menu: [required(false), within([true])],
@@ -16,7 +13,8 @@ export const sidebar = component({
 		direction: [required(true), within(["top", "right", "bottom", "left"])],
 		width: [required(false), within(["thin", "very thin", "wide", "very wide"])],
 		visible: [required(false), within([true, false])]
-	},
+	}
+
 	getClassList (attrs) {
 		return [
 			"ui",
@@ -34,8 +32,12 @@ export const sidebar = component({
 			{"visible": attrs.visible},
 			"sidebar"
 		];
-	},
-	view ({attrs, children, state}) {
-		return m("div", attrs.rootAttrs, children);
 	}
-});
+
+	view ({attrs, children, state}) {
+		return _("div", attrs.rootAttrs, children);
+	}
+}
+
+
+export const sidebar = new Sidebar();

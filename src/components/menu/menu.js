@@ -1,5 +1,4 @@
-import {base} from "./../base.js";
-import component from "mithril-componentx";
+import {Base} from "./../base.js";
 import keys from "lodash/keys";
 import enums from "./../../helpers/enums.js";
 import {required, within} from "validatex";
@@ -17,10 +16,8 @@ let fittedMap = {
 	horizontally: "fitted horizontally"
 };
 
-export const menu = component({
-	name: "menu",
-	base: base,
-	attrSchema: {
+export class Menu extends Base {
+	attrSchema = {
 		state: [required(false), within(["down", "active"], "Invalid state.")],
 		color: [required(false), within(keys(enums.colorClassMap), "Invalid color.")],
 		fixed: [required(false), within(keys(fixedMap), "Invalid position to fix.")],
@@ -30,7 +27,8 @@ export const menu = component({
 		size: [required(false), within(keys(enums.sizeMap), "Invalid size.")],
 		fitted: [required(false), within([true, "vertically", "horizontally"],
 																		"Invalid value for 'fitted'.")]
-	},
+	}
+
 	getClassList (attrs) {
 		return ["ui",
 						{secondary: attrs.secondary},
@@ -55,4 +53,7 @@ export const menu = component({
 						enums.floatMap[attrs.float],
 						"menu"];
 	}
-});
+}
+
+
+export const menu = new Menu();

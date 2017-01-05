@@ -2,7 +2,7 @@ import {Base} from "./base.js";
 
 
 export class Content extends Base {
-	getClassList: function (attrs) {
+	getClassList (attrs) {
 		return ["content"];
 	}
 }

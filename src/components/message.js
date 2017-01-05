@@ -1,6 +1,5 @@
-import component from "mithril-componentx";
-import {base} from "./../components/base.js";
-import m from "mithril";
+import {Base} from "./../components/base.js";
+import _ from "mithril";
 import {attachmentMap, colorClassMap, sizeMap} from "./../helpers/enums.js";
 import keys from "lodash/keys";
 import {required, within, isFunction} from "validatex";
@@ -11,11 +10,10 @@ let types = ["warning", "info", "positive", "success", "negative", "error"];
 
 let states = ["hidden", "visible"];
 
-export const message = component({
-	name: "message",
-	base: base,
-	visible: false,
-	attrSchema: {
+export class Message extends Base {
+	visible = false
+
+	attrSchema = {
 		attach: [required(false), within(keys(attachmentMap),
 																		"^Invalid attachment '{value}'.")],
 		type: [required(false), within(types, "Invalid type '{value}'.")],
@@ -25,7 +23,8 @@ export const message = component({
 		icon: [required(false), componentIs("icon")],
 		content: [required(false)],
 		onDismiss: [required(false), isFunction(true)]
-	},
+	}
+
 	getClassList (attrs) {
 		let self = this;
 		return ["ui",
@@ -39,14 +38,18 @@ export const message = component({
 						colorClassMap[attrs.color],
 						sizeMap[attrs.size],
 						"message"];
-	},
+	}
+
 	view ({attrs, children, state}) {
 		let body = [attrs.icon, attrs.content];
 
 		if (attrs.onDismiss) {
-			body.unshift(m("i.close.icon", {onclick: attrs.onDismiss}));
+			body.unshift(_("i.close.icon", {onclick: attrs.onDismiss}));
 		}
 
-		return m("div", attrs.rootAttrs, body);
+		return _("div", attrs.rootAttrs, body);
 	}
-});
+}
+
+
+export const message = new Message();

@@ -1,14 +1,15 @@
-import m from "mithril";
+import _ from "mithril";
 import {required, within} from "validatex";
 import {Base} from "./base.js";
 
 
 export class Dimmer extends Base {
-	attrSchema: {
+	attrSchema = {
 		page: [required(false), within([true, false])],
 		state: [required(false), within(["active", "disabled"])],
 		inverted: [required(false), within([true, false])]
-	},
+	}
+
 	getClassList (attrs) {
 		return [
 			"ui",
@@ -17,11 +18,12 @@ export class Dimmer extends Base {
 			attrs.inverted && inverted,
 			"dimmer"
 		];
-	},
+	}
+
 	view ({attrs, children, state}) {
-		return m("div", attrs.rootAttrs,
-				m(".content",
-					m(".center", children)));
+		return _("div", attrs.rootAttrs,
+				_(".content",
+					_(".center", children)));
 	}
 }
 

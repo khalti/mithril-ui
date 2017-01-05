@@ -1,4 +1,4 @@
-import {base} from "./../base.js";
+import {Base} from "./../base.js";
 import keys from "lodash/keys";
 import reduce from "lodash/reduce";
 import enums from "./../../helpers/enums.js";
@@ -7,10 +7,8 @@ import clone from "lodash/clone";
 import {required, within} from "validatex";
 
 
-export const column = component({
-	name: "column",
-  base: base,
-	attrSchema: {
+export class Column extends Base {
+	attrSchema = {
 		float: [required(false),
 						within(keys(enums.floatMap), "Invalid value '{value}'.")],
 		width: [required(false),
@@ -31,7 +29,8 @@ export const column = component({
 									within(enums.properKeys(enums.widthClassMap), "Invalid value '{value}'.")],
 		widescreen: [required(false),
 								within(enums.properKeys(enums.widthClassMap), "Invalid value '{value}'.")]
-	},
+	}
+
 	getClassList (attrs) {
 		let visibleClass;
 		let visibility = clone(attrs.visible || []);
@@ -53,4 +52,7 @@ export const column = component({
 						attrs.widescreen? enums.widthClassMap[attrs.widescreen] + " widescreen": "",
 						"column"];
 	}
-});
+}
+
+
+export const column = new Column();

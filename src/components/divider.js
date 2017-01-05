@@ -1,17 +1,15 @@
-import {base} from "./base.js";
-import component from "mithril-componentx";
-import m from "mithril";
+import {Base} from "./base.js";
+import _ from "mithril";
 import {required, within} from "validatex";
 
 
-export const divider = component({
-	name: "divider",
-  base: base,
-	attrSchema: {
+export class Divider extends Base {
+	attrSchema = {
 		type: [required(false),
 					within(["vertical", "horizontal"], "Invalid type '{value}'.")],
-	},
-	getClassList: function (attrs) {
+	}
+
+	getClassList (attrs) {
 		return ["ui",
 						attrs.type,
 						{inverted: attrs.inverted},
@@ -21,4 +19,7 @@ export const divider = component({
 						{clearing: attrs.clearing},
 						"divider"];
 	}
-});
+}
+
+
+export const divider = new Divider();

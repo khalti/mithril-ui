@@ -1,50 +1,63 @@
-import {base}  from "./../../src/components/base.js";
+import {Base}  from "./../../src/components/base.js";
 import {getVdom} from "./../utils.js";
-import component from "mithril-componentx";
 import chai from "chai";
 import {required} from "validatex";
-import m from "mithril";
-
+import _ from "mithril";
+import {mocks} from "mock-browser";
 
 let expect = chai.expect;
 
-describe("base", () => {
+describe("Base", () => {
 	describe("validateAttrs", () => {
 		let profile;
+
+		before(() => {
+			global.window = mocks.MockBrowser().createWindow();
+			console.log("window:", global.window);
+		});
+
 		beforeEach(() => {
-			profile = component({
-				base: base,
-				attrSchema: {name: required(true)}
-			});
+			class Profile extends Base {
+				attrSchema = {name: required(true)}
+			}
+
+			profile = new Profile();
 		});
 
 		it("throws errors if attributes are invalid", () => {
-			expect(profile.view.bind(profile, new profile.controller())).to.throw(Error);
+			expect(profile.validateAttrs.bind(profile, {})).to.throw(Error);
 		});
 
 		it("does not throw errors if attributes are valid", () => {
 			let attrs = {name: "aName"};
-			expect(profile.view.bind(profile, new profile.controller(attrs), attrs)).not.to.throw(Error);
+			expect(profile.validateAttrs.bind(profile, attrs)).not.to.throw(Error);
 		});
 	});
 
-	describe("view", () => {
-		let vdom ;
+	describe.only("view", () => {
+		let vdom;
+
 		beforeEach(() => {
-			let attrs = {
-				root: "i",
-				"data-name": "aName"
+			let vnode = {
+				attrs : {
+					root: "i",
+					id: "baseId"
+				},
+				children: ["child1"],
+				state: {}
 			};
 
-			vdom = base.view(new base.controller(attrs), attrs, "child1");
+			let base = new Base();
+
+			vdom = base.view(vnode);
 		});
 
-		it("creates vdom with given attrs.tag", () => {
+		it("creates vdom with given attrs.root", () => {
 			expect(vdom.tag).to.equal("i");
 		});
 
 		it("creates vdom with given attributes", () => {
-			expect(vdom.attrs["data-name"]).to.equal("aName");
+			expect(vdom.attrs["id"]).to.equal("baseId");
 		});
 
 		it("creates vdom with given children", () => {

@@ -1,25 +1,24 @@
-import {base} from "./../base.js";
-import component from "mithril-componentx";
-import m from "mithril";
+import {Base} from "./../base.js";
+import _ from "mithril";
 import omit from "lodash/omit";
 import keys from "lodash/keys";
 import {colorClassMap, floatMap, emphasisMap, sizeMap} from "./../../helpers/enums.js";
 import {within, required} from "validatex";
 
-export const button = component({
-	name: "button",
-  base: base,
-	attrSchema: {
+export class Button extends Base {
+	attrSchema = {
 		size: [ required(false),
 						within(keys(sizeMap), "Invalid size {value}.")],
-	},
-	getDefaultAttrs (attrs) {
+	}
+
+	getDefaultAttrs ({attrs}) {
 		let defaultAttrs = {root: "button"};
 		if (attrs.type) {
 			defaultAttrs.rootAttrs = {type : attrs.type};
 		}
 		return defaultAttrs;
-	},
+	}
+
 	getClassList (attrs) {
 		return [
 			"ui",
@@ -39,7 +38,8 @@ export const button = component({
 			{icon: attrs.icon? true: false},
 			"button"
 		];
-	},
+	}
+
 	view (vnode) {
 		let attrs = vnode.attrs;
 		let children = vnode.children || [];
@@ -56,4 +56,7 @@ export const button = component({
 
 		return m(attrs.root, attrs.rootAttrs, children);
 	}
-});
+}
+
+
+extends const button = new Button();

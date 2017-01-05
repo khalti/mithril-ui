@@ -1,20 +1,19 @@
-import {base} from "./../base.js";
-import component from "mithril-componentx";
-import m from "mithril";
+import {Base} from "./../base.js";
+import _ from "mithril";
 import keys from "lodash/keys";
 
 
-export const thead = component({
-	name: "thead",
-	base: base,
-	attrSchema: {
-	},
+export class THead extends Base {
 	getClassList (attrs) {
 		return [
 			{"full-width": attrs.fullWidth}
 		];
-	},
-	getDefaultAttrs (attrs) {
+	}
+
+	getDefaultAttrs ({attrs}) {
 		return {root: "thead"};
 	}
-});
+}
+
+
+export const thead = new THead();

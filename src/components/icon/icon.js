@@ -1,6 +1,5 @@
-import {base} from "./../base.js";
-import component from "mithril-componentx";
-import m from "mithril";
+import {Base} from "./../base.js";
+import _ from "mithril";
 import omit from "lodash/omit";
 import keys from "lodash/keys";
 import {sizeMap, colorClassMap} from "./../../helpers/enums.js";
@@ -18,10 +17,8 @@ const rotateMap = {
 	counterclockwise: "counterclockwise rotated"
 };
 
-export const icon = component({
-	name: "icon",
-	base: base,
-	attrSchema: {
+export class Icon extends Base {
+	attrSchema = {
 		// TODO: make name required
 		name: [required(false), isString()],
 		fitted: [required(false), within(booleans)],
@@ -35,10 +32,12 @@ export const icon = component({
 		color: [required(false), within(keys(colorClassMap))],
 		inverted: [required(false), within(booleans)],
 		corner: [required(false), within(booleans)],
-	},
-	getDefaultAttrs () {
+	}
+
+	getDefaultAttrs (vnode) {
 		return {root: "i"};
-	},
+	}
+
 	getClassList (attrs) {
 		return [
 			{fitted: attrs.fitted},
@@ -51,10 +50,14 @@ export const icon = component({
 			attrs.name,
 			"icon",
 		];
-	},
+	}
+
   view (vnode) {
 		let attrs = vnode.attrs;
 
-    return m(attrs.root, attrs.rootAttrs, vnode.children);
+    return _(attrs.root, attrs.rootAttrs, vnode.children);
   }
-});
+}
+
+
+export const icon = new Icon();

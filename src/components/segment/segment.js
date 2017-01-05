@@ -1,5 +1,4 @@
-import {base} from "./../base.js";
-import component from "mithril-componentx";
+import {Base} from "./../base.js";
 import {
 	attachmentMap,
 	colorClassMap,
@@ -9,10 +8,8 @@ import keys from "lodash/keys";
 import {required, within} from "validatex";
 
 
-export const segment = component({
-	name: "segment",
-	base: base,
-	attrSchema: {
+export class Segment extends Base {
+	attrSchema = {
 		attach: [required(false), within([true, "top", "bottop", "left", "right"],
 																		"^Invalid attachment '{value}'.")],
 		color: [required(false), within(keys(colorClassMap),
@@ -21,7 +18,8 @@ export const segment = component({
 																			"Invalid emphasis '{value}'.")],
 		textAlignment: [required(false), within(keys(textAlignmentClassMap),
 																						"Invalid text alignment '{value}'.")]
-	},
+	}
+
 	getClassList (attrs) {
 		return ["ui",
 						{raised: attrs.raised},
@@ -42,4 +40,7 @@ export const segment = component({
 						textAlignmentClassMap[attrs.textAlignment],
 						"segment"];
 	}
-});
+}
+
+
+export const segment = new Segment();

@@ -1,6 +1,5 @@
-import {base} from "./../base.js";
-import component from "mithril-componentx";
-import m from "mithril";
+import {Base} from "./../base.js";
+import _ from "mithril";
 import {required, within} from "validatex";
 import {
 	verticalAlignmentClassMap,
@@ -11,16 +10,15 @@ import keys from "lodash/keys";
 
 const states = ["positive", "negative", "error", "warning", "active", "disabled"];
 
-export const td = component({
-	name: "td",
-	base: base,
-	attrSchema: {
+export class TD extends Base {
+	attrSchema = {
 		state: [required(false), within(states)],
 		verticalAlignment: [required(false), within(keys(verticalAlignmentClassMap))],
 		textAlignment: [required(false), within(keys(textAlignmentClassMap))],
 		width: [required(false), within(keys(widthClassMap))]
-	},
-	isRootAttr (value, key) {
+	}
+
+	isRootAttr (key) {
 		try {
 			return /^(key|id|style|on.*|data-.*|config|rowspan|colspan)$/.test(key)? true: false;
 		}
@@ -29,7 +27,8 @@ export const td = component({
 				return false;
 			}
 		}
-	},
+	}
+
 	getClassList (attrs) {
 		return [
 			attrs.state,
@@ -39,8 +38,12 @@ export const td = component({
 			{collapsing: attrs.collapsing},
 			widthClassMap[attrs.width]
 		];
-	},
-	getDefaultAttrs (attrs) {
+	}
+
+	getDefaultAttrs ({attrs}) {
 		return {root: "td"};
 	}
-});
+}
+
+
+export const td = new TD();

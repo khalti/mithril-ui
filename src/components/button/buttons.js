@@ -1,18 +1,16 @@
-import {base} from "./../base.js";
-import component from "mithril-componentx";
-import m from "mithril";
+import {Base} from "./../base.js";
+import _ from "mithril";
 import {numberMap, properKeys, colorClassMap, sizeMap} from "./../../helpers/enums.js";
 import {required, within} from "validatex";
 
 
-export const buttons = component({
-	name: "buttons",
-	base: base,
-	attrSchema: {
+export class Buttons extends Base {
+	attrSchema = {
 		buttonCount: [required(false), within(properKeys(numberMap))],
 		color: [required(false), within(properKeys(colorClassMap))],
 		size: [required(false), within(properKeys(sizeMap))]
-	},
+	}
+
 	getClassList (attrs) {
 		return [
 			"ui",
@@ -26,8 +24,12 @@ export const buttons = component({
 			{fluid: attrs.fluid},
 			"buttons"
 		];
-	},
-	getDefaultAttrs (attrs) {
+	}
+
+	getDefaultAttrs ({attrs}) {
 		return {root: "div"};
 	}
-});
+}
+
+
+export const buttons = new Buttons();

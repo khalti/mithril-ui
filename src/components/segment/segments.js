@@ -1,18 +1,16 @@
-import {base} from "./../base.js";
-import component from "mithril-componentx";
+import {Base} from "./../base.js";
 import {required, within} from "validatex";
 
 
-export const segments = component({
-	name: "segments",
-	base: base,
-	attrSchema: {
+export class Segments extends Base {
+	attrSchema = {
 		horizontal: [required(false), within(true, false)],
 		raised: [required(false), within(true, false)],
 		stacked: [required(false), within(true, false)],
 		piled: [required(false), within(true, false)],
 		compact: [required(false), within(true, false)],
-	},
+	}
+
 	getClassList (attrs) {
 		return ["ui",
 						{horizontal: attrs.horizontal},
@@ -22,4 +20,7 @@ export const segments = component({
 						{compact: attrs.compact},
 						"segments"];
 	}
-});
+}
+
+
+export const segments = new Segments();

@@ -1,5 +1,5 @@
 import {Base} from "./../base.js";
-import m from "mithril";
+import _ from "mithril";
 import omit from "lodash/omit";
 import keys from "lodash/keys";
 import {sizeMap} from "./../../helpers/enums.js";
@@ -7,11 +7,15 @@ import {required, within} from "validatex";
 
 
 export class Form extends Base {
+	attrSchema = {
+			size: [required(false), within(keys(sizeMap), "^Invalid size '%{value}'.")]
+	}
+
 	getDefaultAttrs (attrs) {
 		return {root: "form"};
 	}
 
-	isRootAttr (value, key) {
+	isRootAttr (key) {
 		try {
 			return /^(key|id|style|on.*|data-.*|config|method|action)$/.test(key)? true: false;
 		}
@@ -35,8 +39,5 @@ export class Form extends Base {
 	}
 }
 
-Form.attrSchema = {
-		size: [required(false), within(keys(sizeMap), "^Invalid size '%{value}'.")]
-};
 
 export const form = new Form();

@@ -1,13 +1,13 @@
-import {base} from "./base.js";
-import component from "mithril-componentx";
+import {Base} from "./base.js";
 
-export const label = component({
-	name: "label",
-	base: base,
+export class Label extends Base {
 	getClassList (attrs) {
 		return [
 			"ui",
 			"label"
 		];
 	}
-});
+}
+
+
+export const label = new Label();

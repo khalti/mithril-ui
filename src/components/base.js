@@ -1,22 +1,22 @@
-import m from "mithril";
+import _ from "mithril";
 import {validate} from "validatex";
 import omit from "lodash/omit.js";
 import Component from "mithril-componentx";
 
 
-export class Base extends Componen {
-	getDefaultAttrs (attrs) {
+export class Base extends Component {
+	getDefaultAttrs (vnode) {
 		return {root: "div"};
 	}
 
   validateAttrs (attrs) {
-    let errors = validate(attrs, this.constructor.attrSchema);
+    let errors = validate(attrs, this.attrSchema);
 		if (errors) {
 			throw Error(JSON.stringify(errors));
 		}
   }
 
   view ({attrs, children, state}) {
-    return m(attrs.root, attrs.rootAttrs, children);
+    return _(attrs.root, attrs.rootAttrs, children);
   }
 }

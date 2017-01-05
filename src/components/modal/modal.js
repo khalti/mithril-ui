@@ -1,70 +1,74 @@
 import _ from "mithril";
-import component from "mithril-componentx";
 import {required, within} from "validatex";
-import {base} from "./../base.js";
+import {Base} from "./../base.js";
 import {modalPool} from "./pool.js";
 
 
 const sizeMap = ["small", "large", "fullscreen"];
 
-export const header = component({
-	name: "modalHeader",
-	base: base,
+export class ModalHeader extends Base {
 	getClassList (attrs) {
 		return ["header"];
-	},
+	}
+
 	view ({attrs, children, state}) {
 		return _("div", attrs.rootAttrs, children);
 	}
-});
+}
+
+export const modalHeader = new ModalHeader();
 
 
-export const content = component({
-	name: "modalContent",
-	base: base,
-	attrSchema: {
+export class ModalContent extends Base {
+	attrSchema = {
 		image: [required(false), within([true, false])]
-	},
+	}
+
 	getClassList (attrs) {
 		return [
 			{image: attrs.image},
 			"content"
 		];
-	},
+	}
+
 	view ({attrs, children, state}) {
 		return _("div", attrs.rootAttrs, children);
 	}
-});
+}
+
+export const modalContent = new ModalContent();
 
 
-export const actions = component({
-	name: "modalActions",
-	base: base,
+export const ModalActions extends Base {
 	getClassList (attrs) {
 		return [
 			"actions"
 		];
-	},
+	}
+
 	view ({attrs, children, state}) {
 		return _("div", attrs.rootAttrs, children);
 	}
-});
+}
+
+export const modalActions = new ModalActions();
 
 
-export const modal = component({
-	name: "modal",
-	base: base,
-	attrSchema: {
+export class Modal extends Base {
+	attrSchema = {
 		basic: [required(false), within([true, false])],
 		size: [required(false), within(sizeMap)],
 		scrolling: [required(false), within([true, false])]
-	},
+	}
+
 	remove () {
 		modalPool.shift();
-	},
+	}
+
 	onremove (vdom) {
 		this.remove();
-	},
+	}
+
 	getClassList (attrs) {
 		return [
 			"ui",
@@ -73,8 +77,12 @@ export const modal = component({
 			{scrolling: attrs.scrolling},
 			"modal visible active"
 		];
-	},
+	}
+
 	view ({attrs, children, state}) {
 		return _("div", attrs.rootAttrs, children);
 	}
-});
+}
+
+
+export const modal = new Modal();

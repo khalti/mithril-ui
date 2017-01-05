@@ -1,6 +1,5 @@
-import {base} from "./../base.js";
-import component from "mithril-componentx";
-import m from "mithril";
+import {Base} from "./../base.js";
+import _ from "mithril";
 import {required, within} from "validatex";
 import {
 	verticalAlignmentClassMap,
@@ -14,16 +13,15 @@ export const sortMap = {
 	"descending": "sorted descending"
 };
 
-export const th = component({
-	name: "th",
-	base: base,
-	attrSchema: {
+export class TH extends Base {
+	attrSchema = {
 		verticalAlignment: [required(false), within(keys(verticalAlignmentClassMap))],
 		textAlignment: [required(false), within(keys(textAlignmentClassMap))],
 		width: [required(false), within(keys(widthClassMap))],
 		sort: [required(false), within(keys(sortMap))]
-	},
-	isRootAttr (value, key) {
+	}
+
+	isRootAttr (key) {
 		try {
 			return /^(key|id|style|on.*|data-.*|config|rowspan|colspan)$/.test(key)? true: false;
 		}
@@ -32,7 +30,8 @@ export const th = component({
 				return false;
 			}
 		}
-	},
+	}
+
 	getClassList (attrs) {
 		return [
 			verticalAlignmentClassMap[attrs.verticalAlignment],
@@ -41,8 +40,12 @@ export const th = component({
 			{collapsing: attrs.collapsing},
 			sortMap[attrs.sort]
 		];
-	},
-	getDefaultAttrs (attrs) {
+	}
+
+	getDefaultAttrs ({attrs}) {
 		return {root: "th"};
 	}
-});
+}
+
+
+export const th = new TH();

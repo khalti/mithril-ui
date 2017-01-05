@@ -1,23 +1,22 @@
-import {base} from "./base.js";
-import component from "mithril-componentx";
-import m from "mithril";
+import {Base} from "./base.js";
+import _ from "mithril";
 import omit from "lodash/omit";
 import {verticalAlignmentClassMap, floatMap} from "./../helpers/enums.js";
 import {required} from "validatex";
 
 
-export const image = component({
-	name: "image",
-  base: base,
-	attrSchema: {
+export class Image extends Base {
+	attrSchema = {
 		src: required(true)
-	},
-	getDefaultAttrs (attrs) {
+	}
+
+	getDefaultAttrs ({attrs}) {
 		if (attrs.link) {
 			return {rootAttrs: {href: attrs.link}};
 		}
 		return {rootAttrs: {src: attrs.src}};
-	},
+	}
+	
 	getClassList (attrs) {
 		return ["ui",
 						{hidden: attrs.hidden},
@@ -32,15 +31,19 @@ export const image = component({
 						floatMap[attrs.float],
 						attrs.size,
 						"image"];
-	},
+	}
+
   view (vdom) {
 		let attrs = vdom.attrs;
 
 		if(attrs.link) {
-			return m("a", attrs.rootAttrs,
-							 m("img", {src: attrs.src}));
+			return _("a", attrs.rootAttrs,
+							 _("img", {src: attrs.src}));
 		}
 
-    return m("img", attrs.rootAttrs);
+    return _("img", attrs.rootAttrs);
   }
-});
+}
+
+
+export const image = new Image();

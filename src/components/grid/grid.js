@@ -1,5 +1,4 @@
-import {base} from "./../base.js";
-import component from "mithril-componentx";
+import {Base} from "./../base.js";
 import keys from "lodash/keys";
 import enums from "./../../helpers/enums.js";
 import {required, within} from "validatex";
@@ -46,10 +45,9 @@ let attrSchema = {
 																		"Invalid value '{value}'.")]
 };
 
-export const grid = component({
-	name: "grid",
-  base: base,
-	attrSchema: attrSchema,
+export class Grid  extends Base {
+	attrSchema = attrSchema
+
 	getClassList (attrs) {
 		return ["ui",
 						enums.columnsClassMap[attrs.columns],
@@ -68,4 +66,7 @@ export const grid = component({
 						{container: attrs.container},
 						"grid"];
 	}
-});
+}
+
+
+export const grid = new Grid();

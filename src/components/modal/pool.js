@@ -1,13 +1,11 @@
-import m from "mithril";
-import component from "mithril-componentx";
+import _ from "mithril";
 import {required, within} from "validatex";
-import {base} from "./../base.js";
+import {Base} from "./../base.js";
 
 
-export const modalPool = component({
-	name: "modalPool",
-	base: base,
-	modals: [],
+export class ModalPool extends Base {
+	modals = []
+
 	getStyle ({attrs, children, state}) {
 		return {
 			".ui.dimmer > .content > .center > *": {
@@ -15,13 +13,16 @@ export const modalPool = component({
 				"text-align": "left"
 			},
 		};
-	},
+	}
+
 	add (modal) {
 		modalPool.modals.unshift(modal);
-	},
+	}
+
 	shift (modal) {
 		modalPool.modals.shift();
-	},
+	}
+
 	getClassList (attrs) {
 		return [
 			"ui",
@@ -31,9 +32,13 @@ export const modalPool = component({
 			"dimmer",
 			modalPool.modals.length === 0? undefined: "visible active"
 		];
-	},
+	}
+
 	view ({attrs, children, state}) {
 		let modals = modalPool.modals.length;
 		return m("div", attrs.rootAttrs, modals === 0? null: modalPool.modals);
 	}
-});
+}
+
+
+export const modalPool = new ModalPool();

@@ -1,6 +1,5 @@
-import {base} from "./base.js";
-import component from "mithril-componentx";
-import m from "mithril";
+import {Base} from "./base.js";
+import _ from "mithril";
 import {properKeys,
 				attachmentMap,
 				floatMap,
@@ -18,15 +17,15 @@ let levelMap = {
 	6: "h6"
 };
 
-export const header = component({
-	name: "header",
-  base: base,
-	attrSchema: {
+export class Header extends Base {
+	attrSchema = {
 		level: [required(false), within(properKeys(levelMap), "Invalid level '{value}.'")]
-	},
-	getDefaultAttrs (attrs) {
+	}
+
+	getDefaultAttrs (vnode) {
 		return {};
-	},
+	}
+
 	getClassList (attrs) {
 		return ["ui",
 						{icon: attrs.pyramid},
@@ -39,10 +38,14 @@ export const header = component({
 						colorClassMap[attrs.color],
 						{inverted: attrs.inverted},
 						"header"];
-	},
+	}
+
 	view (vnode) {
 		let attrs = vnode.attrs;
 
 		return m(levelMap[attrs.level] || "div", attrs.rootAttrs, vnode.children);
 	}
-});
+}
+
+
+export const header = new Header();

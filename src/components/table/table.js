@@ -1,6 +1,5 @@
-import {base} from "./../base.js";
-import component from "mithril-componentx";
-import m from "mithril";
+import {Base} from "./../base.js";
+import _ from "mithril";
 import {
 	colorClassMap,
 	sizeMap,
@@ -9,14 +8,13 @@ import keys from "lodash/keys";
 import {required, within} from "validatex";
 
 
-export const table = component({
-	name: "table",
-	base: base,
-	attrSchema: {
+export class Table extends Base {
+	attrSchema = {
 		columnCount: [required(false), within(keys(columnsClassMap))],
 		color: [required(false), within(keys[colorClassMap])],
 		size: [required(false), within(keys[sizeMap])],
-	},
+	}
+
 	getClassList (attrs) {
 		return [
 			"ui",
@@ -38,8 +36,12 @@ export const table = component({
 			sizeMap[attrs.size],
 			"table"
 		];
-	},
-	getDefaultAttrs (attrs) {
+	}
+
+	getDefaultAttrs ({attrs}) {
 		return {root: "table"};
 	}
-});
+}
+
+
+export const table = new Table();

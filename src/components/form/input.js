@@ -1,6 +1,5 @@
-import m from 'mithril';
-import component from "mithril-componentx";
-import {base} from "./../base.js";
+import _ from 'mithril';
+import {Base} from "./../base.js";
 import omit from "lodash/omit";
 import omitBy from "lodash/omitBy";
 import {required} from "validatex";
@@ -16,14 +15,13 @@ let isComponent = (comp) => {
 	}
 }
 
-export const input = component({
-	name: "input",
-	base: base,
-	attrSchema: {
+export class Input extends Base {
+	attrSchema = {
 		type: required(true),
 		prepend: [required(false), isComponent],
 		append: [required(false), isComponent]
-	},
+	}
+
 	getClassList (attrs) {
 		let {prepend, append} = attrs;
 		return ["ui",
@@ -39,7 +37,8 @@ export const input = component({
 			{disabled: attrs.disabled},
 			{fluid: attrs.fluid},
 			"input"];
-	},
+	}
+
   view (vnode) {
 		let attrs = vnode.attrs;
 		let inputAttrs = omit(attrs, ['prepend', 'append', 'rootAttrs']);
@@ -55,9 +54,11 @@ export const input = component({
 
 		delete inputAttrs.root;
 
-    return m('div', omitBy(attrs.rootAttrs, isEventHandler),
+    return _('div', omitBy(attrs.rootAttrs, isEventHandler),
 						 attrs.prepend? m(attrs.prepend): undefined,
-						 m('input', inputAttrs),
+						 _('input', inputAttrs),
 						 attrs.append? m(attrs.append): undefined);
   }
-});
+}
+
+export const input = new Input();

@@ -1,11 +1,11 @@
-import {base} from "./base.js";
-import component from "mithril-componentx";
+import {Base} from "./base.js";
 
 
-export const description = component({
-	name: "description",
-	base: base,
+export class Description extends Base {
 	getClassList (attrs) {
 		return ["description"];
 	}
-});
+}
+
+
+export const description = new Description();

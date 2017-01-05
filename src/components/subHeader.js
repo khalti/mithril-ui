@@ -1,10 +1,10 @@
-import {base} from "./base.js";
-import component from "mithril-componentx";
+import {Base} from "./base.js";
 
-export const subHeader = component({
-	name: "subHeader",
-	base: base,
+export class SubHeader extends Base {
 	getClassList (attrs) {
 			return ["sub header"];
 		}
-});
+}
+
+
+export const subHeader = new SubHeader();

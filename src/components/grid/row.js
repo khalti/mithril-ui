@@ -1,5 +1,4 @@
-import {base} from "./../base.js";
-import component from "mithril-componentx";
+import {Base} from "./../base.js";
 import keys from "lodash/keys";
 import enums from "./../../helpers/enums.js";
 import reduce from "lodash/reduce";
@@ -12,10 +11,8 @@ let stretchedMap = {
 	false: ""
 };
 
-export const row = component({
-	name: "row",
-	base: base,
-	attrSchema: {
+export class Row extends Base {
+	attrSchema = {
 		columns: [required(false), within(enums.properKeys(enums.columnsClassMap),
 																			"Invalid value '{value}'.")],
 		stretched: [required(false), within([true, false],
@@ -32,7 +29,8 @@ export const row = component({
 		 // 											message: "^Invalid value '%{value}'."}},
 		reverse: [required(false), within(keys(enums.reverseClassMap),
 																			"Invalid value '{value}'.")]
-	},
+	}
+
 	getClassList (attrs) {
 		let visibleClass;
 		let visibility = clone(attrs.visible || []);
@@ -52,4 +50,7 @@ export const row = component({
 						enums.reverseClassMap[attrs.reverse],
 						"row"];
 	}
-});
+}
+
+
+export const row = new Row();

@@ -1,15 +1,14 @@
-import {base} from "./../base.js";
-import component from "mithril-componentx";
+import {Base} from "./../base.js";
 import {numberMap} from "./../../helpers/enums.js";
 
 
 export class Fields extends Base {
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		return [
-			{grouped: attrs.grouped},
+			attrs.grouped && "grouped",
 			numberMap[attrs.fieldCount],
-			{"equal width": attrs.equalWidth},
-			{inline: attrs.inline},
+			attrs.equalWidth && "equal width",
+			attrs.inline && "inline",
 			"fields"
 		];
 	}

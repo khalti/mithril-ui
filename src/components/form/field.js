@@ -1,10 +1,11 @@
 import _ from "mithril";
-import isObject from "lodash/isObject";
-import isString from "lodash/isString";
+import {isObject, isString} from "./../../helpers/type.js";
 import {input}  from "./input.js";
 import {Base} from "./../base.js";
-import {widthClassMap} from "./../../helpers/enums.js";
+import {widthMap} from "./../../helpers/enums.js";
 import {required} from "validatex";
+import Component from "mithril-componentx";
+
 
 export class Field extends Base {
 	attrSchema = {
@@ -48,19 +49,17 @@ export class Field extends Base {
 		}
 	}
 
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		return [
-			{inline: attrs.inline},
+			attrs.inline && "inline",
 			"field",
-			{disabled: attrs.disabled},
-			{error: attrs.model.error() && ! attrs.hideError},
-			widthClassMap[attrs.size]
+			attrs.disabled && "disabled",
+			attrs.model.error() && !attrs.hideError && "error",
+			widthMap[attrs.size]
 		];
 	}
 
-  view (vnode)  {
-		let attrs = vnode.attrs;
-
+  view ({attrs})  {
     let inputAttrs = {
       prepend: attrs.prepend,
       append: attrs.append,
@@ -80,11 +79,11 @@ export class Field extends Base {
 			}
 
 			if (attrs.update === attrs.validate) {
-				inputAttrs[attrs.update] = m.withAttr('value', attrs.model.setAndValidate);
+				inputAttrs[attrs.update] = _.withAttr('value', attrs.model.setAndValidate);
 			}
 			else {
 				if (attrs.update) {
-					inputAttrs[attrs.update] = m.withAttr('value', attrs.model);
+					inputAttrs[attrs.update] = _.withAttr('value', attrs.model);
 				}
 				if (attrs.validate) {
 					inputAttrs[attrs.validate] = () => {attrs.model.isValid();};

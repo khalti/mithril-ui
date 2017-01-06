@@ -42,4 +42,11 @@ export const click = (el) => {
 	let event = window.document.createEvent("Event");
 	event.initEvent("click", true, true);
 	el.dispatchEvent(event);
-}
+};
+
+
+export const trigger = (eventName, el, bubble = true, cancelable = true) => {
+	let event = window.document.createEvent("Event");
+	event.initEvent(eventName, bubble, cancelable);
+	el.dispatchEvent(event);
+};

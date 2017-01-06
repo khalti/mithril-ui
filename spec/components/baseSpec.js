@@ -1,20 +1,15 @@
+import {window, FRAME_BUDGET, click} from "./../utils.js";
 import {Base}  from "./../../src/components/base.js";
-import {getVdom} from "./../utils.js";
 import chai from "chai";
 import {required} from "validatex";
 import _ from "mithril";
-import {mocks} from "mock-browser";
+
 
 let expect = chai.expect;
 
 describe("Base", () => {
 	describe("validateAttrs", () => {
 		let profile;
-
-		before(() => {
-			global.window = mocks.MockBrowser().createWindow();
-			console.log("window:", global.window);
-		});
 
 		beforeEach(() => {
 			class Profile extends Base {
@@ -34,34 +29,43 @@ describe("Base", () => {
 		});
 	});
 
-	describe.only("view", () => {
-		let vdom;
+	describe("view", () => {
+		let buttonDom, document;
 
 		beforeEach(() => {
-			let vnode = {
-				attrs : {
-					root: "i",
-					id: "baseId"
-				},
-				children: ["child1"],
-				state: {}
-			};
+			document = window.document;
 
-			let base = new Base();
+			class Button extends Base {
+				content = "a button content"
 
-			vdom = base.view(vnode);
+				getDefaultAttrs(vnode) {
+					let attrs =  super.getDefaultAttrs(vnode);
+					attrs.id = "buttonId";
+					return attrs;
+				}
+
+				view ({attrs, children, state}) {
+					return _("button", attrs.rootAttrs, this.content);
+				}
+			}
+
+			let button = new Button();
+
+			_.mount(document.body, button)
+
+			buttonDom = document.querySelector("button");
 		});
 
 		it("creates vdom with given attrs.root", () => {
-			expect(vdom.tag).to.equal("i");
+			expect(buttonDom.nodeName).to.equal("BUTTON");
 		});
 
 		it("creates vdom with given attributes", () => {
-			expect(vdom.attrs["id"]).to.equal("baseId");
+			expect(buttonDom.getAttribute("id")).to.equal("buttonId");
 		});
 
 		it("creates vdom with given children", () => {
-			expect(vdom.children[0]).to.equal("child1");
+			expect(buttonDom.textContent).to.equal("a button content");
 		});
 	});
 });

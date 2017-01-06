@@ -1,5 +1,7 @@
 import map from "lodash/map";
-import _ from "mithril";
+import {jsdom} from "jsdom";
+
+export const FRAME_BUDGET = 1000/60;
 
 
 export const presence = (value) => {
@@ -30,3 +32,13 @@ export const getVdom = (component, attrs = {}) => {
 	}
 	return vdom;
 };
+
+global.window = jsdom().defaultView;
+
+export const window = global.window;
+
+export const click = (el) => {
+	let event = window.document.createEvent("Event");
+	event.initEvent("click", true, true);
+	el.dispatchEvent(event);
+}

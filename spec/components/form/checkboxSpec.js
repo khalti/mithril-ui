@@ -1,7 +1,8 @@
+import {window, trigger} from "./../../utils.js";
 import {checkbox} from "../../../src/components/form/checkbox.js";
-import m from "mithril";
+import _ from "mithril";
 import powerform from "powerform";
-import {getVdom, presence} from "./../../utils.js";
+import {presence} from "./../../utils.js";
 import chai from "chai";
 
 let expect = chai.expect;
@@ -9,58 +10,74 @@ let expect = chai.expect;
 let truth = presence;
 
 describe("checkbox", () => {
-  let vdom, attrs;
+  let vnode;
   beforeEach(() => {
-    attrs = {
-      model: powerform({isTrue: {validator: truth, default: false}}).isTrue,
-      label: 'A label.'
-    };
-
-    vdom = getVdom(m(checkbox, attrs));
+		vnode = {
+			attrs : {
+				model: powerform({isTrue: {validator: truth, default: false}}).isTrue,
+				label: 'A label.'
+			}
+		}
   });
 
 	it("complains if 'model' is absent.", () => {
-		let aCheckbox = m(checkbox, {label: "A label"});
-		expect(aCheckbox.view.bind(aCheckbox)).to.throw(Error);
+		vnode.attrs.model = "";
+		expect(checkbox.oninit.bind(checkbox, vnode)).to.throw(Error);
 	});
 
 	it("complains if 'label' is absent.", () => {
-		let aCheckbox = m(checkbox, {model: "A model"});
-		expect(aCheckbox.view.bind(aCheckbox)).to.throw(Error);
+		vnode.attrs.label = "";
+		expect(checkbox.oninit.bind(checkbox, vnode)).to.throw(Error);
 	});
 
-  it("sets class of <input> to 'ui checkbox'", () => {
-    let input = vdom.children[0];
 
-    expect(input.attrs.className).to.equal("ui checkbox");
-  });
+	describe("view", () => {
+		it("sets class to 'ui checkbox'", () => {
+			_.render(document.body, _(checkbox, vnode.attrs));
+			let checkboxDom = document.querySelector(".checkbox");
 
-  it("sets input type to checkbox", () => {
-    let input = vdom.children[0].children[0];
-    expect(input.attrs.type).to.equal('checkbox');
-  });
+			expect(checkboxDom.getAttribute("class")).to.equal("ui checkbox");
+		});
 
-  it("creates <label> out of attrs.label", () => {
-    let label = vdom.children[0].children[1];
-    expect(label.children[0]).to.equal('A label.');
-  });
+		it("sets input type to checkbox", () => {
+			_.render(document.body, _(checkbox, vnode.attrs));
+			let inputDom = document.querySelector("input");
 
-  it("sets the value of input's checked to the model's value", () => {
-		attrs.model(true);
-		let vdom = getVdom(m(checkbox, attrs));
-    let input = vdom.children[0].children[0];
-    expect(input.attrs.checked).to.equal(true);
-  });
+			expect(inputDom.getAttribute("type")).to.equal('checkbox');
+		});
 
-  it("updates the value on click", () => {
-    vdom.attrs.onclick({});
-    expect(attrs.model()).to.equal(true);
-  });
+		it("sets the value of input's checked to the model's value", () => {
+			vnode.attrs.model(true);
 
-  it("its sets the class of input div to 'ui checkbox checked' if its checked", () => {
-		attrs.model(true);
-		let vdom = getVdom(m(checkbox, attrs));
-    let input = vdom.children[0];
-    expect(input.attrs.className).to.have.string('checked');
-  });
+			_.render(document.body, _(checkbox, vnode.attrs));
+			let inputDom = document.querySelector("input");
+
+			expect(inputDom.checked).to.equal(true);
+		});
+
+		it("updates the value on click", () => {
+			_.render(document.body, _(checkbox, vnode.attrs));
+			let inputDom = document.querySelector("input");
+
+			trigger("click", inputDom);
+
+			expect(vnode.attrs.model()).to.equal(true);
+		});
+
+		it("its sets the class of input div to 'ui checkbox checked' if its checked", () => {
+			vnode.attrs.model(true);
+
+			_.render(document.body, _(checkbox, vnode.attrs));
+			let checkboxDom = document.querySelector(".checkbox");
+
+			expect(checkboxDom.getAttribute("class")).to.contain('checked');
+		});
+
+		it("creates <label> out of attrs.label", () => {
+			_.render(document.body, _(checkbox, vnode.attrs));
+			let labelDom = document.querySelector("label");
+
+			expect(labelDom.textContent).to.equal('A label.');
+		});
+	});
 });

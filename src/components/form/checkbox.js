@@ -23,8 +23,7 @@ export class Checkbox extends Field {
 		return null;
 	}
 
-  view (vnode) {
-		let attrs = vnode.attrs;
+  view ({attrs, children, state}) {
 		attrs.rootAttrs.onclick = this.toggleState.bind(this, attrs);
 
     return _('div', attrs.rootAttrs,

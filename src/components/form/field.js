@@ -59,7 +59,7 @@ export class Field extends Base {
 		];
 	}
 
-  view ({attrs})  {
+  view ({attrs, children, state})  {
     let inputAttrs = {
       prepend: attrs.prepend,
       append: attrs.append,

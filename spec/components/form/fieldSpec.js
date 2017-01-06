@@ -1,9 +1,8 @@
-import {window, trigger} from "./../../utils.js";
+import {window, trigger, presence} from "./../../utils.js";
 import {field} from "../../../src/components/form/field.js";
 import powerform from "powerform";
 import _ from "mithril";
 import chai from "chai";
-import {getVdom, presence} from "./../../utils.js";
 import classnames from "classnames";
 
 let expect = chai.expect;
@@ -21,12 +20,12 @@ describe("field", () => {
 
 	it("complains if 'model' is absent.", () => {
 		vnode.attrs.type = "type";
-		expect(field.oninit.bind(vnode)).to.throw(Error);
+		expect(field.oninit.bind(field, vnode)).to.throw(Error);
 	});
 
 	it("complains if 'label' is absent.", () => {
 		vnode.attrs.model = "model";
-		expect(field.oninit.bind(vnode)).to.throw(Error);
+		expect(field.oninit.bind(field, vnode)).to.throw(Error);
 	});
 
 	describe(".getLabelPrepend", () => {

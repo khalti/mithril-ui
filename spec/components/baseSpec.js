@@ -1,4 +1,4 @@
-import {window, FRAME_BUDGET, click} from "./../utils.js";
+import {window, FRAME_BUDGET} from "./../utils.js";
 import {Base}  from "./../../src/components/base.js";
 import chai from "chai";
 import {required} from "validatex";

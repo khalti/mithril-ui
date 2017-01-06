@@ -1,17 +1,15 @@
 import {Base} from "./../base.js";
 import _ from "mithril";
-import omit from "lodash/omit";
-import keys from "lodash/keys";
 import {sizeMap} from "./../../helpers/enums.js";
 import {required, within} from "validatex";
 
 
 export class Form extends Base {
 	attrSchema = {
-			size: [required(false), within(keys(sizeMap), "^Invalid size '%{value}'.")]
+			size: [required(false), within(Object.keys(sizeMap), "^Invalid size '{value}'.")]
 	}
 
-	getDefaultAttrs (attrs) {
+	getDefaultAttrs ({attrs}) {
 		return {root: "form"};
 	}
 
@@ -26,7 +24,7 @@ export class Form extends Base {
 		}
 	}
 
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		return ["ui",
 						attrs.loading && "loading",
 						attrs.success && "success",

@@ -5,3 +5,16 @@ export const componentIs = (componentType) => {
 		}
 	};
 };
+
+
+export const properKeys = (obj) => {
+	return Object.keys(obj).map((akey) => {
+		var properKey = parseInt(akey);
+		if(properKey) {
+			return properKey;
+		}
+		else {
+			return akey;
+		}
+	});
+}

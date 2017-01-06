@@ -1,6 +1,3 @@
-import keys from "lodash/keys";
-import map from "lodash/map";
-
 module.exports = {
 	numberMap: {
     1: "one",
@@ -20,7 +17,7 @@ module.exports = {
     15: "fifteen",
     16: "sixteen"
 	},
-  columnsClassMap: {
+  columnsMap: {
     1: "one column",
     2: "two column",
     3: "three column",
@@ -38,8 +35,7 @@ module.exports = {
     15: "fifteen column",
     16: "sixteen column"
   },
-	// TODO: rename to colorMap
-  colorClassMap: {
+  colorMap: {
     "red": "red",
     "orange": "orange",
     "yellow": "yellow",
@@ -52,23 +48,23 @@ module.exports = {
     "pink": "pink",
     "brown": "brown"
   },
-  reverseClassMap: {
+  reverseMap: {
     mobile: "mobile reversed ",
     tablet: "tablet reversed",
     computer: "computer reversed"
   },
-  verticalAlignmentClassMap: {
+  verticalAlignmentMap: {
     middle: "middle aligned",
     top: "top aligned",
     bottom: "bottom aligned"
   },
-  textAlignmentClassMap: {
+  textAlignmentMap: {
     left: "left aligned",
     right: "right aligned",
     center: "center aligned",
     justified: "justified"
   },
-  widthClassMap: {
+  widthMap: {
     1: "one wide",
     2: "two wide",
     3: "three wide",
@@ -86,7 +82,7 @@ module.exports = {
     15: "fifteen wide",
     16: "sixteen wide"
   },
-  centeredClassMap: {
+  centeredMap: {
     true: "centered",
     false: ""
   },
@@ -115,17 +111,6 @@ module.exports = {
 		huge: "huge",
 		massive: "massive"
 	},
-  properKeys: function (obj) {
-    return map(keys(obj), function (akey) {
-      var properKey = parseInt(akey);
-      if(properKey) {
-        return properKey;
-      }
-      else {
-        return akey;
-      }
-    });
-  },
 	deviceMap: {
 		mobile: "mobile",
 		tablet: "tablet",

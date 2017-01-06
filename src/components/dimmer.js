@@ -10,12 +10,12 @@ export class Dimmer extends Base {
 		inverted: [required(false), within([true, false])]
 	}
 
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		return [
 			"ui",
 			attrs.page && "page",
 			attrs.state,
-			attrs.inverted && inverted,
+			attrs.inverted && "inverted",
 			"dimmer"
 		];
 	}

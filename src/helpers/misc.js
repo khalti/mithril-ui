@@ -1,7 +1,21 @@
-export const componentIs = (componentType) => {
+import {isArray} from "./type.js";
+
+export const is = (instance, base) => {
+	return instance instanceof base;
+};
+
+export const componentIs = (componentTypes) => {
 	return (component) => {
-		if (!component.is(componentType)) {
-			return "Expected a component of type '${componentType}'.";
+		let _componentIs = (componentType) => {
+			return component instanceof componentType;
+		}
+
+		if (!isArray(componentTypes)) {
+			componentTypes = [componentTypes];
+		}
+
+		if (!componentTypes.some(_componentIs)) {
+			return `Expected a component of type '${componentType}'.`;
 		}
 	};
 };

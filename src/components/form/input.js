@@ -3,44 +3,41 @@ import {Base} from "./../base.js";
 import omit from "lodash/omit";
 import omitBy from "lodash/omitBy";
 import {required} from "validatex";
+import {componentIs, is} from "./../../helpers/misc.js";
+import {Icon} from "./../icon/icon.js";
+import {Button} from "./../button/button.js";
+import {Label} from "./../label.js";
 
 
 let isEventHandler = (value, key) => {
 	return /^on.*$/.test(key);
 };
 
-let isComponent = (comp) => {
-	if (!comp.is) {
-		return "Please pass a 'mithril-componentx' component which has not been passed through m."
-	}
-}
-
 export class Input extends Base {
 	attrSchema = {
 		type: required(true),
-		prepend: [required(false), isComponent],
-		append: [required(false), isComponent]
+		prepend: [required(false), componentIs([Icon, Button, Label])],
+		append: [required(false), componentIs([Icon, Button, Label])]
 	}
 
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		let {prepend, append} = attrs;
 		return ["ui",
-			{"left icon": prepend && prepend.is("icon") && (!append || !append.is("icon"))},
-			{"right icon": (!prepend || !prepend.is("icon")) && append && append.is("icon")},
-			{"left right icon": prepend && prepend.is("icon") && append && append.is("icon")},
-			{"left labeled": prepend && prepend.is("label") && (!append || !append.is("label"))},
-			{"right labeled": (!prepend || !prepend.is("label")) && append && append.is("label")},
-			{"left right labeled": prepend && prepend.is("label") && append && append.is("label")},
-			{"left action": prepend && prepend.is("button") && (!append || !append.is("button"))},
-			{"right action": (!prepend || !prepend.is("button")) && append && append.is("button")},
-			{"left right action": prepend && prepend.is("button") && append && append.is("button")},
-			{disabled: attrs.disabled},
-			{fluid: attrs.fluid},
+			prepend && is(prepend, Icon) && (!append || !is(append, Icon)) && "left icon",
+			(!prepend || !is(prepend, Icon)) && append && is(append, Icon) && "right icon",
+			prepend && is(prepend, Icon) && append && is(append, Icon) && "left right icon",
+			prepend && is(prepend, Label) && (!append || !is(append, Label)) && "left labeled",
+			(!prepend || !is(prepend, Label)) && append && is(append, Label) && "right labeled",
+			prepend && is(prepend, Label) && append && is(append, Label) && "left right labeled",
+			prepend && is(prepend, Button) && (!append || !is(append, Button)) && "left action",
+			(!prepend || !is(prepend, Button)) && append && is(append, Button) && "right action",
+			prepend && is(prepend, Button) && append && is(append, Button) && "left right action",
+			attrs.disabled && "disabled",
+			attrs.fluid && "fluid",
 			"input"];
 	}
 
-  view (vnode) {
-		let attrs = vnode.attrs;
+  view ({attrs, children, state}) {
 		let inputAttrs = omit(attrs, ['prepend', 'append', 'rootAttrs']);
 		inputAttrs.className = attrs.type === "hidden"? "hidden": "";
 
@@ -54,10 +51,11 @@ export class Input extends Base {
 
 		delete inputAttrs.root;
 
+		console.log(attrs.prepend);
     return _('div', omitBy(attrs.rootAttrs, isEventHandler),
-						 attrs.prepend? m(attrs.prepend): undefined,
+						 attrs.prepend? _(attrs.prepend): undefined,
 						 _('input', inputAttrs),
-						 attrs.append? m(attrs.append): undefined);
+						 attrs.append? _(attrs.append): undefined);
   }
 }
 

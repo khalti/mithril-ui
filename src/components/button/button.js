@@ -59,4 +59,4 @@ export class Button extends Base {
 }
 
 
-extends const button = new Button();
+export const button = new Button();

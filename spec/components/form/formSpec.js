@@ -17,54 +17,54 @@ describe("form", () => {
 
 		it("includes 'ui'.", () => {
 			let classList = form.getClassList(vnode);
-			expect(classList.join(" ")).to.have.string("ui");
+			expect(classList).to.contain("ui");
 		});
 
 		it("includes 'form'.", () => {
 			let classList = form.getClassList(vnode);
-			expect(classList.join(" ")).to.have.string("form");
+			expect(classList).to.contain("form");
 		});
 
 		it("includes 'loading'.", () => {
 			vnode.attrs.loading = true;
 			let classList = form.getClassList(vnode);
-			expect(classList.join(" ")).to.have.string("loading");
+			expect(classList).to.contain("loading");
 		});
 
 		it("includes 'success'.", () => {
 			vnode.attrs.success = true;
 			let classList = form.getClassList(vnode);
-			expect(classList.join(" ")).to.have.string("success");
+			expect(classList).to.contain("success");
 		});
 
 		it("includes 'error'.", () => {
 			vnode.attrs.error = true;
 			let classList = form.getClassList(vnode);
-			expect(classList.join(" ")).to.have.string("error");
+			expect(classList).to.contain("error");
 		});
 
 		it("includes 'warning'.", () => {
 			vnode.attrs.warning = true;
 			let classList = form.getClassList(vnode);
-			expect(classList.join(" ")).to.have.string("warning");
+			expect(classList).to.contain("warning");
 		});
 
 		it("includes proper size.", () => {
 			vnode.attrs.size = "mini";
 			let classList = form.getClassList(vnode);
-			expect(classList.join(" ")).to.have.string("mini");
+			expect(classList).to.contain("mini");
 		});
 
 		it("includes 'inverted'.", () => {
 			vnode.attrs.inverted = true;
 			let classList = form.getClassList(vnode);
-			expect(classList.join(" ")).to.have.string("inverted");
+			expect(classList).to.contain("inverted");
 		});
 
 		it("includes 'equal width'.", () => {
 			vnode.attrs.equalWidth = true;
 			let classList = form.getClassList(vnode);
-			expect(classList.join(" ")).to.have.string("equal width");
+			expect(classList).to.contain("equal width");
 		});
 	});
 });

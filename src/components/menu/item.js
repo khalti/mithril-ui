@@ -28,12 +28,12 @@ export class MenuItem extends Base {
 
 	getClassList (attrs) {
 		return ["item",
-						enums.colorClassMap[attrs.color],
+						enums.colorMap[attrs.color],
 						fittedMap[attrs.fitted],
-						{header: attrs.header},
-						{borderless: attrs.borderless},
-						{active: attrs.active},
-						{disabled: attrs.disabled}
+						attrs.header && "header",
+						attrs.borderless && "borderless",
+						attrs.active && "active",
+						attrs.disabled && "disabled"
 		];
 	}
 }

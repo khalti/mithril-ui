@@ -6,13 +6,13 @@ export class SubMenu extends Base {
 		right: [required(false), within([true, false])]
 	}
 
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		return [
-			{right: attrs.right},
+			attrs.right && "right",
 			"menu"
 		];
 	}
 }
 
 
-export subMenu = new SubMenu();
+export const subMenu = new SubMenu();

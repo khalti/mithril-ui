@@ -1,154 +1,167 @@
+import {window, getVnode} from "./../../utils.js";
 import {menu} from "./../../../src/components/menu/menu.js";
 import {expect} from "chai";
-import classnames from "classnames";
-import m from "mithril";
+import _ from "mithril";
 
 
 describe("menu", () => {
 	it("complains if state is invalid.", () => {
-		let vdom = m(menu, {state: "invalid"});
-		expect(vdom.view.bind(vdom)).to.throw(Error);
+		let vnode = getVnode();
+		vnode.attrs = {state: "invalid"};
+		expect(menu.oninit.bind(menu, vnode)).to.throw(Error);
 	});
 
 	it("complains if position to fix is invalid.", () => {
-		let vdom = m(menu, {fixed: "somewhere"});
-		expect(vdom.view.bind(vdom)).to.throw(Error);
+		let vnode = getVnode();
+		vnode.attrs = {fixed: "somewhere"};
+		expect(menu.oninit.bind(menu, vnode)).to.throw(Error);
 	});
 
 	it("complains if color is invalid.", () => {
-		let vdom = m(menu, {color: "transparent"});
-		expect(vdom.view.bind(vdom)).to.throw(Error);
+		let vnode = getVnode();
+		vnode.attrs = {color: "transparent"};
+		expect(menu.oninit.bind(menu, vnode)).to.throw(Error);
 	});
 
 	it("complains if item count is invalid.", () => {
-		let vdom = m(menu, {itemCount: 17});
-		expect(vdom.view.bind(vdom)).to.throw(Error);
+		let vnode = getVnode();
+		vnode.attrs = {itemCount: 17};
+		expect(menu.oninit.bind(menu, vnode)).to.throw(Error);
 	});
 
 	it("complains if attachment is invalid.", () => {
-		let vdom = m(menu, {attach: "somewhere"});
-		expect(vdom.view.bind(vdom)).to.throw(Error);
+		let vnode = getVnode();
+		vnode.attrs = {attach: "somewhere"};
+		expect(menu.oninit.bind(menu, vnode)).to.throw(Error);
 	});
 
 	it("complains if size is invalid.", () => {
-		let vdom = m(menu, {size: "extra large"});
-		expect(vdom.view.bind(vdom)).to.throw(Error);
+		let vnode = getVnode();
+		vnode.attrs = {size: "extra large"};
+		expect(menu.oninit.bind(menu, vnode)).to.throw(Error);
 	});
 
 	it("complains if 'fitted' is invalid.", () => {
-		let vdom = m(menu, {fitted: "none"});
-		expect(vdom.view.bind(vdom)).to.throw(Error);
+		let vnode = getVnode();
+		vnode.attrs = {fitted: "none"};
+		expect(menu.oninit.bind(menu, vnode)).to.throw(Error);
 	});
 
 	describe("getClassList", () => {
+		let vnode;
+
+		beforeEach(() => {
+			vnode = getVnode();
+		});
+
 		it("includes 'ui'", () => {
-			let className = classnames(menu.getClassList({}));
-			expect(className).to.have.string("ui");
+			let classList = menu.getClassList(vnode);
+			expect(classList).to.contain("ui");
 		});
 
 		it("includes 'menu'", () => {
-			let className = classnames(menu.getClassList({}));
-			expect(className).to.have.string("menu");
+			let classList = menu.getClassList(vnode);
+			expect(classList).to.contain("menu");
 		});
 
 		it("includes 'secondary'", () => {
-			let className = classnames(menu.getClassList({secondary: true}));
-			expect(className).to.have.string("secondary");
+			vnode.attrs = {secondary: true};
+			expect(menu.getClassList(vnode)).to.contain("secondary");
 		});
 
 		it("includes 'pointing'", () => {
-			let className = classnames(menu.getClassList({pointing: true}));
-			expect(className).to.have.string("pointing");
+			vnode.attrs = {pointing: true};
+			expect(menu.getClassList(vnode)).to.contain("pointing");
 		});
 
 		it("includes 'tabular'", () => {
-			let className = classnames(menu.getClassList({tabular: true}));
-			expect(className).to.have.string("tabular");
+			vnode.attrs = {tabular: true};
+			expect(menu.getClassList(vnode)).to.contain("tabular");
 		});
 
 		it("includes 'text'", () => {
-			let className = classnames(menu.getClassList({text: true}));
-			expect(className).to.have.string("text");
+			vnode.attrs = {text: true};
+			expect(menu.getClassList(vnode)).to.contain("text");
 		});
 
 		it("includes 'vertical'", () => {
-			let className = classnames(menu.getClassList({vertical: true}));
-			expect(className).to.have.string("vertical");
+			vnode.attrs = {vertical: true};
+			expect(menu.getClassList(vnode)).to.contain("vertical");
 		});
 
 		it("includes 'pagination'", () => {
-			let className = classnames(menu.getClassList({pagination: true}));
-			expect(className).to.have.string("pagination");
+			vnode.attrs = {pagination: true};
+			expect(menu.getClassList(vnode)).to.contain("pagination");
 		});
 
 		it("includes proper state.", () => {
-			let className = classnames(menu.getClassList({state: "active"}));
-			expect(className).to.have.string("active");
+			vnode.attrs = {state: "active"};
+			expect(menu.getClassList(vnode)).to.contain("active");
 		});
 
 		it("includes proper 'fixed'.", () => {
-			let className = classnames(menu.getClassList({fixed: "top"}));
-			expect(className).to.have.string("top fixed");
+			vnode.attrs = {fixed: "top"};
+			expect(menu.getClassList(vnode)).to.contain("top fixed");
 		});
 
 		it("includes 'inverted'.", () => {
-			let className = classnames(menu.getClassList({inverted: true}));
-			expect(className).to.have.string("inverted");
+			vnode.attrs = {inverted: true};
+			expect(menu.getClassList(vnode)).to.contain("inverted");
 		});
 
 		it("includes proper color.", () => {
-			let className = classnames(menu.getClassList({color: "red"}));
-			expect(className).to.have.string("red");
+			vnode.attrs = {color: "red"};
+			expect(menu.getClassList(vnode)).to.contain("red");
 		});
 
 		it("includes 'fluid'.", () => {
-			let className = classnames(menu.getClassList({fluid: true}));
-			expect(className).to.have.string("fluid");
+			vnode.attrs = {fluid: true};
+			expect(menu.getClassList(vnode)).to.contain("fluid");
 		});
 
 		it("includes 'compact'.", () => {
-			let className = classnames(menu.getClassList({compact: true}));
-			expect(className).to.have.string("compact");
+			vnode.attrs = {compact: true};
+			expect(menu.getClassList(vnode)).to.contain("compact");
 		});
 
 		it("includes proper item count.", () => {
-			let className = classnames(menu.getClassList({itemCount: 2}));
-			expect(className).to.have.string("two");
+			vnode.attrs = {itemCount: 2};
+			expect(menu.getClassList(vnode)).to.contain("two item");
 		});
 
 		it("includes proper attachment.", () => {
-			let className = classnames(menu.getClassList({attach: "top"}));
-			expect(className).to.have.string("top attached");
+			vnode.attrs = {attach: "top"};
+			expect(menu.getClassList(vnode)).to.contain("top attached");
 		});
 
 		it("includes proper size.", () => {
-			let className = classnames(menu.getClassList({size: "mini"}));
-			expect(className).to.have.string("mini");
+			vnode.attrs = {size: "mini"};
+			expect(menu.getClassList(vnode)).to.contain("mini");
 		});
 
 		it("includes proper value for 'fitted'.", () => {
-			let className = classnames(menu.getClassList({fitted: "vertically"}));
-			expect(className).to.have.string("fitted vertically");
+			vnode.attrs = {fitted: "vertically"};
+			expect(menu.getClassList(vnode)).to.contain("fitted vertically");
 		});
 
 		it("includes 'borderless'.", () => {
-			let className = classnames(menu.getClassList({borderless: true}));
-			expect(className).to.have.string("borderless");
+			vnode.attrs = {borderless: true};
+			expect(menu.getClassList(vnode)).to.contain("borderless");
 		});
 
 		it("includes 'icon'.", () => {
-			let className = classnames(menu.getClassList({icon: true}));
-			expect(className).to.have.string("icon");
+			vnode.attrs = {icon: true};
+			expect(menu.getClassList(vnode)).to.contain("icon");
 		});
 
 		it("includes 'labeled icon'.", () => {
-			let className = classnames(menu.getClassList({labeledIcon: true}));
-			expect(className).to.have.string("labeled icon");
+			vnode.attrs = {labeledIcon: true};
+			expect(menu.getClassList(vnode)).to.contain("labeled icon");
 		});
 
 		it("includes proper float.", () => {
-			let className = classnames(menu.getClassList({float: "right"}));
-			expect(className).to.have.string("right floated");
+			vnode.attrs = {float: "right"};
+			expect(menu.getClassList(vnode)).to.contain("right floated");
 		});
 	});
 });

@@ -32,24 +32,29 @@ describe("input", () => {
 		});
 
 		it("'s root dom is a div", () => {
-			expect(vdom.tag).to.equal("div");
+			let rootDom = document.body.childNodes[0];
+			expect(rootDom.tagName).to.equal("DIV");
 		});
 
 		it("it appends", function () {
-			expect(vdom.children[2]).to.exist;
+			let prependDom = document.body.childNodes[0].childNodes[0];
+			expect(prependDom.tagName).to.equal("I");
 		});
 
 		it("it prepends", function () {
-			expect(vdom.children[0]).to.exist;
+			let appendDom = document.body.childNodes[0].childNodes[2];
+			expect(appendDom.tagName).to.equal("I");
 		});
 
 		it("'s root element has 'ui' and 'input' in its class", () => {
-			expect(vdom.attrs.class).to.have.string("ui");
-			expect(vdom.attrs.class).to.have.string("input");
+			let rootDom = document.body.childNodes[0];
+			expect(rootDom.className).to.have.string("ui");
+			expect(rootDom.className).to.have.string("input");
 		});
 
 		it("changes class of 'input' element to 'hidden' if 'attrs.type' is 'hidden'", () => {
-			expect(vdom.children[1]);
+			let inputDom = document.querySelector("input");
+			expect(inputDom.className).to.have.string("hidden");
 		});
 	});
 

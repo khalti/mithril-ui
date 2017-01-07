@@ -51,7 +51,6 @@ export class Input extends Base {
 
 		delete inputAttrs.root;
 
-		console.log(attrs.prepend);
     return _('div', omitBy(attrs.rootAttrs, isEventHandler),
 						 attrs.prepend? _(attrs.prepend): undefined,
 						 _('input', inputAttrs),

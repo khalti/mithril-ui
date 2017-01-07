@@ -1,11 +1,11 @@
 import {Base} from "./base.js";
 import _ from "mithril";
-import {properKeys,
-				attachmentMap,
+import {attachmentMap,
 				floatMap,
-				textAlignmentClassMap,
-				colorClassMap} from "./../helpers/enums.js";
+				textAlignmentMap,
+				colorMap} from "./../helpers/enums.js";
 import {required, within} from "validatex";
+import {properKeys} from "./../helpers/misc.js";
 
 
 let levelMap = {
@@ -26,24 +26,24 @@ export class Header extends Base {
 		return {};
 	}
 
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		return ["ui",
-						{icon: attrs.pyramid},
-						{disabled: attrs.disabled},
-						{dividing: attrs.dividing},
-						{block: attrs.block},
+						attrs.pyramid && "icon",
+						attrs.disabled && "disabled",
+						attrs.dividing && "dividing",
+						attrs.block && "block",
 						attachmentMap[attrs.attach],
 						floatMap[attrs.float],
-						textAlignmentClassMap[attrs.textAlignment],
-						colorClassMap[attrs.color],
-						{inverted: attrs.inverted},
+						textAlignmentMap[attrs.textAlignment],
+						colorMap[attrs.color],
+						attrs.inverted && "inverted",
 						"header"];
 	}
 
 	view (vnode) {
 		let attrs = vnode.attrs;
 
-		return m(levelMap[attrs.level] || "div", attrs.rootAttrs, vnode.children);
+		return _(levelMap[attrs.level] || "div", attrs.rootAttrs, vnode.children);
 	}
 }
 

@@ -20,3 +20,12 @@ export const trigger = (eventName, el, bubble = true, cancelable = true) => {
 	event.initEvent(eventName, bubble, cancelable);
 	el.dispatchEvent(event);
 };
+
+
+export const getVnode = () => {
+	return {
+		attrs: {},
+		children: [],
+		state: {}
+	};
+};

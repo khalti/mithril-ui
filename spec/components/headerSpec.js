@@ -1,93 +1,121 @@
+import {window, getVnode} from "./../utils.js";
 import {header} from "./../../src/components/header.js";
 import {expect} from "chai";
-import m from "mithril";
-import classnames from "classnames";
+import _ from "mithril";
 
 
 describe("header", () => {
 	it("complains if level is invalid.", () => {
-		let aHeader = m(header, {level: 7});
-		expect(aHeader.view.bind(aHeader)).to.throw(Error);
+		let vnode = {
+			attrs: {level: 7 }
+		};
+		expect(header.oninit.bind(header, vnode)).to.throw(Error);
 	});
 
 	describe("getClassList", () => {
 		it("includes 'ui'.", () => {
-			let className = classnames(header.getClassList({}));
-			expect(className).to.have.string("ui");
+			let vnode = getVnode();
+			let classList = header.getClassList(vnode);
+			expect(classList).to.contain("ui");
 		});
 
 		it("includes 'header'.", () => {
-			let className = classnames(header.getClassList({}));
-			expect(className).to.have.string("header");
+			let vnode = getVnode();
+			let classList = header.getClassList(vnode);
+			expect(classList).to.contain("header");
 		});
 
 		it("includes 'icon'.", () => {
-			let className = classnames(header.getClassList({pyramid: true}));
-			expect(className).to.have.string("icon");
+			let vnode = getVnode();
+			vnode.attrs.pyramid = true;
+			let classList = header.getClassList(vnode);
+			expect(classList).to.contain("icon");
 		});
 
 		it("includes 'disabled'.", () => {
-			let className = classnames(header.getClassList({disabled: true}));
-			expect(className).to.have.string("disabled");
+			let vnode = getVnode();
+			vnode.attrs.disabled = true;
+			let classList = header.getClassList(vnode);
+			expect(classList).to.contain("disabled");
 		});
 
 		it("includes 'dividing'.", () => {
-			let className = classnames(header.getClassList({dividing: true}));
-			expect(className).to.have.string("dividing");
+			let vnode = getVnode();
+			vnode.attrs.dividing = true;
+			let classList = header.getClassList(vnode);
+			expect(classList).to.contain("dividing");
 		});
 
 		it("includes 'block'.", () => {
-			let className = classnames(header.getClassList({block: true}));
-			expect(className).to.have.string("block");
+			let vnode = getVnode();
+			vnode.attrs.block = true;
+			let classList = header.getClassList(vnode);
+			expect(classList).to.contain("block");
 		});
 
 		it("includes proper attachment class.", () => {
-			var className = classnames(header.getClassList({attach: true}));
-			expect(className).to.have.string("attached");
+			let vnode = getVnode();
 
-			className = classnames(header.getClassList({attach: "top"}));
-			expect(className).to.have.string("top attached");
+			vnode.attrs.attach = true;
+			let classList = header.getClassList(vnode);
+			expect(classList).to.contain("attached");
+
+			vnode.attrs.attach = "top";
+			classList = header.getClassList(vnode);
+			expect(classList).to.contain("top attached");
 		});
 
 		it("includes proper float.", () => {
-			let className = classnames(header.getClassList({float: "left"}));
-			expect(className).to.have.string("left floated");
+			let vnode = getVnode();
+			vnode.attrs.float = "left";
+			let classList = header.getClassList(vnode);
+			expect(classList).to.contain("left floated");
 		});
 
 		it("includes proper text aligment.", () => {
-			let className = classnames(header.getClassList({textAlignment: "left"}));
-			expect(className).to.have.string("left aligned");
+			let vnode = getVnode();
+			vnode.attrs.textAlignment = "left";
+			let classList = header.getClassList(vnode);
+			expect(classList).to.contain("left aligned");
 		});
 
 		it("includes proper color.", () => {
-			let className = classnames(header.getClassList({color: "red"}));
-			expect(className).to.have.string("red");
+			let vnode = getVnode();
+			vnode.attrs.color = "red";
+			let classList = header.getClassList(vnode);
+			expect(classList).to.contain("red");
 		});
 
-		it("includes proper color.", () => {
-			let className = classnames(header.getClassList({inverted: true}));
-			expect(className).to.have.string("inverted");
+		it("includes 'inverted'", () => {
+			let vnode = getVnode();
+			vnode.attrs.inverted = true;
+			let classList = header.getClassList(vnode);
+			expect(classList).to.contain("inverted");
 		});
 	});
 
 	describe("view", () => {
 		it("sets 'div' as root element if no level is specified.", () => {
-			let aHeader = header.view(header.controller());
-			expect(aHeader.tag).to.equal('div');
+			let vnode = getVnode();
+			let vdom = header.view(vnode);
+			expect(vdom.tag).to.equal('div');
 		});
 
 		it("sets root element to appropriate level.", () => {
-			let attrs = {level: 6};
-			let dom = header.view(header.controller(attrs), attrs);
-			expect(dom.tag).to.equal("h6");
+			let vnode = getVnode();
+			vnode.attrs = {level: 6};
+			let vdom = header.view(vnode);
+			expect(vdom.tag).to.equal("h6");
 		});
 
 		it("renders children", () => {
-			let dom = header.view(header.controller(), 1, 2, 3);
+			let vnode = getVnode();
+			vnode.children = [1,2,3];
+			let vdom = header.view(vnode);
 
-			expect(dom.children[0]).to.equal(1);
-			expect(dom.children[1]).to.equal(2);
-			expect(dom.children[2]).to.equal(3);
+			expect(vdom.children[0].children).to.equal(1);
+			expect(vdom.children[1].children).to.equal(2);
+			expect(vdom.children[2].children).to.equal(3);
 		});
 	});
 

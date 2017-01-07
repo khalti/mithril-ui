@@ -26,11 +26,11 @@ export class ModalPool extends Base {
 	getClassList (attrs) {
 		return [
 			"ui",
-			{"inverted": attrs.inverted},
+			attrs.inverted && "inverted",
 			"page",
 			"modals",
 			"dimmer",
-			modalPool.modals.length === 0? undefined: "visible active"
+			modalPool.modals.length !== 0 && "visible active"
 		];
 	}
 

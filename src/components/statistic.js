@@ -1,14 +1,14 @@
 import {Base} from "./base.js";
-import {colorClassMap, numberMap, floatMap, sizeMap} from "./../helpers/enums.js";
+import {colorMap, numberMap, floatMap, sizeMap} from "./../helpers/enums.js";
 
 
 export class Statistic extends Base {
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		return [
 			"ui",
-			{horizontal: attrs.horizontal},
-			{inverted: attrs.inverted},
-			colorClassMap[attrs.color],
+			attrs.horizontal && "horizontal",
+			attrs.inverted && "inverted",
+			colorMap[attrs.color],
 			floatMap[attrs.float],
 			sizeMap[attrs.size],
 			"statistic"
@@ -19,12 +19,12 @@ export class Statistic extends Base {
 export const statistic = new Statistic();
 
 export class Statistics extends Base {
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		return [
 			"ui",
-			{horizontal: attrs.horizontal},
-			{inverted: attrs.inverted},
-			colorClassMap[attrs.color],
+			attrs.horizontal && "horizontal",
+			attrs.inverted && "inverted",
+			colorMap[attrs.color],
 			numberMap[attrs.statisticCount],
 			sizeMap[attrs.size],
 			floatMap[attrs.float],
@@ -36,8 +36,8 @@ export class Statistics extends Base {
 export const statistics = new Statistics();
 
 export class SubStatistic extends Statistic {
-	getClassList (attrs) {
-		let classes = this.base.getClassList(attrs);
+	getClassList (vnode) {
+		let classes = super.getClassList(vnode);
 		classes.shift();
 		return classes;
 	}
@@ -46,7 +46,7 @@ export class SubStatistic extends Statistic {
 export const subStatistics = new SubStatistic();
 
 export class StatisticValue extends Base {
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		return ["value"];
 	}
 }
@@ -54,7 +54,7 @@ export class StatisticValue extends Base {
 export const statisticValue = new StatisticValue();
 
 export class StatisticLabel extends Base {
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		return ["label"];
 	}
 }

@@ -2,8 +2,8 @@ import {
 	statistic,
 	statistics,
 	subStatistic,
-	value,
-	label
+	statisticValue,
+	statisticLabel
 } from "./../../src/components/statistic.js";
 import {expect} from "chai";
 import classnames from "classnames";
@@ -101,7 +101,7 @@ describe("subStatistic", () => {
 	});
 });
 
-describe("value", () => {
+describe("statisticValue", () => {
 	describe(".getClassList", () => {
 		it("does not include 'value'", () => {
 			let classes = value.getClassList({});
@@ -110,7 +110,7 @@ describe("value", () => {
 	});
 });
 
-describe("label", () => {
+describe("statisticLabel", () => {
 	describe(".getClassList", () => {
 		it("does not include 'value'", () => {
 			let classes = label.getClassList({});

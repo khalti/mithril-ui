@@ -11,13 +11,13 @@ export class Segments extends Base {
 		compact: [required(false), within(true, false)],
 	}
 
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		return ["ui",
-						{horizontal: attrs.horizontal},
-						{raised: attrs.raised},
-						{stacked: attrs.stacked},
-						{piled: attrs.piled},
-						{compact: attrs.compact},
+						attrs.horizontal && "horizontal",
+						attrs.raised && "raised",
+						attrs.stacked && "stacked",
+						attrs.piled && "piled",
+						attrs.compact && "compact",
 						"segments"];
 	}
 }

@@ -1,7 +1,7 @@
 import {Base} from "./base.js";
 import {required, isNumber, within} from "validatex";
 import _ from "mithril";
-import {attachmentMap, sizeMap, colorClassMap} from "./../helpers/enums.js";
+import {attachmentMap, sizeMap, colorMap} from "./../helpers/enums.js";
 
 
 const states = ["active", "success", "warning", "error", "disabled"];
@@ -30,12 +30,12 @@ export class Progress extends Base {
 	getClassList (attrs) {
 		return [
 			"ui",
-			{indicating: attrs.indicating},
-			{inverted: attrs.inverted},
+			attrs.indicating && "indicating",
+			attrs.inverted && "inverted",
 			attachmentMap[attrs.attach],
 			sizeMap[attrs.size],
 			attrs.state,
-			colorClassMap[attrs.color],
+			colorMap[attrs.color],
 			"progress"
 		];
 	}

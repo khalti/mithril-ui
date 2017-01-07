@@ -26,7 +26,7 @@ export class ModalContent extends Base {
 
 	getClassList (attrs) {
 		return [
-			{image: attrs.image},
+			attrs.image && "image",
 			"content"
 		];
 	}
@@ -72,9 +72,9 @@ export class Modal extends Base {
 	getClassList (attrs) {
 		return [
 			"ui",
-			{basic: attrs.basic},
+			attrs.basic && "basic",
 			attrs.size,
-			{scrolling: attrs.scrolling},
+			attrs.scrolling && "scrolling",
 			"modal visible active"
 		];
 	}

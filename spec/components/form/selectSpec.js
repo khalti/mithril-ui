@@ -1,10 +1,9 @@
+import {window, presence, trigger, FRAME_BUDGET} from "./../../utils.js";
 import {select} from "../../../src/components/form/select.js";
-import m from 'mithril';
+import _ from 'mithril';
 import powerform from "powerform";
-import {getVdom, presence} from "./../../utils.js";
-import chai from "chai";
+import {expect}  from "chai";
 
-let expect = chai.expect;
 
 describe("selection", () => {
   let attrs, vdom, model, superheroes;
@@ -21,34 +20,42 @@ describe("selection", () => {
       options: superheroes,
 			name: "superhero"
     };
-		vdom = getVdom(m(select, attrs));
+
+		_.mount(document.body, {
+			view () {
+				return _(select, attrs);
+			}
+		});
   });
 
   it("lists options", () => {
-    let item1 = vdom.children[1].children[0];
+		let firstOption = document.querySelector("option");
 
-    expect(item1.attrs.value).to.equal("");
-    expect(item1.children[0]).to.equal("Select superheroes");
+    expect(firstOption.textContent).to.equal("Select superheroes");
   });
 
   it("shows errors", () => {
     attrs.model.isValid();
-		let vdom = getVdom(m(select, attrs));
-    let error = vdom.children[2];
+		let selectDom = document.querySelector("select");
+		trigger("change", selectDom);
 
-    expect(error.children[0]).to.equal("This field is required.");
+		setTimeout(() => {
+			let errorDom = document.querySelectorAll(".error")[0];
+			expect(errorDom.textContent).to.equal("This field is required.");
+		}, FRAME_BUDGET);
   });
 
   it("gets red colored if error exists in its model", function () {
     attrs.model.isValid();
-		let vdom = getVdom(m(select, attrs));
 
-    expect(vdom.attrs.class).to.equal("field error");
+		setTimeout(() => {
+			let rootDom = document.querySelector(".field.error");
+			expect(rootDom).to.exist;
+		});
   });
 
 	it("adds name", () => {
-		let selectDom = vdom.children[1];
-		console.log(selectDom);
-		expect(selectDom.attrs.name).to.equal("superhero");
+		let selectDom = document.querySelector("select");
+		expect(selectDom.name).to.equal("superhero");
 	});
 });

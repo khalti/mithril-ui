@@ -1,6 +1,12 @@
 import {Base} from "./base.js";
 import {required, within} from "validatex";
+import {textAlignmentMap} from "./../helpers/enums.js";
 
+
+const typeClassMap = {
+	"text": "text",
+	"fluid": "fluid"
+}
 
 export class Container extends Base {
 	attrSchema = {
@@ -11,22 +17,10 @@ export class Container extends Base {
 												"Invalid value '{value}' for attribute 'alignment'.")]
 	}
 
-	typeClassMap: {
-		"text": "text",
-		"fluid": "fluid"
-	}
-
-	alignmentClassMap: {
-		"left": "",
-		"center": "center aligned",
-		"right": "right aligned",
-		"justified": "justified"
-	}
-
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		return ["ui",
-						this.typeClassMap[attrs.type],
-						this.alignmentClassMap[attrs.alignment],
+						typeClassMap[attrs.type],
+						textAlignmentMap[attrs.textAlignment],
 						"container"];
 	}
 }

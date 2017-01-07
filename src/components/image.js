@@ -1,7 +1,7 @@
 import {Base} from "./base.js";
 import _ from "mithril";
 import omit from "lodash/omit";
-import {verticalAlignmentClassMap, floatMap} from "./../helpers/enums.js";
+import {verticalAlignmentMap, floatMap} from "./../helpers/enums.js";
 import {required} from "validatex";
 
 
@@ -17,17 +17,17 @@ export class Image extends Base {
 		return {rootAttrs: {src: attrs.src}};
 	}
 	
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		return ["ui",
-						{hidden: attrs.hidden},
-						{disabled: attrs.disabled},
-						{bordered: attrs.bordered},
-						{fluid: attrs.fluid},
-						{rounded: attrs.rounded},
-						{circular: attrs.circular},
-						{centered: attrs.centered},
-						{spaced: attrs.spaced},
-						verticalAlignmentClassMap[attrs.verticalAlignment],
+						attrs.hidden && "hidden",
+						attrs.disabled && "disabled",
+						 attrs.bordered && "bordered",
+						attrs.fluid && "fluid",
+						attrs.rounded && "rounded",
+						attrs.circular && "circular",
+						attrs.centered && "centered",
+						attrs.spaced && "spaced",
+						verticalAlignmentMap[attrs.verticalAlignment],
 						floatMap[attrs.float],
 						attrs.size,
 						"image"];

@@ -1,9 +1,10 @@
 import {Base} from "./../components/base.js";
 import _ from "mithril";
-import {attachmentMap, colorClassMap, sizeMap} from "./../helpers/enums.js";
-import keys from "lodash/keys";
+import {attachmentMap, colorMap, sizeMap} from "./../helpers/enums.js";
 import {required, within, isFunction} from "validatex";
-import {componentIs} from "./../helpers/misc.js";
+import {is, componentIs} from "./../helpers/misc.js";
+import {icon, Icon} from "./icon/icon.js";
+import {isArray} from "./../helpers/type.js";
 
 
 let types = ["warning", "info", "positive", "success", "negative", "error"];
@@ -14,42 +15,57 @@ export class Message extends Base {
 	visible = false
 
 	attrSchema = {
-		attach: [required(false), within(keys(attachmentMap),
+		attach: [required(false), within(Object.keys(attachmentMap),
 																		"^Invalid attachment '{value}'.")],
 		type: [required(false), within(types, "Invalid type '{value}'.")],
-		color: [required(false), within(keys(colorClassMap), "Invalid color '{value}'.")],
-		size: [required(false), within(keys(sizeMap), "Invalid size '{value}'.")],
+		color: [required(false), within(Object.keys(colorMap), "Invalid color '{value}'.")],
+		size: [required(false), within(Object.keys(sizeMap), "Invalid size '{value}'.")],
 		state: [required(false), within(states, "Invalid state '{value}'.")],
-		icon: [required(false), componentIs("icon")],
-		content: [required(false)],
 		onDismiss: [required(false), isFunction(true)]
 	}
 
-	getClassList (attrs) {
-		let self = this;
+	getClassList ({attrs, children = []}) {
+		if (!isArray(children)) {
+			children = [children];
+		}
+
 		return ["ui",
-						{icon: attrs.icon},
+						children.some((child) => is(child.tag, Icon)) && "icon",
 						attrs.state,
-						{floating: attrs.floating},
-						{compact: attrs.compact},
-						{warning: attrs.warning},
+						attrs.floating && "floating",
+						attrs.compact && "compact",
+						attrs.warning && "warning",
 						attrs.type,
 						attachmentMap[attrs.attach],
-						colorClassMap[attrs.color],
+						colorMap[attrs.color],
 						sizeMap[attrs.size],
 						"message"];
 	}
 
-	view ({attrs, children, state}) {
-		let body = [attrs.icon, attrs.content];
-
+	view ({attrs, children = [], state}) {
 		if (attrs.onDismiss) {
-			body.unshift(_("i.close.icon", {onclick: attrs.onDismiss}));
+			children.unshift(_(icon, {name: "close", onclick: attrs.onDismiss}));
 		}
 
-		return _("div", attrs.rootAttrs, body);
+		return _("div", attrs.rootAttrs, children);
 	}
 }
 
-
 export const message = new Message();
+
+
+export class MessageHeader extends Base {
+	getClassList ({attrs}) {
+		return ["header"];
+	}
+}
+
+export const messageHeader = new MessageHeader();
+
+export class MessageContent extends Base {
+	getClassList ({attrs}) {
+		return ["content"];
+	}
+}
+
+export const messageContent = new MessageContent();

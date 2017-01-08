@@ -1,7 +1,7 @@
 import {Base} from "./base.js";
 
 export class Label extends Base {
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		return [
 			"ui",
 			"label"

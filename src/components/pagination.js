@@ -1,7 +1,8 @@
-import {Menu, menu, item} from "./menu";
+import {Menu, menu} from "./menu/menu.js";
+import {menuItem} from "./menu/item.js";
 import _ from "mithril";
 import {required, isNumber, isFunction} from "validatex";
-import {icon} from "./../index.js";
+import {icon} from "./../../src/components/icon/icon.js";
 import {properKeys} from "./../helpers/misc.js";
 
 
@@ -12,8 +13,8 @@ export class Pagination extends Menu {
 		onPageChange: [required(true), isFunction()]
 	}
 
-	getClassList(attrs) {
-		let classList = super.getClassList(attrs);
+	getClassList(vnode) {
+		let classList = super.getClassList(vnode);
 		classList.push("pagination");
 		return classList;
 	}
@@ -36,19 +37,19 @@ export class Pagination extends Menu {
 	getFirstPageBtn ({onPageChange, pageCount, currentPage}) {
 		let isCurrentPage = currentPage === 1;
 
-		return _(item, {disabled: isCurrentPage,
+		return _(menuItem, {disabled: isCurrentPage,
 										href: isCurrentPage? "" : "#",
 										onclick: this.getClickHandler(onPageChange, 1, currentPage) },
-							_(icon, {class: "angle double left icon"}));
+							_(icon, {name: "angle double left"}));
 	}
 
 	getLastPageBtn ({onPageChange, pageCount, currentPage}) {
 		let isCurrentPage = currentPage === pageCount;
 
-		return _(item, {href: isCurrentPage? "": "#",
+		return _(menuItem, {href: isCurrentPage? "": "#",
 										disabled: isCurrentPage,
 										onclick: this.getClickHandler(onPageChange, pageCount, currentPage) },
-							_(icon, {class: "angle double right icon"}));
+							_(icon, {name: "angle double right"}));
 	}
 
 	showLeft3dotsBtn(pageCount, currentPage) {
@@ -60,14 +61,14 @@ export class Pagination extends Menu {
 	}
 
 	get3dotsBtn () {
-		return _(item, {disabled: true},
+		return _(menuItem, {disabled: true},
 						_(icon, {class: "ellipsis horizontal icon"}));
 	}
 
 	getPageBtn (onPageChange, pageNumber, currentPage) {
 		let isCurrentPage = pageNumber === currentPage;
 
-		return _(item, {active: isCurrentPage,
+		return _(menuItem, {active: isCurrentPage,
 										href: isCurrentPage? "": "#",
 										onclick: this.getClickHandler(onPageChange, pageNumber, currentPage)},
 							pageNumber)
@@ -91,26 +92,26 @@ export class Pagination extends Menu {
 		let nextPage = currentPage + 1;
 		let disabled = currentPage === pageCount;
 
-		return _(item, {href: disabled? "": "#",
+		return _(menuItem, {href: disabled? "": "#",
 										disabled: disabled,
 										onclick: this.getClickHandler(
 												onPageChange,
 												nextPage <= pageCount ? nextPage: undefined,
 												currentPage)},
-						_(icon, {class: "angle right icon"}));
+						_(icon, {name: "angle right"}));
 	}
 
 	getPreviousPageBtn ({onPageChange, pageCount, currentPage}) {
 		let previousPage = currentPage - 1;
 		let disabled = currentPage === 1;
 
-		return _(item, {href: disabled? "": "#",
+		return _(menuItem, {href: disabled? "": "#",
 										disabled: disabled,
 										onclick: this.getClickHandler(
 												onPageChange,
 												previousPage > 0? previousPage: undefined,
 												currentPage)},
-						_(icon, {class: "angle left icon"}));
+						_(icon, {name: "angle left"}));
 	}
 
 	getItems (attrs) {

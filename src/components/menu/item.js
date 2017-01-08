@@ -26,7 +26,7 @@ export class MenuItem extends Base {
 		};
 	}
 
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		return ["item",
 						enums.colorMap[attrs.color],
 						fittedMap[attrs.fitted],

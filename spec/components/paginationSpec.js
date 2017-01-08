@@ -1,4 +1,4 @@
-import {window} from "./../utils.js";
+import {window, getVnode, trigger} from "./../utils.js";
 import {expect} from "chai";
 import _ from "mithril";
 import {pagination} from "./../../src/components/pagination.js";
@@ -10,37 +10,42 @@ let clickEvent = {
 };
 
 describe("pagination", () => {
+	let vnode;
+
+	beforeEach(() => {
+		vnode = getVnode();
+	});
+
 	it("complains if current page is absent.", () => {
-		let attrs = {
+		vnode.attrs = {
 			// currentPage: 2,
 			pageCount: 10,
 			onPageChange: () => {}
 		};
-		expect(pagination.view.bind(pagination, attrs)).to.throw(Error);
+		expect(pagination.oninit.bind(pagination, vnode)).to.throw(Error);
 	});
 
 	it("complains if page count is absent.", () => {
-		let attrs = {
+		vnode.attrs = {
 			currentPage: 2, 
 			// pageCount: 10,
 			onPageChange: () => {}
 		};
-		expect(pagination.view.bind(pagination, attrs)).to.throw(Error);
+		expect(pagination.oninit.bind(pagination, vnode)).to.throw(Error);
 	});
 
 	it("complainss if page change call back is absent.", () => {
-		let attrs = {
+		vnode.attrs = {
 			currentPage: 2, 
 			// pageCount: 10,
 			onPageChange: () => {}
 		};
-		expect(pagination.view.bind(pagination, attrs)).to.throw(Error);
+		expect(pagination.oninit.bind(pagination, vnode)).to.throw(Error);
 	});
 
 	describe(".getClassList", () => {
 		it("includes 'pagination'", () => {
-			let got = pagination.getClassList({});
-			expect(got.indexOf("pagination")).not.to.equal(-1);
+			expect(pagination.getClassList(vnode)).to.contain("pagination");
 		});
 	});
 
@@ -100,42 +105,40 @@ describe("pagination", () => {
 		});
 
 		it("sets icon to 'angle double left'", () => {
-			let vdom = getVdom(pagination.getFirstPageBtn({}));
+			_.render(document.body, pagination.getFirstPageBtn({}));
+			let iconDom = document.querySelector("i");
 
-			let got = vdom.children[0].attrs.class;
-			expect(got).to.contain("angle double left");
+			expect(iconDom.className).to.contain("angle double left");
 		});
 
 		it("disables the button", () => {
 			attrs.currentPage = 1;
-			let vdom = getVdom(pagination.getFirstPageBtn(attrs));
+			_.render(document.body, pagination.getFirstPageBtn(attrs));
 
-			let got = vdom.attrs.class;
-
-			expect(got).to.contain("disabled");
+			expect(document.body.childNodes[0].className).to.contain("disabled");
 		});
 
 		it("sets 'href' to '#'", () => {
 			attrs.currentPage = 2;
-			let vdom = getVdom(pagination.getFirstPageBtn(attrs));
+			_.render(document.body, pagination.getFirstPageBtn(attrs));
 
-			let got = vdom.attrs.href;
-
-			expect(got).to.equal("#");
+			let rootDom = document.body.childNodes[0];
+			expect(rootDom.getAttribute("href")).to.equal("#");
 		});
 
 		it("sets 'href' to ''", () => {
 			attrs.currentPage = 1;
-			let vdom = getVdom(pagination.getFirstPageBtn(attrs));
+			_.render(document.body, pagination.getFirstPageBtn(attrs));
 
-			let got = vdom.attrs.href;
-
-			expect(got).to.equal("");
+			let rootDom = document.body.childNodes[0];
+			expect(rootDom.getAttribute("href")).to.equal("");
 		});
 
 		it("sets current page to 1 on click.", () => {
-			let vdom = getVdom(pagination.getFirstPageBtn(attrs));
-			vdom.attrs.onclick(clickEvent);
+			_.render(document.body, pagination.getFirstPageBtn(attrs));
+
+			let rootDom = document.body.childNodes[0];
+			trigger("click", rootDom);
 
 			expect(clicked).to.equal(true);
 		});
@@ -161,42 +164,40 @@ describe("pagination", () => {
 		});
 
 		it("sets icon to 'angle double right'", () => {
-			let vdom = getVdom(pagination.getLastPageBtn({}));
+			_.render(document.body, pagination.getLastPageBtn({}));
+			let iconDom = document.querySelector("i");
 
-			let got = vdom.children[0].attrs.class;
-			expect(got).to.contain("angle double right");
+			expect(iconDom.className).to.contain("angle double right");
 		});
 
 		it("disables the button", () => {
 			attrs.currentPage = 10;
-			let vdom = getVdom(pagination.getLastPageBtn(attrs));
+			_.render(document.body, pagination.getLastPageBtn(attrs));
 
-			let got = vdom.attrs.class;
-
-			expect(got).to.contain("disabled");
+			expect(document.body.childNodes[0].className).to.contain("disabled");
 		});
 
 		it("sets 'href' to '#'", () => {
 			attrs.currentPage = 9;
-			let vdom = getVdom(pagination.getLastPageBtn(attrs));
+			_.render(document.body, pagination.getLastPageBtn(attrs));
 
-			let got = vdom.attrs.href;
-
-			expect(got).to.equal("#");
+			let rootDom = document.body.childNodes[0];
+			expect(rootDom.getAttribute("href")).to.equal("#");
 		});
 
 		it("sets 'href' to ''", () => {
 			attrs.currentPage = 10;
-			let vdom = getVdom(pagination.getLastPageBtn(attrs));
+			_.render(document.body, pagination.getLastPageBtn(attrs));
 
-			let got = vdom.attrs.href;
-
-			expect(got).to.equal("");
+			let rootDom = document.body.childNodes[0];
+			expect(rootDom.getAttribute("href")).to.equal("");
 		});
 
 		it("sets current page to last page on click.", () => {
-			let vdom = getVdom(pagination.getLastPageBtn(attrs));
-			vdom.attrs.onclick(clickEvent);
+			_.render(document.body, pagination.getLastPageBtn(attrs));
+
+			let rootDom = document.body.childNodes[0];
+			trigger("click", rootDom);
 
 			expect(clicked).to.equal(true);
 		});
@@ -235,34 +236,33 @@ describe("pagination", () => {
 
 		it("displays page number", () => {
 			let pageNumber = 10;
-			let pageBtn =  pagination.getPageBtn(onPageChange, pageNumber, 1);
-			let page = getVdom(pageBtn).children[0];
-			expect(page).to.equal(pageNumber);
+			_.render(document.body, pagination.getPageBtn(onPageChange, pageNumber, 1));
+			let rootDom = document.querySelector(".item");
+			expect(rootDom.textContent).to.equal("" + pageNumber);
 		});
 
 		it("sets button to be 'active' if current page and button page are same.", () => {
-			let pageBtn = pagination.getPageBtn(onPageChange, 1, 1);
-			let btnClass = getVdom(pageBtn).attrs.class;
-			expect(btnClass).to.contain("active");
+			_.render(document.body, pagination.getPageBtn(onPageChange, 1, 1));
+			let rootDom = document.querySelector(".item");
+			expect(rootDom.className).to.contain("active");
 		});
 
 		it("sets 'href' to '#'", () => {
-			let pageBtn = pagination.getPageBtn(onPageChange, 2, 1);
-			let href = getVdom(pageBtn).attrs.href;
-			expect(href).to.contain("#");
+			_.render(document.body, pagination.getPageBtn(onPageChange, 2, 1));
+			let rootDom = document.querySelector(".item");
+			expect(rootDom.getAttribute("href")).to.contain("#");
 		});
 
 		it("sets 'href' to ''", () => {
-			let pageBtn = pagination.getPageBtn(onPageChange, 1, 1);
-			let href = getVdom(pageBtn).attrs.href;
-			expect(href).to.contain("");
+			_.render(document.body, pagination.getPageBtn(onPageChange, 1, 1));
+			let rootDom = document.querySelector(".item");
+			expect(rootDom.getAttribute("href")).to.contain("");
 		});
 
 		it("calls 'onPageChange' on click.", () => {
-			let pageBtn = pagination.getPageBtn(onPageChange, 2, 1);
-			let vdom = getVdom(pageBtn);
-			vdom.attrs.onclick(clickEvent);
-
+			_.render(document.body, pagination.getPageBtn(onPageChange, 2, 1));
+			let rootDom = document.querySelector(".item");
+			trigger("click", rootDom);
 			expect(clicked).to.equal(true);
 		});
 	});
@@ -305,7 +305,6 @@ describe("pagination", () => {
 				currentPage: 5
 			};
 			let pages = pagination.getPagesBtns(attrs);
-			console.log(pages);
 			expect(pages.length).to.equal(5);
 		});	
 	});
@@ -328,38 +327,37 @@ describe("pagination", () => {
 
 		it("shows 'angle right' icon", () => {
 			attrs.currentPage = 9;
-			let nextBtn = pagination.getNextPageBtn(attrs);
-			let vdom = getVdom(nextBtn);
-			let icon = vdom.children[0];
-			expect(icon.attrs.class).to.contain("angle right");
+			_.render(document.body, pagination.getNextPageBtn(attrs));
+			let iconDom = document.querySelector("i");
+			expect(iconDom.className).to.contain("angle right");
 		});
 
 		it("disables if currentPage is pageCount", () => {
-			let nextBtn = pagination.getNextPageBtn(attrs);
-			let vdom = getVdom(nextBtn);
-			expect(vdom.attrs.class).to.contain("disabled");
+			_.render(document.body, pagination.getNextPageBtn(attrs));
+			let itemDom = document.querySelector(".item");
+			expect(itemDom.className).to.contain("disabled");
 		});
 
 		it("sets href to '' if currentPage is pageCount", () => {
-			let nextBtn = pagination.getNextPageBtn(attrs);
-			let vdom = getVdom(nextBtn);
-			expect(vdom.attrs.href).to.contain("");
+			_.render(document.body, pagination.getNextPageBtn(attrs));
+			let itemDom = document.querySelector(".item");
+			expect(itemDom.getAttribute("href")).to.contain("");
 		});
 
 		it("changes page to next page on clicked", () => {
 			attrs.currentPage = 8 
-			let nextBtn = pagination.getNextPageBtn(attrs);
-			let vdom = getVdom(nextBtn);
-			vdom.attrs.onclick(clickEvent);
+			_.render(document.body, pagination.getNextPageBtn(attrs));
+			let itemDom = document.querySelector(".item");
+			trigger("click", itemDom);
 
 			expect(clickedPage).to.equal(9);
 		});
 
 		it("won't change page if next page is greater than pageCount", () => {
 			attrs.currentPage = 10 
-			let nextBtn = pagination.getNextPageBtn(attrs);
-			let vdom = getVdom(nextBtn);
-			vdom.attrs.onclick(clickEvent);
+			_.render(document.body, pagination.getNextPageBtn(attrs));
+			let itemDom = document.querySelector(".item");
+			trigger("click", itemDom);
 
 			expect(clickedPage).to.equal(undefined);
 		});
@@ -383,38 +381,37 @@ describe("pagination", () => {
 
 		it("shows 'angle left' icon", () => {
 			attrs.currentPage = 9;
-			let nextBtn = pagination.getPreviousPageBtn(attrs);
-			let vdom = getVdom(nextBtn);
-			let icon = vdom.children[0];
-			expect(icon.attrs.class).to.contain("angle left");
+			_.render(document.body, pagination.getPreviousPageBtn(attrs));
+			let iconDom = document.querySelector("i");
+			expect(iconDom.className).to.contain("angle left");
 		});
 
 		it("disables if currentPage is 1", () => {
-			let nextBtn = pagination.getPreviousPageBtn(attrs);
-			let vdom = getVdom(nextBtn);
-			expect(vdom.attrs.class).to.contain("disabled");
+			_.render(document.body, pagination.getPreviousPageBtn(attrs));
+			let rootDom = document.querySelector(".item");
+			expect(rootDom.className).to.contain("disabled");
 		});
 
 		it("sets href to '' if currentPage is 1", () => {
-			let nextBtn = pagination.getPreviousPageBtn(attrs);
-			let vdom = getVdom(nextBtn);
-			expect(vdom.attrs.href).to.contain("");
+			_.render(document.body, pagination.getPreviousPageBtn(attrs));
+			let rootDom = document.querySelector(".item");
+			expect(rootDom.getAttribute("href")).to.contain("");
 		});
 
-		it("changes page to previous page on clicked", () => {
+		it("changes page to previous page on click", () => {
 			attrs.currentPage = 8;
-			let nextBtn = pagination.getPreviousPageBtn(attrs);
-			let vdom = getVdom(nextBtn);
-			vdom.attrs.onclick(clickEvent);
+			_.render(document.body, pagination.getPreviousPageBtn(attrs));
+			let rootDom = document.querySelector(".item");
+			trigger("click", rootDom);
 
 			expect(clickedPage).to.equal(7);
 		});
 
 		it("won't change page if next page is greater than pageCount", () => {
 			attrs.currentPage = 1 
-			let nextBtn = pagination.getPreviousPageBtn(attrs);
-			let vdom = getVdom(nextBtn);
-			vdom.attrs.onclick(clickEvent);
+			_.render(document.body, pagination.getPreviousPageBtn(attrs));
+			let rootDom = document.querySelector(".item");
+			trigger("click", rootDom);
 
 			expect(clickedPage).to.equal(undefined);
 		});

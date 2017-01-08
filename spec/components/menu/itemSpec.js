@@ -28,27 +28,33 @@ describe("item", () => {
 		});
 
 		it("includes 'header'", () => {
-			expect(menuItem.getClassList({header: true})).to.contain("header");
+			vnode.attrs = {header: true};
+			expect(menuItem.getClassList(vnode)).to.contain("header");
 		});
 
 		it("includes proper 'color'.", () => {
-			expect(menuItem.getClassList({color: "red"})).to.contain("red");
+			vnode.attrs = {color: "red"};
+			expect(menuItem.getClassList(vnode)).to.contain("red");
 		});
 
 		it("includes proper value for 'fitted'.", () => {
-			expect(menuItem.getClassList({fitted: "vertically"})).to.contain("fitted vertically");
+			vnode.attrs = {fitted: "vertically"};
+			expect(menuItem.getClassList(vnode)).to.contain("fitted vertically");
 		});
 
 		it("includes 'borderless'.", () => {
-			expect(menuItem.getClassList({borderless: true})).to.contain("borderless");
+			vnode.attrs = {borderless: true};
+			expect(menuItem.getClassList(vnode)).to.contain("borderless");
 		});
 
 		it("includes 'active'.", () => {
-			expect(menuItem.getClassList({active: true})).to.contain("active");
+			vnode.attrs = {active: true};
+			expect(menuItem.getClassList(vnode)).to.contain("active");
 		});
 
 		it("includes 'disabled'.", () => {
-			expect(menuItem.getClassList({disabled: true})).to.contain("disabled");
+			vnode.attrs = {disabled: true};
+			expect(menuItem.getClassList(vnode)).to.contain("disabled");
 		});
 	});
 

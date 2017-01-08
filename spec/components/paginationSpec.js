@@ -1,3 +1,4 @@
+import {window} from "./../utils.js";
 import {expect} from "chai";
 import _ from "mithril";
 import {pagination} from "./../../src/components/pagination.js";

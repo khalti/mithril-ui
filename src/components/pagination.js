@@ -2,6 +2,7 @@ import {Menu, menu, item} from "./menu";
 import _ from "mithril";
 import {required, isNumber, isFunction} from "validatex";
 import {icon} from "./../index.js";
+import {properKeys} from "./../helpers/misc.js";
 
 
 export class Pagination extends Menu {
@@ -12,7 +13,7 @@ export class Pagination extends Menu {
 	}
 
 	getClassList(attrs) {
-		let classList = this.base.getClassList(attrs);
+		let classList = super.getClassList(attrs);
 		classList.push("pagination");
 		return classList;
 	}

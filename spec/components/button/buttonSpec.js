@@ -1,127 +1,111 @@
+import {window, getVnode} from "./../../utils.js";
 import {button} from "./../../../src/components/button/button.js";
-import m from "mithril";
-import chai from "chai";
-import classnames from "classnames";
-
-let expect = chai.expect;
+import _ from "mithril";
+import {expect} from "chai";
+import {icon} from "./../../../src/components/icon/icon.js";
+import {label} from "./../../../src/components/label.js";
 
 
 describe("button", () => {
+	let vnode;
+
+	beforeEach(() => {
+		vnode = getVnode();
+	});
+
 	it("complains if size is invalid.", () => {
-		let aButton = m(button, {size: "extra-large"});
-		expect(aButton.view.bind(aButton)).to.throw(Error);
+		vnode.attrs = {size: "extra-large"};
+		expect(button.oninit.bind(button, vnode)).to.throw(Error);
 	});
 
 	describe("getDefaultAttrs", () => {
 		it("returns button as root.", () => {
-			let got = button.getDefaultAttrs({});
-			expect(got.root).to.equal("button");
+			expect(button.getDefaultAttrs(vnode).root).to.equal("button");
 		});
 
 		it("sets type of root to attrs.type", () => {
-			let got = button.getDefaultAttrs({type: "submit"});
-			expect(got.rootAttrs.type).to.equal("submit");
+			vnode.attrs = {type: "submit"};
+			expect(button.getDefaultAttrs(vnode).rootAttrs.type).to.equal("submit");
 		});
 	});
 
 	describe("getClassList", () => {
-		it("returns list with 'ii' and 'button'.", () => {
-			let got = button.getClassList({});
-			expect(got.indexOf('ui')).not.to.equal(-1);
-			expect(got.indexOf('button')).not.to.equal(-1);
+		it("returns list with 'ui' and 'button'.", () => {
+			expect(button.getClassList(vnode)).to.contain("ui");
+			expect(button.getClassList(vnode)).to.contain("button");
 		});
 
 		it("adds 'icon'.", () => {
-			let got = classnames(button.getClassList({icon: m("i")}));
-			expect(got).to.have.string("icon");
+			vnode.children = _(icon, {name: "caticon"});
+			expect(button.getClassList(vnode)).to.contain("icon");
 		});
 
 		it("adds labeled.", () => {
-			let got = classnames(button.getClassList({icon: m("i"), label: "A label"}));
-			expect(got).to.have.string("labeled icon");
+			vnode.children = _(label, "a label");
+			expect(button.getClassList(vnode)).to.contain("label");
 		});
 
 		it("adds basic.", () => {
-			let got = classnames(button.getClassList({basic: true}));
-			expect(got).to.have.string("basic");
+			vnode.attrs = {basic: true};
+			expect(button.getClassList(vnode)).to.contain("basic");
 		});
 
 		it("adds inverted.", () => {
-			let got = classnames(button.getClassList({inverted: true}));
-			expect(got).to.have.string("inverted");
+			vnode.attrs = {inverted: true};
+			expect(button.getClassList(vnode)).to.contain("inverted");
 		});
 
 		it("adds active.", () => {
-			let got = classnames(button.getClassList({active: true}));
-			expect(got).to.have.string("active");
+			vnode.attrs = {active: true};
+			expect(button.getClassList(vnode)).to.contain("active");
 		});
 
 		it("adds disabled.", () => {
-			let got = classnames(button.getClassList({disabled: true}));
-			expect(got).to.have.string("disabled");
+			vnode.attrs = {disabled: true};
+			expect(button.getClassList(vnode)).to.contain("disabled");
 		});
 
 		it("adds loading.", () => {
-			let got = classnames(button.getClassList({loading: true}));
-			expect(got).to.have.string("loading");
+			vnode.attrs = {loading: true};
+			expect(button.getClassList(vnode)).to.contain("loading");
 		});
 
 		it("adds size", () => {
-			let got = classnames(button.getClassList({size: "mini"}));
-			expect(got).to.have.string("mini");
+			vnode.attrs = {size: "mini"};
+			expect(button.getClassList(vnode)).to.contain("mini");
 		});
 
 		it("adds floats", () => {
-			var got = classnames(button.getClassList({float: "right"}));
-			expect(got).to.have.string("right floated");
+			vnode.attrs = {float: "right"};
+			expect(button.getClassList(vnode)).to.contain("right floated");
 
-			got = classnames(button.getClassList({float: "left"}));
-			expect(got).to.have.string("left floated");
+			vnode.attrs = {float: "left"};
+			expect(button.getClassList(vnode)).to.contain("left floated");
 		});
 
 		it("adds color.", () => {
-			let got = classnames(button.getClassList({color: "red"}));
-			expect(got).to.have.string("red");
+			vnode.attrs = {color: "red"};
+			expect(button.getClassList(vnode)).to.contain("red");
 		});
 
 		it("adds compact.", () => {
-			let got = classnames(button.getClassList({compact: true}));
-			expect(got).to.have.string("compact");
+			vnode.attrs = {compact: true};
+			expect(button.getClassList(vnode)).to.contain("compact");
 		});
 
 		it("adds fluid.", () => {
-			let got = classnames(button.getClassList({fluid: true}));
-			expect(got).to.have.string("fluid");
+			vnode.attrs = {fluid: true};
+			expect(button.getClassList(vnode)).to.contain("fluid");
 		});
 
 		it("adds circular.", () => {
-			let got = classnames(button.getClassList({circular: true}));
-			expect(got).to.have.string("circular");
+			vnode.attrs = {circular: true};
+			expect(button.getClassList(vnode)).to.contain("circular");
 		});
 
 		it("adds emphasis.", () => {
-			let got = classnames(button.getClassList({emphasis: "primary"}));
-			expect(got).to.have.string("primary");
-		});
-	});
-
-	describe("view", () => {
-		it("renders passed children.", () => {
-			let dom = button.view(button.controller({}), 1, 2);
-			expect(dom.children[0]).to.equal(1);
-			expect(dom.children[1]).to.equal(2);
-		});
-
-		it("renders icon.", () => {
-			let attrs = {icon: "icon"};
-			let dom = button.view(button.controller(attrs), attrs);
-			expect(dom.children[0]).to.equal("icon");
-		});
-
-		it("renders label.", () => {
-			let attrs = {label: "label"};
-			let dom = button.view(button.controller(attrs), attrs);
-			expect(dom.children[1]).to.equal("label");
+			vnode.attrs = {emphasis: "primary"};
+			expect(button.getClassList(vnode)).to.contain("primary");
 		});
 	});
 });

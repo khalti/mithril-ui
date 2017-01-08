@@ -15,21 +15,21 @@ export class Sidebar extends Base {
 		visible: [required(false), within([true, false])]
 	}
 
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		return [
 			"ui",
-			{inverted: attrs.inverted},
-			{vertical: attrs.vertical},
-			{menu: attrs.menu},
-			{icon: attrs.menu},
-			{labeled: attrs.labeled},
+			attrs.inverted && "inverted",
+			attrs.vertical && "vertical",
+			attrs.menu && "menu",
+			attrs.icon && "icon",
+			attrs.labeled && "labeled",
 			attrs.direction,
 			attrs.width,
-			{"uncover": attrs.visible && attrs.direction === "left"},
-			{"uncover": attrs.visible && attrs.direction === "right"},
-			{"overlay": attrs.visible && attrs.direction === "top"},
-			{"overlay": attrs.visible && attrs.direction === "bottom"},
-			{"visible": attrs.visible},
+			attrs.visible && attrs.direction === "left" && "uncover",
+			attrs.visible && attrs.direction === "right" && "uncover",
+			attrs.visible && attrs.direction === "top" && "overlay",
+			attrs.visible && attrs.direction === "bottom" && "overlay",
+			attrs.visible && "visible",
 			"sidebar"
 		];
 	}

@@ -1,14 +1,37 @@
 import {Base} from "./../base.js";
-import {content} from "./../content.js";
-import {title} from "./../title.js";
-import {description} from "./../description.js";
 import _ from "mithril";
 import {required} from "validatex";
 
 
+export class StepTitle extends Base {
+	getClassList ({attrs}) {
+		return ["title"];
+	}
+}
+
+export const stepTitle = new StepTitle();
+
+
+export class StepContent extends Base {
+	getClassList ({attrs}) {
+		return ["content"];
+	}
+}
+
+export const stepContent = new StepContent();
+
+
+export class StepDescription extends Base {
+	getClassList ({attrs}) {
+		return ["description"];
+	}
+}
+
+export const stepDescription = new StepDescription();
+
+
 export class Step extends Base {
 	attrSchema = {
-		title: required(true),
 		state: required(true),
 		index: required(true)
 	}
@@ -19,7 +42,7 @@ export class Step extends Base {
 		if (index > state) return "disabled";
 	}
 
-	getClassList(attrs) {
+	getClassList({attrs}) {
 		return [
 			this.getState(attrs.state, attrs.index),
 			"step"
@@ -30,22 +53,6 @@ export class Step extends Base {
 		return {
 			root: attrs.link? "a": "div"
 		};
-	}
-
-	view (vnode) {
-		let attrs = vnode.attrs;
-
-		if (attrs.icon) {
-			return _(attrs.root, attrs.rootAttrs,
-					_(attrs.icon),
-					_(content,
-						_(title, attrs.title),
-						_(description, attrs.description)));
-		}
-
-		return _(attrs.root, attrs.rootAttrs,
-			_(title, attrs.title),
-			_(description, attrs.description));
 	}
 }
 

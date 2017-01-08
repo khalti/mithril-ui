@@ -8,9 +8,9 @@ export class Pusher extends Base {
 		dimmed: [required(false), within([true, false])]
 	}
 
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		return [
-			{dimmed: attrs.dimmed},
+			attrs.dimmed && "dimmed",
 			"pusher"
 		];
 	}

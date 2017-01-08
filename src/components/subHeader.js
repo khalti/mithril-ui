@@ -1,7 +1,7 @@
 import {Base} from "./base.js";
 
 export class SubHeader extends Base {
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 			return ["sub header"];
 		}
 }

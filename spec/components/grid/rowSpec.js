@@ -1,58 +1,61 @@
+import {window, getVnode} from "./../../utils.js";
 import {row} from "./../../../src/components/grid/row.js";
-import chai from "chai";
-import classnames from "classnames";
+import {expect} from "chai";
 
-
-let expect = chai.expect;
 
 describe("row", () => {
+	let vnode;
+
+	beforeEach(() => {
+		vnode = getVnode();
+	});
+
 	describe(".getClassList", () => {
 		it("should include 'container'.", () => {
-			let className = classnames(row.getClassList({}));
-			expect(className).to.have.string("row");
+			expect(row.getClassList(vnode)).to.contain("row");
 		});
 
 		it("should include proper 'columns' class", () => {
-			let className = classnames(row.getClassList({columns: 1}));
-			expect(className).to.have.string("one column");
+			vnode.attrs = {columns: 1};
+			expect(row.getClassList(vnode)).to.contain("one column");
 		});
 
 		it("should include proper 'stretched' class", () => {
-			let className = classnames(row.getClassList({stretched: true}));
-			expect(className).to.have.string("stretched");
+			vnode.attrs = {stretched: true};
+			expect(row.getClassList(vnode)).to.contain("stretched");
 		});
 
 		it("should include proper 'color' class", () => {
-			let className = classnames(row.getClassList({color: "blue"}));
-			expect(className).to.have.string("blue");
+			vnode.attrs = {color: "blue"};
+			expect(row.getClassList(vnode)).to.contain("blue");
 		});
 
 		it("should include proper 'centered' class", () => {
-			let className = classnames(row.getClassList({centered: true}));
-			expect(className).to.have.string("centered");
+			vnode.attrs = {centered: true};
+			expect(row.getClassList(vnode)).to.contain("centered");
 		});
 
 		it("should include proper 'textAlignment' class", () => {
-			let className = classnames(row.getClassList({textAlignment: "center"}));
-			expect(className).to.have.string("center aligned");
+			vnode.attrs = {textAlignment: "center"};
+			expect(row.getClassList(vnode)).to.contain("center aligned");
 		});
 
 		it("should include proper 'verticalAlignment' class", () => {
-			let className = classnames(row.getClassList({verticalAlignment: "bottom"}));
-			expect(className).to.have.string("bottom aligned");
+			vnode.attrs = {verticalAlignment: "bottom"};
+			expect(row.getClassList(vnode)).to.contain("bottom aligned");
 		});
 
 		it("should include proper 'visible' class", () => {
-			let className = classnames(row.getClassList({visible: ["mobile"]}));
-			expect(className).to.have.string("mobile only");
+			vnode.attrs = {visible: ["mobile"]};
+			expect(row.getClassList(vnode)).to.contain(" mobile only");
 
-			className = classnames(row.getClassList({visible: ["mobile", "computer"]}));
-			expect(className).to.have.string("mobile computer only");
+			vnode.attrs = {visible: ["mobile", "computer"]};
+			expect(row.getClassList(vnode)).to.contain(" mobile computer only");
 		});
 
 		it("should include proper 'reverse' class", () => {
-			let className = classnames(row.getClassList({reverse: "mobile"}));
-			expect(className).to.have.string("mobile reversed");
+			vnode.attrs = {reverse: "mobile"};
+			expect(row.getClassList(vnode)).to.contain("mobile reversed");
 		});
 	});
 });

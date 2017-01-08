@@ -9,14 +9,14 @@ export class Divider extends Base {
 					within(["vertical", "horizontal"], "Invalid type '{value}'.")],
 	}
 
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		return ["ui",
 						attrs.type,
-						{inverted: attrs.inverted},
-						{fitted: attrs.fitted},
-						{hidden: attrs.hidden},
-						{section: attrs.section},
-						{clearing: attrs.clearing},
+						attrs.inverted && "inverted",
+						attrs.fitted && "fitted",
+						attrs.hidden && "hidden",
+						attrs.section && "section",
+						attrs.clearing && "clearing",
 						"divider"];
 	}
 }

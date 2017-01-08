@@ -1,8 +1,6 @@
 import {Base} from "./../base.js";
-import keys from "lodash/keys";
-import reduce from "lodash/reduce";
+import {properKeys} from "./../../helpers/misc.js";
 import enums from "./../../helpers/enums.js";
-import component from "mithril-componentx";
 import clone from "lodash/clone";
 import {required, within} from "validatex";
 
@@ -10,46 +8,46 @@ import {required, within} from "validatex";
 export class Column extends Base {
 	attrSchema = {
 		float: [required(false),
-						within(keys(enums.floatMap), "Invalid value '{value}'.")],
+						within(Object.keys(enums.floatMap), "Invalid value '{value}'.")],
 		width: [required(false),
-						within(enums.properKeys(enums.widthClassMap), "Invalid value '{value}'")],
+						within(properKeys(enums.widthMap), "Invalid value '{value}'")],
 		color: [required(false),
-						within(keys(enums.colorClassMap), "Invalid value '{value}'.")],
+						within(Object.keys(enums.colorMap), "Invalid value '{value}'.")],
 		textAlignment: [required(false),
-										within(keys(enums.textAlignmentClassMap), "Invalid value '{value}'.")],
+										within(Object.keys(enums.textAlignmentMap), "Invalid value '{value}'.")],
 		// visible: {inclusion: {within: enums.devices,
 		// 											message: "^Invalid value '%{value}'."}},
 		mobile: [required(false),
-						within(enums.properKeys(enums.widthClassMap), "Invalid value '{value}'.")],
+						within(properKeys(enums.widthMap), "Invalid value '{value}'.")],
 		tablet: [required(false),
-						within(enums.properKeys(enums.widthClassMap), "Invalid value '{value}'.")],
+						within(properKeys(enums.widthMap), "Invalid value '{value}'.")],
 		computer: [required(false),
-							within(enums.properKeys(enums.widthClassMap), "Invalid value '{value}'.")],
+							within(properKeys(enums.widthMap), "Invalid value '{value}'.")],
 		largeScreen: [required(false),
-									within(enums.properKeys(enums.widthClassMap), "Invalid value '{value}'.")],
+									within(properKeys(enums.widthMap), "Invalid value '{value}'.")],
 		widescreen: [required(false),
-								within(enums.properKeys(enums.widthClassMap), "Invalid value '{value}'.")]
+								within(properKeys(enums.widthMap), "Invalid value '{value}'.")]
 	}
 
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		let visibleClass;
 		let visibility = clone(attrs.visible || []);
 		if (visibility.length > 0) {
-			visibleClass = reduce(visibility, (className, device) => {
+			visibleClass = visibility.reduce((className, device) => {
 				return `${className} ${enums.deviceMap[device]}`;
 			})
 		}
 
 		return [enums.floatMap[attrs.float],
-						enums.widthClassMap[attrs.width],
-						enums.colorClassMap[attrs.color],
-						enums.textAlignmentClassMap[attrs.textAlignment],
+						enums.widthMap[attrs.width],
+						enums.colorMap[attrs.color],
+						enums.textAlignmentMap[attrs.textAlignment],
 						visibleClass? visibleClass + " only": "",
-						attrs.mobile? enums.widthClassMap[attrs.mobile] + " mobile": "",
-						attrs.tablet? enums.widthClassMap[attrs.tablet] + " tablet": "",
-						attrs.computer? enums.widthClassMap[attrs.computer] + " computer": "",
-						attrs.largeScreen? enums.widthClassMap[attrs.largeScreen] + " large screen": "",
-						attrs.widescreen? enums.widthClassMap[attrs.widescreen] + " widescreen": "",
+						attrs.mobile? enums.widthMap[attrs.mobile] + " mobile": "",
+						attrs.tablet? enums.widthMap[attrs.tablet] + " tablet": "",
+						attrs.computer? enums.widthMap[attrs.computer] + " computer": "",
+						attrs.largeScreen? enums.widthMap[attrs.largeScreen] + " large screen": "",
+						attrs.widescreen? enums.widthMap[attrs.widescreen] + " widescreen": "",
 						"column"];
 	}
 }

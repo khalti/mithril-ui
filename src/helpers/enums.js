@@ -49,7 +49,7 @@ module.exports = {
     "brown": "brown"
   },
   reverseMap: {
-    mobile: "mobile reversed ",
+    mobile: "mobile reversed",
     tablet: "tablet reversed",
     computer: "computer reversed"
   },

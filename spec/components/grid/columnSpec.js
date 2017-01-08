@@ -1,68 +1,72 @@
+import {window, getVnode} from "./../../utils.js";
 import {column} from "./../../../src/components/grid/column.js";
-import m from "mithril";
-import chai from "chai";
-import classnames from "classnames";
+import _ from "mithril";
+import {expect} from "chai";
 
-let expect = chai.expect;
 
 describe("column", () => {
+	let vnode;
+
+	beforeEach(() => {
+		vnode = getVnode();
+	});
+
 	describe(".getClassList", () => {
 		it("should include 'column'", () => {
-			let className = classnames(column.getClassList({}));
-			expect(className).to.have.string("column");
+			expect(column.getClassList(vnode)).to.contain("column");
 		});
 
 		it("should include proper 'float' class", () => {
-			let className = classnames(column.getClassList({float: "left"}));
-			expect(className).to.have.string("left floated");
+			vnode.attrs = {float: "left"};
+			expect(column.getClassList(vnode)).to.contain("left floated");
 		});
 
 		it("should include proper 'width' class", () => {
-			let className = classnames(column.getClassList({width: 8}));
-			expect(className).to.have.string("eight wide");
+			vnode.attrs = {width: 8};
+			expect(column.getClassList(vnode)).to.contain("eight wide");
 		});
 
 		it("should include proper 'color' class", () => {
-			let className = classnames(column.getClassList({color: "blue"}));
-			expect(className).to.have.string("blue");
+			vnode.attrs = {color: "blue"};
+			expect(column.getClassList(vnode)).to.contain("blue");
 		});
 
 		it("should include proper 'textAlignment' class", () => {
-			let className = classnames(column.getClassList({textAlignment: "center"}));
-			expect(className).to.have.string("center aligned");
+			vnode.attrs = {textAlignment: "center"};
+			expect(column.getClassList(vnode)).to.contain("center aligned");
 		});
 
 		it("should include proper 'visible' class", () => {
-			let className = classnames(column.getClassList({visible: ["mobile"]}));
-			expect(className).to.have.string("mobile only");
+			vnode.attrs = {visible: ["mobile"]};
+			expect(column.getClassList(vnode)).to.contain("mobile only");
 
-			className = classnames(column.getClassList({visible: ["mobile", "computer", "largeScreen", "widescreen"]}));
-			expect(className).to.have.string("mobile computer large screen widescreen only");
+			vnode.attrs = {visible: ["mobile", "computer", "largeScreen", "widescreen"]};
+			expect(column.getClassList(vnode)).to.contain("mobile computer large screen widescreen only");
 		});
 
 		it("should include proper 'mobile' class", () => {
-			let className = classnames(column.getClassList({mobile: 8}));
-			expect(className).to.have.string("eight wide mobile");
+			vnode.attrs = {mobile: 8};
+			expect(column.getClassList(vnode)).to.contain("eight wide mobile");
 		});
 
 		it("should include proper 'tablet' class", () => {
-			let className = classnames(column.getClassList({tablet: 8}));
-			expect(className).to.have.string("eight wide tablet");
+			vnode.attrs = {tablet: 8};
+			expect(column.getClassList(vnode)).to.contain("eight wide tablet");
 		});
 
 		it("should include proper 'computer' class", () => {
-			let className = classnames(column.getClassList({computer: 8}));
-			expect(className).to.have.string("eight wide computer");
+			vnode.attrs = {computer: 8};
+			expect(column.getClassList(vnode)).to.contain("eight wide computer");
 		});
 
 		it("should include proper 'largeScreen' class", () => {
-			let className = classnames(column.getClassList({largeScreen: 8}));
-			expect(className).to.have.string("eight wide large screen");
+			vnode.attrs = {largeScreen: 8};
+			expect(column.getClassList(vnode)).to.contain("eight wide large screen");
 		});
 
 		it("should include proper 'widescreen' class", () => {
-			let className = classnames(column.getClassList({widescreen: 8}));
-			expect(className).to.have.string("eight wide widescreen");
+			vnode.attrs = {widescreen: 8};
+			expect(column.getClassList(vnode)).to.contain("eight wide widescreen");
 		});
 	});
 });

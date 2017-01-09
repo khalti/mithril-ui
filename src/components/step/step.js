@@ -1,6 +1,6 @@
 import {Base} from "./../base.js";
 import _ from "mithril";
-import {required} from "validatex";
+import {required, within} from "validatex";
 
 
 export class StepTitle extends Base {
@@ -30,21 +30,16 @@ export class StepDescription extends Base {
 export const stepDescription = new StepDescription();
 
 
+const STEP_STATES = ["completed", "active", "disabled"];
+
 export class Step extends Base {
 	attrSchema = {
-		state: required(true),
-		index: required(true)
-	}
-
-	getState (state, index) {
-		if (index < state) return "completed";
-		if (index === state) return "active";
-		if (index > state) return "disabled";
+		state: [required(true), within(STEP_STATES)]
 	}
 
 	getClassList({attrs}) {
 		return [
-			this.getState(attrs.state, attrs.index),
+			attrs.state,
 			"step"
 		];
 	}

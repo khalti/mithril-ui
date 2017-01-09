@@ -1,90 +1,102 @@
+import {window, getVnode} from "./../../utils.js";
 import {steps} from "./../../../src/components/step/steps.js";
+import {step, stepTitle} from "./../../../src/components/step/step.js";
 import {expect} from "chai";
-import m from "mithril";
-import classnames from "classnames";
+import _ from "mithril";
 
 
 describe("steps", () => {
+	let vnode;
+
+	beforeEach(() => {
+		vnode = getVnode();
+	});
+
 	it("complains if ''attachment is invalid.", () => {
-		let step = m(steps, {attach: "somewhere", steps: [], progress: 1});
-		expect(step.view.bind(step, {})).to.throw(Error);
+		vnode.attrs = {attach: "somewhere", steps: [], progress: 1};
+		expect(steps.oninit.bind(steps, vnode)).to.throw(Error);
 	});
 
 	it("complains if 'size' is invalid.", () => {
-		let step = m(steps, {size: "extra large", steps: [], progress: 1});
-		expect(step.view.bind(step, {})).to.throw(Error);
-	});
-
-	it("complains if 'steps' is absent.", () => {
-		let step = m(steps, {progress: 1});
-		expect(step.view.bind(step, {})).to.throw(Error);
+		vnode.attrs = {size: "extra large", steps: [], progress: 1};
+		expect(steps.oninit.bind(steps, vnode)).to.throw(Error);
 	});
 
 	describe("getClassList", () => {
 		it("includes 'ui'.", () => {
-			let className = classnames(steps.getClassList({steps: {}}));
-			expect(className).to.have.string("ui");
+			expect(steps.getClassList(vnode)).to.contain("ui");
 		});
 		
 		it("includes 'steps'.", () => {
-			let className = classnames(steps.getClassList({steps: {}}));
-			expect(className).to.have.string("steps");
+			expect(steps.getClassList(vnode)).to.contain("steps");
 		});
 
 		it("includes 'ordered'.", () => {
-			let className = classnames(steps.getClassList({ordered: true, steps: []}));
-			expect(className).to.have.string("ordered");
+			vnode.attrs = {ordered: true};
+			expect(steps.getClassList(vnode)).to.contain("ordered");
 		});
 
 		it("includes 'vertical'.", () => {
-			let className = classnames(steps.getClassList({vertical: true, steps: []}));
-			expect(className).to.have.string("vertical");
+			vnode.attrs = {vertical: true};
+			expect(steps.getClassList(vnode)).to.contain("vertical");
 		});
 
 		it("includes 'fluid'.", () => {
-			let className = classnames(steps.getClassList({fluid: true, steps: []}));
-			expect(className).to.have.string("fluid");
+			vnode.attrs = {fluid: true};
+			expect(steps.getClassList(vnode)).to.contain("fluid");
 		});
 
 		it("includes proper attachment.", () => {
-			let className = classnames(steps.getClassList({attach: true, steps: []}));
-			expect(className).to.have.string("attached");
+			vnode.attrs = {attach: true};
+			expect(steps.getClassList(vnode)).to.contain("attached");
 			// TODO: test rest of the attachments
 		});
 
 		it("includes proper steps count.", () => {
-			let className = classnames(steps.getClassList({steps: [1,2,3]}));
-			expect(className).to.have.string("three");
+			vnode.children = [1,2,3];
+			expect(steps.getClassList(vnode)).to.contain("three");
 			// TODO: test rest of the count
 		});
 
 		it("includes proper size.", () => {
-			let className = classnames(steps.getClassList({size: "mini", steps: []}));
-			expect(className).to.have.string("mini");
+			vnode.attrs = {size: "mini", steps: []};
+			expect(steps.getClassList(vnode)).to.contain("mini");
 			// TODO: test rest of the size
 		});
 	});
 
 	describe("getDefaultAttrs", () => {
 		it("sets state to '0'.", () => {
-			let attrs = steps.getDefaultAttrs({});
-			expect(attrs.state).to.equal(0);
+			let attrs = steps.getDefaultAttrs(vnode);
+			expect(attrs.currentStep).to.equal(0);
 		});
 
 		it("sets state to one which is passed", () => {
-			let attrs = steps.getDefaultAttrs({state: m.prop(1)});
-			expect(attrs.state()).to.equal(1);
+			vnode.attrs = {currentStep: 1};
+			let attrs = steps.getDefaultAttrs(vnode);
+			expect(attrs.currentStep).to.equal(1);
 		});
 	});
 
 	describe("view", () => {
-		it("displays steps and children", () => {
-			let step1 = {title: "a title"};
-			let step2 = {title: "a title"};
+		it("sets proper state of steps", () => {
+			let attrs = {currentStep: 1};
+			_.render(document.body, _(steps, attrs,
+					_(step,
+						_(stepTitle, "Step 1")),
+					_(step,
+						_(stepTitle, "Step 2")),
+					_(step,
+						_(stepTitle, "Step 2"))));
 
-			let dStepsCom = m(steps, { steps: [step1, step2] });
-			let vdom = dStepsCom.view(dStepsCom.controller());
-			expect(vdom.children.length).to.equal(2);
+			let step1 = document.querySelectorAll(".step")[0];
+			expect(step1.className).to.contain("completed");
+
+			let step2 = document.querySelectorAll(".step")[1];
+			expect(step2.className).to.contain("active");
+
+			let step3 = document.querySelectorAll(".step")[2];
+			expect(step3.className).to.contain("disabled");
 		});
 	});
 });

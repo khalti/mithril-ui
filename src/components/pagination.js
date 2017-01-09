@@ -2,7 +2,7 @@ import {Menu, menu} from "./menu/menu.js";
 import {menuItem} from "./menu/item.js";
 import _ from "mithril";
 import {required, isNumber, isFunction} from "validatex";
-import {icon} from "./../../src/components/icon/icon.js";
+import {icon} from "./../components/icon/icon.js";
 import {properKeys} from "./../helpers/misc.js";
 
 

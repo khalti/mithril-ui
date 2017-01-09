@@ -39,7 +39,7 @@ export class ModalContent extends Base {
 export const modalContent = new ModalContent();
 
 
-export const ModalActions extends Base {
+export class ModalActions extends Base {
 	getClassList (attrs) {
 		return [
 			"actions"

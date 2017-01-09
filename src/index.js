@@ -45,8 +45,6 @@ export {
 	segment,
 	sidebar,
 	statistic,
-	meta,
-	modal,
-	modalPool,
+	table,
 	step,
 };

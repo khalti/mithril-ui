@@ -1,9 +1,9 @@
-import {Base} from "./base.js";
+import {UI} from "./base.js";
 import {within, required} from "validatex";
 import _ from "mithril";
 
 
-export class Sidebar extends Base {
+export class Sidebar extends UI {
 	attrSchema = {
 		inverted: [required(false), within([true])],
 		vertical: [required(false), within([true])],

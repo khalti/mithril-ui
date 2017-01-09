@@ -1,12 +1,12 @@
 import _ from "mithril";
 import {required, within} from "validatex";
-import {Base} from "./../base.js";
+import {UI} from "./../base.js";
 import {modalPool} from "./pool.js";
 
 
 const sizeMap = ["small", "large", "fullscreen"];
 
-export class ModalHeader extends Base {
+export class ModalHeader extends UI {
 	getClassList (attrs) {
 		return ["header"];
 	}
@@ -19,7 +19,7 @@ export class ModalHeader extends Base {
 export const modalHeader = new ModalHeader();
 
 
-export class ModalContent extends Base {
+export class ModalContent extends UI {
 	attrSchema = {
 		image: [required(false), within([true, false])]
 	}
@@ -39,7 +39,7 @@ export class ModalContent extends Base {
 export const modalContent = new ModalContent();
 
 
-export class ModalActions extends Base {
+export class ModalActions extends UI {
 	getClassList (attrs) {
 		return [
 			"actions"
@@ -54,7 +54,7 @@ export class ModalActions extends Base {
 export const modalActions = new ModalActions();
 
 
-export class Modal extends Base {
+export class Modal extends UI {
 	attrSchema = {
 		basic: [required(false), within([true, false])],
 		size: [required(false), within(sizeMap)],

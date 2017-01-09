@@ -1,9 +1,9 @@
-import {Base} from "./base.js";
+import {UI} from "./base.js";
 import _ from "mithril";
 import {colorMap, numberMap, floatMap} from "./../helpers/enums.js";
 
 
-export class Card extends Base {
+export class Card extends UI {
 	getClassList ({attrs, children, state}) {
 		return [
 			"ui",
@@ -38,7 +38,7 @@ export class SubCard extends Card {
 
 export const subCard = new SubCard();
 
-export class Cards extends Base {
+export class Cards extends UI {
 	getClassList ({attrs, children, state}) {
 		return [
 			"ui",
@@ -53,7 +53,7 @@ export class Cards extends Base {
 
 export const cards = new Cards()
 
-export class CardContent extends Base {
+export class CardContent extends UI {
 	getClassList ({attrs}) {
 		return [
 			attrs.extra && "extra",
@@ -65,7 +65,7 @@ export class CardContent extends Base {
 
 export const cardContent = new CardContent();
 
-export class CardHeader extends Base {
+export class CardHeader extends UI {
 	getClassList ({attrs}) {
 		return [
 			floatMap[attrs.float],
@@ -86,7 +86,7 @@ export class CardHeader extends Base {
 
 export const cardHeader = new CardHeader();
 
-export class CardMeta extends Base {
+export class CardMeta extends UI {
 	getClassList ({attrs, children, state}) {
 		return [
 			floatMap[attrs.float],
@@ -97,7 +97,7 @@ export class CardMeta extends Base {
 
 export const cardMeta = new CardMeta();
 
-export class CardDescription extends Base {
+export class CardDescription extends UI {
 	getClassList ({attrs, children, state}) {
 		return [
 			floatMap[attrs.float],
@@ -109,7 +109,7 @@ export class CardDescription extends Base {
 export const cardDescription = new CardDescription();
 
 
-export class CardAuthor extends Base {
+export class CardAuthor extends UI {
 	getClassList ({attrs, children, state}) {
 		return [
 			floatMap[attrs.float],
@@ -121,7 +121,7 @@ export class CardAuthor extends Base {
 export const cardAuthor = new CardAuthor();
 
 
-export class CardTime extends Base {
+export class CardTime extends UI {
 	getClassList ({attrs, children, state}) {
 		return [
 			floatMap[attrs.float],
@@ -132,7 +132,7 @@ export class CardTime extends Base {
 
 export const cardTime = new CardTime();
 
-export class CardCategory extends Base {
+export class CardCategory extends UI {
 	getClassList ({attrs, children, state}) {
 		return [
 			floatMap[attrs.float],

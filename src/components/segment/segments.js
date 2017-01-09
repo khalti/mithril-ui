@@ -1,8 +1,8 @@
-import {Base} from "./../base.js";
+import {UI} from "./../base.js";
 import {required, within} from "validatex";
 
 
-export class Segments extends Base {
+export class Segments extends UI {
 	attrSchema = {
 		horizontal: [required(false), within(true, false)],
 		raised: [required(false), within(true, false)],

@@ -1,13 +1,13 @@
 import _ from "mithril";
 import {isObject, isString} from "./../../helpers/type.js";
 import {input}  from "./input.js";
-import {Base} from "./../base.js";
+import {UI} from "./../base.js";
 import {widthMap} from "./../../helpers/enums.js";
 import {required} from "validatex";
 import Component from "mithril-componentx";
 
 
-export class Field extends Base {
+export class Field extends UI {
 	attrSchema = {
 		model: required(true),
 		type: required(true)

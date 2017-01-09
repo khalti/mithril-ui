@@ -1,4 +1,4 @@
-import {Base} from "./../base.js";
+import {UI} from "./../base.js";
 import {
 	attachmentMap,
 	colorMap,
@@ -7,7 +7,7 @@ import {
 import {required, within} from "validatex";
 
 
-export class Segment extends Base {
+export class Segment extends UI {
 	attrSchema = {
 		attach: [required(false), within([true, "top", "bottop", "left", "right"],
 																		"^Invalid attachment '{value}'.")],

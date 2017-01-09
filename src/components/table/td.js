@@ -1,4 +1,4 @@
-import {Base} from "./../base.js";
+import {UI} from "./../base.js";
 import _ from "mithril";
 import {required, within} from "validatex";
 import {
@@ -9,7 +9,7 @@ import {
 
 const states = ["positive", "negative", "error", "warning", "active", "disabled"];
 
-export class TD extends Base {
+export class TD extends UI {
 	attrSchema = {
 		state: [required(false), within(states)],
 		verticalAlignment: [required(false), within(Object.keys(verticalAlignmentMap))],

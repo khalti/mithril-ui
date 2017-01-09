@@ -1,8 +1,8 @@
-import {Base} from "./../base.js";
+import {UI} from "./../base.js";
 import {numberMap} from "./../../helpers/enums.js";
 
 
-export class Fields extends Base {
+export class Fields extends UI {
 	getClassList ({attrs}) {
 		return [
 			attrs.grouped && "grouped",

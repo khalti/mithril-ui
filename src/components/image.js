@@ -1,11 +1,11 @@
-import {Base} from "./base.js";
+import {UI} from "./base.js";
 import _ from "mithril";
 import omit from "lodash/omit";
 import {verticalAlignmentMap, floatMap} from "./../helpers/enums.js";
 import {required} from "validatex";
 
 
-export class Image extends Base {
+export class Image extends UI {
 	attrSchema = {
 		src: required(true)
 	}

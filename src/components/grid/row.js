@@ -1,5 +1,5 @@
 import {properKeys} from "./../../helpers/misc.js";
-import {Base} from "./../base.js";
+import {UI} from "./../base.js";
 import enums from "./../../helpers/enums.js";
 import clone from "lodash/clone";
 import {required, within} from "validatex";
@@ -10,7 +10,7 @@ let stretchedMap = {
 	false: ""
 };
 
-export class Row extends Base {
+export class Row extends UI {
 	attrSchema = {
 		columns: [required(false), within(properKeys(enums.columnsMap),
 																			"Invalid value '{value}'.")],

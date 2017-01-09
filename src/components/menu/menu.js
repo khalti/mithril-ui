@@ -1,4 +1,4 @@
-import {Base} from "./../base.js";
+import {UI} from "./../base.js";
 import keys from "lodash/keys";
 import enums from "./../../helpers/enums.js";
 import {required, within} from "validatex";
@@ -17,7 +17,7 @@ let fittedMap = {
 	horizontally: "fitted horizontally"
 };
 
-export class Menu extends Base {
+export class Menu extends UI {
 	attrSchema = {
 		state: [required(false), within(["down", "active"], "Invalid state.")],
 		color: [required(false), within(keys(enums.colorClassMap), "Invalid color.")],

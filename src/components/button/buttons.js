@@ -1,11 +1,11 @@
-import {Base} from "./../base.js";
+import {UI} from "./../base.js";
 import _ from "mithril";
 import {numberMap, colorMap, sizeMap} from "./../../helpers/enums.js";
 import {required, within} from "validatex";
 import {properKeys} from "./../../helpers/misc.js";
 
 
-export class Buttons extends Base {
+export class Buttons extends UI {
 	attrSchema = {
 		buttonCount: [required(false), within(properKeys(numberMap))],
 		color: [required(false), within(properKeys(colorMap))],

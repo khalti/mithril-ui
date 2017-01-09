@@ -1,8 +1,8 @@
-import {Base} from "./base.js";
+import {UI} from "./base.js";
 import {colorMap, numberMap, floatMap, sizeMap} from "./../helpers/enums.js";
 
 
-export class Statistic extends Base {
+export class Statistic extends UI {
 	getClassList ({attrs}) {
 		return [
 			"ui",
@@ -18,7 +18,7 @@ export class Statistic extends Base {
 
 export const statistic = new Statistic();
 
-export class Statistics extends Base {
+export class Statistics extends UI {
 	getClassList ({attrs}) {
 		return [
 			"ui",
@@ -45,7 +45,7 @@ export class SubStatistic extends Statistic {
 
 export const subStatistic = new SubStatistic();
 
-export class StatisticValue extends Base {
+export class StatisticValue extends UI {
 	getClassList ({attrs}) {
 		return ["value"];
 	}
@@ -53,7 +53,7 @@ export class StatisticValue extends Base {
 
 export const statisticValue = new StatisticValue();
 
-export class StatisticLabel extends Base {
+export class StatisticLabel extends UI {
 	getClassList ({attrs}) {
 		return ["label"];
 	}

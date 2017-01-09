@@ -4,7 +4,7 @@ import omit from "lodash/omit.js";
 import Component from "mithril-componentx";
 
 
-export class Base extends Component {
+export class UI extends Component {
 	getDefaultAttrs (vnode) {
 		return {root: "div"};
 	}

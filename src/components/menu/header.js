@@ -1,7 +1,7 @@
-import {Base} from "./../base.js";
+import {UI} from "./../base.js";
 
 
-export class MenuHeader extends Base {
+export class MenuHeader extends UI {
 	getClassList (attrs) {
 		return ["header"];
 	}

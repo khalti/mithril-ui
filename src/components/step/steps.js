@@ -1,4 +1,4 @@
-import {Base} from "./../base.js";
+import {UI} from "./../base.js";
 import {step} from "./step.js";
 import enums from "./../../helpers/enums.js";
 import map from "lodash/map";
@@ -8,7 +8,7 @@ import {required, within} from "validatex";
 import {isArray} from "./../../helpers/type.js";
 
 
-export class Steps extends Base {
+export class Steps extends UI {
 	attrSchema = {
 		attach: [ required(false),
 							within(Object.keys(enums.attachmentMap), "Invalid value for attachment.")],

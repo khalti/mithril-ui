@@ -1,4 +1,4 @@
-import {Base} from "./../base.js";
+import {UI} from "./../base.js";
 import _ from "mithril";
 import {required, within} from "validatex";
 import {
@@ -12,7 +12,7 @@ export const sortMap = {
 	"descending": "sorted descending"
 };
 
-export class TH extends Base {
+export class TH extends UI {
 	attrSchema = {
 		verticalAlignment: [required(false), within(Object.keys(verticalAlignmentMap))],
 		textAlignment: [required(false), within(Object.keys(textAlignmentMap))],

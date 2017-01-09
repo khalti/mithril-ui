@@ -1,9 +1,9 @@
-import {Base} from "./base.js";
+import {UI} from "./base.js";
 import {within, required} from "validatex";
 import _ from "mithril";
 
 
-export class Pusher extends Base {
+export class Pusher extends UI {
 	attrSchema = {
 		dimmed: [required(false), within([true, false])]
 	}

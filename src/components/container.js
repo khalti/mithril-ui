@@ -1,4 +1,4 @@
-import {Base} from "./base.js";
+import {UI} from "./base.js";
 import {required, within} from "validatex";
 import {textAlignmentMap} from "./../helpers/enums.js";
 
@@ -8,7 +8,7 @@ const typeClassMap = {
 	"fluid": "fluid"
 }
 
-export class Container extends Base {
+export class Container extends UI {
 	attrSchema = {
 		type: [ required(false),
 						within(["text", "fluid"], "Invalid value '{value}' for attribute 'type'.")],

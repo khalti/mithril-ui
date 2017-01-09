@@ -1,4 +1,4 @@
-import {Base} from "./../components/base.js";
+import {UI} from "./../components/base.js";
 import _ from "mithril";
 import {attachmentMap, colorMap, sizeMap} from "./../helpers/enums.js";
 import {required, within, isFunction} from "validatex";
@@ -11,7 +11,7 @@ let types = ["warning", "info", "positive", "success", "negative", "error"];
 
 let states = ["hidden", "visible"];
 
-export class Message extends Base {
+export class Message extends UI {
 	visible = false
 
 	attrSchema = {
@@ -54,7 +54,7 @@ export class Message extends Base {
 export const message = new Message();
 
 
-export class MessageHeader extends Base {
+export class MessageHeader extends UI {
 	getClassList ({attrs}) {
 		return ["header"];
 	}
@@ -62,7 +62,7 @@ export class MessageHeader extends Base {
 
 export const messageHeader = new MessageHeader();
 
-export class MessageContent extends Base {
+export class MessageContent extends UI {
 	getClassList ({attrs}) {
 		return ["content"];
 	}

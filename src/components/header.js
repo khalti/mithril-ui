@@ -1,4 +1,4 @@
-import {Base} from "./base.js";
+import {UI} from "./base.js";
 import _ from "mithril";
 import {attachmentMap,
 				floatMap,
@@ -17,7 +17,7 @@ let levelMap = {
 	6: "h6"
 };
 
-export class Header extends Base {
+export class Header extends UI {
 	attrSchema = {
 		level: [required(false), within(properKeys(levelMap), "Invalid level '{value}.'")]
 	}
@@ -51,10 +51,20 @@ export class Header extends Base {
 export const header = new Header();
 
 
-export class SubHeader extends Base {
+export class SubHeader extends UI {
 	getClassList ({attrs}) {
 		return ["sub header"];
 	}
 }
 
 export const subHeader = new SubHeader();
+
+
+export class HeaderContent extends UI {
+	getClassList ({attrs}) {
+		return ["content"];
+	}
+}
+
+export const headerContent = new HeaderContent();
+

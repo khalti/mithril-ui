@@ -1,9 +1,9 @@
 import _ from "mithril";
 import {required, within} from "validatex";
-import {Base} from "./base.js";
+import {UI} from "./base.js";
 
 
-export class Dimmer extends Base {
+export class Dimmer extends UI {
 	attrSchema = {
 		page: [required(false), within([true, false])],
 		state: [required(false), within(["active", "disabled"])],

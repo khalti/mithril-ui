@@ -1,4 +1,4 @@
-import {Base} from "./../base.js";
+import {UI} from "./../base.js";
 import _ from "mithril";
 import {sizeMap, colorMap} from "./../../helpers/enums.js";
 import {required, within, isString} from "validatex";
@@ -15,7 +15,7 @@ const rotateMap = {
 	counterclockwise: "counterclockwise rotated"
 };
 
-export class Icon extends Base {
+export class Icon extends UI {
 	attrSchema = {
 		// TODO: make name required
 		name: [required(false), isString()],

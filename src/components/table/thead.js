@@ -1,8 +1,8 @@
-import {Base} from "./../base.js";
+import {UI} from "./../base.js";
 import _ from "mithril";
 
 
-export class THead extends Base {
+export class THead extends UI {
 	getClassList ({attrs}) {
 		return [
 			attrs.fullWidth && "full-width"

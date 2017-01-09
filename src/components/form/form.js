@@ -1,10 +1,10 @@
-import {Base} from "./../base.js";
+import {UI} from "./../base.js";
 import _ from "mithril";
 import {sizeMap} from "./../../helpers/enums.js";
 import {required, within} from "validatex";
 
 
-export class Form extends Base {
+export class Form extends UI {
 	attrSchema = {
 			size: [required(false), within(Object.keys(sizeMap), "^Invalid size '{value}'.")]
 	}

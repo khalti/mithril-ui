@@ -1,11 +1,11 @@
-import {Base} from "./../base.js";
+import {UI} from "./../base.js";
 import {properKeys} from "./../../helpers/misc.js";
 import enums from "./../../helpers/enums.js";
 import clone from "lodash/clone";
 import {required, within} from "validatex";
 
 
-export class Column extends Base {
+export class Column extends UI {
 	attrSchema = {
 		float: [required(false),
 						within(Object.keys(enums.floatMap), "Invalid value '{value}'.")],

@@ -35,6 +35,7 @@ import {
 import {
 	Header, header,
 	SubHeader, subHeader,
+	HeaderContent, headerContent,
 } from "./components/header.js";
 import {
 	Icon, icon,
@@ -137,6 +138,7 @@ export {
 
 	Header, header,
 	SubHeader, subHeader,
+	HeaderContent, headerContent,
 
 	Icon, icon,
 	Icons, icons,

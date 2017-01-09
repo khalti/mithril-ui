@@ -1,5 +1,5 @@
 import {window, FRAME_BUDGET} from "./../utils.js";
-import {Base}  from "./../../src/components/base.js";
+import {UI}  from "./../../src/components/base.js";
 import chai from "chai";
 import {required} from "validatex";
 import _ from "mithril";
@@ -12,7 +12,7 @@ describe("Base", () => {
 		let profile;
 
 		beforeEach(() => {
-			class Profile extends Base {
+			class Profile extends UI {
 				attrSchema = {name: required(true)}
 			}
 
@@ -35,7 +35,7 @@ describe("Base", () => {
 		beforeEach(() => {
 			document = window.document;
 
-			class Button extends Base {
+			class Button extends UI {
 				content = "a button content"
 
 				getDefaultAttrs(vnode) {

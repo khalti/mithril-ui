@@ -1,4 +1,4 @@
-import {Base} from "./../base.js";
+import {UI} from "./../base.js";
 import _ from "mithril";
 import {
 	colorMap,
@@ -7,7 +7,7 @@ import {
 import {required, within} from "validatex";
 
 
-export class Table extends Base {
+export class Table extends UI {
 	attrSchema = {
 		columnCount: [required(false), within(Object.keys(columnsMap))],
 		color: [required(false), within(Object.keys(colorMap))],

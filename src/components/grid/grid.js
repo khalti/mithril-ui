@@ -1,4 +1,4 @@
-import {Base} from "./../base.js";
+import {UI} from "./../base.js";
 import enums from "./../../helpers/enums.js";
 import {required, within} from "validatex";
 import {properKeys} from "./../../helpers/misc.js";
@@ -45,7 +45,7 @@ let attrSchema = {
 																		"Invalid value '{value}'.")]
 };
 
-export class Grid  extends Base {
+export class Grid  extends UI {
 	attrSchema = attrSchema
 
 	getClassList ({attrs}) {

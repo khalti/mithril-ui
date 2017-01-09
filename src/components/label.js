@@ -1,6 +1,6 @@
-import {Base} from "./base.js";
+import {UI} from "./base.js";
 
-export class Label extends Base {
+export class Label extends UI {
 	getClassList ({attrs}) {
 		return [
 			"ui",

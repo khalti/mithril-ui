@@ -1,9 +1,9 @@
 import _ from "mithril";
 import {required, within} from "validatex";
-import {Base} from "./../base.js";
+import {UI} from "./../base.js";
 
 
-export class ModalPool extends Base {
+export class ModalPool extends UI {
 	modals = []
 
 	getStyle ({attrs, children, state}) {

@@ -1,4 +1,4 @@
-import {Base} from "./../base.js";
+import {UI} from "./../base.js";
 import _ from "mithril";
 import omit from "lodash/omit";
 import {colorMap, floatMap, emphasisMap, sizeMap} from "./../../helpers/enums.js";
@@ -9,7 +9,7 @@ import {isArray} from "./../../helpers/type.js";
 import {is} from "./../../helpers/misc.js";
 
 
-export class Button extends Base {
+export class Button extends UI {
 	attrSchema = {
 		size: [ required(false),
 						within(Object.keys(sizeMap), "Invalid size {value}.")],

@@ -1,9 +1,9 @@
-import {Base} from "./../base.js";
+import {UI} from "./../base.js";
 import _ from "mithril";
 import {required, within} from "validatex";
 
 
-export class StepTitle extends Base {
+export class StepTitle extends UI {
 	getClassList ({attrs}) {
 		return ["title"];
 	}
@@ -12,7 +12,7 @@ export class StepTitle extends Base {
 export const stepTitle = new StepTitle();
 
 
-export class StepContent extends Base {
+export class StepContent extends UI {
 	getClassList ({attrs}) {
 		return ["content"];
 	}
@@ -21,7 +21,7 @@ export class StepContent extends Base {
 export const stepContent = new StepContent();
 
 
-export class StepDescription extends Base {
+export class StepDescription extends UI {
 	getClassList ({attrs}) {
 		return ["description"];
 	}
@@ -32,7 +32,7 @@ export const stepDescription = new StepDescription();
 
 const STEP_STATES = ["completed", "active", "disabled"];
 
-export class Step extends Base {
+export class Step extends UI {
 	attrSchema = {
 		state: [required(true), within(STEP_STATES)]
 	}

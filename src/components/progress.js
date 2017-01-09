@@ -1,4 +1,4 @@
-import {Base} from "./base.js";
+import {UI} from "./base.js";
 import {required, isNumber, within} from "validatex";
 import _ from "mithril";
 import {attachmentMap, sizeMap, colorMap} from "./../helpers/enums.js";
@@ -6,7 +6,7 @@ import {attachmentMap, sizeMap, colorMap} from "./../helpers/enums.js";
 
 const states = ["active", "success", "warning", "error", "disabled"];
 
-export class Bar extends Base {
+export class Bar extends UI {
 	attrSchema = {
 		percent: [required(true), isNumber()],
 		state: [required(false), within(states)]
@@ -21,7 +21,7 @@ export class Bar extends Base {
 export const bar = new Bar();
 
 
-export class Progress extends Base {
+export class Progress extends UI {
 	attrSchema = {
 		percent: [required(true), isNumber()],
 		state: [required(false), within(states)]

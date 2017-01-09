@@ -1,5 +1,5 @@
 import _ from 'mithril';
-import {Base} from "./../base.js";
+import {UI} from "./../base.js";
 import omit from "lodash/omit";
 import omitBy from "lodash/omitBy";
 import {required} from "validatex";
@@ -13,7 +13,7 @@ let isEventHandler = (value, key) => {
 	return /^on.*$/.test(key);
 };
 
-export class Input extends Base {
+export class Input extends UI {
 	attrSchema = {
 		type: required(true),
 		prepend: [required(false), componentIs([Icon, Button, Label])],

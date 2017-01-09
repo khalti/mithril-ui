@@ -8,5 +8,5 @@ export {
 	Menu, menu,
 	MenuHeader, menuHeader,
 	MenuItem, menuItem,
-	SubMenu, subMenu
+	SubMenu, subMenu,
 };

@@ -49,3 +49,12 @@ export class Header extends Base {
 
 
 export const header = new Header();
+
+
+export class SubHeader extends Base {
+	getClassList ({attrs}) {
+		return ["sub header"];
+	}
+}
+
+export const subHeader = new SubHeader();

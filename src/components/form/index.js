@@ -1,9 +1,16 @@
-import {input} from "./input.js";
-import {field} from "./field.js";
-import {fields} from "./fields.js";
-import {select} from "./select.js";
-import {form} from "./form.js";
-import {checkbox} from "./checkbox.js";
+import {Input, input} from "./input.js";
+import {Field, field} from "./field.js";
+import {Fields, fields} from "./fields.js";
+import {Select, select} from "./select.js";
+import {Form, form} from "./form.js";
+import {Checkbox, checkbox} from "./checkbox.js";
 
 
-export {input, field, fields, select, form, checkbox};
+export {
+	Input, input,
+	Field, field,
+	Fields, fields,
+	Select, select,
+	Form, form,
+	Checkbox, checkbox
+};

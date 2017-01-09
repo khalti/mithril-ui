@@ -1,6 +1,10 @@
-import {button} from "./button.js";
-import {buttons} from "./buttons.js";
+import {Button, button} from "./button.js";
+import {Buttons, buttons} from "./buttons.js";
 
 
-export {button, buttons};
+export {
+	Button, button,
+	Buttons, buttons
+};
+
 

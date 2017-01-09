@@ -13,6 +13,6 @@ export {
 	TFoot, tfoot,
 	TR, tr,
 	TH, th ,
-	TD, td
+	TD, td,
 };
 

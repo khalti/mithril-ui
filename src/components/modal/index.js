@@ -1,5 +1,8 @@
-import {modal} from "./modal.js";
-import {modalPool} from "./pool.js";
+import {Modal, modal} from "./modal.js";
+import {ModalPool, modalPool} from "./pool.js";
 
 
-export {modal, modalPool};
+export {
+	Modal, modal,
+	ModalPool, modalPool,
+};

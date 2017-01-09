@@ -2,10 +2,9 @@ import {Base} from "./../base.js";
 import _ from "mithril";
 import {required, within} from "validatex";
 import {
-	verticalAlignmentClassMap,
-	widthClassMap,
-	textAlignmentClassMap} from "./../../helpers/enums.js";
-import keys from "lodash/keys";
+	verticalAlignmentMap,
+	widthMap,
+	textAlignmentMap} from "./../../helpers/enums.js";
 
 
 const states = ["positive", "negative", "error", "warning", "active", "disabled"];
@@ -13,9 +12,9 @@ const states = ["positive", "negative", "error", "warning", "active", "disabled"
 export class TD extends Base {
 	attrSchema = {
 		state: [required(false), within(states)],
-		verticalAlignment: [required(false), within(keys(verticalAlignmentClassMap))],
-		textAlignment: [required(false), within(keys(textAlignmentClassMap))],
-		width: [required(false), within(keys(widthClassMap))]
+		verticalAlignment: [required(false), within(Object.keys(verticalAlignmentMap))],
+		textAlignment: [required(false), within(Object.keys(textAlignmentMap))],
+		width: [required(false), within(Object.keys(widthMap))]
 	}
 
 	isRootAttr (key) {
@@ -29,14 +28,14 @@ export class TD extends Base {
 		}
 	}
 
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		return [
 			attrs.state,
-			{selectable: attrs.selectable},
-			verticalAlignmentClassMap[attrs.verticalAlignment],
-			textAlignmentClassMap[attrs.textAlignment],
-			{collapsing: attrs.collapsing},
-			widthClassMap[attrs.width]
+			attrs.selectable && "selectable",
+			verticalAlignmentMap[attrs.verticalAlignment],
+			textAlignmentMap[attrs.textAlignment],
+			attrs.collapsing && "collapsing",
+			widthMap[attrs.width]
 		];
 	}
 

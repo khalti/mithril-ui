@@ -1,20 +1,19 @@
 import {Base} from "./../base.js";
 import _ from "mithril";
 import {required, within} from "validatex";
-import {verticalAlignmentClassMap, textAlignmentClassMap} from "./../../helpers/enums.js";
-import keys from "lodash/keys";
+import {verticalAlignmentMap, textAlignmentMap} from "./../../helpers/enums.js";
 
 
 export class TR extends Base {
 	attrSchema = {
-		verticalAlignment: [required(false), within(keys(verticalAlignmentClassMap))],
-		textAlignment: [required(false), within(keys(textAlignmentClassMap))]
+		verticalAlignment: [required(false), within(Object.keys(verticalAlignmentMap))],
+		textAlignment: [required(false), within(Object.keys(textAlignmentMap))]
 	}
 
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		return [
-			verticalAlignmentClassMap[attrs.verticalAlignment],
-			textAlignmentClassMap[attrs.textAlignment]
+			verticalAlignmentMap[attrs.verticalAlignment],
+			textAlignmentMap[attrs.textAlignment]
 		];
 	}
 

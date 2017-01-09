@@ -1,125 +1,129 @@
+import {window, getVnode} from "./../../utils.js";
 import {table} from "./../../../src/components/table/table.js";
-import classnames from "classnames";
 import {expect} from "chai";
-import m from "mithril";
+import _ from "mithril";
 
 
 describe("table", () => {
+	let vnode;
+
+	beforeEach(() => {
+		vnode = getVnode();
+	});
+
 	it("complains on invalid column count", () => {
-		let atable = m(table, {columnCount: 0});
-		expect(atable.view.bind(atable)).to.throw(Error);
+		vnode.attrs = {columnCount: 0};
+		expect(table.oninit.bind(table, vnode)).to.throw(Error);
 	});
 
 	it("complains on invalid color", () => {
-		let atable = m(table, {color: "transparent"});
-		expect(atable.view.bind(atable)).to.throw(Error);
+		vnode.attrs = {color: "transparent"};
+		expect(table.oninit.bind(table, vnode)).to.throw(Error);
 	});
 
 	it("complains on invalid size", () => {
-		let atable = m(table, {size: "extra huge"});
-		expect(atable.view.bind(atable)).to.throw(Error);
+		vnode.attrs = {size: "extra huge"};
+		expect(table.oninit.bind(table, vnode)).to.throw(Error);
 	});
 
 	describe("getClassList", () => {
 		it("includes 'ui'", () => {
-			let got = table.getClassList({});
-			expect("ui").to.be.oneOf(got);
+			expect(table.getClassList(vnode)).to.contain("ui");
 		});
 
 		it("includes 'table'", () => {
-			let got = table.getClassList({});
-			expect("table").to.be.oneOf(got);
+			expect(table.getClassList(vnode)).to.contain("table");
 		});
 
 		it("includes 'celled'", () => {
-			let got = table.getClassList({celled: true});
-			expect(classnames(got)).to.have.string("celled");
+			vnode.attrs = {celled: true};
+			expect(table.getClassList(vnode)).to.contain("celled");
 		});
 
 		it("includes 'single line'", () => {
-			let got = table.getClassList({singleLine: true});
-			expect(classnames(got)).to.have.string("single line");
+			vnode.attrs = {singleLine: true};
+			expect(table.getClassList(vnode)).to.contain("single line");
 		});
 
 		it("includes 'fixed'", () => {
-			let got = table.getClassList({fixed: true});
-			expect(classnames(got)).to.have.string("fixed");
+			vnode.attrs = {fixed: true};
+			expect(table.getClassList(vnode)).to.contain("fixed");
 		});
 
 		it("includes 'stackable'", () => {
-			let got = table.getClassList({stackable: true});
-			expect(classnames(got)).to.have.string("stackable");
+			vnode.attrs = {stackable: true};
+			expect(table.getClassList(vnode)).to.contain("stackable");
 		});
 
 		it("includes 'unstackable'", () => {
-			let got = table.getClassList({unstackable: true});
-			expect(classnames(got)).to.have.string("unstackable");
+			vnode.attrs = {unstackable: true};
+			expect(table.getClassList(vnode)).to.contain("unstackable");
 		});
 
 		it("includes 'selectable'", () => {
-			let got = table.getClassList({selectable: true});
-			expect(classnames(got)).to.have.string("selectable");
+			vnode.attrs = {selectable: true};
+			expect(table.getClassList(vnode)).to.contain("selectable");
 		});
 
 		it("includes 'striped'", () => {
-			let got = table.getClassList({striped: true});
-			expect(classnames(got)).to.have.string("striped");
+			vnode.attrs = {striped: true};
+			expect(table.getClassList(vnode)).to.contain("striped");
 		});
 
 		it("includes 'basic'", () => {
-			let got = table.getClassList({basic: true});
-			expect(classnames(got)).to.have.string("basic");
+			vnode.attrs = {basic: true};
+			expect(table.getClassList(vnode)).to.contain("basic");
 		});
 
 		it("includes 'very basic'", () => {
-			let got = table.getClassList({veryBasic: true});
-			expect(classnames(got)).to.have.string("very basic");
+			vnode.attrs = {veryBasic: true};
+			expect(table.getClassList(vnode)).to.contain("very basic");
 		});
 
 		it("includes includes proper column count", () => {
-			let got = table.getClassList({columnCount: 1});
-			expect(classnames(got)).to.have.string("one column");
+			vnode.attrs = {columnCount: 1};
+			expect(table.getClassList(vnode)).to.contain("one column");
 		});
 
 		it("includes 'collapsing'", () => {
-			let got = table.getClassList({collapsing: true});
-			expect(classnames(got)).to.have.string("collapsing");
+			vnode.attrs = {collapsing: true};
+			expect(table.getClassList(vnode)).to.contain("collapsing");
 		});
 
 		it("includes includes proper color", () => {
-			let got = table.getClassList({color: "red"});
-			expect(classnames(got)).to.have.string("red");
+			vnode.attrs = {color: "red"};
+			expect(table.getClassList(vnode)).to.contain("red");
 		});
 
 		it("includes 'inverted'", () => {
-			let got = table.getClassList({inverted: true});
-			expect(classnames(got)).to.have.string("inverted");
+			vnode.attrs = {inverted: true};
+			expect(table.getClassList(vnode)).to.contain("inverted");
 		});
 
 		it("includes 'sortable'", () => {
-			let got = table.getClassList({inverted: true});
-			expect(classnames(got)).to.have.string("inverted");
+			vnode.attrs = {inverted: true};
+			expect(table.getClassList(vnode)).to.contain("inverted");
 		});
 
 		it("includes 'padded'", () => {
-			let got = table.getClassList({padded: true});
-			expect(classnames(got)).to.have.string("padded");
+			vnode.attrs = {padded: true};
+			expect(table.getClassList(vnode)).to.contain("padded");
 		});
 
 		it("includes 'compact'", () => {
-			let got = table.getClassList({compact: true});
-			expect(classnames(got)).to.have.string("compact");
+			vnode.attrs = {compact: true};
+			expect(table.getClassList(vnode)).to.contain("compact");
 		});
 
 		it("includes proper size", () => {
-			let got = table.getClassList({size: "small"});
-			expect(classnames(got)).to.have.string("small");
+			vnode.attrs = {size: "small"};
+			expect(table.getClassList(vnode)).to.contain("small");
 		});
 	});
 
 	describe("getDefaultAttrs", () => {
 		it("sets root element to be a 'table'", () => {
-			expect(table.getDefaultAttrs({}).root).to.equal("table");
+			expect(table.getDefaultAttrs(vnode).root).to.equal("table");
 		});
 	});
 });

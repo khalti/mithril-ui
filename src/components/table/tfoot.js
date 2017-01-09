@@ -1,12 +1,11 @@
 import {Base} from "./../base.js";
 import _ from "mithril";
-import keys from "lodash/keys";
 
 
 export class TFoot extends Base {
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		return [
-			{"full-width": attrs.fullWidth}
+			attrs.fullWidth && "full-width"
 		];
 	}
 

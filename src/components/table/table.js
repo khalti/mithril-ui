@@ -1,38 +1,37 @@
 import {Base} from "./../base.js";
 import _ from "mithril";
 import {
-	colorClassMap,
+	colorMap,
 	sizeMap,
-	columnsClassMap} from "./../../helpers/enums.js";
-import keys from "lodash/keys";
+	columnsMap} from "./../../helpers/enums.js";
 import {required, within} from "validatex";
 
 
 export class Table extends Base {
 	attrSchema = {
-		columnCount: [required(false), within(keys(columnsClassMap))],
-		color: [required(false), within(keys[colorClassMap])],
-		size: [required(false), within(keys[sizeMap])],
+		columnCount: [required(false), within(Object.keys(columnsMap))],
+		color: [required(false), within(Object.keys(colorMap))],
+		size: [required(false), within(Object.keys(sizeMap))],
 	}
 
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		return [
 			"ui",
-			{"single line": attrs.singleLine},
-			{fixed: attrs.fixed},
+			attrs.singleLine && "single line",
+			attrs.fixed && "fixed",
 			attrs.stackable? "stackable": "unstackable",
-			{selectable: attrs.selectable},
-			{striped: attrs.striped},
-			{celled: attrs.celled},
-			{basic: attrs.basic},
-			{"very basic": attrs.veryBasic},
-			columnsClassMap[attrs.columnCount],
-			{collapsing: attrs.collapsing},
-			colorClassMap[attrs.color],
-			{inverted: attrs.inverted},
-			{sortable: attrs.sortable},
-			{padded: attrs.padded},
-			{compact: attrs.compact},
+			attrs.selectable && "selectable",
+			attrs.striped && "striped",
+			attrs.celled && "celled",
+			attrs.basic && "basic",
+			attrs.veryBasic && "very basic",
+			columnsMap[attrs.columnCount],
+			attrs.collapsing && "collapsing",
+			colorMap[attrs.color],
+			attrs.inverted && "inverted",
+			attrs.sortable && "sortable",
+			attrs.padded && "padded",
+			attrs.compact && "compact",
 			sizeMap[attrs.size],
 			"table"
 		];

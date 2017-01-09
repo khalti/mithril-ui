@@ -1,55 +1,61 @@
+import {window, getVnode} from "./../../utils.js";
 import {td} from "./../../../src/components/table/td.js";
-import classnames from "classnames";
 import {expect} from "chai";
-import m from "mithril";
+import _ from "mithril";
 
 
 describe("table", () => {
+	let vnode;
+
+	beforeEach(() => {
+		vnode = getVnode();
+	});
+
 	it("complains if invalid state is feed.", () => {
-		let atd = m(td, {state: "high"});
-		expect(atd.view.bind(atd)).to.throw(Error);
+		vnode.attrs = {state: "high"};
+		expect(td.oninit.bind(td, vnode)).to.throw(Error);
 	});
 
 	it("complains if invalid vertical alignment is feed.", () => {
-		let atd = m(td, {verticalAlignment: "near top"});
-		expect(atd.view.bind(atd)).to.throw(Error);
+		vnode.attrs = {verticalAlignment: "near top"};
+		expect(td.oninit.bind(td, vnode)).to.throw(Error);
 	});
 
 	it("complains if invalid text alignment is feed.", () => {
-		let atd = m(td, {textAlignment: "beyond right"});
-		expect(atd.view.bind(atd)).to.throw(Error);
+		vnode.attrs = {textAlignment: "beyond right"};
+		expect(td.oninit.bind(td, vnode)).to.throw(Error);
 	});
 
 
 	describe("getClassList", () => {
 		it("includes proper state", () => {
-			let got = td.getClassList({state: "active"});
-			expect(classnames(got)).to.have.string("active");
+			vnode.attrs = {state: "active"};
+			expect(td.getClassList(vnode)).to.contain("active");
 		});
 
 		it("includes 'selectable'", () => {
-			let got = td.getClassList({selectable: "active"});
-			expect(classnames(got)).to.have.string("selectable");
+			vnode.attrs = {selectable: "active"};
+			expect(td.getClassList(vnode)).to.contain("selectable");
 		});
 
 		it("includes proper vertical alignment", () => {
-			let got = td.getClassList({verticalAlignment: "top"});
-			expect(classnames(got)).to.have.string("top aligned");
+			vnode.attrs = {verticalAlignment: "top"};
+			expect(td.getClassList(vnode)).to.contain("top aligned");
 		});
 
 		it("includes proper text alignment", () => {
-			let got = td.getClassList({textAlignment: "right"});
-			expect(classnames(got)).to.have.string("right aligned");
+			vnode.attrs = {textAlignment: "right"};
+			expect(td.getClassList(vnode)).to.contain("right aligned");
 		});
 
 		it("includes 'collapsing'", () => {
-			let got = td.getClassList({collapsing: "right"});
-			expect(classnames(got)).to.have.string("collapsing");
+			vnode.attrs = {collapsing: "right"};
+			expect(td.getClassList(vnode)).to.contain("collapsing");
 		});
 
 		it("includes proper width", () => {
-			let got = td.getClassList({width: "3"});
-			expect(classnames(got)).to.have.string("three wide");
+			vnode.attrs = {width: "3"};
+			expect(td.getClassList(vnode)).to.contain("three wide");
 		});
 	});
 

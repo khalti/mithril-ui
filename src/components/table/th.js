@@ -2,10 +2,9 @@ import {Base} from "./../base.js";
 import _ from "mithril";
 import {required, within} from "validatex";
 import {
-	verticalAlignmentClassMap,
-	widthClassMap,
-	textAlignmentClassMap} from "./../../helpers/enums.js";
-import keys from "lodash/keys";
+	verticalAlignmentMap,
+	widthMap,
+	textAlignmentMap} from "./../../helpers/enums.js";
 
 
 export const sortMap = {
@@ -15,10 +14,10 @@ export const sortMap = {
 
 export class TH extends Base {
 	attrSchema = {
-		verticalAlignment: [required(false), within(keys(verticalAlignmentClassMap))],
-		textAlignment: [required(false), within(keys(textAlignmentClassMap))],
-		width: [required(false), within(keys(widthClassMap))],
-		sort: [required(false), within(keys(sortMap))]
+		verticalAlignment: [required(false), within(Object.keys(verticalAlignmentMap))],
+		textAlignment: [required(false), within(Object.keys(textAlignmentMap))],
+		width: [required(false), within(Object.keys(widthMap))],
+		sort: [required(false), within(Object.keys(sortMap))]
 	}
 
 	isRootAttr (key) {
@@ -32,12 +31,12 @@ export class TH extends Base {
 		}
 	}
 
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		return [
-			verticalAlignmentClassMap[attrs.verticalAlignment],
-			textAlignmentClassMap[attrs.textAlignment],
-			widthClassMap[attrs.width],
-			{collapsing: attrs.collapsing},
+			verticalAlignmentMap[attrs.verticalAlignment],
+			textAlignmentMap[attrs.textAlignment],
+			widthMap[attrs.width],
+			attrs.collapsing && "collapsing",
 			sortMap[attrs.sort]
 		];
 	}

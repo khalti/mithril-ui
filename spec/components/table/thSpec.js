@@ -1,49 +1,55 @@
+import {window, getVnode} from "./../../utils.js";
 import {th} from "./../../../src/components/table/th.js";
-import classnames from "classnames";
 import {expect} from "chai";
-import m from "mithril";
+import _ from "mithril";
 
 
 describe("th", () => {
+	let vnode;
+
+	beforeEach(() => {
+		vnode = getVnode();
+	});
+
 	it("complains if invalid vertical alignment is feed.", () => {
-		let ath = m(th, {verticalAlignment: "near top"});
-		expect(ath.view.bind(ath)).to.throw(Error);
+		vnode.attrs = {verticalAlignment: "near top"};
+		expect(th.oninit.bind(th, vnode)).to.throw(Error);
 	});
 
 	it("complains if invalid text alignment is feed.", () => {
-		let ath = m(th, {textAlignment: "beyond right"});
-		expect(ath.view.bind(ath)).to.throw(Error);
+		vnode.attrs = {textAlignment: "beyond right"};
+		expect(th.oninit.bind(th, vnode)).to.throw(Error);
 	});
 
 	it("complains on invalid sort.", () => {
-		let ath = m(th, {sort: "random"});
-		expect(ath.view.bind(ath)).to.throw(Error);
+		vnode.attrs = {sort: "random"};
+		expect(th.oninit.bind(th, vnode)).to.throw(Error);
 	});
 
 	describe("getClassList", () => {
 		it("includes proper vertical alignment", () => {
-			let got = th.getClassList({verticalAlignment: "top"});
-			expect(classnames(got)).to.have.string("top aligned");
+			vnode.attrs = {verticalAlignment: "top"};
+			expect(th.getClassList(vnode)).to.contain("top aligned");
 		});
 
 		it("includes proper text alignment", () => {
-			let got = th.getClassList({textAlignment: "right"});
-			expect(classnames(got)).to.have.string("right aligned");
+			vnode.attrs = {textAlignment: "right"};
+			expect(th.getClassList(vnode)).to.contain("right aligned");
 		});
 
 		it("includes 'collapsing'", () => {
-			let got = th.getClassList({collapsing: "right"});
-			expect(classnames(got)).to.have.string("collapsing");
+			vnode.attrs = {collapsing: "right"};
+			expect(th.getClassList(vnode)).to.contain("collapsing");
 		});
 
 		it("includes proper width", () => {
-			let got = th.getClassList({width: "3"});
-			expect(classnames(got)).to.have.string("three wide");
+			vnode.attrs = {width: "3"};
+			expect(th.getClassList(vnode)).to.contain("three wide");
 		});
 
 		it("includes proper sort", () => {
-			let got = th.getClassList({sorte: "ascending"});
-			expect(classnames(got)).to.have.string("sorted ascending");
+			vnode.attrs = {sort: "ascending"};
+			expect(th.getClassList(vnode)).to.contain("sorted ascending");
 		});
 	});
 

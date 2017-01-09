@@ -43,7 +43,7 @@ export class SubStatistic extends Statistic {
 	}
 }
 
-export const subStatistics = new SubStatistic();
+export const subStatistic = new SubStatistic();
 
 export class StatisticValue extends Base {
 	getClassList ({attrs}) {

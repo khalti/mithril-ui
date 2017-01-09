@@ -1,10 +1,18 @@
-import {table} from "./table.js";
-import {thead} from "./thead.js";
-import {tbody} from "./tbody.js";
-import {tfoot} from "./tfoot.js";
-import {tr} from "./tr.js";
-import {th} from "./th.js";
-import {td} from "./td.js";
+import {Table, table} from "./table.js";
+import {THead, thead} from "./thead.js";
+import {TBody, tbody} from "./tbody.js";
+import {TFoot, tfoot} from "./tfoot.js";
+import {TR, tr} from "./tr.js";
+import {TH, th} from "./th.js";
+import {TD, td} from "./td.js";
 
-export {table, thead, tbody, tfoot, tr,th , td};
+export {
+	Table, table,
+	THead, thead,
+	TBody, tbody,
+	TFoot, tfoot,
+	TR, tr,
+	TH, th ,
+	TD, td
+};
 

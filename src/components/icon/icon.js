@@ -55,5 +55,4 @@ export class Icon extends Base {
 	}
 }
 
-
 export const icon = new Icon();

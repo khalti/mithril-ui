@@ -1,7 +1,12 @@
-import {menu} from "./menu.js";
-import {header} from "./header.js";
-import {item} from "./item.js";
-import {subMenu} from "./subMenu.js";
+import {Menu, menu} from "./menu.js";
+import {MenuHeader, menuHeader} from "./header.js";
+import {MenuItem, menuItem} from "./item.js";
+import {SubMenu, subMenu} from "./subMenu.js";
 
 
-export {menu, header, item, subMenu};
+export {
+	Menu, menu,
+	MenuHeader, menuHeader,
+	MenuItem, menuItem,
+	SubMenu, subMenu
+};

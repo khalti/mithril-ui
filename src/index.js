@@ -97,7 +97,7 @@ import {
 	Step, step,
 	StepTitle, stepTitle,
 	StepContent, stepContent,
-	stepDescription, stepDescription,
+	StepDescription, stepDescription,
 	Steps, steps,
 } from "./components/step";
 
@@ -189,7 +189,7 @@ export {
 	Step, step,
 	StepTitle, stepTitle,
 	StepContent, stepContent,
-	stepDescription, stepDescription,
+	StepDescription, stepDescription,
 	Steps, steps,
 
 };

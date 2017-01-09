@@ -16,8 +16,8 @@ describe("input", () => {
 
 		beforeEach(() => {
 			attrs = {
-				prepend: icon,
-				append: icon,
+				prepend: _(icon, {name: "hill"}),
+				append: _(icon, {name: "mountain"}),
 				onclick: "aCallabck",
 				type: "hidden",
 				name: "aName"
@@ -76,55 +76,55 @@ describe("input", () => {
     });
 
     it("includes 'right icon' if an icon is being appended", () => {
-      vnode.attrs = {append: icon};
+      vnode.attrs = {append: _(icon, {name: "add"})};
 			let classList = input.getClassList(vnode);
       expect(classList).to.contain("right icon");
     });
 
     it("includes 'left icon' if an icon is being prepended", () => {
-      vnode.attrs = {prepend: icon};
+      vnode.attrs = {prepend: _(icon, {name: "remove"})};
 			let classList = input.getClassList(vnode);
       expect(classList).to.contain("left icon");
     });
 
     it("returns 'left right icon' if input is surrounded by icons", () => {
-      vnode.attrs = {prepend: icon, append: icon};
+      vnode.attrs = {prepend: _(icon, {name: "aname"}), append: _(icon, {name: "aname"})};
 			let classList = input.getClassList(vnode);
       expect(classList).to.contain("left right icon");
     });
 
     it("returns 'left labeled' if a label is being prepended", () => {
-      vnode.attrs = {prepend: label};
+      vnode.attrs = {prepend: _(label)};
 			let classList = input.getClassList(vnode);
       expect(classList).to.contain("left labeled");
     });
 
     it("returns 'right labeled' if a label is being appended", () => {
-      vnode.attrs = {append: label};
+      vnode.attrs = {append: _(label)};
 			let classList = input.getClassList(vnode);
       expect(classList).to.contain("right labeled");
     });
 
     it("returns 'left right labeled'", () => {
-      vnode.attrs = {prepend: label, append: label};
+      vnode.attrs = {prepend: _(label), append: _(label)};
 			let classList = input.getClassList(vnode);
       expect(classList).to.contain("left right labeled");
     });
 
     it("returns 'left action'", () => {
-      vnode.attrs = {prepend: button};
+      vnode.attrs = {prepend: _(button)};
 			let classList = input.getClassList(vnode);
       expect(classList).to.contain("left action");
     });
 
     it("returns 'right labeled'", () => {
-      vnode.attrs = {append: button};
+      vnode.attrs = {append: _(button)};
 			let classList = input.getClassList(vnode);
       expect(classList).to.contain("right action");
     });
 
     it("returns 'left right action'", () => {
-      vnode.attrs = {prepend: button, append: button};
+      vnode.attrs = {prepend: _(button), append: _(button)};
 			let classList = input.getClassList(vnode);
       expect(classList).to.contain("left right action");
     });

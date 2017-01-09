@@ -23,15 +23,15 @@ export class Input extends UI {
 	getClassList ({attrs}) {
 		let {prepend, append} = attrs;
 		return ["ui",
-			prepend && is(prepend, Icon) && (!append || !is(append, Icon)) && "left icon",
-			(!prepend || !is(prepend, Icon)) && append && is(append, Icon) && "right icon",
-			prepend && is(prepend, Icon) && append && is(append, Icon) && "left right icon",
-			prepend && is(prepend, Label) && (!append || !is(append, Label)) && "left labeled",
-			(!prepend || !is(prepend, Label)) && append && is(append, Label) && "right labeled",
-			prepend && is(prepend, Label) && append && is(append, Label) && "left right labeled",
-			prepend && is(prepend, Button) && (!append || !is(append, Button)) && "left action",
-			(!prepend || !is(prepend, Button)) && append && is(append, Button) && "right action",
-			prepend && is(prepend, Button) && append && is(append, Button) && "left right action",
+			prepend && is(prepend.tag, Icon) && (!append || !is(append.tag, Icon)) && "left icon",
+			(!prepend || !is(prepend.tag, Icon)) && append && is(append.tag, Icon) && "right icon",
+			prepend && is(prepend.tag, Icon) && append && is(append.tag, Icon) && "left right icon",
+			prepend && is(prepend.tag, Label) && (!append || !is(append.tag, Label)) && "left labeled",
+			(!prepend || !is(prepend.tag, Label)) && append && is(append.tag, Label) && "right labeled",
+			prepend && is(prepend.tag, Label) && append && is(append.tag, Label) && "left right labeled",
+			prepend && is(prepend.tag, Button) && (!append || !is(append.tag, Button)) && "left action",
+			(!prepend || !is(prepend.tag, Button)) && append && is(append.tag, Button) && "right action",
+			prepend && is(prepend.tag, Button) && append && is(append.tag, Button) && "left right action",
 			attrs.disabled && "disabled",
 			attrs.fluid && "fluid",
 			"input"];
@@ -52,9 +52,9 @@ export class Input extends UI {
 		delete inputAttrs.root;
 
     return _('div', omitBy(attrs.rootAttrs, isEventHandler),
-						 attrs.prepend? _(attrs.prepend): undefined,
+						 attrs.prepend? attrs.prepend: undefined,
 						 _('input', inputAttrs),
-						 attrs.append? _(attrs.append): undefined);
+						 attrs.append? attrs.append: undefined);
   }
 }
 

@@ -1,4 +1,4 @@
-import {Base} from "./components/base.js";
+import {UI} from "./components/base.js";
 import {
 	Button, button,
 	Buttons, buttons,
@@ -104,7 +104,7 @@ import {
 
 
 export {
-	Base,
+	UI,
 
 	Button, button, Buttons, buttons,
 

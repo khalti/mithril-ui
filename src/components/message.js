@@ -30,7 +30,7 @@ export class Message extends UI {
 		}
 
 		return ["ui",
-						children.some((child) => is(child.tag, Icon)) && "icon",
+						children.some((child) => child && is(child.tag, Icon)) && "icon",
 						attrs.state,
 						attrs.floating && "floating",
 						attrs.compact && "compact",

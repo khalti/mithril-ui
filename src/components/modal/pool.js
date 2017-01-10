@@ -36,7 +36,7 @@ export class ModalPool extends UI {
 
 	view ({attrs, children, state}) {
 		let modals = modalPool.modals.length;
-		return m("div", attrs.rootAttrs, modals === 0? null: modalPool.modals);
+		return _("div", attrs.rootAttrs, modals === 0? null: modalPool.modals);
 	}
 }
 

@@ -48,13 +48,13 @@ export class Steps extends UI {
 
 		let childIndex = 0;
 		children = children.map((child) => {
-			if (childIndex === attrs.currentStep) {
+			if (childIndex + 1 === attrs.currentStep) {
 				child.attrs.state = "active";
 			}
-			else if (childIndex > attrs.currentStep) {
+			else if (childIndex + 1 > attrs.currentStep) {
 				child.attrs.state = "disabled";
 			}
-			else if (childIndex < attrs.currentStep) {
+			else if (childIndex + 1 < attrs.currentStep) {
 				child.attrs.state = "completed";
 			}
 

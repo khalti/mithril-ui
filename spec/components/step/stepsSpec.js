@@ -80,7 +80,7 @@ describe("steps", () => {
 
 	describe("view", () => {
 		it("sets proper state of steps", () => {
-			let attrs = {currentStep: 1};
+			let attrs = {currentStep: 2};
 			_.render(document.body, _(steps, attrs,
 					_(step,
 						_(stepTitle, "Step 1")),

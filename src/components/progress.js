@@ -13,7 +13,8 @@ export class Bar extends UI {
 	}
 
 	view ({attrs, children, state}) {
-		return _("div.bar", {style: {width: `${attrs.percent}%`}});
+		attrs.rootAttrs.style = {width: `${attrs.percent}%`};
+		return _(".bar", attrs.rootAttrs);
 	}
 }
 
@@ -27,7 +28,7 @@ export class Progress extends UI {
 		state: [required(false), within(states)]
 	}
 
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		return [
 			"ui",
 			attrs.indicating && "indicating",

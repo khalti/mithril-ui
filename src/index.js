@@ -54,10 +54,12 @@ import {
 	MessageHeader, messageHeader,
 	MessageContent, messageContent,
 } from "./components/message.js";
-import {
-	Modal, modal,
-	ModalPool, modalPool,
-} from "./components/modal";
+import
+	{ ModalHeader , modalHeader
+	, ModalContent, modalContent
+	, ModalActions, modalActions
+	, Modal, modal
+	, ModalPool, modalPool } from "./components/modal";
 import {
 	Pagination,
 	pagination,
@@ -156,6 +158,9 @@ export {
 	MessageHeader, messageHeader,
 	MessageContent, messageContent,
 
+	ModalHeader , modalHeader,
+	ModalContent, modalContent,
+	ModalActions, modalActions,
 	Modal, modal,
 	ModalPool, modalPool,
 

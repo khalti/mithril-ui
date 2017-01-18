@@ -67,7 +67,8 @@ export class Field extends UI {
       placeholder: attrs.placeholder,
       value: attrs.model(),
 			class: attrs.input? attrs.input.class : "",
-			disabled: attrs.disabled
+			disabled: attrs.disabled,
+			loading: attrs.loading
     };
 
 		if (attrs.readOnly) {

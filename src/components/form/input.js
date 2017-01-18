@@ -33,6 +33,7 @@ export class Input extends UI {
 			(!prepend || !is(prepend.tag, Button)) && append && is(append.tag, Button) && "right action",
 			prepend && is(prepend.tag, Button) && append && is(append.tag, Button) && "left right action",
 			attrs.disabled && "disabled",
+			attrs.loading && "loading",
 			attrs.fluid && "fluid",
 			"input"];
 	}

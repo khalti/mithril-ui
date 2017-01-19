@@ -35,13 +35,20 @@ export class Image extends UI {
 
   view (vdom) {
 		let attrs = vdom.attrs;
+		let root;
 
-		if(attrs.link) {
-			return _("a", attrs.rootAttrs,
-							 _("img", {src: attrs.src}));
+		if (attrs.root) {
+			root = "div";
 		}
 
-    return _("img", attrs.rootAttrs);
+		if(attrs.link) {
+			root = "a";
+		}
+
+		return root
+			? _(root, attrs.rootAttrs,
+							 _("img", {src: attrs.src}))
+			: _("img", attrs.rootAttrs);
   }
 }
 

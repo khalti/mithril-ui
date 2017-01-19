@@ -103,7 +103,15 @@ import {
 	StepDescription, stepDescription,
 	Steps, steps,
 } from "./components/step";
-
+import {
+	Items, items,
+	Item, item,
+	ItemContent, itemContent,
+	ItemHeader, itemHeader,
+	ItemMeta, itemMeta,
+	ItemDescription, itemDescription,
+	ItemExtra, itemExtra,
+} from "./components/item.js";
 
 export {
 	UI,
@@ -198,5 +206,13 @@ export {
 	StepContent, stepContent,
 	StepDescription, stepDescription,
 	Steps, steps,
+
+	Items, items,
+	Item, item,
+	ItemContent, itemContent,
+	ItemHeader, itemHeader,
+	ItemMeta, itemMeta,
+	ItemDescription, itemDescription,
+	ItemExtra, itemExtra,
 
 };

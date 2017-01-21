@@ -21,10 +21,21 @@ export class Select extends Field {
 		this.menuVisible = false;
 	}
 
+	getSelectedIndex (options, value) {
+		for (let i = 0; i < options.length; i ++ ) {
+			if (options[i].value === value) {
+				return i;
+			}
+		}
+	}
+
   view (vdom) {
 		let attrs = vdom.attrs;
-		let selectRootAttr = {value: attrs.model(),
-													onchange: _.withAttr("value", attrs.model.setAndValidate)};
+		let selectRootAttr =
+			{ value: attrs.model()
+			, onchange: _.withAttr("value", attrs.model.setAndValidate)
+			, selectedIndex: this.getSelectedIndex(attrs.options, attrs.model()) };
+
 		if (attrs.name) {
 			selectRootAttr.name = attrs.name;
 		}
@@ -35,8 +46,9 @@ export class Select extends Field {
                map(attrs.options, (option) => {
 								 let optionAttrs = {value: option.value};
 								 if (option.value === attrs.model()) {
-									 optionAttrs.selected = "selected";
+									 optionAttrs.selected = true;
 								 }
+
                  return _("option", optionAttrs, option.label);
                })),
              this.getLabelAppend(attrs));

@@ -12,7 +12,8 @@ export class Sidebar extends UI {
 		labeled: [required(false), within([true])],
 		direction: [required(true), within(["top", "right", "bottom", "left"])],
 		width: [required(false), within(["thin", "very thin", "wide", "very wide"])],
-		visible: [required(false), within([true, false])]
+		visible: [required(false), within([true, false])],
+		animation: [required(false), within["push", "uncover", "overlay", "scale down"]]
 	}
 
 	getClassList ({attrs}) {
@@ -25,10 +26,7 @@ export class Sidebar extends UI {
 			attrs.labeled && "labeled",
 			attrs.direction,
 			attrs.width,
-			attrs.visible && attrs.direction === "left" && "uncover",
-			attrs.visible && attrs.direction === "right" && "uncover",
-			attrs.visible && attrs.direction === "top" && "overlay",
-			attrs.visible && attrs.direction === "bottom" && "overlay",
+			attrs.visible && attrs.animation,
 			attrs.visible && "visible",
 			"sidebar"
 		];

@@ -46,7 +46,9 @@ module.exports = {
     "violet": "violet",
     "purple": "purple",
     "pink": "pink",
-    "brown": "brown"
+    "brown": "brown",
+		"grey": "grey",
+		"black": "black"
   },
   reverseMap: {
     mobile: "mobile reversed",

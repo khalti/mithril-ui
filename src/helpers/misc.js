@@ -32,3 +32,10 @@ export const properKeys = (obj) => {
 		}
 	});
 }
+
+
+export const firstMatch = (collection, predicate) => {
+	for (let i = 0; i < collection.length; i++) {
+		if (predicate(collection[i])) return collection[i];
+	}
+}

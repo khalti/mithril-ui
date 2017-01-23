@@ -2,6 +2,7 @@ import _ from "mithril";
 import map from "lodash/map";
 import {Field} from "./field.js";
 import {required} from "validatex";
+import {dropdown} from "./../dropdown.js";
 
 
 export class Select extends Field {
@@ -32,9 +33,11 @@ export class Select extends Field {
   view (vdom) {
 		let attrs = vdom.attrs;
 		let selectRootAttr =
-			{ value: attrs.model()
-			, onchange: _.withAttr("value", attrs.model.setAndValidate)
-			, selectedIndex: this.getSelectedIndex(attrs.options, attrs.model()) };
+			// { value: attrs.model()
+			// , onchange: _.withAttr("value", attrs.model.setAndValidate)
+			// , selectedIndex: this.getSelectedIndex(attrs.options, attrs.model()) };
+			{ model: attrs.model,
+			options: attrs.options };
 
 		if (attrs.name) {
 			selectRootAttr.name = attrs.name;
@@ -42,15 +45,7 @@ export class Select extends Field {
 
     return _("div", attrs.rootAttrs,
              this.getLabelPrepend(attrs),
-             _("select", selectRootAttr,
-               map(attrs.options, (option) => {
-								 let optionAttrs = {value: option.value};
-								 if (option.value === attrs.model()) {
-									 optionAttrs.selected = true;
-								 }
-
-                 return _("option", optionAttrs, option.label);
-               })),
+             _(dropdown, selectRootAttr),
              this.getLabelAppend(attrs));
   }
 }

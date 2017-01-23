@@ -27,6 +27,9 @@ export class Dropdown extends UI {
 		super.oninit(vnode);
 		this.active = false;
 		this.selector = "";
+
+		let index;
+
 		this.selectedIndex = -1;
 	}
 
@@ -74,11 +77,15 @@ export class Dropdown extends UI {
 
 	getText (attrs) {
 		if (!attrs.model) return attrs.text;
-		if (attrs.model && !attrs.model()) return attrs.placeholder;
+		if (attrs.model && !attrs.model() && attrs.placeholder) return attrs.placeholder;
 
-		return firstMatch((attrs.options), (option) => {
+		let match = firstMatch((attrs.options), (option) => {
 			return option.value === attrs.model();
-		}).label;
+		});
+
+		if (match) return match.label;
+
+		if (attrs.options.length > 0) return attrs.options[0].label;
 	}
 
 	clearSelector () {
@@ -125,6 +132,8 @@ export class Dropdown extends UI {
 
 			if (!this.active && [ENTER, ESC, SPACE].indexOf(e.keyCode) === -1) {
 				this.active = true;
+				e.preventDefault();
+				return;
 			}
 
 			if (e.keyCode === ESC) {
@@ -154,24 +163,8 @@ export class Dropdown extends UI {
 		e.redraw = false;
 	}
 
-	shouldSelectOption (option, attrs, currentIndex) {
-		let selectedOption = firstMatch(attrs.options, (anOption) => {
-			const selector = this.selector;
-			const selectedIndex = this.selectedIndex;
-
-			if (selector) {
-				return selector && anOption.label.toLowerCase().match("^" + selector);
-			}
-
-			return selectedIndex === currentIndex;
-
-		});
-
-		return !selectedOption && attrs.model() === option.value + "" || selectedOption === option;
-	}
-
 	selectOption (index, value, model, e) {
-		model(value);
+		model.setAndValidate(value);
 		this.selectedIndex = index;
 		e.preventDefault();
 	}
@@ -195,7 +188,6 @@ export class Dropdown extends UI {
 	}
 
 	view ({attrs, children, state}) {
-		console.log("redrawing ...");
 		const isSelection = this.isSelection(attrs);
 		const text = this.getText(attrs);
 

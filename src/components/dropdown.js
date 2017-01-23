@@ -3,11 +3,15 @@ import o from "mithril";
 import {required, isArray} from "validatex";
 import {icon} from "./icon";
 import {firstMatch} from "./../helpers/misc.js";
+import {range} from "lodash";
+
 
 const SPACE = 32;
 const ENTER = 13;
 const ESC = 27;
 const SELECTOR_RESET_INTERVAL = 500;
+const UP_KEY = 38;
+const DOWN_KEY = 40;
 
 
 export class Dropdown extends UI {
@@ -23,25 +27,31 @@ export class Dropdown extends UI {
 		super.oninit(vnode);
 		this.active = false;
 		this.selector = "";
+		this.selectedIndex = -1;
 	}
 
-	toggleActive (e) {
+	toggleActive () {
 		this.active = !this.active;
 	}
 
-	deactive (e) {
+	deactive () {
 		this.active = false;
 	}
 
 	getDefaultAttrs (vnode) {
-		return {
+		let attrs = {
 			rootAttrs: {
 				tabindex: 0,
 				onclick: this.toggleActive.bind(this),
 				onblur: this.deactive.bind(this),
-				onkeypress: this.captureKeyPress.bind(this)
 			}
 		};
+
+		if (vnode.attrs.model) {
+			attrs.onkeydown = this.captureKeyPress.bind(this, vnode.attrs.options);
+		}
+
+		return attrs;
 	}
 
 	getClassList ({attrs}) {
@@ -75,42 +85,108 @@ export class Dropdown extends UI {
 		this.selector = "";
 	}
 
-	setSelector (character) {
+	setSelector (options, character) {
 		if (!this.active) return;
 
 		this.clearSelectorTimmer && clearTimeout(this.clearSelectorTimmer);
 
 		this.selector = this.selector + character;
 
+		for (let i = 0; i < options.length; i ++) {
+			if (options[i].label.toLowerCase().match("^" + this.selector)) {
+				this.selectedIndex = i;
+				break;
+			}
+		}
+
 		this.clearSelectorTimmer = setTimeout(this.clearSelector.bind(this), SELECTOR_RESET_INTERVAL);
 	}
 
-	captureKeyPress (e) {
-		if (e.keyCode === SPACE) {
-			this.toggleActive();
-			e.preventDefault();
-		}
-		else if (e.keyCode === ENTER) {
-			console.log("set value and close dropdown");
-		}
-		else if (e.keyCode === ESC) {
-			console.log("close dropdown");
-		}
-		else {
-			this.setSelector(e.key);
+	incSelectedIndex (options) {
+		this.selectedIndex ++;
+
+		if (this.selectedIndex === options.length) {
+			this.selectedIndex = 0;
 		}
 	}
 
-	shouldSelectOption (option, attrs) {
+	decSelectedIndex (options) {
+		this.selectedIndex --;
+
+		if (this.selectedIndex === -1) {
+			this.selectedIndex = options.length - 1;
+		}
+	}
+
+	captureKeyPress (options, e) {
+		if ([SPACE, ENTER, ESC, UP_KEY, DOWN_KEY].indexOf(e.keyCode) !== -1 ||
+				e.keyCode >= 65 && e.keyCode <= 90 ||
+				e.keyCode >= 48 && e.keyCode <= 57) {
+
+			if (!this.active && [ENTER, ESC, SPACE].indexOf(e.keyCode) === -1) {
+				this.active = true;
+			}
+
+			if (e.keyCode === ESC) {
+				console.log("close dropdown");
+			}
+			else if (e.keyCode == UP_KEY) {
+				this.decSelectedIndex(options);
+			}
+			else if (e.keyCode == DOWN_KEY) {
+				this.incSelectedIndex(options);
+			}
+			else if (e.keyCode === SPACE) {
+				console.log("toggle active");
+				this.toggleActive();
+			}
+			else if (e.keyCode === ENTER) {
+				console.log("set value and close dropdown");
+			}
+			else {
+				this.setSelector(options, e.key);
+			}
+
+			e.preventDefault();
+		}
+	}
+
+	shouldSelectOption (option, attrs, currentIndex) {
 		let selectedOption = firstMatch(attrs.options, (anOption) => {
 			const selector = this.selector;
-			return selector && anOption.label.toLowerCase().match("^" + selector);
+			const selectedIndex = this.selectedIndex;
+
+			if (selector) {
+				return selector && anOption.label.toLowerCase().match("^" + selector);
+			}
+
+			return selectedIndex === currentIndex;
+
 		});
 
 		return !selectedOption && attrs.model() === option.value + "" || selectedOption === option;
 	}
 
+	getProcessedOptions (attrs) {
+		let index = 0;
+
+		return attrs.options.map((option) => {
+			let itemAttrs =
+				{ "data-value": option.value
+				, onclick: o.withAttr("data-value", attrs.model) };
+
+			if (this.selectedIndex === index) {
+				itemAttrs.active = true;
+				itemAttrs.selected = true;
+			}
+
+			index ++;
+			return o(dropdownItem, itemAttrs, option.label);
+		});
+	}
+
 	view ({attrs, children, state}) {
+		console.log("redrawing ...");
 		const isSelection = this.isSelection(attrs);
 		const text = this.getText(attrs);
 
@@ -129,18 +205,7 @@ export class Dropdown extends UI {
 
 				o(dropdownMenu, {visible: this.active},
 					isSelection
-						? attrs.options.map((option) => {
-							let itemAttrs =
-							{ "data-value": option.value
-							, onclick: o.withAttr("data-value", attrs.model) };
-
-							if (this.shouldSelectOption(option, attrs)) {
-								itemAttrs.active = true;
-								itemAttrs.selected = true;
-							}
-
-							return o(dropdownItem, itemAttrs, option.label);
-						})
+						? this.getProcessedOptions(attrs)
 						: children));
 	}
 }

@@ -36,10 +36,11 @@ export class Select extends Field {
 			// { value: attrs.model()
 			// , onchange: _.withAttr("value", attrs.model.setAndValidate)
 			// , selectedIndex: this.getSelectedIndex(attrs.options, attrs.model()) };
-			{ model: attrs.model,
-			placeholder: attrs.placeholder,
-			name: attrs.name,
-			options: attrs.options };
+			{ model: attrs.model
+			, placeholder: attrs.placeholder
+			, name: attrs.name
+			, search: attrs.search
+			, options: attrs.options };
 
 		if (attrs.name) {
 			selectRootAttr.name = attrs.name;

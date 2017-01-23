@@ -46,7 +46,6 @@ export class Dropdown extends UI {
 				for (let i = 0; i < children.length; i ++ ) {
 					let child = children[i];
 					if (child.className.match("search")) {
-						console.log("focus input");
 						child.focus();
 					}
 				}
@@ -56,7 +55,7 @@ export class Dropdown extends UI {
 		this.active = !this.active;
 	}
 
-	deactive () {
+	deactive (e) {
 		this.active = false;
 	}
 
@@ -110,7 +109,7 @@ export class Dropdown extends UI {
 	}
 
 	matchOptionLabel(label, selector) {
-		return selector? label.toLowerCase().match("^" + selector): false;
+		return selector? label.toLowerCase().match("^" + selector.toLowerCase()): false;
 	}
 
 	setSelector (attrs, character) {
@@ -138,6 +137,7 @@ export class Dropdown extends UI {
 	}
 
 	incSelectedIndex (options) {
+		this.downKeyPress = true;
 		this.selectedIndex ++;
 
 		if (this.selectedIndex === options.length) {
@@ -146,6 +146,7 @@ export class Dropdown extends UI {
 	}
 
 	decSelectedIndex (options) {
+		this.downKeyPress = false;
 		this.selectedIndex --;
 
 		if (this.selectedIndex === -1) {
@@ -203,14 +204,16 @@ export class Dropdown extends UI {
 
 	getProcessedOptions (attrs) {
 		let index = 0;
+		let anOptionSelected = false;
 
 		return attrs.options.map((option) => {
 			let itemAttrs =
 				{ "data-value": option.value
-				, onclick: this.selectOption.bind(this, index, option.value, attrs.model) };
+				, onmousedown: this.selectOption.bind(this, index, option.value, attrs.model) };
 
 			if (this.selectedIndex === index) {
 				itemAttrs.selected = true;
+				anOptionSelected = true;
 			}
 
 			if (attrs.model() === option.value) {
@@ -229,7 +232,6 @@ export class Dropdown extends UI {
 	}
 
 	updateSearchText (attrs, e) {
-		console.log("@ update search text");
 		let el = e.target || e.srcElement;
 		this.setSelector(attrs, el.value);
 		e.preventDefault();
@@ -253,6 +255,7 @@ export class Dropdown extends UI {
 				attrs.search
 					? o("input.search[tabindex=0][autocomplete=off]",
 							{ value: this.selector
+							, onblur: this.deactive.bind(this)
 							, oninput: this.updateSearchText.bind(this, attrs) })
 					: null,
 

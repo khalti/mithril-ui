@@ -48,7 +48,7 @@ export class Dropdown extends UI {
 		};
 
 		if (vnode.attrs.model) {
-			attrs.onkeydown = this.captureKeyPress.bind(this, vnode.attrs.options);
+			attrs.onkeydown = this.captureKeyPress.bind(this, vnode.attrs);
 		}
 
 		return attrs;
@@ -77,7 +77,7 @@ export class Dropdown extends UI {
 		if (attrs.model && !attrs.model()) return attrs.placeholder;
 
 		return firstMatch((attrs.options), (option) => {
-			return option.value + "" === attrs.model();
+			return option.value === attrs.model();
 		}).label;
 	}
 
@@ -118,7 +118,7 @@ export class Dropdown extends UI {
 		}
 	}
 
-	captureKeyPress (options, e) {
+	captureKeyPress (attrs, e) {
 		if ([SPACE, ENTER, ESC, UP_KEY, DOWN_KEY].indexOf(e.keyCode) !== -1 ||
 				e.keyCode >= 65 && e.keyCode <= 90 ||
 				e.keyCode >= 48 && e.keyCode <= 57) {
@@ -128,27 +128,30 @@ export class Dropdown extends UI {
 			}
 
 			if (e.keyCode === ESC) {
-				console.log("close dropdown");
+				this.deactive();
 			}
 			else if (e.keyCode == UP_KEY) {
-				this.decSelectedIndex(options);
+				this.decSelectedIndex(attrs.options);
 			}
 			else if (e.keyCode == DOWN_KEY) {
-				this.incSelectedIndex(options);
+				this.incSelectedIndex(attrs.options);
 			}
 			else if (e.keyCode === SPACE) {
-				console.log("toggle active");
 				this.toggleActive();
 			}
 			else if (e.keyCode === ENTER) {
-				console.log("set value and close dropdown");
+				let {options, model} = attrs;
+				this.selectOption(this.selectedIndex, options[this.selectedIndex].value, model, e);
+				this.deactive();
 			}
 			else {
-				this.setSelector(options, e.key);
+				this.setSelector(attrs.options, e.key);
 			}
 
 			e.preventDefault();
+			return;
 		}
+		e.redraw = false;
 	}
 
 	shouldSelectOption (option, attrs, currentIndex) {
@@ -167,13 +170,19 @@ export class Dropdown extends UI {
 		return !selectedOption && attrs.model() === option.value + "" || selectedOption === option;
 	}
 
+	selectOption (index, value, model, e) {
+		model(value);
+		this.selectedIndex = index;
+		e.preventDefault();
+	}
+
 	getProcessedOptions (attrs) {
 		let index = 0;
 
 		return attrs.options.map((option) => {
 			let itemAttrs =
 				{ "data-value": option.value
-				, onclick: o.withAttr("data-value", attrs.model) };
+				, onclick: this.selectOption.bind(this, index, option.value, attrs.model) };
 
 			if (this.selectedIndex === index) {
 				itemAttrs.active = true;

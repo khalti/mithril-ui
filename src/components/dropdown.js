@@ -20,7 +20,8 @@ export class Dropdown extends UI {
 		options: [required(false), isArray()],
 		placeholder: required(false),
 		model: required(false),
-		search: required(false)
+		name: required(false),
+		search: required(false),
 	};
 
 	oninit (vnode) {
@@ -50,7 +51,7 @@ export class Dropdown extends UI {
 			}
 		};
 
-		if (vnode.attrs.model) {
+		if (vnode.attrs.model && !vnode.attrs.search) {
 			attrs.onkeydown = this.captureKeyPress.bind(this, vnode.attrs);
 		}
 
@@ -92,21 +93,28 @@ export class Dropdown extends UI {
 		this.selector = "";
 	}
 
-	setSelector (options, character) {
+	matchOptionLabel(label, selector) {
+		return selector? label.toLowerCase().match("^" + selector): false;
+	}
+
+	setSelector (attrs, character) {
+		let {options, search} = attrs;
+
 		if (!this.active) return;
 
 		this.clearSelectorTimmer && clearTimeout(this.clearSelectorTimmer);
 
-		this.selector = this.selector + character;
+		this.selector = attrs.search ? character: this.selector + character;
 
 		for (let i = 0; i < options.length; i ++) {
-			if (options[i].label.toLowerCase().match("^" + this.selector)) {
+			if (this.matchOptionLabel(options[i].label, this.selector)) {
 				this.selectedIndex = i;
 				break;
 			}
 		}
 
-		this.clearSelectorTimmer = setTimeout(this.clearSelector.bind(this), SELECTOR_RESET_INTERVAL);
+		this.clearSelectorTimmer =
+			!attrs.search && setTimeout( this.clearSelector.bind(this), SELECTOR_RESET_INTERVAL);
 	}
 
 	incSelectedIndex (options) {
@@ -154,7 +162,7 @@ export class Dropdown extends UI {
 				this.deactive();
 			}
 			else {
-				this.setSelector(attrs.options, e.key);
+				this.setSelector(attrs, e.key);
 			}
 
 			e.preventDefault();
@@ -166,11 +174,24 @@ export class Dropdown extends UI {
 	selectOption (index, value, model, e) {
 		model.setAndValidate(value);
 		this.selectedIndex = index;
+		this.selector = "";
 		e.preventDefault();
+	}
+
+	getFilteredOptions (attrs) {
+		if (attrs.search && this.selector) {
+			return attrs.options.filter((option) => {
+				return this.matchOptionLabel(option.label, this.selector);
+			});
+		}
+
+		return attrs.options;
 	}
 
 	getProcessedOptions (attrs) {
 		let index = 0;
+
+		// let filteredOptions = this.getFilteredOptions(attrs);
 
 		return attrs.options.map((option) => {
 			let itemAttrs =
@@ -178,8 +199,17 @@ export class Dropdown extends UI {
 				, onclick: this.selectOption.bind(this, index, option.value, attrs.model) };
 
 			if (this.selectedIndex === index) {
-				itemAttrs.active = true;
 				itemAttrs.selected = true;
+			}
+
+			if (attrs.model() === option.value) {
+				itemAttrs.active = true;
+			}
+
+			if (attrs.search &&
+					this.selector && 
+					!this.matchOptionLabel(option.label, this.selector)) {
+				itemAttrs.filtered = true;
 			}
 
 			index ++;
@@ -191,18 +221,22 @@ export class Dropdown extends UI {
 		const isSelection = this.isSelection(attrs);
 		const text = this.getText(attrs);
 
-		let inputAttrs = {type: "hidden"};
-		if (isSelection && attrs.name) {
-			name: attrs.name
-		}
-
 		return o("div", attrs.rootAttrs,
-				isSelection? o("input", inputAttrs): null,
+				isSelection?
+					o("input", {type: "hidden", name: attrs.name || "", value: attrs.model()})
+					: null,
 
-				o(dropdownText, {default: this.isDefaultText(attrs, text)}, text),
+				o(dropdownText,
+					{ default: this.isDefaultText(attrs, text)
+					, filtered: attrs.search && this.selector? true: false },
+					text),
 				o(icon, {name: "dropdown"}),
 
-				attrs.search? o("input.search[tabindex=0][autocomplete=off]"): null,
+				attrs.search
+					? o("input.search[tabindex=0][autocomplete=off]",
+							{ value: this.selector
+							, oninput: o.withAttr("value", this.setSelector.bind(this, attrs)) })
+					: null,
 
 				o(dropdownMenu, {visible: this.active},
 					isSelection
@@ -217,10 +251,11 @@ export const dropdown = new Dropdown();
 
 export class DropdownText extends UI {
 	getClassList ({attrs}) {
-	return [
-			attrs.default && "default",
-			"text"
-		];
+		return [
+				attrs.default && "default",
+				attrs.filtered && "filtered",
+				"text"
+			];
 	}
 }
 
@@ -257,6 +292,7 @@ export class DropdownItem extends UI {
 		return [
 			attrs.active && "active",
 			attrs.selected && "selected",
+			attrs.filtered && "filtered",
 			"item"
 		];
 	}

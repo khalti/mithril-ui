@@ -37,6 +37,8 @@ export class Select extends Field {
 			// , onchange: _.withAttr("value", attrs.model.setAndValidate)
 			// , selectedIndex: this.getSelectedIndex(attrs.options, attrs.model()) };
 			{ model: attrs.model,
+			placeholder: attrs.placeholder,
+			name: attrs.name,
 			options: attrs.options };
 
 		if (attrs.name) {

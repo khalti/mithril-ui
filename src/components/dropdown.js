@@ -34,7 +34,25 @@ export class Dropdown extends UI {
 		this.selectedIndex = -1;
 	}
 
-	toggleActive () {
+	toggleActive (e) {
+		if (!this.active) {
+			let target = e.target || e.srcElement;
+			if (!(target.className.match("dropdown") && target.className.match("ui"))) {
+				target = target.parentNode;
+			}
+
+			if (target.className.match("search")) {
+				let children = target.childNodes;
+				for (let i = 0; i < children.length; i ++ ) {
+					let child = children[i];
+					if (child.className.match("search")) {
+						console.log("focus input");
+						child.focus();
+					}
+				}
+			}
+		}
+
 		this.active = !this.active;
 	}
 
@@ -48,12 +66,10 @@ export class Dropdown extends UI {
 				tabindex: 0,
 				onclick: this.toggleActive.bind(this),
 				onblur: this.deactive.bind(this),
+				onkeydown: this.captureKeyPress.bind(this, vnode.attrs)
 			}
 		};
 
-		if (vnode.attrs.model && !vnode.attrs.search) {
-			attrs.onkeydown = this.captureKeyPress.bind(this, vnode.attrs);
-		}
 
 		return attrs;
 	}
@@ -102,6 +118,10 @@ export class Dropdown extends UI {
 
 		if (!this.active) return;
 
+		if (!character) {
+			this.selectedIndex = -1;
+		}
+
 		this.clearSelectorTimmer && clearTimeout(this.clearSelectorTimmer);
 
 		this.selector = attrs.search ? character: this.selector + character;
@@ -139,7 +159,7 @@ export class Dropdown extends UI {
 				e.keyCode >= 48 && e.keyCode <= 57) {
 
 			if (!this.active && [ENTER, ESC, SPACE].indexOf(e.keyCode) === -1) {
-				this.active = true;
+				this.toggleActive(e);
 				e.preventDefault();
 				return;
 			}
@@ -154,12 +174,15 @@ export class Dropdown extends UI {
 				this.incSelectedIndex(attrs.options);
 			}
 			else if (e.keyCode === SPACE) {
-				this.toggleActive();
+				this.toggleActive(e);
 			}
 			else if (e.keyCode === ENTER) {
 				let {options, model} = attrs;
 				this.selectOption(this.selectedIndex, options[this.selectedIndex].value, model, e);
 				this.deactive();
+			}
+			else if (attrs.search) {
+				return;
 			}
 			else {
 				this.setSelector(attrs, e.key);
@@ -178,20 +201,8 @@ export class Dropdown extends UI {
 		e.preventDefault();
 	}
 
-	getFilteredOptions (attrs) {
-		if (attrs.search && this.selector) {
-			return attrs.options.filter((option) => {
-				return this.matchOptionLabel(option.label, this.selector);
-			});
-		}
-
-		return attrs.options;
-	}
-
 	getProcessedOptions (attrs) {
 		let index = 0;
-
-		// let filteredOptions = this.getFilteredOptions(attrs);
 
 		return attrs.options.map((option) => {
 			let itemAttrs =
@@ -217,6 +228,13 @@ export class Dropdown extends UI {
 		});
 	}
 
+	updateSearchText (attrs, e) {
+		console.log("@ update search text");
+		let el = e.target || e.srcElement;
+		this.setSelector(attrs, el.value);
+		e.preventDefault();
+	}
+
 	view ({attrs, children, state}) {
 		const isSelection = this.isSelection(attrs);
 		const text = this.getText(attrs);
@@ -235,7 +253,7 @@ export class Dropdown extends UI {
 				attrs.search
 					? o("input.search[tabindex=0][autocomplete=off]",
 							{ value: this.selector
-							, oninput: o.withAttr("value", this.setSelector.bind(this, attrs)) })
+							, oninput: this.updateSearchText.bind(this, attrs) })
 					: null,
 
 				o(dropdownMenu, {visible: this.active},

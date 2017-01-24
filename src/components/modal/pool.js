@@ -2,6 +2,8 @@ import _ from "mithril";
 import {required, within} from "validatex";
 import {UI} from "./../base.js";
 
+const DISABLE_SCROLL_CLASS = " dimmable dimmed";
+
 
 export class ModalPool extends UI {
 	modals = []
@@ -16,11 +18,40 @@ export class ModalPool extends UI {
 	}
 
 	add (modal) {
-		modalPool.modals.unshift(modal);
+		this.modals.unshift(modal);
 	}
 
 	shift (modal) {
-		modalPool.modals.shift();
+		this.modals.shift();
+	}
+
+	onupdate (vnode) {
+		let parentDom = vnode.dom.parentNode;
+		const className = parentDom.className;
+
+		if (this.modals.length > 0) {
+			if (!className.match(DISABLE_SCROLL_CLASS)) {
+				parentDom.className = className + DISABLE_SCROLL_CLASS;
+			}
+		}
+		else {
+			parentDom.className = className.replace(DISABLE_SCROLL_CLASS, "");
+		}
+	}
+
+	removeModal (e) {
+		if (e.target.className.match("modals")) {
+			this.shift();
+			return;
+		}
+
+		e.redraw = false;
+	}
+
+	getDefaultAttrs (vnode) {
+		let attrs = super.getDefaultAttrs(vnode);
+		attrs.onclick = this.removeModal.bind(this);
+		return attrs;
 	}
 
 	getClassList (attrs) {
@@ -30,13 +61,13 @@ export class ModalPool extends UI {
 			"page",
 			"modals",
 			"dimmer",
-			modalPool.modals.length !== 0 && "visible active"
+			this.modals.length !== 0 && "visible active"
 		];
 	}
 
 	view ({attrs, children, state}) {
-		let modals = modalPool.modals.length;
-		return _("div", attrs.rootAttrs, modals === 0? null: modalPool.modals);
+		let modals = this.modals.length;
+		return _("div", attrs.rootAttrs, modals === 0? []: this.modals);
 	}
 }
 

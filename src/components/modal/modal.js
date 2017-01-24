@@ -7,7 +7,7 @@ import {modalPool} from "./pool.js";
 const sizeMap = ["small", "large", "fullscreen"];
 
 export class ModalHeader extends UI {
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		return ["header"];
 	}
 
@@ -24,7 +24,7 @@ export class ModalContent extends UI {
 		image: [required(false), within([true, false])]
 	}
 
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		return [
 			attrs.image && "image",
 			"content"
@@ -40,7 +40,7 @@ export const modalContent = new ModalContent();
 
 
 export class ModalActions extends UI {
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		return [
 			"actions"
 		];
@@ -69,7 +69,7 @@ export class Modal extends UI {
 		this.remove();
 	}
 
-	getClassList (attrs) {
+	getClassList ({attrs}) {
 		return [
 			"ui",
 			attrs.basic && "basic",

@@ -112,6 +112,12 @@ import {
 	ItemDescription, itemDescription,
 	ItemExtra, itemExtra,
 } from "./components/item.js";
+import {
+	Dropdown, dropdown,
+	DropdownText, dropdownText,
+	DropdownMenu, dropdownMenu,
+	DropdownItem, dropdownItem,
+} from "./components/dropdown.js";
 
 export {
 	UI,
@@ -215,4 +221,8 @@ export {
 	ItemDescription, itemDescription,
 	ItemExtra, itemExtra,
 
+	Dropdown, dropdown,
+	DropdownText, dropdownText,
+	DropdownMenu, dropdownMenu,
+	DropdownItem, dropdownItem,
 };

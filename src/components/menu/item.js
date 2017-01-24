@@ -2,6 +2,7 @@ import {UI} from "./../base.js";
 import enums from "./../../helpers/enums.js";
 import keys from "lodash/keys";
 import {required, within} from "validatex";
+import _ from "mithril";
 
 
 let fittedMap = {
@@ -22,6 +23,7 @@ export class MenuItem extends UI {
 			root: attrs.href? "a": "div",
 			rootAttrs: {
 				href: attrs.href || ""
+				// oncreate: _.route.link
 			}
 		};
 	}

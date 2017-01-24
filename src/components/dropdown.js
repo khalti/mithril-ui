@@ -4,6 +4,7 @@ import {required, isArray} from "validatex";
 import {icon} from "./icon";
 import {firstMatch} from "./../helpers/misc.js";
 import {range} from "lodash";
+import {MenuItem} from "./menu/item.js";
 
 
 const SPACE = 32;
@@ -308,14 +309,14 @@ export class DropdownMenu extends UI {
 export const dropdownMenu = new DropdownMenu();
 
 
-export class DropdownItem extends UI {
-	getClassList ({attrs}) {
-		return [
-			attrs.active && "active",
-			attrs.selected && "selected",
-			attrs.filtered && "filtered",
-			"item"
-		];
+export class DropdownItem extends  MenuItem {
+	getClassList (vnode) {
+		let classes = super.getClassList(vnode);
+
+		classes.selected = vnode.attrs.selected && "selected";
+		classes.filtered = vnode.attrs.filtered && "filtered";
+
+		return classes;
 	}
 }
 

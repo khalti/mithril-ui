@@ -19,6 +19,7 @@ export class Image extends UI {
 	
 	getClassList ({attrs}) {
 		return ["ui",
+						attrs.inline && "inline",
 						attrs.hidden && "hidden",
 						attrs.disabled && "disabled",
 						 attrs.bordered && "bordered",

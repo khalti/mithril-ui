@@ -33,6 +33,7 @@ export class Segment extends UI {
 						attrs.circular && "circular",
 						attrs.clearing && "clearing",
 						attrs.basic && "basic",
+						attrs.header && "header",
 						attachmentMap[attrs.attach],
 						colorMap[attrs.color],
 						emphasisMap[attrs.emphasis],

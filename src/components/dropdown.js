@@ -80,6 +80,7 @@ export class Dropdown extends UI {
 			this.active && "active visible",
 			attrs.options && "selection",
 			attrs.search && "search",
+			attrs.fluid && "fluid",
 			"dropdown"
 		];
 	}

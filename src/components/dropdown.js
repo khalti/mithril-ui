@@ -65,7 +65,7 @@ export class Dropdown extends UI {
 			rootAttrs: {
 				tabindex: 0,
 				onclick: this.toggleActive.bind(this),
-				onblur: this.deactive.bind(this),
+				// onblur: this.deactive.bind(this),
 				onkeydown: this.captureKeyPress.bind(this, vnode.attrs)
 			}
 		};

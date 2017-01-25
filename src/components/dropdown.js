@@ -35,6 +35,8 @@ export class Dropdown extends UI {
 	}
 
 	toggleActive (e) {
+		if (this.active && e.target.tagName.toLowerCase() === "input") return;
+
 		if (!this.active) {
 			let target = e.target || e.srcElement;
 			if (!(target.className.match("dropdown") && target.className.match("ui"))) {
@@ -56,6 +58,8 @@ export class Dropdown extends UI {
 	}
 
 	deactive (e) {
+		let relatedTarget = e.relatedTarget;
+		if (relatedTarget && relatedTarget.tagName.toLowerCase() === "input") return;
 		this.active = false;
 	}
 
@@ -63,13 +67,13 @@ export class Dropdown extends UI {
 		let attrs = {
 			rootAttrs: {
 				tabindex: 0,
-				onclick: this.toggleActive.bind(this),
+				onclick: this.handleClick.bind(this),
 				onkeydown: this.captureKeyPress.bind(this, vnode.attrs)
 			}
 		};
 
 		if (vnode.attrs.model) {
-				attrs.rootAttrs.onblur = this.deactive.bind(this);
+			attrs.rootAttrs.onblur = this.handleBlur.bind(this);
 		}
 
 		return attrs;
@@ -84,6 +88,14 @@ export class Dropdown extends UI {
 			attrs.fluid && "fluid",
 			"dropdown"
 		];
+	}
+
+	handleClick (e) {
+		this.toggleActive(e);
+	}
+
+	handleBlur (e) {
+		this.deactive(e);
 	}
 
 	isSelection(attrs) {
@@ -169,7 +181,7 @@ export class Dropdown extends UI {
 			}
 
 			if (e.keyCode === ESC) {
-				this.deactive();
+				this.deactive(e);
 			}
 			else if (e.keyCode == UP_KEY) {
 				this.decSelectedIndex(attrs.options);
@@ -183,7 +195,7 @@ export class Dropdown extends UI {
 			else if (e.keyCode === ENTER) {
 				let {options, model} = attrs;
 				this.selectOption(this.selectedIndex, options[this.selectedIndex].value, model, e);
-				this.deactive();
+				this.deactive(e);
 			}
 			else if (attrs.search) {
 				return;
@@ -258,7 +270,6 @@ export class Dropdown extends UI {
 				attrs.search
 					? o("input.search[tabindex=0][autocomplete=off]",
 							{ value: this.selector
-							, onblur: this.deactive.bind(this)
 							, oninput: this.updateSearchText.bind(this, attrs) })
 					: null,
 

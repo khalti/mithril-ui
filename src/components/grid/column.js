@@ -26,7 +26,8 @@ export class Column extends UI {
 		largeScreen: [required(false),
 									within(properKeys(enums.widthMap), "Invalid value '{value}'.")],
 		widescreen: [required(false),
-								within(properKeys(enums.widthMap), "Invalid value '{value}'.")]
+								within(properKeys(enums.widthMap), "Invalid value '{value}'.")],
+		verticalAlignment: [required(false)]
 	}
 
 	getClassList ({attrs}) {
@@ -48,6 +49,7 @@ export class Column extends UI {
 						attrs.computer? enums.widthMap[attrs.computer] + " computer": "",
 						attrs.largeScreen? enums.widthMap[attrs.largeScreen] + " large screen": "",
 						attrs.widescreen? enums.widthMap[attrs.widescreen] + " widescreen": "",
+						enums.verticalAlignmentMap[attrs.verticalAlignment],
 						"column"];
 	}
 }

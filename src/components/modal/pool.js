@@ -2,11 +2,11 @@ import _ from "mithril";
 import {required, within} from "validatex";
 import {UI} from "./../base.js";
 
-const DISABLE_SCROLL_CLASS = " dimmable dimmed";
+const DISABLE_SCROLL_CLASS = " dimmable dimmed scrolling";
 
 
 export class ModalPool extends UI {
-	modals = []
+	static modals = []
 
 	getStyle ({attrs, children, state}) {
 		return {
@@ -18,18 +18,18 @@ export class ModalPool extends UI {
 	}
 
 	add (modal) {
-		this.modals.unshift(modal);
+		ModalPool.modals = ModalPool.modals.concat([modal]);
 	}
 
 	shift (modal) {
-		this.modals.shift();
+		ModalPool.modals = ModalPool.modals.slice(1);
 	}
 
 	onupdate (vnode) {
 		let parentDom = vnode.dom.parentNode;
 		const className = parentDom.className;
 
-		if (this.modals.length > 0) {
+		if (ModalPool.modals.length > 0) {
 			if (!className.match(DISABLE_SCROLL_CLASS)) {
 				parentDom.className = className + DISABLE_SCROLL_CLASS;
 			}
@@ -61,13 +61,12 @@ export class ModalPool extends UI {
 			"page",
 			"modals",
 			"dimmer",
-			this.modals.length !== 0 && "visible active"
+			ModalPool.modals.length !== 0 && "visible active"
 		];
 	}
 
 	view ({attrs, children, state}) {
-		let modals = this.modals.length;
-		return _("div", attrs.rootAttrs, modals === 0? []: this.modals);
+		return _("div", attrs.rootAttrs, ModalPool.modals);
 	}
 }
 

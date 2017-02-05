@@ -124,6 +124,8 @@ export class Dropdown extends UI {
 	}
 
 	matchOptionLabel(label, selector) {
+		label = "" + label;
+		selector = "" + selector;
 		return selector? label.toLowerCase().match("^" + selector.toLowerCase()): false;
 	}
 

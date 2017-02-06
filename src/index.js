@@ -24,7 +24,8 @@ import {
 	Fields, fields,
 	Select, select,
 	Form, form,
-	Checkbox, checkbox
+	Checkbox, checkbox,
+	TextArea, textArea
 } from "./components/form";
 
 import {
@@ -147,6 +148,7 @@ export {
 	Select, select,
 	Form, form,
 	Checkbox, checkbox,
+	TextArea, textArea,
 
 	Grid, grid,
 	Row, row,

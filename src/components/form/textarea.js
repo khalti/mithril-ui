@@ -12,6 +12,7 @@ export class TextArea extends Field {
 			rows: attrs.rowCount,
 			name: attrs.name,
 			placeholder: attrs.placeholder,
+			value: attrs.model()
 			// autoExpand
 		};
 

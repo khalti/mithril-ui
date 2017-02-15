@@ -68,7 +68,8 @@ export class Field extends UI {
       value: attrs.model(),
 			class: attrs.input? attrs.input.class : "",
 			disabled: attrs.disabled,
-			loading: attrs.loading
+			loading: attrs.loading,
+			step: attrs.step
     };
 
 		if (attrs.readOnly) {

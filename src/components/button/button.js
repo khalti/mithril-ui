@@ -52,7 +52,11 @@ export class Button extends UI {
 		if (attrs.href) {
 			attrs.root = "a";
 			attrs.rootAttrs.href = attrs.href;
-			attrs.rootAttrs.oncreate = _.route.link;
+
+			if (attrs.href && !attrs.href.match(/^(https?:\/\/)|(www\.)/)) {
+				console.log(attrs.href);
+				attrs.rootAttrs.oncreate = _.route.link;
+			}
 		}
 
 		return _(attrs.root, attrs.rootAttrs, children);

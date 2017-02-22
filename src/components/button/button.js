@@ -54,7 +54,6 @@ export class Button extends UI {
 			attrs.rootAttrs.href = attrs.href;
 
 			if (attrs.href && !attrs.href.match(/^(https?:\/\/)|(www\.)/)) {
-				console.log(attrs.href);
 				attrs.rootAttrs.oncreate = _.route.link;
 			}
 		}

@@ -5,6 +5,7 @@ import {Select, select} from "./select.js";
 import {Form, form} from "./form.js";
 import {Checkbox, checkbox} from "./checkbox.js";
 import {TextArea, textArea} from "./textarea.js";
+import {Calendar, calendar} from "./calendar.js";
 
 
 export {
@@ -15,4 +16,5 @@ export {
 	Form, form,
 	Checkbox, checkbox,
 	TextArea, textArea,
+	Calendar, calendar,
 };

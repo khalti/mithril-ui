@@ -25,7 +25,8 @@ import {
 	Select, select,
 	Form, form,
 	Checkbox, checkbox,
-	TextArea, textArea
+	TextArea, textArea,
+	Calendar, calendar,
 } from "./components/form";
 
 import {
@@ -119,6 +120,7 @@ import {
 	DropdownMenu, dropdownMenu,
 	DropdownItem, dropdownItem,
 } from "./components/dropdown.js";
+import { Popup, popup, popupBinder } from "./components/popup.js";
 
 export {
 	UI,
@@ -149,6 +151,7 @@ export {
 	Form, form,
 	Checkbox, checkbox,
 	TextArea, textArea,
+	Calendar, calendar,
 
 	Grid, grid,
 	Row, row,
@@ -227,4 +230,6 @@ export {
 	DropdownText, dropdownText,
 	DropdownMenu, dropdownMenu,
 	DropdownItem, dropdownItem,
+
+	Popup, popup, popupBinder,
 };

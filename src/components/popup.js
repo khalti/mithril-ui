@@ -13,9 +13,9 @@ export class Popup extends UI {
 		, size: [required(false), within(Object.keys(sizeMap))]
 		, flowing: [required(false), isBoolean(true)]
 		, inverted: [required(false), isBoolean(true)]
-		, position: [required(false), isString(true)]
+		, position: [required(true), isString(true)]
 		, offSet: [required(false), isNumber(true)]
-		, display: [required(true), isBoolean(true)]
+		, visible: [required(true), isBoolean(true)]
 		, }
 
 	getClassList ({attrs}) {
@@ -28,7 +28,7 @@ export class Popup extends UI {
 			, attrs.flowing && "flowing"
 			, attrs.inverted && "inverted"
 			, attrs.position
-			, attrs.display? "visible": "hidden"
+			, attrs.visible? "visible": "hidden"
 			, "popup"
 			, ];
 
@@ -40,38 +40,85 @@ export const popup = new Popup();
 
 
 export class PopupBinder extends UI {
+	attrSchema =
+		{ displayPopup: [required(true), isString(true)]
+		, hidePopup: [required(true), isString(true)]
+	 	, }
+
 	oninit (vnode) {
-		super.oninit(vnode);
-		this.displayPopup = false;
+		this.popupCache = this.getPopup(vnode);
 	}
 
-	toggleDisplayPopup () {
-		this.displayPopup = !this.displayPopup;
+	onbeforeremove (vnode) {
+		PopupPool.remove(this.popupCache);
+	}
+
+	getPopup (vnode) {
+		return vnode.children[1];
+	}
+
+	displayPopup () {
+		if (this.popupCache.attrs.visible === undefined) {
+			PopupPool.add(this.popupCache);
+		}
+
+		this.popupCache.attrs.visible = true;
+	}
+
+	hidePopup () {
+		this.popupCache.attrs.visible = false;
+	}
+
+	togglePopupDisplay () {
+		if (!this.popupCache.attrs.visible) {
+			this.displayPopup();
+		}
+		else {
+			this.hidePopup();
+		}
 	}
 
 	view ({attrs, children, state}) {
 		if (children.length !== 2) throw Error("Please pass a popup and triggerer.");
 
-		let popupVdom, parentVdom;
-		if (children[1].tag instanceof Popup) {
-			popupVdom = children[1];
-			parentVdom = children[0];
+		let parentVdom = children[0];
+		let parentAttrs = parentVdom.attrs;
+
+		if (attrs.displayPopup === attrs.hidePopup) {
+			parentVdom.attrs[attrs.displayPopup] = (e) => {
+				this.togglePopupDisplay();
+			}
 		}
 		else {
-			popupVdom = children[0];
-			parentVdom = children[1];
+			parentVdom.attrs[attrs.displayPopup] = this.displayPopup.bind(this);
+			parentVdom.attrs[attrs.hidePopup] = this.hidePopup.bind(this);
 		}
-
-		popupVdom.attrs.display = this.displayPopup;
-
-		let parentStyle = parentVdom.attrs.style || {};
-
-		parentVdom.children.push(popupVdom);
-		parentVdom.attrs.onclick = this.toggleDisplayPopup.bind(this);
-		parentVdom.attrs.style = Object.assign(parentStyle, {position: "relative"});
 
 		return parentVdom;
 	}
 }
 
 export const popupBinder = new PopupBinder();
+
+
+export class PopupPool extends UI {
+	static popups = [];
+
+	static add (popup) {
+		PopupPool.popups = PopupPool.popups.concat([popup]);
+	}
+
+	static remove (popup) {
+		PopupPool.popups = PopupPool.popups.filter((apopup) => {
+			return apopup !== popup;
+		});
+	}
+
+	view ({attrs, children, state}) {
+		return o("div", attrs.rootAttrs, PopupPool.popups.map((popup) => {
+			return Object.assign({}, popup);
+		}));
+	}
+}
+
+export const popupPool = new PopupPool();

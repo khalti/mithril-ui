@@ -1,8 +1,8 @@
 import {UI} from "./../base.js";
 import o from "mithril";
+import {required, isBoolean, isString} from "validatex";
 import {Calendar as Cal} from "calendar";
 import {Field} from "./field.js";
-import {required, isString} from "validatex";
 import {popup, popupBinder, popupPool} from "./../popup.js";
 import {table, thead, tbody, th, tr, td} from "./../table";
 import {grid, column} from "./../grid";
@@ -28,9 +28,11 @@ export class MonthDateGrid extends UI {
 		return {
 			"tbody td": {
 				cursor: "pointer",
-			},
-			"tbody td.view-month": {
 				fontWeight: "bold"
+			},
+			"tbody td.offSet": {
+				fontWeight: "normal",
+				color: "grey"
 			},
 			"tbody td.today": {
 				backgroundColor: "black !important",
@@ -51,21 +53,45 @@ export class MonthDateGrid extends UI {
 		return date1Time === date2Time;
 	}
 
+	isPast (date) {
+		let today = new Date();
+		date.setHours(0,0,0,0);
+		today.setHours(0,0,0,0);
+
+		return date.getTime() < today.getTime();
+	}
+
+	isNotViewMonth (date, month) {
+		return date.getMonth() !== month;
+	}
+
 	view ({attrs}) {
 		return o(tbody, attrs.rootAttrs,
 			attrs.dateGrid.map(row => {
 				return o(tr, {textAlignment: "center"},
 					row.map(dateStr => {
 						let date = new Date(dateStr);
-						let dclass = [];
-						this.datesAreEqual(date, new Date())? dclass.push("today"): "";
-						this.datesAreEqual(date, new Date(attrs.model()))? dclass.push("selected"): "";
-						date.getMonth() === attrs.viewMonth? dclass.push("view-month"): "";
-						return o(td,
-							{ color: "blue"
-							, class: dclass.join(" ")
-							, onclick: attrs.setDate.bind(undefined, date)
-						 	, }, date.getDate());
+						let tdAttrs = {};
+						let child = date.getDate();
+
+						if (attrs.hideOffset && this.isNotViewMonth(date, attrs.viewMonth)) {
+							return o(td, "");
+						}
+
+						if (attrs.disablePast && this.isPast(date)) {
+							tdAttrs.state = "disabled";
+						}
+
+
+						let tdClass = [];
+						this.datesAreEqual(date, new Date())? tdClass.push("today"): "";
+						this.datesAreEqual(date, new Date(attrs.model()))? tdClass.push("selected"): "";
+						date.getMonth() !== attrs.viewMonth? tdClass.push("offSet"): "";
+
+						tdAttrs.class = tdClass.join(" ");
+						tdAttrs.onclick = attrs.setDate.bind(undefined, date);
+
+						return o(td, tdAttrs, child);
 					}));
 			}));
 	}
@@ -105,6 +131,8 @@ export class CalendarWidget extends UI {
 					, viewMonth: attrs.viewMonth
 					, setDate: attrs.setDate
 					, model: attrs.model
+					, disablePast: attrs.disablePast
+					, hideOffset: attrs.hideOffset
 					, })));
 	}
 }
@@ -115,18 +143,18 @@ export class Calendar extends Field {
 	viewYear = undefined
 	viewMonth = undefined
 
+	attrSchema =
+		{ format: [required(false), isString(true)]
+		, disablePast: [required(false), isBoolean(true)]
+		, model: [required(true), isBoolean(true)]
+		, hideOffset: [required(false), isBoolean(true)]
+		, }
+
 	oninit (vnode) {
 		super.oninit(vnode);
 		let {attrs} = vnode;
 
-		if (!attrs.model()) {
-			let today = new Date();
-			this.setViewMonthYear(today);
-		}
-		// else {
-		// 	viewYear =  //model year
-		// 	viewMth =  // model mth
-		// }
+		this.setViewMonthYear(attrs.model() || new Date());
 	}
 
 	setViewMonthYear (date) {
@@ -139,6 +167,8 @@ export class Calendar extends Field {
 			{ format: "YYYY-MM-DD"
 			, type: "text"
 		 	, readOnly: true
+			, disablePast: false
+			, hideOffset: false
 			, };
 		let attrs = Object.assign(super.getDefaultAttrs(vnode), defaultAttrs);
 		return attrs;
@@ -189,6 +219,8 @@ export class Calendar extends Field {
 						, viewYear: this.viewYear
 						, viewMonth: this.viewMonth
 						, model: attrs.model
+						, disablePast: attrs.disablePast
+						, hideOffset: attrs.hideOffset
 						, })));
 
 		return view;

@@ -242,7 +242,6 @@ export class PopupPool extends UI {
 	static popups = [];
 
 	reposition (e) {
-		console.log("repositioning");
 		PopupPool.popups.forEach((popup) => {
 			let instance = popup.tag;
 			instance.updatePosition.call(popup.state, popup);

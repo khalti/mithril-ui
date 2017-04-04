@@ -180,7 +180,9 @@ export class Calendar extends Field {
 		model(newDate);
 	}
 
-	prevMonth () {
+	prevMonth (e) {
+		e.stopPropagation();
+
 		let prevMonth = this.viewMonth - 1;
 		if (prevMonth === -1) {
 			this.viewYear += -1;
@@ -191,7 +193,9 @@ export class Calendar extends Field {
 		this.viewMonth = prevMonth;
 	}
 
-	nextMonth () {
+	nextMonth (e) {
+		e.stopPropagation();
+
 		let nextMonth = this.viewMonth + 1;
 		if (nextMonth === 12) {
 			this.viewYear += 1;

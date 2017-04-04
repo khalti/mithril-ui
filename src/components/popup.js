@@ -113,84 +113,125 @@ export class PopupBinder extends UI {
 	attrSchema =
 		{ displayPopup: [required(true), isString(true)]
 		, hidePopup: [required(true), isString(true)]
+		, popupIsVisible: [required(false), isBoolean(true)]
 	 	, }
 
 	oninit (vnode) {
+		this.popupAttached = false;
 		this.popupCache = this.getPopup(vnode);
 		this.popupCache.attrs.oncreate = (vnode) => {
 			this.popupCache.dom = vnode.dom;
-			vnode.attrs.triggererDom = this.popupCache.attrs.triggererDom;
+			this.popupCache.instance = vnode.instance;
 		}
 		this.popupCache.attrs.onbeforeupdate = (vnode) => {
-			this.updatePopupVdom(vnode);
+			this.popupCache.dom = vnode.dom;
+			this.popupCache.instance = vnode.instance;
+		}
+	}
+
+	onbeforeupdate (vnode) {
+		let popup = this.getPopup(vnode);
+		popup.attrs.visible = vnode.attrs.popupIsVisible === undefined
+			? this.popupCache.attrs.visible
+			: vnode.attrs.popupIsVisible;
+		popup.attrs.triggererDom = this.popupCache.attrs.triggererDom;
+		popup.attrs.oncreate = this.popupCache.attrs.oncreate;
+		popup.attrs.onbeforeupdate = this.popupCache.attrs.onbeforeupdate;
+		popup.attrs.onupdate = this.popupCache.attrs.onupdate;
+		this.popupCache.attrs = popup.attrs;
+		this.popupCache.children = popup.children;
+		this.popupCache.state = popup.state;
+
+		if (vnode.attrs.popupIsVisible && !this.popupAttached) {
+			this.displayPopup();
 		}
 	}
 
 	oncreate (vnode) {
 		super.oncreate(vnode);
 		this.popupCache.attrs.triggererDom = vnode.children[0].dom;
-	}
 
-	updatePopupVdom (vnode) {
-		vnode.attrs.visible = this.popupCache.attrs.visible;
-		this.popupCache.attrs = vnode.attrs;
-		this.popupCache.children = vnode.children;
-		this.popupCache.state = vnode.state;
-		this.popupCache.instance = vnode.instance;
+		if (vnode.attrs.popupIsVisible) {
+			this.displayPopup();
+		}
 	}
 
 	getPopup (vnode) {
 		return vnode.children[1];
 	}
 
-	displayPopup (eventHandler) {
+	unwatchDefocus () {
+		document.body.removeEventListener("click", this.bindedDefocusWatcher);
+	}
+
+	defocusWatcher (e) {
+		this.hidePopup(undefined, e);
+		o.redraw();
+	}
+
+	watchDefocus () {
+		this.bindedDefocusWatcher = this.defocusWatcher.bind(this);
+		document.body.addEventListener("click", this.bindedDefocusWatcher);
+	}
+
+	displayPopup (eventHandler, e) {
+		e.stopPropagation();
+
 		eventHandler && eventHandler();
-		if (this.popupCache.attrs.visible === undefined) {
+		if (!this.popupAttached) {
 			PopupPool.add(this.popupCache);
+			this.popupAttached = true;
 		}
 
 		this.popupCache.attrs.visible = true;
+		this.watchDefocus();
 	}
 
-	hidePopup (eventHandler) {
+	hidePopup (eventHandler, e) {
+		e.stopPropagation();
+
 		eventHandler && eventHandler();
 		this.popupCache.attrs.visible = false;
+		this.unwatchDefocus();
 	}
 
-	togglePopupDisplay (eventHandler) {
-		eventHandler && eventHandler();
+	togglePopupDisplay (eventHandler, e) {
 		if (!this.popupCache.attrs.visible) {
-			this.displayPopup();
+			this.displayPopup(eventHandler, e);
 		}
 		else {
-			this.hidePopup();
+			this.hidePopup(eventHandler, e);
 		}
+	}
+
+	onbeforeremove (vnode) {
+		document.body.removeEventListener("click", this.bindedDefocusWatcher);
 	}
 
 	view ({attrs, children, state}) {
 		if (children.length !== 2) throw Error("Please pass a popup and triggerer.");
 
-		let parentVdom = children[0];
-		let parentAttrs = parentVdom.attrs;
+		let triggererVdom = children[0];
+		let parentAttrs = triggererVdom.attrs;
 
 		if (attrs.displayPopup === attrs.hidePopup) {
-			let originalEventHandler = parentVdom.attrs[attrs.displayPopup];
-			parentVdom.attrs[attrs.displayPopup] = this.togglePopupDisplay.bind(this, originalEventHandler);
+			let originalEventHandler = triggererVdom.attrs[attrs.displayPopup];
+			triggererVdom.attrs[attrs.displayPopup] = this.togglePopupDisplay.bind(this, originalEventHandler);
 		}
 		else {
-			let originalEventHandler1 = parentVdom.attrs[attrs.displayPopup];
-			let originalEventHandler2 = parentVdom.attrs[attrs.hidePopup];
-			parentVdom.attrs[attrs.displayPopup] = this.displayPopup.bind(this, originalEventHandler1);
-			parentVdom.attrs[attrs.hidePopup] = this.hidePopup.bind(this, originalEventHandler2);
+			let originalEventHandler1 = triggererVdom.attrs[attrs.displayPopup];
+			let originalEventHandler2 = triggererVdom.attrs[attrs.hidePopup];
+			triggererVdom.attrs[attrs.displayPopup] = this.displayPopup.bind(this, originalEventHandler1);
+			triggererVdom.attrs[attrs.hidePopup] = this.hidePopup.bind(this, originalEventHandler2);
 		}
 
-		let onbeforeremove = parentVdom.attrs.onbeforeremove;
-		parentVdom.attrs.onremove = (vnode) => {
+		let onbeforeremove = triggererVdom.attrs.onbeforeremove;
+		triggererVdom.attrs.onremove = (vnode) => {
 			onbeforeremove && onbeforeremove();
 			PopupPool.remove(this.popupCache);
 		}
 
-		return parentVdom;
+		return triggererVdom;
 	}
 }
 
@@ -200,17 +241,20 @@ export const popupBinder = new PopupBinder();
 export class PopupPool extends UI {
 	static popups = [];
 
-	oncreate (vnode) {
-		this.listener = window.addEventListener("resize", () => {
-			PopupPool.popups.forEach((popup) => {
-				let instance = popup.tag;
-				instance.updatePosition.call(popup.state, popup);
-			});
+	reposition (e) {
+		console.log("repositioning");
+		PopupPool.popups.forEach((popup) => {
+			let instance = popup.tag;
+			instance.updatePosition.call(popup.state, popup);
 		});
 	}
 
+	oncreate (vnode) {
+		window.addEventListener("resize", this.reposition);
+	}
+
 	onbeforeremove (vnode) {
-		window.removeEventListener("resize", this.listener);
+		window.removeEventListener("resize", this.reposition);
 	}
 
 	static add (popup) {

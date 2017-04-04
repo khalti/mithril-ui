@@ -24,27 +24,6 @@ export class WeekBar extends UI {
 export const weekBar = new WeekBar();
 
 export class MonthDateGrid extends UI {
-	getStyle (vnode) {
-		return {
-			"tbody td": {
-				cursor: "pointer",
-				fontWeight: "bold"
-			},
-			"tbody td.offSet": {
-				fontWeight: "normal",
-				color: "grey"
-			},
-			"tbody td.today": {
-				backgroundColor: "black !important",
-				color: "white"
-			},
-			"tbody td.selected": {
-				backgroundColor: "blue !important",
-				color: "white"
-			}
-		};
-	}
-
 	datesAreEqual(date1, date2) {
 		date1.setHours(0,0,0,0);
 		date2.setHours(0,0,0,0);
@@ -102,10 +81,30 @@ export const monthDateGrid = new MonthDateGrid();
 export class CalendarWidget extends UI {
 	getStyle (vnode) {
 		return {
+			[ "div table.ui.table > tbody > tr > td"
+			+ ", div table.ui.table > thead > tr > th" ] : {
+				"padding": ".78571429em !important"
+			},
+			"div table.ui.table > tbody td": {
+				cursor: "pointer",
+				fontWeight: "bold"
+			},
+			"div table.ui.table > tbody td.offSet": {
+				fontWeight: "normal",
+				color: "grey"
+			},
+			"div table.ui.table > tbody td.today": {
+				backgroundColor: "orange !important",
+				color: "white"
+			},
+			"div table.ui.table > tbody td.selected": {
+				backgroundColor: "blue !important",
+				color: "white"
+			},
 			"div .prev-month, div .next-month": {
 				cursor: "pointer"
 			}
-		};
+		}
 	}
 
 	getMonthDates (year, month) {
@@ -119,7 +118,7 @@ export class CalendarWidget extends UI {
 					o(icon, {name: "chevron left", class: "prev-month", color: "blue"})),
 				o(column, {width: 10, textAlignment: "center"},
 					o("div.mth-year", MONTHS[attrs.viewMonth] + " " + attrs.viewYear)),
-				o(column, {width: 3, onclick: attrs.nextMonth},
+				o(column, {width: 3, onclick: attrs.nextMonth, textAlignment: "right"},
 					o(icon, {name: "chevron right", class: "next-month", color: "blue"}))),
 			o(table,
 				{ veryBasic: true

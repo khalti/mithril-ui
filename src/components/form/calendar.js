@@ -153,7 +153,23 @@ export class Calendar extends Field {
 		super.oninit(vnode);
 		let {attrs} = vnode;
 
-		this.setViewMonthYear(attrs.model() || new Date());
+		this.setViewMonthYear(this.getViewMonthYear(attrs.model));
+	}
+
+	onbeforeupdate (vnode, oldVnode) {
+		super.onbeforeupdate(vnode, oldVnode);
+
+		if (this.modelHasChanged(vnode.attrs.model(), oldVnode.attrs.model())) {
+			this.setViewMonthYear(this.getViewMonthYear(vnode.attrs.model));
+		}
+	}
+
+	modelHasChanged (newVal, oldVal) {
+		return newVal !== oldVal;
+	}
+
+	getViewMonthYear (model) {
+		return model() && new Date(model()) || new Date();
 	}
 
 	setViewMonthYear (date) {

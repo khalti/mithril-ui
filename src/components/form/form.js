@@ -25,6 +25,7 @@ export class Form extends UI {
 	}
 
 	getClassList ({attrs}) {
+		// TODO: add state to handle [loading, success, error, warning]
 		return ["ui",
 						attrs.loading && "loading",
 						attrs.success && "success",

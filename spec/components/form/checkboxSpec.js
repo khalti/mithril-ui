@@ -9,7 +9,7 @@ let expect = chai.expect;
 
 let truth = presence;
 
-describe.only("checkbox", () => {
+describe("checkbox", () => {
   let vnode;
   beforeEach(() => {
 		vnode = {

@@ -1,16 +1,29 @@
 import _ from "mithril";
 import {Field} from "./field.js";
-import {required} from "validatex";
+import {required, within} from "validatex";
 
+const TYPES = ["slider", "toggle"];
 
 export class Checkbox extends Field {
 	attrSchema = {
 		model: required(true),
-		label: required(true)
+		label: required(true),
+		type: [required(false), within([TYPES])]
 	}
 
 	toggleState (attrs) {
 		attrs.model.setAndValidate(!attrs.model());
+	}
+
+	getClassList (vnode) {
+		let classes = super.getClassList(vnode);
+
+		let type = vnode.attrs.type;
+		if (type) {
+			classes.push(type);
+		}
+
+		return classes;
 	}
 
 	getLabelAppend (attrs) {

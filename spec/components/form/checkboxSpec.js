@@ -9,7 +9,7 @@ let expect = chai.expect;
 
 let truth = presence;
 
-describe("checkbox", () => {
+describe.only("checkbox", () => {
   let vnode;
   beforeEach(() => {
 		vnode = {
@@ -28,6 +28,14 @@ describe("checkbox", () => {
 	it("complains if 'label' is absent.", () => {
 		vnode.attrs.label = "";
 		expect(checkbox.oninit.bind(checkbox, vnode)).to.throw(Error);
+	});
+
+	describe("getClassList", () => {
+		it("includes checkbox type", () => {
+			vnode.attrs.type = "slider";
+			let classes = checkbox.getClassList(vnode);
+			expect(classes.includes("slider")).to.equal(true);
+		});
 	});
 
 

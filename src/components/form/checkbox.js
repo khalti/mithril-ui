@@ -8,22 +8,11 @@ export class Checkbox extends Field {
 	attrSchema = {
 		model: required(true),
 		label: required(true),
-		type: [required(false), within([TYPES])]
+		type: [required(false), within(TYPES)]
 	}
 
 	toggleState (attrs) {
 		attrs.model.setAndValidate(!attrs.model());
-	}
-
-	getClassList (vnode) {
-		let classes = super.getClassList(vnode);
-
-		let type = vnode.attrs.type;
-		if (type) {
-			classes.push(type);
-		}
-
-		return classes;
 	}
 
 	getLabelAppend (attrs) {
@@ -39,8 +28,12 @@ export class Checkbox extends Field {
   view ({attrs, children, state}) {
 		attrs.rootAttrs.onclick = this.toggleState.bind(this, attrs);
 
+		let checkboxClasses = [];
+		attrs.model() && checkboxClasses.push("checked");
+		attrs.type && checkboxClasses.push(attrs.type);
+
     return _('div', attrs.rootAttrs,
-             _(".ui.checkbox", {className: attrs.model()? "checked": ""},
+             _(".ui.checkbox", {className: checkboxClasses.join(" ")},
                _("input.hidden[type=checkbox][tabindex=0]", {checked: attrs.model()}),
                _("label", attrs.label)),
              this.getLabelAppend(attrs));

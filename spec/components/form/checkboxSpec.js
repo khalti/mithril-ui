@@ -30,15 +30,6 @@ describe("checkbox", () => {
 		expect(checkbox.oninit.bind(checkbox, vnode)).to.throw(Error);
 	});
 
-	describe("getClassList", () => {
-		it("includes checkbox type", () => {
-			vnode.attrs.type = "slider";
-			let classes = checkbox.getClassList(vnode);
-			expect(classes.includes("slider")).to.equal(true);
-		});
-	});
-
-
 	describe("view", () => {
 		it("sets class to 'ui checkbox'", () => {
 			_.render(document.body, _(checkbox, vnode.attrs));

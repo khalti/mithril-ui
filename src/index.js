@@ -26,7 +26,7 @@ import {
 	Form, form,
 	Checkbox, checkbox,
 	TextArea, textArea,
-	Calendar, calendar,
+	DatePicker, datePicker
 } from "./components/form";
 
 import {
@@ -151,7 +151,7 @@ export {
 	Form, form,
 	Checkbox, checkbox,
 	TextArea, textArea,
-	Calendar, calendar,
+	DatePicker, datePicker,
 
 	Grid, grid,
 	Row, row,

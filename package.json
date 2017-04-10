@@ -45,6 +45,7 @@
   "dependencies": {
     "babel-plugin-transform-class-properties": "^6.23.0",
     "calendar": "^0.1.0",
+    "fecha": "^2.3.0",
     "jsdom": "^9.12.0",
     "lodash": "^4.16.2",
     "mithril": "^1.0.0-rc.7",

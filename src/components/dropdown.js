@@ -29,52 +29,67 @@ export class Dropdown extends UI {
 		this.active = false;
 		this.selector = "";
 
-		let index;
-
 		this.selectedIndex = -1;
 	}
 
+	listenClickOnDocument () {
+		this.hideDropdownListener = (e) => {
+			if (e.srcComponent === this.vnode.dom) return;
+			this.hideDropdown(e);
+			o.redraw();
+		}
+
+		document.addEventListener("click", this.hideDropdownListener);
+	}
+
+	unlistenClickOnDocument () {
+		document.removeEventListener("click", this.hideDropdownListener);
+	}
+
+	onbeforeremove (vnode) {
+		this.unlistenClickOnDocument();
+	}
+
+	attachComponentRootToEvent (e) {
+		e.srcComponent = this.vnode.dom;
+	}
+
 	toggleActive (e) {
-		if (this.active && e.target.tagName.toLowerCase() === "input") return;
+		this.active === true? this.hideDropdown(e): this.displayDropdown(e);
+	}
 
-		if (!this.active) {
-			let target = e.target || e.srcElement;
-			if (!(target.className.match("dropdown") && target.className.match("ui"))) {
-				target = target.parentNode;
-			}
+	hideDropdown (e) {
+		this.active = false;
+		this.unlistenClickOnDocument();
+	}
 
-			if (target.className.match("search")) {
-				let children = target.childNodes;
-				for (let i = 0; i < children.length; i ++ ) {
-					let child = children[i];
-					if (child.className.match("search")) {
-						child.focus();
-					}
+	focusSearchInput(componentRoot) {
+		if (componentRoot.className.match("search")) {
+			let children = componentRoot.childNodes;
+			for (let i = 0; i < children.length; i ++ ) {
+				let child = children[i];
+				if (child.className.match("search")) {
+					child.focus();
 				}
 			}
 		}
-
-		this.active = !this.active;
 	}
 
-	deactive (e) {
-		let relatedTarget = e.relatedTarget;
-		if (relatedTarget && relatedTarget.tagName.toLowerCase() === "input") return;
-		this.active = false;
+	displayDropdown (e) {
+		this.attachComponentRootToEvent(e);
+		this.listenClickOnDocument();
+		this.active = true;
+		this.focusSearchInput(e.srcComponent);
 	}
 
 	getDefaultAttrs (vnode) {
 		let attrs = {
 			rootAttrs: {
 				tabindex: 0,
-				onclick: this.handleClick.bind(this),
+				onclick: this.toggleActive.bind(this),
 				onkeydown: this.captureKeyPress.bind(this, vnode.attrs)
 			}
 		};
-
-		if (vnode.attrs.model) {
-			attrs.rootAttrs.onblur = this.handleBlur.bind(this);
-		}
 
 		return attrs;
 	}
@@ -88,14 +103,6 @@ export class Dropdown extends UI {
 			attrs.fluid && "fluid",
 			"dropdown"
 		];
-	}
-
-	handleClick (e) {
-		this.toggleActive(e);
-	}
-
-	handleBlur (e) {
-		this.deactive(e);
 	}
 
 	isSelection(attrs) {
@@ -183,7 +190,7 @@ export class Dropdown extends UI {
 			}
 
 			if (e.keyCode === ESC) {
-				this.deactive(e);
+				this.hideDropdown(e);
 			}
 			else if (e.keyCode == UP_KEY) {
 				this.decSelectedIndex(attrs.options);
@@ -197,7 +204,7 @@ export class Dropdown extends UI {
 			else if (e.keyCode === ENTER) {
 				let {options, model} = attrs;
 				this.selectOption(this.selectedIndex, options[this.selectedIndex].value, model, e);
-				this.deactive(e);
+				this.hideDropdown(e);
 			}
 			else if (attrs.search) {
 				return;
@@ -238,7 +245,7 @@ export class Dropdown extends UI {
 			}
 
 			if (attrs.search &&
-					this.selector && 
+					this.selector &&
 					!this.matchOptionLabel(option.label, this.selector)) {
 				itemAttrs.filtered = true;
 			}
@@ -259,26 +266,26 @@ export class Dropdown extends UI {
 		const text = this.getText(attrs);
 
 		return o("div", attrs.rootAttrs,
-				isSelection?
-					o("input", {type: "hidden", name: attrs.name || "", value: attrs.model()})
-					: null,
+			isSelection?
+				o("input", {type: "hidden", name: attrs.name || "", value: attrs.model()})
+				: null,
 
-				o(dropdownText,
-					{ default: this.isDefaultText(attrs, text)
-					, filtered: attrs.search && this.selector? true: false },
-					text),
-				o(icon, {name: "dropdown"}),
+			o(dropdownText,
+				{ default: this.isDefaultText(attrs, text)
+				, filtered: attrs.search && this.selector? true: false },
+				text),
+			o(icon, {name: "dropdown"}),
 
-				attrs.search
-					? o("input.search[tabindex=0][autocomplete=off]",
-							{ value: this.selector
-							, oninput: this.updateSearchText.bind(this, attrs) })
-					: null,
+			attrs.search
+				? o("input.search[tabindex=0][autocomplete=off]",
+						{ value: this.selector
+						, oninput: this.updateSearchText.bind(this, attrs) })
+				: null,
 
-				o(dropdownMenu, {visible: this.active},
-					isSelection
-						? this.getProcessedOptions(attrs)
-						: children));
+			o(dropdownMenu, {visible: this.active},
+				isSelection
+					? this.getProcessedOptions(attrs)
+					: children));
 	}
 }
 

@@ -16,6 +16,3 @@ export class Icons extends Icon {
 		];
 	}
 }
-
-
-export const icons = new Icons();

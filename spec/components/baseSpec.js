@@ -1,13 +1,11 @@
 import {window, FRAME_BUDGET} from "./../utils.js";
 import {UI}  from "./../../src/components/base.js";
-import chai from "chai";
+import {expect} from "chai";
 import {required} from "validatex";
 import _ from "mithril";
 
 
-let expect = chai.expect;
-
-describe("Base", () => {
+describe("UI", () => {
 	describe("validateAttrs", () => {
 		let profile;
 
@@ -49,9 +47,7 @@ describe("Base", () => {
 				}
 			}
 
-			let button = new Button();
-
-			_.mount(document.body, button)
+			_.mount(document.body, Button);
 
 			buttonDom = document.querySelector("button");
 		});

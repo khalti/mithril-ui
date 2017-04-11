@@ -1,16 +1,5 @@
-import {
-	Step, step,
-	StepTitle, stepTitle,
-	StepContent, stepContent,
-	StepDescription, stepDescription,
-} from "./step.js";
-import {Steps, steps} from "./steps.js";
+import { Step, StepTitle, StepContent, StepDescription, } from "./step.js";
+import { Steps, } from "./steps.js";
 
 
-export {
-	Step, step,
-	StepTitle, stepTitle,
-	StepContent, stepContent,
-	StepDescription, stepDescription,
-	Steps, steps,
-};
+export { Step, StepTitle, StepContent, StepDescription, Steps, };

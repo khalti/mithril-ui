@@ -1,7 +1,7 @@
 import {UI} from "./base.js";
 import o from "mithril";
 import {required, isArray} from "validatex";
-import {icon} from "./icon";
+import {Icon} from "./icon";
 import {firstMatch} from "./../helpers/misc.js";
 import {range} from "lodash";
 
@@ -251,7 +251,7 @@ export class Dropdown extends UI {
 			}
 
 			index ++;
-			return o(dropdownItem, itemAttrs, option.label);
+			return o(DropdownItem, itemAttrs, option.label);
 		});
 	}
 
@@ -270,11 +270,11 @@ export class Dropdown extends UI {
 				o("input", {type: "hidden", name: attrs.name || "", value: attrs.model()})
 				: null,
 
-			o(dropdownText,
+			o(DropdownText,
 				{ default: this.isDefaultText(attrs, text)
 				, filtered: attrs.search && this.selector? true: false },
 				text),
-			o(icon, {name: "dropdown"}),
+			o(Icon, {name: "dropdown"}),
 
 			attrs.search
 				? o("input.search[tabindex=0][autocomplete=off]",
@@ -282,15 +282,12 @@ export class Dropdown extends UI {
 						, oninput: this.updateSearchText.bind(this, attrs) })
 				: null,
 
-			o(dropdownMenu, {visible: this.active},
+			o(DropdownMenu, {visible: this.active},
 				isSelection
 					? this.getProcessedOptions(attrs)
 					: children));
 	}
 }
-
-
-export const dropdown = new Dropdown();
 
 
 export class DropdownText extends UI {
@@ -303,7 +300,6 @@ export class DropdownText extends UI {
 	}
 }
 
-export const dropdownText = new DropdownText();
 
 export class DropdownMenu extends UI {
 	attrSchema = {
@@ -328,8 +324,6 @@ export class DropdownMenu extends UI {
 	}
 }
 
-export const dropdownMenu = new DropdownMenu();
-
 
 export class DropdownItem extends UI {
 	getClassList ({attrs}) {
@@ -341,5 +335,3 @@ export class DropdownItem extends UI {
 		];
 	}
 }
-
-export const dropdownItem = new DropdownItem();

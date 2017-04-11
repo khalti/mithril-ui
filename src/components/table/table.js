@@ -41,6 +41,3 @@ export class Table extends UI {
 		return {root: "table"};
 	}
 }
-
-
-export const table = new Table();

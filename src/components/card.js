@@ -26,7 +26,6 @@ export class Card extends UI {
 	}
 }
 
-export const card = new Card();
 
 export class SubCard extends Card {
 	getClassList (vnode) {
@@ -36,7 +35,6 @@ export class SubCard extends Card {
 	}
 }
 
-export const subCard = new SubCard();
 
 export class Cards extends UI {
 	getClassList ({attrs, children, state}) {
@@ -51,7 +49,6 @@ export class Cards extends UI {
 	}
 }
 
-export const cards = new Cards()
 
 export class CardContent extends UI {
 	getClassList ({attrs}) {
@@ -63,7 +60,6 @@ export class CardContent extends UI {
 	}
 }
 
-export const cardContent = new CardContent();
 
 export class CardHeader extends UI {
 	getClassList ({attrs}) {
@@ -84,7 +80,6 @@ export class CardHeader extends UI {
 	}
 }
 
-export const cardHeader = new CardHeader();
 
 export class CardMeta extends UI {
 	getClassList ({attrs, children, state}) {
@@ -95,7 +90,6 @@ export class CardMeta extends UI {
 	}
 }
 
-export const cardMeta = new CardMeta();
 
 export class CardDescription extends UI {
 	getClassList ({attrs, children, state}) {
@@ -105,8 +99,6 @@ export class CardDescription extends UI {
 		];
 	}
 }
-
-export const cardDescription = new CardDescription();
 
 
 export class CardAuthor extends UI {
@@ -118,8 +110,6 @@ export class CardAuthor extends UI {
 	}
 }
 
-export const cardAuthor = new CardAuthor();
-
 
 export class CardTime extends UI {
 	getClassList ({attrs, children, state}) {
@@ -130,7 +120,6 @@ export class CardTime extends UI {
 	}
 }
 
-export const cardTime = new CardTime();
 
 export class CardCategory extends UI {
 	getClassList ({attrs, children, state}) {
@@ -140,6 +129,3 @@ export class CardCategory extends UI {
 		];
 	}
 }
-
-
-export const cardCategory = new CardCategory();

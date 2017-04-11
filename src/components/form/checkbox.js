@@ -39,6 +39,3 @@ export class Checkbox extends Field {
              this.getLabelAppend(attrs));
   }
 }
-
-
-export const checkbox = new Checkbox();

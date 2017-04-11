@@ -67,6 +67,3 @@ export class Grid  extends UI {
 						"grid"];
 	}
 }
-
-
-export const grid = new Grid();

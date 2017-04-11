@@ -33,5 +33,3 @@ class Radio extends Field {
              this.getLabelAppend(attrs));
   }
 }
-
-export const radio = new Radio();

@@ -1,5 +1,5 @@
 import {window, presence, trigger, FRAME_BUDGET} from "./../../utils.js";
-import {select} from "../../../src/components/form/select.js";
+import {Select} from "../../../src/components/form/select.js";
 import _ from 'mithril';
 import powerform from "powerform";
 import {expect}  from "chai";
@@ -23,20 +23,20 @@ describe("selection", () => {
 
 		_.mount(document.body, {
 			view () {
-				return _(select, attrs);
+				return _(Select, attrs);
 			}
 		});
   });
 
   it("lists options", () => {
-		let firstOption = document.querySelector("option");
+		let firstOption = document.querySelector(".item");
 
     expect(firstOption.textContent).to.equal("Select superheroes");
   });
 
   it("shows errors", () => {
     attrs.model.isValid();
-		let selectDom = document.querySelector("select");
+		let selectDom = document.querySelector("input");
 		trigger("change", selectDom);
 
 		setTimeout(() => {
@@ -55,7 +55,7 @@ describe("selection", () => {
   });
 
 	it("adds name", () => {
-		let selectDom = document.querySelector("select");
+		let selectDom = document.querySelector("input");
 		expect(selectDom.name).to.equal("superhero");
 	});
 });

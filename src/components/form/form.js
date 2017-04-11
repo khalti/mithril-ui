@@ -37,6 +37,3 @@ export class Form extends UI {
 						"form"];
 	}
 }
-
-
-export const form = new Form();

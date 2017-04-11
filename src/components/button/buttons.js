@@ -27,6 +27,3 @@ export class Buttons extends UI {
 		];
 	}
 }
-
-
-export const buttons = new Buttons();

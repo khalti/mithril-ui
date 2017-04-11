@@ -13,6 +13,3 @@ export class SubMenu extends UI {
 		];
 	}
 }
-
-
-export const subMenu = new SubMenu();

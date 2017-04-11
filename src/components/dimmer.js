@@ -26,5 +26,3 @@ export class Dimmer extends UI {
 					_(".center", children)));
 	}
 }
-
-export const dimmer = new Dimmer();

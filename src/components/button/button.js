@@ -61,6 +61,3 @@ export class Button extends UI {
 		return _(attrs.root, attrs.rootAttrs, children);
 	}
 }
-
-
-export const button = new Button();

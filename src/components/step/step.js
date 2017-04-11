@@ -9,8 +9,6 @@ export class StepTitle extends UI {
 	}
 }
 
-export const stepTitle = new StepTitle();
-
 
 export class StepContent extends UI {
 	getClassList ({attrs}) {
@@ -18,16 +16,12 @@ export class StepContent extends UI {
 	}
 }
 
-export const stepContent = new StepContent();
-
 
 export class StepDescription extends UI {
 	getClassList ({attrs}) {
 		return ["description"];
 	}
 }
-
-export const stepDescription = new StepDescription();
 
 
 const STEP_STATES = ["completed", "active", "disabled"];
@@ -50,6 +44,3 @@ export class Step extends UI {
 		};
 	}
 }
-
-
-export const step = new Step();

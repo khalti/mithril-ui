@@ -1,12 +1,13 @@
 import {window} from "./../utils.js";
-import {container} from "./../../src/components/container.js";
+import {Container} from "./../../src/components/container.js";
 import {expect} from "chai";
 
 
-describe("container", () => {
-	let vnode;
+describe("Container", () => {
+	let vnode, container;
 
 	beforeEach(() => {
+		container = new Container();
 		vnode = {
 			attrs: {},
 			children: [],

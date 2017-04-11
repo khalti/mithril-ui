@@ -1,7 +1,7 @@
 import {window, getVnode, trigger} from "./../utils.js";
 import {expect} from "chai";
 import _ from "mithril";
-import {pagination} from "./../../src/components/pagination.js";
+import {Pagination} from "./../../src/components/pagination.js";
 import {getVdom} from "./../../spec/utils.js";
 
 
@@ -9,10 +9,11 @@ let clickEvent = {
 	preventDefault () {}
 };
 
-describe("pagination", () => {
-	let vnode;
+describe("Pagination", () => {
+	let vnode, pagination;
 
 	beforeEach(() => {
+		pagination = new Pagination();
 		vnode = getVnode();
 	});
 
@@ -27,7 +28,7 @@ describe("pagination", () => {
 
 	it("complains if page count is absent.", () => {
 		vnode.attrs = {
-			currentPage: 2, 
+			currentPage: 2,
 			// pageCount: 10,
 			onPageChange: () => {}
 		};
@@ -36,7 +37,7 @@ describe("pagination", () => {
 
 	it("complainss if page change call back is absent.", () => {
 		vnode.attrs = {
-			currentPage: 2, 
+			currentPage: 2,
 			// pageCount: 10,
 			onPageChange: () => {}
 		};
@@ -306,7 +307,7 @@ describe("pagination", () => {
 			};
 			let pages = pagination.getPagesBtns(attrs);
 			expect(pages.length).to.equal(5);
-		});	
+		});
 	});
 
 	describe(".getNextPageBtn", () => {
@@ -321,7 +322,7 @@ describe("pagination", () => {
 			attrs = {
 				onPageChange: onPageChange,
 				pageCount: 10,
-				currentPage: 10 
+				currentPage: 10
 			};
 		});
 
@@ -345,7 +346,7 @@ describe("pagination", () => {
 		});
 
 		it("changes page to next page on clicked", () => {
-			attrs.currentPage = 8 
+			attrs.currentPage = 8
 			_.render(document.body, pagination.getNextPageBtn(attrs));
 			let itemDom = document.querySelector(".item");
 			trigger("click", itemDom);
@@ -354,7 +355,7 @@ describe("pagination", () => {
 		});
 
 		it("won't change page if next page is greater than pageCount", () => {
-			attrs.currentPage = 10 
+			attrs.currentPage = 10
 			_.render(document.body, pagination.getNextPageBtn(attrs));
 			let itemDom = document.querySelector(".item");
 			trigger("click", itemDom);
@@ -375,7 +376,7 @@ describe("pagination", () => {
 			attrs = {
 				onPageChange: onPageChange,
 				pageCount: 10,
-				currentPage: 1 
+				currentPage: 1
 			};
 		});
 
@@ -408,7 +409,7 @@ describe("pagination", () => {
 		});
 
 		it("won't change page if next page is greater than pageCount", () => {
-			attrs.currentPage = 1 
+			attrs.currentPage = 1
 			_.render(document.body, pagination.getPreviousPageBtn(attrs));
 			let rootDom = document.querySelector(".item");
 			trigger("click", rootDom);

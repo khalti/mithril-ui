@@ -48,16 +48,11 @@ export class Header extends UI {
 }
 
 
-export const header = new Header();
-
-
 export class SubHeader extends UI {
 	getClassList ({attrs}) {
 		return ["sub header"];
 	}
 }
-
-export const subHeader = new SubHeader();
 
 
 export class HeaderContent extends UI {
@@ -65,6 +60,3 @@ export class HeaderContent extends UI {
 		return ["content"];
 	}
 }
-
-export const headerContent = new HeaderContent();
-

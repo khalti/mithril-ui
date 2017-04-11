@@ -1,13 +1,14 @@
 import {window} from "./../../utils.js";
-import {fields} from "./../../../src/components/form/fields.js";
+import {Fields} from "./../../../src/components/form/fields.js";
 import {expect} from "chai";
 
 
 describe("fields", () => {
 	describe("getClassList", () => {
-		let vnode;
+		let vnode, fields;
 
 		beforeEach(() => {
+			fields = new Fields();
 			vnode = {
 				attrs: {},
 				children: [],

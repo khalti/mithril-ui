@@ -21,6 +21,3 @@ export class TR extends UI {
 		return {root: "tr"};
 	}
 }
-
-
-export const tr = new TR();

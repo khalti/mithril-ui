@@ -1,13 +1,14 @@
 import {window, getVnode} from "./../utils.js";
-import {divider} from  "./../../src/components/divider.js";
+import {Divider} from  "./../../src/components/divider.js";
 import _ from "mithril";
 import {expect} from "chai";
 
 
-describe("divider", () => {
-	let vnode;
+describe("Divider", () => {
+	let vnode, divider;
 
 	beforeEach(() => {
+		divider = new Divider();
 		vnode = getVnode();
 	});
 

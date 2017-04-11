@@ -13,6 +13,3 @@ export class TFoot extends UI {
 		return {root: "tfoot"};
 	}
 }
-
-
-export const tfoot = new TFoot();

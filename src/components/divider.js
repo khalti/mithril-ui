@@ -20,6 +20,3 @@ export class Divider extends UI {
 						"divider"];
 	}
 }
-
-
-export const divider = new Divider();

@@ -21,6 +21,3 @@ export class Segments extends UI {
 						"segments"];
 	}
 }
-
-
-export const segments = new Segments();

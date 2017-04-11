@@ -1,12 +1,12 @@
 import {window} from "./../../utils.js";
-import {input} from "./../../../src/components/form/input.js";
+import {Input} from "./../../../src/components/form/input.js";
 import _ from 'mithril';
 import chai from "chai";
 import classnames from "classnames";
 import {getVdom} from "./../../utils.js";
-import {icon} from "./../../../src/components/icon/icon.js";
-import {label} from "./../../../src/components/label.js";
-import {button} from "./../../../src/components/button/button.js";
+import {Icon} from "./../../../src/components/icon/icon.js";
+import {Label} from "./../../../src/components/label.js";
+import {Button} from "./../../../src/components/button/button.js";
 import {expect} from "chai";
 
 
@@ -16,14 +16,14 @@ describe("input", () => {
 
 		beforeEach(() => {
 			attrs = {
-				prepend: _(icon, {name: "hill"}),
-				append: _(icon, {name: "mountain"}),
+				prepend: _(Icon, {name: "hill"}),
+				append: _(Icon, {name: "mountain"}),
 				onclick: "aCallabck",
 				type: "hidden",
 				name: "aName"
 			};
 
-			_.render(document.body, _(input, attrs));
+			_.render(document.body, _(Input, attrs));
 		});
 
 		it("includes 'name'", () => {
@@ -59,9 +59,10 @@ describe("input", () => {
 	});
 
   describe(".getClassList",  () => {
-		let vnode;
+		let vnode, input;
 
 		beforeEach(() => {
+			input = new Input();
 			vnode = {
 				attrs: {},
 				children: [],
@@ -76,55 +77,55 @@ describe("input", () => {
     });
 
     it("includes 'right icon' if an icon is being appended", () => {
-      vnode.attrs = {append: _(icon, {name: "add"})};
+      vnode.attrs = {append: _(Icon, {name: "add"})};
 			let classList = input.getClassList(vnode);
       expect(classList).to.contain("right icon");
     });
 
     it("includes 'left icon' if an icon is being prepended", () => {
-      vnode.attrs = {prepend: _(icon, {name: "remove"})};
+      vnode.attrs = {prepend: _(Icon, {name: "remove"})};
 			let classList = input.getClassList(vnode);
       expect(classList).to.contain("left icon");
     });
 
     it("returns 'left right icon' if input is surrounded by icons", () => {
-      vnode.attrs = {prepend: _(icon, {name: "aname"}), append: _(icon, {name: "aname"})};
+      vnode.attrs = {prepend: _(Icon, {name: "aname"}), append: _(Icon, {name: "aname"})};
 			let classList = input.getClassList(vnode);
       expect(classList).to.contain("left right icon");
     });
 
     it("returns 'left labeled' if a label is being prepended", () => {
-      vnode.attrs = {prepend: _(label)};
+      vnode.attrs = {prepend: _(Label)};
 			let classList = input.getClassList(vnode);
       expect(classList).to.contain("left labeled");
     });
 
     it("returns 'right labeled' if a label is being appended", () => {
-      vnode.attrs = {append: _(label)};
+      vnode.attrs = {append: _(Label)};
 			let classList = input.getClassList(vnode);
       expect(classList).to.contain("right labeled");
     });
 
     it("returns 'left right labeled'", () => {
-      vnode.attrs = {prepend: _(label), append: _(label)};
+      vnode.attrs = {prepend: _(Label), append: _(Label)};
 			let classList = input.getClassList(vnode);
       expect(classList).to.contain("left right labeled");
     });
 
     it("returns 'left action'", () => {
-      vnode.attrs = {prepend: _(button)};
+      vnode.attrs = {prepend: _(Button)};
 			let classList = input.getClassList(vnode);
       expect(classList).to.contain("left action");
     });
 
     it("returns 'right labeled'", () => {
-      vnode.attrs = {append: _(button)};
+      vnode.attrs = {append: _(Button)};
 			let classList = input.getClassList(vnode);
       expect(classList).to.contain("right action");
     });
 
     it("returns 'left right action'", () => {
-      vnode.attrs = {prepend: _(button), append: _(button)};
+      vnode.attrs = {prepend: _(Button), append: _(Button)};
 			let classList = input.getClassList(vnode);
       expect(classList).to.contain("left right action");
     });

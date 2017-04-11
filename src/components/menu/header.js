@@ -6,6 +6,3 @@ export class MenuHeader extends UI {
 		return ["header"];
 	}
 }
-
-
-export const menuHeader = new MenuHeader();

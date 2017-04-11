@@ -1,18 +1,19 @@
 import {window, getVnode} from "./../utils.js";
 import {
-	statistic,
-	statistics,
-	subStatistic,
-	statisticValue,
-	statisticLabel
+	Statistic,
+	Statistics,
+	SubStatistic,
+	StatisticValue,
+	StatisticLabel
 } from "./../../src/components/statistic.js";
 import {expect} from "chai";
 
 
-describe("statistic", () => {
-	let vnode;
+describe("Statistic", () => {
+	let vnode, statistic;
 
 	beforeEach(() => {
+		statistic = new Statistic();
 		vnode = getVnode();
 	});
 
@@ -52,10 +53,11 @@ describe("statistic", () => {
 	});
 });
 
-describe("statistics", () => {
-	let vnode;
+describe("Statistics", () => {
+	let vnode, statistics;
 
 	beforeEach(() => {
+		statistics = new Statistics();
 		vnode = getVnode();
 	});
 
@@ -100,10 +102,11 @@ describe("statistics", () => {
 	});
 });
 
-describe("subStatistic", () => {
-	let vnode;
-	
+describe("SubStatistic", () => {
+	let vnode, subStatistic;
+
 	beforeEach(() => {
+		subStatistic = new SubStatistic();
 		vnode = getVnode();
 	});
 
@@ -114,10 +117,11 @@ describe("subStatistic", () => {
 	});
 });
 
-describe("statisticValue", () => {
-	let vnode;
-	
+describe("StatisticValue", () => {
+	let vnode, statisticValue;
+
 	beforeEach(() => {
+		statisticValue = new StatisticValue();
 		vnode = getVnode();
 	});
 
@@ -128,10 +132,11 @@ describe("statisticValue", () => {
 	});
 });
 
-describe("statisticLabel", () => {
-	let vnode;
-	
+describe("StatisticLabel", () => {
+	let vnode, statisticLabel;
+
 	beforeEach(() => {
+		statisticLabel = new StatisticLabel();
 		vnode = getVnode();
 	});
 

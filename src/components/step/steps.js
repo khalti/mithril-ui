@@ -66,6 +66,3 @@ export class Steps extends UI {
 		return _("div", attrs.rootAttrs, children);
 	}
 }
-
-
-export const steps = new Steps();

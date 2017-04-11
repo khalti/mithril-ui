@@ -1,7 +1,8 @@
 import {isArray} from "./type.js";
 
-export const is = (instance, base) => {
-	return instance instanceof base;
+export const is = (subClass, base) => {
+	if (!subClass.prototype) return false;
+	return new subClass() instanceof base;
 };
 
 export const componentIs = (componentTypes) => {

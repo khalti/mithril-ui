@@ -55,6 +55,3 @@ export class Menu extends UI {
 						"menu"];
 	}
 }
-
-
-export const menu = new Menu();

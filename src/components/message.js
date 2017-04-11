@@ -44,14 +44,12 @@ export class Message extends UI {
 
 	view ({attrs, children = [], state}) {
 		if (attrs.onDismiss) {
-			children.unshift(_(icon, {name: "close", onclick: attrs.onDismiss}));
+			children.unshift(_(Icon, {name: "close", onclick: attrs.onDismiss}));
 		}
 
 		return _("div", attrs.rootAttrs, children);
 	}
 }
-
-export const message = new Message();
 
 
 export class MessageHeader extends UI {
@@ -60,12 +58,9 @@ export class MessageHeader extends UI {
 	}
 }
 
-export const messageHeader = new MessageHeader();
 
 export class MessageContent extends UI {
 	getClassList ({attrs}) {
 		return ["content"];
 	}
 }
-
-export const messageContent = new MessageContent();

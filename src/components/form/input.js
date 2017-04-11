@@ -58,5 +58,3 @@ export class Input extends UI {
 						 attrs.append? attrs.append: undefined);
   }
 }
-
-export const input = new Input();

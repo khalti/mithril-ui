@@ -45,6 +45,3 @@ export class TH extends UI {
 		return {root: "th"};
 	}
 }
-
-
-export const th = new TH();

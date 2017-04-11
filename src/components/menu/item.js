@@ -39,6 +39,3 @@ export class MenuItem extends UI {
 		];
 	}
 }
-
-
-export const menuItem = new MenuItem();

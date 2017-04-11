@@ -54,5 +54,3 @@ export class Icon extends UI {
 		];
 	}
 }
-
-export const icon = new Icon();

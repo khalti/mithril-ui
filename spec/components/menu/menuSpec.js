@@ -1,10 +1,16 @@
 import {window, getVnode} from "./../../utils.js";
-import {menu} from "./../../../src/components/menu/menu.js";
+import {Menu} from "./../../../src/components/menu/menu.js";
 import {expect} from "chai";
 import _ from "mithril";
 
 
 describe("menu", () => {
+	let menu;
+
+	beforeEach(() => {
+		menu = new Menu();
+	});
+
 	it("complains if state is invalid.", () => {
 		let vnode = getVnode();
 		vnode.attrs = {state: "invalid"};

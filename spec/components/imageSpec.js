@@ -1,10 +1,16 @@
 import {window, getVnode} from "./../utils.js";
-import {image} from "./../../src/components/image.js";
+import {Image} from "./../../src/components/image.js";
 import {expect} from "chai";
 import _ from "mithril";
 
 
-describe("image", () => {
+describe("Image", () => {
+	let image;
+
+	beforeEach(() => {
+		image = new Image();
+	});
+
 	it("complains if image source is not given", () => {
 		expect(image.view.bind(image)).to.throw(Error);
 	});

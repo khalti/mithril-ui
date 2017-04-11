@@ -13,6 +13,3 @@ export class THead extends UI {
 		return {root: "thead"};
 	}
 }
-
-
-export const thead = new THead();

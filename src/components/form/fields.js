@@ -13,5 +13,3 @@ export class Fields extends UI {
 		];
 	}
 }
-
-export const fields = new Fields();

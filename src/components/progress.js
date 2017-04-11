@@ -19,9 +19,6 @@ export class Bar extends UI {
 }
 
 
-export const bar = new Bar();
-
-
 export class Progress extends UI {
 	attrSchema = {
 		percent: [required(true), isNumber()],
@@ -46,5 +43,3 @@ export class Progress extends UI {
 				_(bar, {percent: attrs.percent}));
 	}
 }
-
-export const progress = new Progress();

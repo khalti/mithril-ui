@@ -36,6 +36,3 @@ export class Sidebar extends UI {
 		return _("div", attrs.rootAttrs, children);
 	}
 }
-
-
-export const sidebar = new Sidebar();

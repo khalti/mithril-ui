@@ -43,6 +43,3 @@ export class TD extends UI {
 		return {root: "td"};
 	}
 }
-
-
-export const td = new TD();

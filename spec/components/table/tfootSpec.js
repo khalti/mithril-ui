@@ -1,13 +1,14 @@
 import {window, getVnode} from "./../../utils.js";
-import {tfoot} from "./../../../src/components/table/tfoot.js";
+import {TFoot} from "./../../../src/components/table/tfoot.js";
 import {expect} from "chai";
 import _ from "mithril";
 
 
-describe("tfoot", () => {
-	let vnode;
+describe("TFoot", () => {
+	let vnode, tfoot;
 
 	beforeEach(() => {
+		tfoot = new TFoot();
 		vnode = getVnode();
 	});
 

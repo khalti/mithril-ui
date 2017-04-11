@@ -53,6 +53,3 @@ export class Column extends UI {
 						"column"];
 	}
 }
-
-
-export const column = new Column();

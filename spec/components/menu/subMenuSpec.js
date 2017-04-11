@@ -1,12 +1,13 @@
 import {window, getVnode} from "./../../utils.js";
-import {subMenu} from "./../../../src/components/menu/subMenu.js";
+import {SubMenu} from "./../../../src/components/menu/subMenu.js";
 import classnames from "classnames";
 import {expect} from "chai";
 
 describe("subMenu", () => {
-	let vnode;
+	let vnode, subMenu;
 
 	beforeEach(() => {
+		subMenu = new SubMenu();
 		vnode = getVnode();
 	});
 

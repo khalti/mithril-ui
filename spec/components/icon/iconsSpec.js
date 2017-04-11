@@ -1,18 +1,19 @@
 import {window} from "./../../utils.js";
-import {icons} from "./../../../src/components/icon/icons.js";
+import {Icons} from "./../../../src/components/icon/icons.js";
 import {Icon} from "./../../../src/components/icon/icon.js";
 import {expect} from "chai";
 
 
 describe("icons", () => {
 	it("extends 'Icon'", () => {
-		expect(icons instanceof Icon).to.equal(true);
+		expect(new Icons() instanceof Icon).to.equal(true);
 	});
 
 	describe("getClassList", () => {
-		let vnode;
+		let vnode, icons;
 
 		beforeEach(() => {
+			icons = new Icons();
 			vnode = {
 				attrs: {},
 				children: [],

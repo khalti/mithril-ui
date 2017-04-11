@@ -16,7 +16,7 @@ export class Image extends UI {
 		}
 		return {rootAttrs: {src: attrs.src}};
 	}
-	
+
 	getClassList ({attrs}) {
 		return ["ui",
 						attrs.inline && "inline",
@@ -52,6 +52,3 @@ export class Image extends UI {
 			: _("img", attrs.rootAttrs);
   }
 }
-
-
-export const image = new Image();

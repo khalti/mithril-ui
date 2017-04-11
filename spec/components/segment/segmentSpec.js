@@ -1,13 +1,14 @@
 import {window, getVnode} from "./../../utils.js";
-import {segment} from "./../../../src/components/segment/segment.js";
+import {Segment} from "./../../../src/components/segment/segment.js";
 import {expect} from "chai";
 import _ from "mithril";
 
 
 describe("segment", () => {
-	let vnode;
+	let vnode, segment;
 
 	beforeEach(() => {
+		segment = new Segment();
 		vnode = getVnode();
 	});
 
@@ -32,6 +33,12 @@ describe("segment", () => {
 	});
 
 	describe("getClassList", () => {
+		let segment;
+
+		beforeEach(() => {
+			segment = new Segment();
+		});
+
 		it("includes 'ui'", () => {
 			expect(segment.getClassList(vnode)).to.contain("ui");
 		});

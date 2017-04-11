@@ -24,6 +24,3 @@ export class Container extends UI {
 						"container"];
 	}
 }
-
-
-export const container = new Container();

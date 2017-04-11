@@ -69,6 +69,3 @@ export class ModalPool extends UI {
 		return _("div", attrs.rootAttrs, ModalPool.modals);
 	}
 }
-
-
-export const modalPool = new ModalPool();

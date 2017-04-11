@@ -1,5 +1,5 @@
 import {window} from "./../../utils.js";
-import {icon} from "./../../../src/components/icon/icon.js";
+import {Icon} from "./../../../src/components/icon/icon.js";
 import {expect} from "chai";
 import _ from "mithril";
 
@@ -7,14 +7,15 @@ import _ from "mithril";
 describe("icon", () => {
 	describe("getDefaultAttrs", () => {
 		it("sets root to 'i'", () => {
-			expect(icon.getDefaultAttrs({attrs: {}}).root).to.equal("i");
+			expect(new Icon().getDefaultAttrs({attrs: {}}).root).to.equal("i");
 		});
 	});
 
 	describe("getClassList", () => {
-		let vnode;
+		let vnode, icon;
 
 		beforeEach(() => {
+			icon = new Icon();
 			vnode = {
 				attrs: {},
 				children: [],

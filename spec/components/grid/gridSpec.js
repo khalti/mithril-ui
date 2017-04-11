@@ -1,12 +1,13 @@
 import {window, getVnode} from "./../../utils.js";
-import {grid} from "./../../../src/components/grid/grid.js";
+import {Grid} from "./../../../src/components/grid/grid.js";
 import {expect} from "chai";
 
 
-describe("grid", () =>{
-	let vnode;
+describe("grid", () => {
+	let vnode, grid;
 
 	beforeEach(() => {
+		grid = new Grid();
 		vnode = getVnode();
 	});
 

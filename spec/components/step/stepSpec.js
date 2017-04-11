@@ -1,13 +1,14 @@
 import {window, getVnode} from "./../../utils.js";
-import {step} from "./../../../src/components/step/step.js";
+import {Step} from "./../../../src/components/step/step.js";
 import _ from "mithril";
 import {expect} from "chai";
 
 
 describe("step", () => {
-	let vnode;
+	let vnode, step;
 
 	beforeEach(() => {
+		step = new Step();
 		vnode = getVnode();
 	});
 
@@ -29,6 +30,12 @@ describe("step", () => {
 	});
 
 	describe("getDefaultAttrs", () => {
+		let step;
+
+		beforeEach(() => {
+			step = new Step();
+		});
+
 		it("sets root to 'a'.", () => {
 			vnode.attrs = {link: true};
 			let attrs = step.getDefaultAttrs(vnode);

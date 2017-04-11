@@ -1,14 +1,15 @@
 import {window, getVnode} from "./../../utils.js";
-import {menuItem} from "./../../../src/components/menu/item.js";
+import {MenuItem} from "./../../../src/components/menu/item.js";
 import classnames from "classnames";
 import {expect} from "chai";
 import _ from "mithril";
 
 
 describe("item", () => {
-	let vnode;
+	let vnode, menuItem;
 
 	beforeEach(() => {
+		menuItem = new MenuItem();
 		vnode = getVnode();
 	});
 
@@ -59,6 +60,12 @@ describe("item", () => {
 	});
 
 	describe("getDefaultAttrs", () => {
+		let menuItem;
+
+		beforeEach(() => {
+			menuItem = new MenuItem();
+		});
+
 		it("sets root to 'a' if 'href' is present", () => {
 			vnode.attrs = {href: "/somewhere/"};
 			expect(menuItem.getDefaultAttrs(vnode).root).to.equal('a');

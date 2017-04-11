@@ -1,7 +1,4 @@
-import {Segment, segment} from "./segment.js";
-import {Segments, segments} from "./segments.js";
+import {Segment} from "./segment.js";
+import {Segments} from "./segments.js";
 
-export {
-	Segment, segment,
-	Segments, segments,
-};
+export { Segment, Segments, };

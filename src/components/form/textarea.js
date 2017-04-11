@@ -47,5 +47,3 @@ export class TextArea extends Field {
 				this.getLabelAppend(attrs));
 	}
 }
-
-export const textArea = new TextArea();

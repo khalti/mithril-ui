@@ -1,10 +1,16 @@
 import {window, getVnode} from "./../utils.js";
-import {header} from "./../../src/components/header.js";
+import {Header} from "./../../src/components/header.js";
 import {expect} from "chai";
 import _ from "mithril";
 
 
-describe("header", () => {
+describe("Header", () => {
+	let header;
+
+	beforeEach(() => {
+		header = new Header();
+	});
+
 	it("complains if level is invalid.", () => {
 		let vnode = {
 			attrs: {level: 7 }

@@ -1,8 +1,5 @@
-import {Icon, icon} from "./icon.js";
-import {Icons, icons} from "./icons.js";
+import {Icon} from "./icon.js";
+import {Icons} from "./icons.js";
 
 
-export {
-	Icon, icon,
-	Icons, icons
-};
+export { Icon, Icons, };

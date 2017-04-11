@@ -8,6 +8,3 @@ export class Label extends UI {
 		];
 	}
 }
-
-
-export const label = new Label();

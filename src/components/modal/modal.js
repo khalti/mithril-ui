@@ -16,8 +16,6 @@ export class ModalHeader extends UI {
 	}
 }
 
-export const modalHeader = new ModalHeader();
-
 
 export class ModalContent extends UI {
 	attrSchema = {
@@ -36,8 +34,6 @@ export class ModalContent extends UI {
 	}
 }
 
-export const modalContent = new ModalContent();
-
 
 export class ModalActions extends UI {
 	getClassList ({attrs}) {
@@ -50,8 +46,6 @@ export class ModalActions extends UI {
 		return _("div", attrs.rootAttrs, children);
 	}
 }
-
-export const modalActions = new ModalActions();
 
 
 export class Modal extends UI {
@@ -83,6 +77,3 @@ export class Modal extends UI {
 		return _("div", attrs.rootAttrs, children);
 	}
 }
-
-
-export const modal = new Modal();

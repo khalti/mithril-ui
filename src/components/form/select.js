@@ -2,7 +2,7 @@ import _ from "mithril";
 import map from "lodash/map";
 import {Field} from "./field.js";
 import {required} from "validatex";
-import {dropdown} from "./../dropdown.js";
+import {Dropdown} from "./../dropdown.js";
 
 
 export class Select extends Field {
@@ -49,10 +49,7 @@ export class Select extends Field {
 
     return _("div", attrs.rootAttrs,
              this.getLabelPrepend(attrs),
-             _(dropdown, selectRootAttr),
+             _(Dropdown, selectRootAttr),
              this.getLabelAppend(attrs));
   }
 }
-
-
-export const select = new Select();

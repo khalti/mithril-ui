@@ -50,6 +50,3 @@ export class Row extends UI {
 						"row"];
 	}
 }
-
-
-export const row = new Row();

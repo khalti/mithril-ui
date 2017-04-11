@@ -19,6 +19,3 @@ export class Pusher extends UI {
 		return _("div", attrs.rootAttrs, children);
 	}
 }
-
-
-export const pusher = new Pusher();

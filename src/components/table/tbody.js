@@ -7,6 +7,3 @@ export class TBody extends UI {
 		return {root: "tbody"};
 	}
 }
-
-
-export const tbody = new TBody();

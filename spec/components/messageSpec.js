@@ -1,15 +1,16 @@
 import {window, getVnode} from "./../utils.js";
-import {message, messageContent} from "./../../src/components/message.js";
+import {Message, MessageContent} from "./../../src/components/message.js";
 import _ from "mithril";
 import {expect} from "chai";
 import classnames from "classnames";
-import {icon} from "./../../src/components/icon/icon.js";
+import {Icon} from "./../../src/components/icon/icon.js";
 
 
-describe("message", () => {
-	let vnode;
+describe("Message", () => {
+	let vnode, message;
 
 	beforeEach(() => {
+		message = new Message();
 		vnode = getVnode();
 	});
 
@@ -38,7 +39,7 @@ describe("message", () => {
 		});
 
 		it("includes 'icon'.", () => {
-			vnode.children = _(icon, {name: "add"});
+			vnode.children = _(Icon, {name: "add"});
 			expect(message.getClassList(vnode)).to.contain("icon");
 		});
 
@@ -94,8 +95,8 @@ describe("message", () => {
 
 	describe("view", () => {
 		it("renders icon and content.", () => {
-			let aIcon = _(icon, {name: "add"});
-			let aContent = _(messageContent, "yolo");
+			let aIcon = _(Icon, {name: "add"});
+			let aContent = _(MessageContent, "yolo");
 			vnode.children = [aIcon, aContent];
 			let vdom = message.view(vnode);
 			expect(vdom.children[0]).to.equal(aIcon);
@@ -105,7 +106,7 @@ describe("message", () => {
 		it("renders dismiss icon.", () => {
 			vnode.attrs = {onDismiss: () => {}, content: "something"};
 			let aMessage = message.view(vnode);
-			expect(aMessage.children[0].tag).to.equal(icon);
+			expect(aMessage.children[0].tag).to.equal(Icon);
 		});
 
 		it("calls 'onDismisss' callback.", () => {

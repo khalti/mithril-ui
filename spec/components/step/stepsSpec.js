@@ -1,14 +1,15 @@
 import {window, getVnode} from "./../../utils.js";
-import {steps} from "./../../../src/components/step/steps.js";
-import {step, stepTitle} from "./../../../src/components/step/step.js";
+import {Steps} from "./../../../src/components/step/steps.js";
+import {Step, StepTitle} from "./../../../src/components/step/step.js";
 import {expect} from "chai";
 import _ from "mithril";
 
 
 describe("steps", () => {
-	let vnode;
+	let vnode, steps;
 
 	beforeEach(() => {
+		steps = new Steps();
 		vnode = getVnode();
 	});
 
@@ -23,10 +24,16 @@ describe("steps", () => {
 	});
 
 	describe("getClassList", () => {
+		let steps;
+
+		beforeEach(() => {
+			steps = new Steps();
+		});
+
 		it("includes 'ui'.", () => {
 			expect(steps.getClassList(vnode)).to.contain("ui");
 		});
-		
+
 		it("includes 'steps'.", () => {
 			expect(steps.getClassList(vnode)).to.contain("steps");
 		});
@@ -66,6 +73,12 @@ describe("steps", () => {
 	});
 
 	describe("getDefaultAttrs", () => {
+		let steps;
+
+		beforeEach(() => {
+			steps = new Steps();
+		});
+
 		it("sets state to '0'.", () => {
 			let attrs = steps.getDefaultAttrs(vnode);
 			expect(attrs.currentStep).to.equal(0);
@@ -81,13 +94,13 @@ describe("steps", () => {
 	describe("view", () => {
 		it("sets proper state of steps", () => {
 			let attrs = {currentStep: 2};
-			_.render(document.body, _(steps, attrs,
-					_(step,
-						_(stepTitle, "Step 1")),
-					_(step,
-						_(stepTitle, "Step 2")),
-					_(step,
-						_(stepTitle, "Step 2"))));
+			_.render(document.body, _(Steps, attrs,
+					_(Step,
+						_(StepTitle, "Step 1")),
+					_(Step,
+						_(StepTitle, "Step 2")),
+					_(Step,
+						_(StepTitle, "Step 2"))));
 
 			let step1 = document.querySelectorAll(".step")[0];
 			expect(step1.className).to.contain("completed");
@@ -100,4 +113,3 @@ describe("steps", () => {
 		});
 	});
 });
-

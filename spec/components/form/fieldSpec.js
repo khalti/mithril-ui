@@ -1,5 +1,5 @@
 import {window, trigger, presence} from "./../../utils.js";
-import {field} from "../../../src/components/form/field.js";
+import {Field} from "../../../src/components/form/field.js";
 import powerform from "powerform";
 import _ from "mithril";
 import chai from "chai";
@@ -8,9 +8,10 @@ import classnames from "classnames";
 let expect = chai.expect;
 
 describe("field", () => {
-	let vnode;
+	let vnode, field;
 
 	beforeEach(() => {
+		field = new Field();
 		vnode = {
 			attrs: {},
 			children: [],
@@ -170,7 +171,7 @@ describe("field", () => {
 		});
 
 		it("passes attrs.input to Input component", () => {
-			_.render(document.body, _(field, attrs));
+			_.render(document.body, _(Field, attrs));
 			let inputDom = document.querySelector("input");
 
 			expect(inputDom.getAttribute("class")).to.contain("aClass");
@@ -178,7 +179,7 @@ describe("field", () => {
 
 		it("binds model to value of input", () => {
 			attrs.model("1");
-			_.render(document.body, _(field, attrs));
+			_.render(document.body, _(Field, attrs));
 			let inputDom = document.querySelector("input");
 
 			expect(inputDom.value).to.equal(attrs.model());
@@ -186,7 +187,7 @@ describe("field", () => {
 
 		it("sets input's placeholder to attrs.placeholder", () => {
 			attrs.model("1");
-			_.render(document.body, _(field, attrs));
+			_.render(document.body, _(Field, attrs));
 			let inputDom = document.querySelector("input");
 
 			expect(inputDom.getAttribute("placeholder")).to.equal(attrs.placeholder);
@@ -194,14 +195,14 @@ describe("field", () => {
 
 		it("sets input's type to attrs.type", function () {
 			attrs.type = "number";
-			_.render(document.body, _(field, attrs));
+			_.render(document.body, _(Field, attrs));
 			let inputDom = document.querySelector("input");
 
 			expect(inputDom.getAttribute("type")).to.equal(attrs.type);
 		});
 
 		it("updates value on attrs.update", function () {
-			_.render(document.body, _(field, attrs));
+			_.render(document.body, _(Field, attrs));
 			let inputDom = document.querySelector("input");
 			inputDom.value = "earth";
 
@@ -211,7 +212,7 @@ describe("field", () => {
 		});
 
 		it("validates on attrs.validate", function () {
-			_.render(document.body, _(field, attrs));
+			_.render(document.body, _(Field, attrs));
 			let inputDom = document.querySelector("input");
 			inputDom.value = "";
 
@@ -224,7 +225,7 @@ describe("field", () => {
 		it("updates and validates the value if attrs.update and attrs.validate are same", function() {
 			attrs.update = "onchange";
 
-			_.render(document.body, _(field, attrs));
+			_.render(document.body, _(Field, attrs));
 			let inputDom = document.querySelector("input");
 
 			// for valid data
@@ -241,7 +242,7 @@ describe("field", () => {
 		});
 
 		it("includes name", () => {
-			_.render(document.body, _(field, attrs));
+			_.render(document.body, _(Field, attrs));
 			let inputDom = document.querySelector("input");
 
 			expect(inputDom.getAttribute("name")).to.equal(attrs.name);

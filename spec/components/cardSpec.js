@@ -1,26 +1,24 @@
 import {window} from "./../utils.js";
 import {
 	Card,
-	card,
-	cards,
-	subCard,
-	cardContent,
-	cardHeader,
-	cardMeta,
-	cardDescription,
-	cardAuthor,
-	cardTime,
-	cardCategory,
+	Cards,
+	SubCard,
+	CardContent,
+	CardHeader,
+	CardMeta,
+	CardDescription,
+	CardAuthor,
+	CardTime,
+	CardCategory,
 } from "./../../src/components/card.js";
+import {expect} from "chai";
 
-import chai from "chai";
 
-let expect = chai.expect;
-
-describe("card", () => {
+describe("Card", () => {
 	describe("getClassList", () => {
-		let vnode;
+		let vnode, card;
 		beforeEach(() => {
+			card = new Card();
 			vnode = {
 				attrs: {},
 				children: [],
@@ -70,9 +68,10 @@ describe("card", () => {
 	});
 
 	describe("view", () => {
-		let vnode;
+		let vnode, card;
 
 		beforeEach(() => {
+			card = new Card();
 			vnode = {
 				attrs: {
 					rootAttrs: {}
@@ -97,9 +96,10 @@ describe("card", () => {
 
 
 describe("subCard", () => {
-	let vnode;
+	let vnode, subCard;
 
 	beforeEach(() => {
+		subCard = new SubCard();
 		vnode = {
 			attrs: {},
 			children: [],
@@ -120,10 +120,11 @@ describe("subCard", () => {
 });
 
 
-describe("cards", () => {
+describe("Cards", () => {
 	describe("getClassList", () => {
-		let vnode;
+		let vnode, cards;
 		beforeEach(() => {
+			cards = new Cards();
 			vnode = {
 				attrs: {},
 				children: [],
@@ -168,11 +169,12 @@ describe("cards", () => {
 });
 
 
-describe("carContent", () => {
+describe("CardContent", () => {
 	describe("getClassList", () => {
-		let vnode;
+		let vnode, cardContent;
 
 		beforeEach(() => {
+			cardContent = new CardContent();
 			vnode = {
 				attrs: {},
 				children: [],
@@ -200,11 +202,12 @@ describe("carContent", () => {
 });
 
 
-describe("cardHeader", () => {
+describe("CardHeader", () => {
 	describe("getClassList", () => {
-		let vnode;
+		let vnode, cardHeader;
 
 		beforeEach(() => {
+			cardHeader = new CardHeader();
 			vnode = {
 				attrs: {},
 				children: [],
@@ -226,9 +229,10 @@ describe("cardHeader", () => {
 	});
 
 	describe("view", () => {
-		let vnode;
+		let vnode, cardHeader;
 
 		beforeEach(() => {
+			cardHeader = new CardHeader();
 			vnode = {
 				attrs: {
 					rootAttrs: {}
@@ -240,23 +244,24 @@ describe("cardHeader", () => {
 
 		it("sets tag to 'a' if 'attrs.href' exists.", () => {
 			vnode.attrs.href = "#";
-			let vdom = card.view(vnode);
+			let vdom = cardHeader.view(vnode);
 			expect(vdom.tag).to.equal("a");
 		});
 
 		it("sets tag to 'div' if 'attrs.href' does not exist.", () => {
-			let vdom = card.view(vnode);
+			let vdom = cardHeader.view(vnode);
 			expect(vdom.tag).to.equal("div");
 		});
 	});
 });
 
 
-describe("cardMeta", () => {
+describe("CardMeta", () => {
 	describe("getClassList", () => {
-		let vnode;
+		let vnode, cardMeta;
 
 		beforeEach(() => {
+			cardMeta = new CardMeta();
 			vnode = {
 				attrs: {},
 				children: [],
@@ -279,11 +284,12 @@ describe("cardMeta", () => {
 });
 
 
-describe("cardDescription", () => {
+describe("CardDescription", () => {
 	describe("getClassList", () => {
-		let vnode;
+		let vnode, cardDescription;
 
 		beforeEach(() => {
+			cardDescription = new CardDescription();
 			vnode = {
 				attrs: {},
 				children: [],
@@ -305,11 +311,12 @@ describe("cardDescription", () => {
 	});
 });
 
-describe("cardAuthor", () => {
+describe("CardAuthor", () => {
 	describe("getClassList", () => {
-		let vnode;
+		let vnode, cardAuthor;
 
 		beforeEach(() => {
+			cardAuthor = new CardAuthor();
 			vnode = {
 				attrs: {},
 				children: [],
@@ -331,11 +338,12 @@ describe("cardAuthor", () => {
 	});
 });
 
-describe("cardTime", () => {
+describe("CardTime", () => {
 	describe("getClassList", () => {
-		let vnode;
+		let vnode, cardTime;
 
 		beforeEach(() => {
+			cardTime = new CardTime();
 			vnode = {
 				attrs: {},
 				children: [],
@@ -358,11 +366,12 @@ describe("cardTime", () => {
 });
 
 
-describe("cardCategory", () => {
+describe("CardCategory", () => {
 	describe("getClassList", () => {
-		let vnode;
+		let vnode, cardCategory;
 
 		beforeEach(() => {
+			cardCategory = new CardCategory();
 			vnode = {
 				attrs: {},
 				children: [],
@@ -383,4 +392,3 @@ describe("cardCategory", () => {
 		});
 	});
 });
-

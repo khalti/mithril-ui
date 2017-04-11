@@ -16,7 +16,6 @@ export class Statistic extends UI {
 	}
 }
 
-export const statistic = new Statistic();
 
 export class Statistics extends UI {
 	getClassList ({attrs}) {
@@ -33,7 +32,6 @@ export class Statistics extends UI {
 	}
 }
 
-export const statistics = new Statistics();
 
 export class SubStatistic extends Statistic {
 	getClassList (vnode) {
@@ -43,7 +41,6 @@ export class SubStatistic extends Statistic {
 	}
 }
 
-export const subStatistic = new SubStatistic();
 
 export class StatisticValue extends UI {
 	getClassList ({attrs}) {
@@ -51,12 +48,9 @@ export class StatisticValue extends UI {
 	}
 }
 
-export const statisticValue = new StatisticValue();
 
 export class StatisticLabel extends UI {
 	getClassList ({attrs}) {
 		return ["label"];
 	}
 }
-
-export const statisticLabel = new StatisticLabel();

@@ -1,13 +1,14 @@
 import {window, getVnode} from "./../../utils.js";
-import {column} from "./../../../src/components/grid/column.js";
+import {Column} from "./../../../src/components/grid/column.js";
 import _ from "mithril";
 import {expect} from "chai";
 
 
 describe("column", () => {
-	let vnode;
+	let vnode, column;
 
 	beforeEach(() => {
+		column = new Column();
 		vnode = getVnode();
 	});
 

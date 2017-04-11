@@ -15,7 +15,6 @@ export class Items extends UI {
 	}
 }
 
-export const items = new Items();
 
 export class Item extends UI {
 	getClassList (vnode) {
@@ -23,7 +22,6 @@ export class Item extends UI {
 	}
 }
 
-export const item = new Item();
 
 export class ItemContent extends UI {
 	getClassList ({attrs, children, state}) {
@@ -33,8 +31,6 @@ export class ItemContent extends UI {
 		];
 	}
 }
-
-export const itemContent = new ItemContent();
 
 
 export class ItemHeader extends UI {
@@ -53,7 +49,6 @@ export class ItemHeader extends UI {
 	}
 }
 
-export const itemHeader = new ItemHeader();
 
 export class ItemMeta extends UI {
 	getClassList ({attrs}) {
@@ -63,7 +58,6 @@ export class ItemMeta extends UI {
 	}
 }
 
-export const itemMeta = new ItemMeta();
 
 export class ItemDescription extends UI {
 	getClassList ({attrs}) {
@@ -73,7 +67,6 @@ export class ItemDescription extends UI {
 	}
 }
 
-export const itemDescription = new ItemDescription();
 
 export class ItemExtra extends UI {
 	getClassList ({attrs}) {
@@ -82,5 +75,3 @@ export class ItemExtra extends UI {
 		];
 	}
 }
-
-export const itemExtra = new ItemExtra();

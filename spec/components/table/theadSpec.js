@@ -1,13 +1,14 @@
 import {window, getVnode} from "./../../utils.js";
-import {thead} from "./../../../src/components/table/thead.js";
+import {THead} from "./../../../src/components/table/thead.js";
 import {expect} from "chai";
 import _ from "mithril";
 
 
 describe("thead", () => {
-	let vnode;
+	let vnode, thead;
 
 	beforeEach(() => {
+		thead = new THead();
 		vnode = getVnode();
 	});
 

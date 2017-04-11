@@ -1,235 +1,168 @@
 import {UI} from "./components/base.js";
-import {
-	Button, button,
-	Buttons, buttons,
-} from "./components/button";
-import {
-	Card, card,
-	SubCard, subCard,
-	Cards, cards,
-	CardContent, cardContent,
-	CardHeader, cardHeader,
-	CardMeta, cardMeta,
-	CardDescription, cardDescription,
-	CardAuthor, cardAuthor,
-	CardTime, cardTime,
-	CardCategory, cardCategory,
+import { Button, Buttons } from "./components/button";
+import { Card,
+	SubCard,
+	Cards,
+	CardContent,
+	CardHeader,
+	CardMeta,
+	CardDescription,
+	CardAuthor,
+	CardTime,
+	CardCategory,
 } from "./components/card.js";
-import {Container, container} from "./components/container.js";
-import {Dimmer, dimmer} from "./components/dimmer.js";
-import {Divider, divider} from "./components/divider.js";
+import {Container} from "./components/container.js";
+import {Dimmer} from "./components/dimmer.js";
+import {Divider} from "./components/divider.js";
 import {
-	Input, input,
-	Field, field,
-	Fields, fields,
-	Select, select,
-	Form, form,
-	Checkbox, checkbox,
-	TextArea, textArea,
-	DatePicker, datePicker
+	Input,
+	Field,
+	Fields,
+	Select,
+	Form,
+	Checkbox,
+	TextArea,
+	DatePicker,
 } from "./components/form";
 
 import {
-	Grid, grid,
-	Row, row,
-	Column, column
+	Grid,
+	Row,
+	Column,
 } from "./components/grid";
 import {
-	Header, header,
-	SubHeader, subHeader,
-	HeaderContent, headerContent,
+	Header,
+	SubHeader,
+	HeaderContent,
 } from "./components/header.js";
 import {
-	Icon, icon,
-	Icons, icons
+	Icon,
+	Icons,
 } from "./components/icon";
-import {Image, image} from "./components/image.js";
-import {Label, label} from "./components/label.js";
+import {Image,} from "./components/image.js";
+import {Label,} from "./components/label.js";
 import {
-	Menu, menu,
-	MenuHeader, menuHeader,
-	MenuItem, menuItem,
-	SubMenu, subMenu,
+	Menu,
+	MenuHeader,
+	MenuItem,
+	SubMenu,
 } from "./components/menu";
 import {
-	Message, message,
-	MessageHeader, messageHeader,
-	MessageContent, messageContent,
+	Message,
+	MessageHeader,
+	MessageContent,
 } from "./components/message.js";
-import
-	{ ModalHeader , modalHeader
-	, ModalContent, modalContent
-	, ModalActions, modalActions
-	, Modal, modal
-	, ModalPool, modalPool } from "./components/modal";
 import {
-	Pagination,
-	pagination,
-} from "./components/pagination.js";
+	ModalHeader,
+	ModalContent,
+	ModalActions,
+	Modal,
+	ModalPool,
+} from "./components/modal";
+import { Pagination, } from "./components/pagination.js";
 import {
-	Bar, bar,
-	Progress, progress,
+	Bar,
+	Progress,
 } from "./components/progress.js";
+import { Pusher, } from "./components/pusher.js";
 import {
-	Pusher,
-	pusher,
-} from "./components/pusher.js";
-import {
-	Segment, segment,
-	Segments, segments,
+	Segment,
+	Segments,
 } from "./components/segment";
 import {
 	Sidebar,
-	sidebar,
 } from "./components/sidebar.js";
 import {
-	Statistic, statistic,
-	Statistics, statistics,
-	SubStatistic, subStatistic,
-	StatisticValue, statisticValue,
-	StatisticLabel, statisticLabel,
+	Statistic,
+	Statistics,
+	SubStatistic,
+	StatisticValue,
+	StatisticLabel,
 } from "./components/statistic.js";
 import {
-	Table, table,
-	THead, thead,
-	TBody, tbody,
-	TFoot, tfoot,
-	TR, tr,
-	TH, th ,
-	TD, td,
+	Table,
+	THead,
+	TBody,
+	TFoot,
+	TR,
+	TH,
+	TD,
 } from "./components/table";
 import {
-	Step, step,
-	StepTitle, stepTitle,
-	StepContent, stepContent,
-	StepDescription, stepDescription,
-	Steps, steps,
+	Step,
+	StepTitle,
+	StepContent,
+	StepDescription,
+	Steps,
 } from "./components/step";
 import {
-	Items, items,
-	Item, item,
-	ItemContent, itemContent,
-	ItemHeader, itemHeader,
-	ItemMeta, itemMeta,
-	ItemDescription, itemDescription,
-	ItemExtra, itemExtra,
+	Items,
+	Item,
+	ItemContent,
+	ItemHeader,
+	ItemMeta,
+	ItemDescription,
+	ItemExtra,
 } from "./components/item.js";
 import {
-	Dropdown, dropdown,
-	DropdownText, dropdownText,
-	DropdownMenu, dropdownMenu,
-	DropdownItem, dropdownItem,
+	Dropdown,
+	DropdownText,
+	DropdownMenu,
+	DropdownItem,
 } from "./components/dropdown.js";
-import { Popup, popup, popupBinder, popupPool } from "./components/popup.js";
+import { Popup, Popup, PopupBinder, PopupPool } from "./components/popup.js";
 
 export {
 	UI,
 
-	Button, button, Buttons, buttons,
+	Button, Buttons,
 
-	Card, card,
-	SubCard, subCard,
-	Cards, cards,
-	CardContent, cardContent,
-	CardHeader, cardHeader,
-	CardMeta, cardMeta,
-	CardDescription, cardDescription,
-	CardAuthor, cardAuthor,
-	CardTime, cardTime,
-	CardCategory, cardCategory,
+	Card, SubCard, Cards, CardContent, CardHeader, CardMeta, CardDescription,
+	CardAuthor, CardTime, CardCategory,
 
-	Container, container,
+	Container,
 
-	Dimmer, dimmer,
+	Dimmer,
 
-	Divider, divider,
+	Divider,
 
-	Input, input,
-	Field, field,
-	Fields, fields,
-	Select, select,
-	Form, form,
-	Checkbox, checkbox,
-	TextArea, textArea,
-	DatePicker, datePicker,
+	Input, Field, Fields, Select, Form, Checkbox, TextArea, DatePicker,
 
-	Grid, grid,
-	Row, row,
-	Column, column,
+	Grid, Row, Column,
 
-	Header, header,
-	SubHeader, subHeader,
-	HeaderContent, headerContent,
+	Header, SubHeader, HeaderContent,
 
-	Icon, icon,
-	Icons, icons,
+	Icon, Icons,
 
-	Image, image,
+	Image,
 
-	Label, label,
+	Label,
 
-	Menu, menu,
-	MenuHeader, menuHeader,
-	MenuItem, menuItem,
-	SubMenu, subMenu,
+	Menu, MenuHeader, MenuItem, SubMenu,
 
-	Message, message,
-	MessageHeader, messageHeader,
-	MessageContent, messageContent,
+	Message, MessageHeader, MessageContent,
 
-	ModalHeader , modalHeader,
-	ModalContent, modalContent,
-	ModalActions, modalActions,
-	Modal, modal,
-	ModalPool, modalPool,
+	ModalHeader, ModalContent, ModalActions, Modal, ModalPool,
 
 	Pagination,
-	pagination,
 
-	Bar, bar,
-	Progress, progress,
+	Bar, Progress,
 
 	Pusher,
-	pusher,
 
-	Segment, segment,
-	Segments, segments,
+	Segment, Segments,
 
 	Sidebar,
-	sidebar,
 
-	Statistic, statistic,
-	Statistics, statistics,
-	SubStatistic, subStatistic,
-	StatisticValue, statisticValue,
-	StatisticLabel, statisticLabel,
+	Statistic, Statistics, SubStatistic, StatisticValue, StatisticLabel,
 
-	Table, table,
-	THead, thead,
-	TBody, tbody,
-	TFoot, tfoot,
-	TR, tr,
-	TH, th ,
-	TD, td,
+	Table, THead, TBody, TFoot, TR, TH, TD,
 
-	Step, step,
-	StepTitle, stepTitle,
-	StepContent, stepContent,
-	StepDescription, stepDescription,
-	Steps, steps,
+	Step, StepTitle, StepContent, StepDescription, Steps,
 
-	Items, items,
-	Item, item,
-	ItemContent, itemContent,
-	ItemHeader, itemHeader,
-	ItemMeta, itemMeta,
-	ItemDescription, itemDescription,
-	ItemExtra, itemExtra,
+	Items, Item, ItemContent, ItemHeader, ItemMeta, ItemDescription, ItemExtra,
 
-	Dropdown, dropdown,
-	DropdownText, dropdownText,
-	DropdownMenu, dropdownMenu,
-	DropdownItem, dropdownItem,
+	Dropdown, DropdownText, DropdownMenu, DropdownItem,
 
-	Popup, popup, popupBinder, popupPool,
+	Popup, Popup, PopupBinder, PopupPool,
 };

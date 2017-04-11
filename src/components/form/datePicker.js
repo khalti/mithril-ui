@@ -22,8 +22,6 @@ export class WeekBar extends UI {
 	}
 }
 
-export const weekBar = new WeekBar();
-
 export class MonthDateGrid extends UI {
 	datesAreEqual(date1, date2) {
 		date1.setHours(0,0,0,0);
@@ -77,7 +75,6 @@ export class MonthDateGrid extends UI {
 	}
 }
 
-export const monthDateGrid = new MonthDateGrid();
 
 export class DatePickerWidget extends UI {
 	getStyle (vnode) {
@@ -137,7 +134,6 @@ export class DatePickerWidget extends UI {
 	}
 }
 
-export const datePickerWidget = new DatePickerWidget();
 
 export class DatePicker extends Field {
 	viewYear = undefined
@@ -254,5 +250,3 @@ export class DatePicker extends Field {
 		return view;
 	}
 }
-
-export const datePicker = new DatePicker();

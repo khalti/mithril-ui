@@ -1,14 +1,15 @@
 import {window} from "./../utils.js";
 import {expect} from "chai";
-import {dimmer} from "./../../src/components/dimmer.js";
+import {Dimmer} from "./../../src/components/dimmer.js";
 import _ from "mithril";
 
 
-describe("dimmer", () => {
+describe("Dimmer", () => {
 	describe("getClassList", () => {
-		let vnode;
+		let vnode, dimmer;
 
 		beforeEach(() => {
+			dimmer = new Dimmer();
 			vnode = {
 				attrs: {},
 				children: [],
@@ -50,9 +51,10 @@ describe("dimmer", () => {
 	});
 
 	describe("view", () => {
-		let vnode, vdom;
+		let vnode, vdom, dimmer;
 
 		beforeEach(() => {
+			dimmer = new Dimmer();
 			vnode = {
 				attrs: {
 					rootAttrs: {id: "aDimmer"}

@@ -1,6 +1,6 @@
 import _ from "mithril";
 import {isObject, isString} from "./../../helpers/type.js";
-import {input}  from "./input.js";
+import {Input}  from "./input.js";
 import {UI} from "./../base.js";
 import {widthMap} from "./../../helpers/enums.js";
 import {required} from "validatex";
@@ -99,10 +99,7 @@ export class Field extends UI {
 
     return _('div', attrs.rootAttrs,
              this.getLabelPrepend(attrs),
-             _(input, inputAttrs),
+             _(Input, inputAttrs),
              this.getLabelAppend(attrs));
   }
 }
-
-
-export const field = new Field();

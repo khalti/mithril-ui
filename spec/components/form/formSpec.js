@@ -1,13 +1,14 @@
 import {window} from "./../../utils.js";
-import {form} from "./../../../src/components/form/form.js";
+import {Form} from "./../../../src/components/form/form.js";
 import {expect} from "chai";
 
 
 describe("form", () => {
 	describe("getClassList", () => {
-		let vnode;
+		let vnode, form;
 
 		beforeEach(() => {
+			form = new Form();
 			vnode = {
 				attrs: {},
 				children: [],

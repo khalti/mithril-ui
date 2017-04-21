@@ -110,7 +110,7 @@ import {
 	DropdownMenu,
 	DropdownItem,
 } from "./components/dropdown.js";
-import { Popup, Popup, PopupBinder, PopupPool } from "./components/popup.js";
+import { Popup, PopupBinder, PopupPool } from "./components/popup.js";
 
 export {
 	UI,
@@ -164,5 +164,5 @@ export {
 
 	Dropdown, DropdownText, DropdownMenu, DropdownItem,
 
-	Popup, Popup, PopupBinder, PopupPool,
+	Popup, PopupBinder, PopupPool,
 };

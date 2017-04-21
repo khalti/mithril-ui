@@ -236,7 +236,7 @@ export class DatePicker extends Field {
 				, hidePopup: "onclick" },
 				super.view(vnode),
 				o(popup, {position: "bottom left"},
-					o(datePickerWidget,
+					o(DatePickerWidget,
 						{ setDate: this.setDate.bind(this, attrs.format, attrs.model)
 						, prevMonth: this.prevMonth.bind(this)
 					 	, nextMonth: this.nextMonth.bind(this)

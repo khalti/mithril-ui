@@ -1,4 +1,4 @@
-import _ from "mithril";
+import o from "mithril";
 import {validate} from "validatex";
 import omit from "lodash/omit.js";
 import Component from "mithril-componentx";
@@ -17,6 +17,6 @@ export class UI extends Component {
   }
 
   view ({attrs, children, state}) {
-    return _(attrs.root, attrs.rootAttrs, children);
+    return o(attrs.root, attrs.rootAttrs, children);
   }
 }

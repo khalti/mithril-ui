@@ -24,34 +24,13 @@ import {
 	TextArea,
 	DatePicker,
 } from "./components/form";
-
-import {
-	Grid,
-	Row,
-	Column,
-} from "./components/grid";
-import {
-	Header,
-	SubHeader,
-	HeaderContent,
-} from "./components/header.js";
-import {
-	Icon,
-	Icons,
-} from "./components/icon";
+import {Grid, Row, Column, } from "./components/grid";
+import {Header, SubHeader, HeaderContent, } from "./components/header.js";
+import {Icon, Icons, } from "./components/icon";
 import {Image,} from "./components/image.js";
 import {Label,} from "./components/label.js";
-import {
-	Menu,
-	MenuHeader,
-	MenuItem,
-	SubMenu,
-} from "./components/menu";
-import {
-	Message,
-	MessageHeader,
-	MessageContent,
-} from "./components/message.js";
+import {Menu, MenuHeader, MenuItem, SubMenu, } from "./components/menu";
+import {Message, MessageHeader, MessageContent, } from "./components/message.js";
 import {
 	ModalHeader,
 	ModalContent,
@@ -60,18 +39,11 @@ import {
 	ModalPool,
 } from "./components/modal";
 import { Pagination, } from "./components/pagination.js";
-import {
-	Bar,
-	Progress,
+import {Bar, Progress,
 } from "./components/progress.js";
 import { Pusher, } from "./components/pusher.js";
-import {
-	Segment,
-	Segments,
-} from "./components/segment";
-import {
-	Sidebar,
-} from "./components/sidebar.js";
+import {Segment, Segments, } from "./components/segment";
+import {Sidebar, } from "./components/sidebar.js";
 import {
 	Statistic,
 	Statistics,
@@ -111,6 +83,7 @@ import {
 	DropdownItem,
 } from "./components/dropdown.js";
 import { Popup, PopupBinder, PopupPool } from "./components/popup.js";
+import {List} from "./components/list.js";
 
 export {
 	UI,
@@ -165,4 +138,6 @@ export {
 	Dropdown, DropdownText, DropdownMenu, DropdownItem,
 
 	Popup, PopupBinder, PopupPool,
+
+	List,
 };

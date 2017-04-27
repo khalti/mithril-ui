@@ -1,11 +1,11 @@
 import {UI} from "./base.js";
-import {required, isBoolean} from "validatex";
+import {required, isBoolean, within, } from "validatex";
 import {sizeMap, verticalAlignmentMap, floatMap} from "./../helpers/enums.js";
 
 const TYPES = ["bulleted", "ordered", "link"];
 
 export class Content extends UI {
-	displayName = "ListItemContent"
+	static displayName = "ListItemContent"
 
 	getClassList (vnode) {
 		return ["content"];
@@ -13,7 +13,7 @@ export class Content extends UI {
 }
 
 export class Header extends UI {
-	displayName = "ListItemHeader"
+	static displayName = "ListItemHeader"
 
 	attrSchema =
 		{ href: required(false) }
@@ -36,7 +36,7 @@ export class Header extends UI {
 }
 
 export class Description extends UI {
-	displayName = "ListItemDescription"
+	static displayName = "ListItemDescription"
 
 	getClassList (vnode) {
 		return ["description"];
@@ -45,7 +45,7 @@ export class Description extends UI {
 
 
 export class Item extends UI {
-	displayName = "ListItem"
+	static displayName = "ListItem"
 
 	getClassList (vnode) {
 		return ["item"];

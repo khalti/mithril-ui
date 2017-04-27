@@ -18,7 +18,6 @@ export class Bar extends UI {
 	}
 }
 
-
 export class Progress extends UI {
 	attrSchema = {
 		percent: [required(true), isNumber()],
@@ -40,6 +39,6 @@ export class Progress extends UI {
 
 	view ({attrs, children, state}) {
 		return _("div", attrs.rootAttrs,
-				_(bar, {percent: attrs.percent}));
+				_(Bar, {percent: attrs.percent}));
 	}
 }

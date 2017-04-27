@@ -17,11 +17,11 @@ export class ModalPool extends UI {
 		};
 	}
 
-	add (modal) {
+	static add (modal) {
 		ModalPool.modals = ModalPool.modals.concat([modal]);
 	}
 
-	shift (modal) {
+	static shift (modal) {
 		ModalPool.modals = ModalPool.modals.slice(1);
 	}
 

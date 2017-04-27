@@ -1,7 +1,7 @@
 import _ from "mithril";
 import {required, within} from "validatex";
 import {UI} from "./../base.js";
-import {modalPool} from "./pool.js";
+import {ModalPool} from "./pool.js";
 
 
 const sizeMap = ["small", "large", "fullscreen"];
@@ -56,7 +56,7 @@ export class Modal extends UI {
 	}
 
 	remove () {
-		modalPool.shift();
+		ModalPool.shift();
 	}
 
 	onremove (vdom) {

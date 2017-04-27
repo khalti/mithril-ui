@@ -3,11 +3,11 @@ import o from "mithril";
 import {required, isBoolean, isString} from "validatex";
 import {Calendar as Cal} from "calendar";
 import {Field} from "./field.js";
-import {popup, popupBinder, popupPool} from "./../popup.js";
-import {table, thead, tbody, th, tr, td} from "./../table";
-import {grid, column} from "./../grid";
-import {icon} from "./../icon";
-import {button} from "./../button";
+import {Popup, PopupBinder, PopupPool} from "./../popup.js";
+import {Table, THead, TBody, TH, TR, TD} from "./../table";
+import {Grid, Column} from "./../grid";
+import {Icon} from "./../icon";
+import {Button} from "./../button";
 import fecha from "fecha";
 
 
@@ -16,9 +16,9 @@ const MONTHS = "JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC".split(" ");
 
 export class WeekBar extends UI {
 	view ({attrs}) {
-		return o(thead, attrs.rootAttrs,
-			o(tr,
-				WEEKDAYS.map(day => o(th, day))));
+		return o(THead, attrs.rootAttrs,
+			o(TR,
+				WEEKDAYS.map(day => o(TH, day))));
 	}
 }
 
@@ -44,16 +44,16 @@ export class MonthDateGrid extends UI {
 	}
 
 	view ({attrs}) {
-		return o(tbody, attrs.rootAttrs,
+		return o(TBody, attrs.rootAttrs,
 			attrs.dateGrid.map(row => {
-				return o(tr, {textAlignment: "center"},
+				return o(TR, {textAlignment: "center"},
 					row.map(dateStr => {
 						let date = new Date(dateStr);
 						let tdAttrs = {};
 						let child = date.getDate();
 
 						if (attrs.hideOffset && this.isNotViewMonth(date, attrs.viewMonth)) {
-							return o(td, "");
+							return o(TD, "");
 						}
 
 						if (attrs.disablePast && this.isPast(date)) {
@@ -69,7 +69,7 @@ export class MonthDateGrid extends UI {
 						tdAttrs.class = tdClass.join(" ");
 						tdAttrs.onclick = attrs.setDate.bind(undefined, date);
 
-						return o(td, tdAttrs, child);
+						return o(TD, tdAttrs, child);
 					}));
 			}));
 	}
@@ -111,19 +111,19 @@ export class DatePickerWidget extends UI {
 
 	view ({attrs}) {
 		return o("div", attrs.rootAttrs,
-			o(grid,
-				o(column, {width: 3, onclick: attrs.prevMonth},
-					o(icon, {name: "chevron left", class: "prev-month", color: "blue"})),
-				o(column, {width: 10, textAlignment: "center"},
+			o(Grid,
+				o(Column, {width: 3, onclick: attrs.prevMonth},
+					o(Icon, {name: "chevron left", class: "prev-month", color: "blue"})),
+				o(Column, {width: 10, textAlignment: "center"},
 					o("div.mth-year", MONTHS[attrs.viewMonth] + " " + attrs.viewYear)),
-				o(column, {width: 3, onclick: attrs.nextMonth, textAlignment: "right"},
-					o(icon, {name: "chevron right", class: "next-month", color: "blue"}))),
-			o(table,
+				o(Column, {width: 3, onclick: attrs.nextMonth, textAlignment: "right"},
+					o(Icon, {name: "chevron right", class: "next-month", color: "blue"}))),
+			o(Table,
 				{ veryBasic: true
 				, size: "small"
 			 	, },
-				o(weekBar),
-				o(monthDateGrid,
+				o(WeekBar),
+				o(MonthDateGrid,
 					{ dateGrid: this.getMonthDates(attrs.viewYear, attrs.viewMonth)
 					, viewMonth: attrs.viewMonth
 					, setDate: attrs.setDate
@@ -231,11 +231,11 @@ export class DatePicker extends Field {
 		let {attrs} = vnode;
 
 		let view =
-			o(popupBinder,
+			o(PopupBinder,
 				{ displayPopup: "onclick"
 				, hidePopup: "onclick" },
 				super.view(vnode),
-				o(popup, {position: "bottom left"},
+				o(Popup, {position: "bottom left"},
 					o(DatePickerWidget,
 						{ setDate: this.setDate.bind(this, attrs.format, attrs.model)
 						, prevMonth: this.prevMonth.bind(this)

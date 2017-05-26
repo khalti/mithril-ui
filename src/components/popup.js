@@ -43,6 +43,14 @@ export class Popup extends UI {
 		, visible: [required(true), isBoolean(true)]
 		, }
 
+	getStyle (vnode) {
+		return {
+			".ui.popup": {
+				"z-index": 800
+			}
+		}
+	}
+
 	getClassList ({attrs}) {
 		let classes =
 			[ "ui"

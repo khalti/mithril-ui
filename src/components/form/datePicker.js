@@ -14,6 +14,26 @@ import fecha from "fecha";
 const WEEKDAYS = "Sun Mon Tue Wed Thu Fri Sat".split(" ");
 const MONTHS = "JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC".split(" ");
 
+export class EmptyButton extends Button {
+	emptyDate (model, e) {
+		e.preventDefault();
+		e.stopPropagation();
+
+		model(null);
+	}
+
+	getDefaultAttrs (vnode) {
+		let attrs = super.getDefaultAttrs(vnode);
+		attrs.onclick = this.emptyDate.bind(this, vnode.attrs.model);
+		return attrs;
+	}
+
+	view ({attrs}) {
+		return o(Button, attrs.rootAttrs,
+			o(Icon, {name: "trash outline"}));
+	}
+}
+
 export class WeekBar extends UI {
 	view ({attrs}) {
 		return o(THead, attrs.rootAttrs,
@@ -190,6 +210,7 @@ export class DatePicker extends Field {
 		 	, readOnly: true
 			, disablePast: false
 			, hideOffset: false
+			, prepend: o(Icon, {name: "calendar"})
 			, };
 		let attrs = Object.assign(super.getDefaultAttrs(vnode), defaultAttrs);
 		return attrs;
@@ -229,6 +250,9 @@ export class DatePicker extends Field {
 
 	view (vnode) {
 		let {attrs} = vnode;
+
+		attrs.append =
+			o(EmptyButton, {model: attrs.model, disabled: attrs.model()? false: true});
 
 		let view =
 			o(PopupBinder,

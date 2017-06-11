@@ -40,12 +40,12 @@ export class Select extends Field {
 			, placeholder: attrs.placeholder
 			, name: attrs.name
 			, search: attrs.search
-			, fluid: attrs.fluid
+			, fluid: attrs.fluid ? attrs.fluid : true
 			, options: attrs.options };
 
-		if (attrs.name) {
-			selectRootAttr.name = attrs.name;
-		}
+		// if (attrs.name) {
+		// 	selectRootAttr.name = attrs.name;
+		// }
 
     return _("div", attrs.rootAttrs,
              this.getLabelPrepend(attrs),

@@ -43,9 +43,9 @@ export class Select extends Field {
 			, fluid: attrs.fluid ? attrs.fluid : true
 			, options: attrs.options };
 
-		if (attrs.name) {
-			selectRootAttr.name = attrs.name;
-		}
+		// if (attrs.name) {
+		// 	selectRootAttr.name = attrs.name;
+		// }
 
     return _("div", attrs.rootAttrs,
              this.getLabelPrepend(attrs),

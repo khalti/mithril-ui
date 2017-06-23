@@ -101,6 +101,7 @@ export class Dropdown extends UI {
 			attrs.options && "selection",
 			attrs.search && "search",
 			attrs.fluid && "fluid",
+			attrs.inline && "inline",
 			"dropdown"
 		];
 	}

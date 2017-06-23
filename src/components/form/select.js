@@ -41,6 +41,7 @@ export class Select extends Field {
 			, name: attrs.name
 			, search: attrs.search
 			, fluid: attrs.fluid === false ? false : true
+			, inline: attrs.inline
 			, options: attrs.options };
 
 		// if (attrs.name) {

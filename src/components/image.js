@@ -39,7 +39,8 @@ export class Image extends UI {
 		let root;
 
 		if (attrs.root) {
-			root = "div";
+			root = attrs.root;
+			delete attrs.rootAttrs["src"]
 		}
 
 		if(attrs.link) {

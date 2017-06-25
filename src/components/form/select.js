@@ -40,7 +40,8 @@ export class Select extends Field {
 			, placeholder: attrs.placeholder
 			, name: attrs.name
 			, search: attrs.search
-			, fluid: attrs.fluid ? attrs.fluid : true
+			, fluid: attrs.fluid === false ? false : true
+			, inline: attrs.inline
 			, options: attrs.options };
 
 		// if (attrs.name) {

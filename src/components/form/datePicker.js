@@ -19,7 +19,7 @@ export class EmptyButton extends Button {
 		e.preventDefault();
 		e.stopPropagation();
 
-		model(null);
+		model.reset();
 	}
 
 	getDefaultAttrs (vnode) {
@@ -165,7 +165,7 @@ export class DatePicker extends Field {
 		, disablePast: [required(false), isBoolean(true)]
 		, model: [required(true), isBoolean(true)]
 		, hideOffset: [required(false), isBoolean(true)]
-		, resetToNull: [required(false), isBoolean(true)]
+		, reset: [required(false), isBoolean(true)]
 		, }
 
 	oldValue = ""
@@ -252,7 +252,7 @@ export class DatePicker extends Field {
 	view (vnode) {
 		let {attrs} = vnode;
 
-		if (attrs.resetToNull) {
+		if (attrs.reset) {
 			attrs.append =
 				o(EmptyButton, {model: attrs.model, disabled: attrs.model()? false: true});
 		}

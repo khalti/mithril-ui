@@ -12,7 +12,7 @@ export class Container extends UI {
 	attrSchema = {
 		type: [ required(false),
 						within(["text", "fluid"], "Invalid value '{value}' for attribute 'type'.")],
-		alignment: [required(false),
+		textAlignment: [required(false),
 								within(["left", "center", "right", "justified"],
 												"Invalid value '{value}' for attribute 'alignment'.")]
 	}

@@ -53,3 +53,18 @@ export class Image extends UI {
 			: _("img", attrs.rootAttrs);
   }
 }
+
+export class Images extends UI {
+	getClassList ({attrs}) {
+		let classes =
+			[ "ui"
+			, attrs.size
+			, "images"
+			]
+		return classes;
+	}
+
+	view ({attrs, state, children}) {
+		return _("div", attrs.rootAttrs, children);
+	}
+}

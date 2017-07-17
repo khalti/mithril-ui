@@ -1,12 +1,13 @@
 import o from "mithril";
 import {required} from "validatex";
-import {Field, field} from "./../ui";
+import {Field} from "./field.js";
 
-
-class Radio extends Field {
+export class Radio extends Field {
 	attrSchema =
 		{ model: required(true)
-		, label: required(true) }
+		, label: required(true)
+		, value: required(true)
+		}
 
 	setValue (attrs) {
 		attrs.model.setAndValidate(attrs.value);
@@ -22,14 +23,22 @@ class Radio extends Field {
 		return null;
 	}
 
+	shouldCheck(attrs) {
+		return attrs.model() === attrs.value;
+	}
+
   view (vnode) {
 		let attrs = vnode.attrs;
 		attrs.rootAttrs.onclick = this.setValue.bind(this, attrs);
 
     return o('div', attrs.rootAttrs,
-             o(".ui.radio.checkbox", {className: attrs.model()===attrs.value? "checked": ""},
-               o("input[type=radio][tabindex=0]", {name: attrs.name, value: attrs.model()}),
-               o("label", attrs.label)),
-             this.getLabelAppend(attrs));
+			o(".ui.radio.checkbox", {className: this.shouldCheck(attrs)? "checked": ""},
+				o("input[type=radio][tabindex=0]",
+					{ name: attrs.name
+					, value: attrs.value
+					, checked: this.shouldCheck(attrs)? true: false
+					}),
+				o("label", attrs.label)),
+			this.getLabelAppend(attrs));
   }
 }

@@ -6,6 +6,7 @@ import {Form} from "./form.js";
 import {Checkbox} from "./checkbox.js";
 import {TextArea} from "./textarea.js";
 import {DatePicker} from "./datePicker.js";
+import {Radio} from "./radio.js";
 
 
-export { Input, Field, Fields, Select, Form, Checkbox, TextArea, DatePicker, };
+export { Input, Field, Fields, Select, Form, Checkbox, TextArea, DatePicker, Radio,};

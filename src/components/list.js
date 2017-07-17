@@ -4,7 +4,7 @@ import {sizeMap, verticalAlignmentMap, floatMap} from "./../helpers/enums.js";
 
 const TYPES = ["bulleted", "ordered", "link"];
 
-export class Content extends UI {
+class Content extends UI {
 	static displayName = "ListItemContent"
 
 	getClassList (vnode) {
@@ -12,7 +12,7 @@ export class Content extends UI {
 	}
 }
 
-export class Header extends UI {
+class Header extends UI {
 	static displayName = "ListItemHeader"
 
 	attrSchema =
@@ -35,7 +35,7 @@ export class Header extends UI {
 	}
 }
 
-export class Description extends UI {
+class Description extends UI {
 	static displayName = "ListItemDescription"
 
 	getClassList (vnode) {
@@ -44,7 +44,7 @@ export class Description extends UI {
 }
 
 
-export class Item extends UI {
+class Item extends UI {
 	static displayName = "ListItem"
 
 	getClassList (vnode) {
@@ -72,8 +72,23 @@ export class List extends UI {
 		, float: [required(false), within(floatMap)]
 		, }
 
-	getClassList (vnode) {
-		return ["ui", "list"];
+	getClassList ({attrs, state, children}) {
+		let classes =
+			[ "ui"
+			, attrs.horizontal && "horizontal"
+			, attrs.inverted && "inverted"
+			, attrs.selection && "selection"
+			, attrs.animated && "animated"
+			, attrs.relaxed && "relaxed"
+			, attrs.divided && "divided"
+			, attrs.celled && "celled"
+			, sizeMap[attrs.size]
+			, verticalAlignmentMap[attrs.verticalAlignment]
+			, floatMap[attrs.float]
+			, "list"
+			]
+
+		return classes;
 	}
 }
 

@@ -19,7 +19,7 @@ export class EmptyButton extends Button {
 		e.preventDefault();
 		e.stopPropagation();
 
-		model(null);
+		model.reset();
 	}
 
 	getDefaultAttrs (vnode) {
@@ -30,7 +30,7 @@ export class EmptyButton extends Button {
 
 	view ({attrs}) {
 		return o(Button, attrs.rootAttrs,
-			o(Icon, {name: "trash outline"}));
+			o(Icon, {name: "calendar delete"}));
 	}
 }
 
@@ -165,6 +165,7 @@ export class DatePicker extends Field {
 		, disablePast: [required(false), isBoolean(true)]
 		, model: [required(true), isBoolean(true)]
 		, hideOffset: [required(false), isBoolean(true)]
+		, reset: [required(false), isBoolean(true)]
 		, }
 
 	oldValue = ""
@@ -251,8 +252,10 @@ export class DatePicker extends Field {
 	view (vnode) {
 		let {attrs} = vnode;
 
-		attrs.append =
-			o(EmptyButton, {model: attrs.model, disabled: attrs.model()? false: true});
+		if (attrs.reset) {
+			attrs.append =
+				o(EmptyButton, {model: attrs.model, disabled: attrs.model()? false: true});
+		}
 
 		let view =
 			o(PopupBinder,

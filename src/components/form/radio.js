@@ -9,6 +9,14 @@ export class Radio extends Field {
 		, value: required(true)
 		}
 
+	getStyle(vnode) {
+		return {
+			"div .ui.radio label": {
+				cursor: "pointer"
+			}
+		};
+	}
+
 	setValue (attrs) {
 		attrs.model.setAndValidate(attrs.value);
 	}

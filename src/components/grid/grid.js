@@ -26,6 +26,7 @@ let stackableMap = {
 };
 
 let attrSchema = {
+	// TODO: rename columns to columnCount
   columns: [required(false),
 						within(properKeys(enums.columnsMap),
 									"Invalid column count '{value}'.")],

@@ -55,6 +55,14 @@ export class Modal extends UI {
 		scrolling: [required(false), within([true, false])]
 	}
 
+	getStyle (vnode) {
+		return {
+			".ui.modal": {
+				top: "5%"
+			}
+		};
+	}
+
 	remove () {
 		ModalPool.shift();
 	}
@@ -69,6 +77,7 @@ export class Modal extends UI {
 			attrs.basic && "basic",
 			attrs.size,
 			attrs.scrolling && "scrolling",
+			attrs.fullscreen && "fullscreen",
 			"modal visible active"
 		];
 	}

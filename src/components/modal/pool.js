@@ -41,7 +41,7 @@ export class ModalPool extends UI {
 
 	removeModal (e) {
 		if (e.target.className.match("modals")) {
-			this.shift();
+			ModalPool.shift();
 			return;
 		}
 
@@ -66,6 +66,10 @@ export class ModalPool extends UI {
 	}
 
 	view ({attrs, children, state}) {
-		return _("div", attrs.rootAttrs, ModalPool.modals);
+		return _("div", attrs.rootAttrs,
+			ModalPool.modals.map((modal) => {
+				return _(modal.tag, modal.attrs,
+					modal.children.map((child) => _(child.tag, child.attrs, child.children)));
+			}));
 	}
 }

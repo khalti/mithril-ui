@@ -45,7 +45,10 @@ export class Field extends UI {
 			return _('label.help', attrs.help);
 		}
 		else if(attrs.model.error() && !attrs.hideError) {
-			return _('label.error', attrs.model.error());
+			return _('label.error',
+				attrs.safe
+				? _.trust(attrs.model.error())
+				: attrs.model.error());
 		}
 	}
 

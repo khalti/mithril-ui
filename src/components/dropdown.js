@@ -4,6 +4,7 @@ import {required, isArray} from "validatex";
 import {Icon} from "./icon";
 import {firstMatch} from "./../helpers/misc.js";
 import {range} from "lodash";
+import {Label} from "./label.js";
 
 
 const SPACE = 32;
@@ -14,6 +15,24 @@ const UP_KEY = 38;
 const DOWN_KEY = 40;
 
 
+export class SelectedItem extends Label {
+	unselect (attrs, e) {
+		e.stopPropagation();
+
+		let selectedItems = attrs.model();
+		let index = selectedItems.indexOf(attrs.item.value);
+		selectedItems.splice(index, 1);
+		attrs.model(selectedItems);
+	}
+
+	view ({attrs, state, children}) {
+		return o("a", attrs.rootAttrs,
+			attrs.item.label,
+			o(Icon, {name: "delete", onclick: this.unselect.bind(this, attrs)})
+		);
+	}
+}
+
 export class Dropdown extends UI {
 	attrSchema = {
 		text: required(false),
@@ -22,10 +41,12 @@ export class Dropdown extends UI {
 		model: required(false),
 		name: required(false),
 		search: required(false),
+		multiple: required(false)
 	};
 
 	oninit (vnode) {
 		super.oninit(vnode);
+		this.multiple = vnode.attrs.multiple;
 		this.active = false;
 		this.selector = "";
 
@@ -102,10 +123,11 @@ export class Dropdown extends UI {
 			attrs.search && "search",
 			attrs.fluid && "fluid",
 			attrs.inline && "inline",
+			attrs.multiple && "multiple",
 			"dropdown"
 		];
 	}
-
+ 
 	isSelection(attrs) {
 		return attrs.model? true: false;
 	}
@@ -116,7 +138,11 @@ export class Dropdown extends UI {
 
 	getText (attrs) {
 		if (!attrs.model) return attrs.text;
-		if (attrs.model && !attrs.model() && attrs.placeholder) return attrs.placeholder;
+		if ( attrs.model && (!attrs.model() || (attrs.multiple && attrs.model().length == 0)) && attrs.placeholder) {
+			return attrs.placeholder;
+		}
+
+		if (attrs.multiple) return "";
 
 		let match = firstMatch((attrs.options), (option) => {
 			return option.value === attrs.model();
@@ -221,7 +247,15 @@ export class Dropdown extends UI {
 	}
 
 	selectOption (index, value, model, e) {
-		model.setAndValidate(value);
+		let modelValue;
+		if (this.multiple) {
+			modelValue = model();
+			modelValue.push(value);
+		}
+		else {
+			modelValue = value;
+		}
+		model.setAndValidate(modelValue);
 		this.selectedIndex = index;
 		this.selector = "";
 		e.preventDefault();
@@ -234,7 +268,8 @@ export class Dropdown extends UI {
 		return attrs.options.map((option) => {
 			let itemAttrs =
 				{ "data-value": option.value
-				, onmousedown: this.selectOption.bind(this, index, option.value, attrs.model) };
+				, onmousedown: this.selectOption.bind(this, index, option.value, attrs.model)
+				};
 
 			if (this.selectedIndex === index) {
 				itemAttrs.selected = true;
@@ -248,6 +283,10 @@ export class Dropdown extends UI {
 			if (attrs.search &&
 					this.selector &&
 					!this.matchOptionLabel(option.label, this.selector)) {
+				itemAttrs.filtered = true;
+			}
+
+			if (attrs.multiple && attrs.model().indexOf(option.value) != -1) {
 				itemAttrs.filtered = true;
 			}
 
@@ -265,6 +304,9 @@ export class Dropdown extends UI {
 	view ({attrs, children, state}) {
 		const isSelection = this.isSelection(attrs);
 		const text = this.getText(attrs);
+		if (attrs.multiple && !isArray(attrs.model())) {
+			throw new Error("Model value must be array.");
+		}
 
 		return o("div", attrs.rootAttrs,
 			isSelection?
@@ -273,8 +315,19 @@ export class Dropdown extends UI {
 
 			o(DropdownText,
 				{ default: this.isDefaultText(attrs, text)
-				, filtered: attrs.search && this.selector? true: false },
+				, filtered: attrs.search && this.selector? true: false
+				},
 				text),
+
+			attrs.multiple
+				? attrs.model().map((sel) => {
+					let item = firstMatch((attrs.options), (option) => {
+						return option.value === sel;
+					});
+					return o(SelectedItem, {model: attrs.model, item: item});
+				})
+				: null,
+
 			o(Icon, {name: "dropdown"}),
 
 			attrs.search

@@ -42,7 +42,9 @@ export class Select extends Field {
 			, search: attrs.search
 			, fluid: attrs.fluid === false ? false : true
 			, inline: attrs.inline
-			, options: attrs.options };
+			, options: attrs.options
+			, multiple: attrs.multiple
+			};
 
 		// if (attrs.name) {
 		// 	selectRootAttr.name = attrs.name;

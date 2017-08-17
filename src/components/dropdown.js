@@ -5,6 +5,7 @@ import {Icon} from "./icon";
 import {firstMatch} from "./../helpers/misc.js";
 import {range} from "lodash";
 import {Label} from "./label.js";
+import {isArray as issArray} from "./../helpers/type.js";
 
 
 const SPACE = 32;
@@ -304,7 +305,7 @@ export class Dropdown extends UI {
 	view ({attrs, children, state}) {
 		const isSelection = this.isSelection(attrs);
 		const text = this.getText(attrs);
-		if (attrs.multiple && !isArray(attrs.model())) {
+		if (attrs.multiple && !issArray(attrs.model())) {
 			throw new Error("Model value must be array.");
 		}
 

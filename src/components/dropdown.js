@@ -137,13 +137,13 @@ export class Dropdown extends UI {
 		return attrs.model && attrs.placeholder === text;
 	}
 
-	isNull (val) {
-		return (val === null || val === undefined)
+	isEmpty (val) {
+		return (val === null || val === undefined || val === "");
 	}
 
 	getText (attrs) {
 		if (!attrs.model) return attrs.text;
-		if ( attrs.model && (this.isNull(attrs.model()) || (attrs.multiple && attrs.model().length == 0)) && attrs.placeholder) {
+		if ( attrs.model && (this.isEmpty(attrs.model()) || (attrs.multiple && attrs.model().length == 0)) && attrs.placeholder) {
 			return attrs.placeholder;
 		}
 

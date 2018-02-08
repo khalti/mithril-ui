@@ -1,8 +1,6 @@
 import {UI} from "./../base.js";
 import {step} from "./step.js";
 import enums from "./../../helpers/enums.js";
-import map from "lodash/map";
-import flattenDeep from "lodash/flattenDeep";
 import _ from "mithril";
 import {required, within} from "validatex";
 import {isArray} from "./../../helpers/type.js";

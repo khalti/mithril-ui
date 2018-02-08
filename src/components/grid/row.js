@@ -1,7 +1,6 @@
-import {properKeys} from "./../../helpers/misc.js";
+import {properKeys, clone} from "./../../helpers/misc.js";
 import {UI} from "./../base.js";
 import enums from "./../../helpers/enums.js";
-import clone from "lodash/clone";
 import {required, within} from "validatex";
 
 

@@ -1,6 +1,5 @@
 import {UI} from "./base.js";
 import _ from "mithril";
-import omit from "lodash/omit";
 import {verticalAlignmentMap, floatMap} from "./../helpers/enums.js";
 import {required} from "validatex";
 

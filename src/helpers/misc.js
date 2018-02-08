@@ -40,3 +40,17 @@ export const firstMatch = (collection, predicate) => {
 		if (predicate(collection[i])) return collection[i];
 	}
 }
+
+export const clone = (item) => {
+	return JSON.parse(JSON.stringify(item));
+};
+
+export const includes = (collection, value, fromIndex=0) => {
+	if (!fromIndex) {
+		fromIndex = 0;
+	}
+	if (fromIndex < 0) {
+		fromIndex = 0;
+	}
+	return collection.indexOf(value, fromIndex) !== -1;
+}

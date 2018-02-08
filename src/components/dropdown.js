@@ -3,7 +3,6 @@ import o from "mithril";
 import {required, isArray} from "validatex";
 import {Icon} from "./icon";
 import {firstMatch} from "./../helpers/misc.js";
-import {range} from "lodash";
 import {Label} from "./label.js";
 import {isArray as issArray} from "./../helpers/type.js";
 

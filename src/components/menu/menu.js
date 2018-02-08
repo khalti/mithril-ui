@@ -1,5 +1,4 @@
 import {UI} from "./../base.js";
-import keys from "lodash/keys";
 import enums from "./../../helpers/enums.js";
 import {required, within} from "validatex";
 import {properKeys} from "./../../helpers/misc.js";
@@ -20,12 +19,12 @@ let fittedMap = {
 export class Menu extends UI {
 	attrSchema = {
 		state: [required(false), within(["down", "active"], "Invalid state.")],
-		color: [required(false), within(keys(enums.colorClassMap), "Invalid color.")],
-		fixed: [required(false), within(keys(fixedMap), "Invalid position to fix.")],
+		color: [required(false), within(properKeys(enums.colorMap), "Invalid color.")],
+		fixed: [required(false), within(properKeys(fixedMap), "Invalid position to fix.")],
 		itemCount: [required(false),
 								within(properKeys(enums.numberMap), "Invalid item count.")],
-		attach: [required(false), within(keys(enums.attachmentMap), "Invalid attachment.")],
-		size: [required(false), within(keys(enums.sizeMap), "Invalid size.")],
+		attach: [required(false), within(properKeys(enums.attachmentMap), "Invalid attachment.")],
+		size: [required(false), within(properKeys(enums.sizeMap), "Invalid size.")],
 		fitted: [required(false), within([true, "vertically", "horizontally"],
 																		"Invalid value for 'fitted'.")]
 	}

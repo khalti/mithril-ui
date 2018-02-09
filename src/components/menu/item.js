@@ -1,6 +1,6 @@
 import {UI} from "./../base.js";
 import enums from "./../../helpers/enums.js";
-import keys from "lodash/keys";
+import {properKeys} from "./../../helpers/misc.js";
 import {required, within} from "validatex";
 import _ from "mithril";
 
@@ -13,7 +13,7 @@ let fittedMap = {
 
 export class MenuItem extends UI {
 	attrSchema = {
-		color: [required(false), within(keys(enums.colorClassMap), "Invalid color.")],
+		color: [required(false), within(properKeys(enums.colorMap), "Invalid color.")],
 		fitted: [required(false), within([true, "vertically", "horizontally"],
 																		"^Invalid value for 'fitted'.")]
 	}

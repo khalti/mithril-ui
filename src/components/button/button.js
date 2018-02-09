@@ -1,6 +1,5 @@
 import {UI} from "./../base.js";
 import _ from "mithril";
-import omit from "lodash/omit";
 import {colorMap, floatMap, emphasisMap, sizeMap} from "./../../helpers/enums.js";
 import {within, required} from "validatex";
 import {Icon} from "./../icon/icon.js";

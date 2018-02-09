@@ -99,7 +99,6 @@ export class Field extends UI {
 		if (attrs.name) {
 			inputAttrs.name = attrs.name;
 		}
-
     return _('div', attrs.rootAttrs,
              this.getLabelPrepend(attrs),
              _(Input, inputAttrs),

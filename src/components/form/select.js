@@ -1,5 +1,4 @@
 import _ from "mithril";
-import map from "lodash/map";
 import {Field} from "./field.js";
 import {required} from "validatex";
 import {Dropdown} from "./../dropdown.js";

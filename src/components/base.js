@@ -1,6 +1,5 @@
 import o from "mithril";
 import {validate} from "validatex";
-import omit from "lodash/omit.js";
 import Component from "mithril-componentx";
 
 

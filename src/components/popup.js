@@ -2,7 +2,7 @@ import {UI} from "./base.js";
 import o from "mithril";
 import {required, isBoolean, isArray, within, isString, isNumber} from "validatex";
 import {sizeMap} from "./../helpers/enums.js";
-import {includes} from "lodash";
+import {includes} from "./../helpers/misc.js";
 import getSize from "get-size";
 
 const WIDTHS = ["wide", "very wide"];

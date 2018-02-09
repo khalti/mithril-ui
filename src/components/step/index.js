@@ -1,5 +1,5 @@
-import {step} from "./step.js";
-import {steps} from "./steps.js";
+import { Step, StepTitle, StepContent, StepDescription, } from "./step.js";
+import { Steps, } from "./steps.js";
 
 
-export {step, steps};
+export { Step, StepTitle, StepContent, StepDescription, Steps, };

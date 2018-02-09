@@ -1,43 +1,57 @@
-import m from "mithril";
-import map from "lodash/map";
-import {field} from "./field.js";
-import component from "mithril-componentx";
+import _ from "mithril";
+import {Field} from "./field.js";
 import {required} from "validatex";
+import {Dropdown} from "./../dropdown.js";
 
 
-export const select = component({
-	name: "select",
-	base: field,
-	attrSchema: {
+export class Select extends Field {
+	attrSchema = {
 		model: required(true),
 		options: required(true),
 		multiple: required(false)
-	},
-	menuVisible: false,
+	}
+
+	menuVisible = false
+
 	toggleMenu () {
 		this.menuVisible = !this.menuVisible;
-	},
+	}
+
 	hideMenu () {
 		this.menuVisible = false;
-	},
+	}
+
+	getSelectedIndex (options, value) {
+		for (let i = 0; i < options.length; i ++ ) {
+			if (options[i].value === value) {
+				return i;
+			}
+		}
+	}
+
   view (vdom) {
 		let attrs = vdom.attrs;
-		let selectRootAttr = {value: attrs.model(),
-													onchange: m.withAttr("value", attrs.model.setAndValidate)};
-		if (attrs.name) {
-			selectRootAttr.name = attrs.name;
-		}
+		let selectRootAttr =
+			// { value: attrs.model()
+			// , onchange: _.withAttr("value", attrs.model.setAndValidate)
+			// , selectedIndex: this.getSelectedIndex(attrs.options, attrs.model()) };
+			{ model: attrs.model
+			, placeholder: attrs.placeholder
+			, name: attrs.name
+			, search: attrs.search
+			, fluid: attrs.fluid === false ? false : true
+			, inline: attrs.inline
+			, options: attrs.options
+			, multiple: attrs.multiple
+			};
 
-    return m("div", attrs.rootAttrs,
+		// if (attrs.name) {
+		// 	selectRootAttr.name = attrs.name;
+		// }
+
+    return _("div", attrs.rootAttrs,
              this.getLabelPrepend(attrs),
-             m("select", selectRootAttr,
-               map(attrs.options, (option) => {
-								 let optionAttrs = {value: option.value};
-								 if (option.value === attrs.model()) {
-									 optionAttrs.selected = "selected";
-								 }
-                 return m("option", optionAttrs, option.label);
-               })),
+             _(Dropdown, selectRootAttr),
              this.getLabelAppend(attrs));
   }
-});
+}

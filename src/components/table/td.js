@@ -1,26 +1,23 @@
-import {base} from "./../base.js";
-import component from "mithril-componentx";
-import m from "mithril";
+import {UI} from "./../base.js";
+import _ from "mithril";
 import {required, within} from "validatex";
 import {
-	verticalAlignmentClassMap,
-	widthClassMap,
-	textAlignmentClassMap} from "./../../helpers/enums.js";
-import keys from "lodash/keys";
+	verticalAlignmentMap,
+	widthMap,
+	textAlignmentMap} from "./../../helpers/enums.js";
 
 
 const states = ["positive", "negative", "error", "warning", "active", "disabled"];
 
-export const td = component({
-	name: "td",
-	base: base,
-	attrSchema: {
+export class TD extends UI {
+	attrSchema = {
 		state: [required(false), within(states)],
-		verticalAlignment: [required(false), within(keys(verticalAlignmentClassMap))],
-		textAlignment: [required(false), within(keys(textAlignmentClassMap))],
-		width: [required(false), within(keys(widthClassMap))]
-	},
-	isRootAttr (value, key) {
+		verticalAlignment: [required(false), within(Object.keys(verticalAlignmentMap))],
+		textAlignment: [required(false), within(Object.keys(textAlignmentMap))],
+		width: [required(false), within(Object.keys(widthMap))]
+	}
+
+	isRootAttr (key) {
 		try {
 			return /^(key|id|style|on.*|data-.*|config|rowspan|colspan)$/.test(key)? true: false;
 		}
@@ -29,18 +26,20 @@ export const td = component({
 				return false;
 			}
 		}
-	},
-	getClassList (attrs) {
+	}
+
+	getClassList ({attrs}) {
 		return [
 			attrs.state,
-			{selectable: attrs.selectable},
-			verticalAlignmentClassMap[attrs.verticalAlignment],
-			textAlignmentClassMap[attrs.textAlignment],
-			{collapsing: attrs.collapsing},
-			widthClassMap[attrs.width]
+			attrs.selectable && "selectable",
+			verticalAlignmentMap[attrs.verticalAlignment],
+			textAlignmentMap[attrs.textAlignment],
+			attrs.collapsing && "collapsing",
+			widthMap[attrs.width]
 		];
-	},
-	getDefaultAttrs (attrs) {
+	}
+
+	getDefaultAttrs ({attrs}) {
 		return {root: "td"};
 	}
-});
+}

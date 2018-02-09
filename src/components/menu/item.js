@@ -1,8 +1,8 @@
-import {base} from "./../base.js";
-import component from "mithril-componentx";
+import {UI} from "./../base.js";
 import enums from "./../../helpers/enums.js";
-import keys from "lodash/keys";
+import {properKeys} from "./../../helpers/misc.js";
 import {required, within} from "validatex";
+import _ from "mithril";
 
 
 let fittedMap = {
@@ -11,30 +11,31 @@ let fittedMap = {
 	horizontally: "fitted horizontally"
 };
 
-export const item = component({
-	name: "menuItem",
-	base: base,
-	attrSchema: {
-		color: [required(false), within(keys(enums.colorClassMap), "Invalid color.")],
+export class MenuItem extends UI {
+	attrSchema = {
+		color: [required(false), within(properKeys(enums.colorMap), "Invalid color.")],
 		fitted: [required(false), within([true, "vertically", "horizontally"],
 																		"^Invalid value for 'fitted'.")]
-	},
-	getDefaultAttrs (attrs) {
+	}
+
+	getDefaultAttrs ({attrs}) {
 		return {
 			root: attrs.href? "a": "div",
 			rootAttrs: {
 				href: attrs.href || ""
+				// oncreate: _.route.link
 			}
 		};
-	},
-	getClassList (attrs) {
+	}
+
+	getClassList ({attrs}) {
 		return ["item",
-						enums.colorClassMap[attrs.color],
+						enums.colorMap[attrs.color],
 						fittedMap[attrs.fitted],
-						{header: attrs.header},
-						{borderless: attrs.borderless},
-						{active: attrs.active},
-						{disabled: attrs.disabled}
+						attrs.header && "header",
+						attrs.borderless && "borderless",
+						attrs.active && "active",
+						attrs.disabled && "disabled"
 		];
 	}
-});
+}

@@ -1,80 +1,88 @@
 import _ from "mithril";
-import component from "mithril-componentx";
 import {required, within} from "validatex";
-import {base} from "./../base.js";
-import {modalPool} from "./pool.js";
+import {UI} from "./../base.js";
+import {ModalPool} from "./pool.js";
 
 
 const sizeMap = ["small", "large", "fullscreen"];
 
-export const header = component({
-	name: "modalHeader",
-	base: base,
-	getClassList (attrs) {
+export class ModalHeader extends UI {
+	getClassList ({attrs}) {
 		return ["header"];
-	},
+	}
+
 	view ({attrs, children, state}) {
 		return _("div", attrs.rootAttrs, children);
 	}
-});
+}
 
 
-export const content = component({
-	name: "modalContent",
-	base: base,
-	attrSchema: {
+export class ModalContent extends UI {
+	attrSchema = {
 		image: [required(false), within([true, false])]
-	},
-	getClassList (attrs) {
+	}
+
+	getClassList ({attrs}) {
 		return [
-			{image: attrs.image},
+			attrs.image && "image",
 			"content"
 		];
-	},
+	}
+
 	view ({attrs, children, state}) {
 		return _("div", attrs.rootAttrs, children);
 	}
-});
+}
 
 
-export const actions = component({
-	name: "modalActions",
-	base: base,
-	getClassList (attrs) {
+export class ModalActions extends UI {
+	getClassList ({attrs}) {
 		return [
 			"actions"
 		];
-	},
+	}
+
 	view ({attrs, children, state}) {
 		return _("div", attrs.rootAttrs, children);
 	}
-});
+}
 
 
-export const modal = component({
-	name: "modal",
-	base: base,
-	attrSchema: {
+export class Modal extends UI {
+	attrSchema = {
 		basic: [required(false), within([true, false])],
 		size: [required(false), within(sizeMap)],
 		scrolling: [required(false), within([true, false])]
-	},
+	}
+
+	getStyle (vnode) {
+		return {
+			".ui.modal": {
+				top: "5%"
+			}
+		};
+	}
+
 	remove () {
-		modalPool.shift();
-	},
+		ModalPool.shift();
+	}
+
 	onremove (vdom) {
 		this.remove();
-	},
-	getClassList (attrs) {
+	}
+
+	getClassList ({attrs}) {
 		return [
 			"ui",
-			{basic: attrs.basic},
+			attrs.basic && "basic",
 			attrs.size,
-			{scrolling: attrs.scrolling},
+			attrs.scrolling && "scrolling",
+			attrs.fullscreen && "fullscreen",
 			"modal visible active"
 		];
-	},
+	}
+
 	view ({attrs, children, state}) {
 		return _("div", attrs.rootAttrs, children);
 	}
-});
+}

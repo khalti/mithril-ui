@@ -1,71 +1,70 @@
-import {base} from "./../base.js";
-import component from "mithril-componentx";
-import keys from "lodash/keys";
+import {UI} from "./../base.js";
 import enums from "./../../helpers/enums.js";
 import {required, within} from "validatex";
+import {properKeys} from "./../../helpers/misc.js";
 
 
-let divideClassMap = {
+let divideMap = {
   "horizontally": "divided",
   "vertically": "vertically divided"
 };
 
-let cellClassMap = {
+let cellMap = {
   "externally": "celled",
   "internally": "internally celled"
 };
 
-let paddedClassMap = {
+let paddedMap = {
   true: "padded",
   vertical: "vertically padded",
   horizontal: "horizontally padded"
 };
 
-let stackableClassMap = {
+let stackableMap = {
   true: "stackable",
   false: ""
 };
 
 let attrSchema = {
+	// TODO: rename columns to columnCount
   columns: [required(false),
-						within(enums.properKeys(enums.columnsClassMap),
+						within(properKeys(enums.columnsMap),
 									"Invalid column count '{value}'.")],
-  divide: [required(false), within(keys(divideClassMap), "Invalid value '{value}'.")],
-  cell: [required(false), within(keys(cellClassMap), "Invalid value '{value}'.")],
+  divide: [required(false), within(Object.keys(divideMap), "Invalid value '{value}'.")],
+  cell: [required(false), within(Object.keys(cellMap), "Invalid value '{value}'.")],
   equalWidth: [required(false), within([true, false], "'{value}' is not a boolean.")],
   padded: [required(false), within([true, false], "'{value}' is not a boolean.")],
   relaxed: [required(false), within([true, false], "'{value}' is not a boolean.")],
   centered: [required(false), within([true, false], "'{value}' is not a boolean.")],
-  textAlignment: [required(false), within(keys(enums.textlignmentClassMap),
+  textAlignment: [required(false), within(Object.keys(enums.textAlignmentMap),
 																					"Invalid value '{value}'.")],
-  verticalAlignment: [required(false), within(keys(enums.verticalAlignmentClassMap),
+  verticalAlignment: [required(false), within(Object.keys(enums.verticalAlignmentMap),
 																							"^Invalid value '%{value}'.")],
   doubling: [required(false), within([true, false], "'{value}' is not a boolean.")],
   stackable: [required(false), within([true, false], "'{value}' is not a boolean.")],
-  reverse: [required(false), within(keys(enums.reverseClassMap),
+  reverse: [required(false), within(Object.keys(enums.reverseMap),
 																		"Invalid value '{value}'.")]
 };
 
-export const grid = component({
-	name: "grid",
-  base: base,
-	attrSchema: attrSchema,
-	getClassList (attrs) {
+export class Grid  extends UI {
+	attrSchema = attrSchema
+
+	getClassList ({attrs}) {
 		return ["ui",
-						enums.columnsClassMap[attrs.columns],
-						divideClassMap[attrs.divide],
-						cellClassMap[attrs.cell],
-						{"equal width": attrs.equalWidth},
-						paddedClassMap[attrs.padded],
-						{"relaxed": attrs.relaxed},
-						enums.centeredClassMap[attrs.centered],
-						enums.textAlignmentClassMap[attrs.textAlignment],
-						enums.verticalAlignmentClassMap[attrs.verticalAlignment],
-						{"doubling": attrs.doubling},
-						{"stackable": attrs.stackable},
-						enums.reverseClassMap[attrs.reverse],
-						{inverted: attrs.inverted},
-						{container: attrs.container},
+						enums.columnsMap[attrs.columns],
+						divideMap[attrs.divide],
+						cellMap[attrs.cell],
+						attrs.equalWidth && "equal width",
+						paddedMap[attrs.padded],
+						attrs.relaxed && "relaxed",
+						enums.centeredMap[attrs.centered],
+						enums.textAlignmentMap[attrs.textAlignment],
+						enums.verticalAlignmentMap[attrs.verticalAlignment],
+						attrs.doubling && "doubling",
+						attrs.stackable && "stackable",
+						enums.reverseMap[attrs.reverse],
+						attrs.inverted && "inverted",
+						attrs.container && "container",
 						"grid"];
 	}
-});
+}

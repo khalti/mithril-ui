@@ -1,45 +1,43 @@
-import {base} from "./../base.js";
-import component from "mithril-componentx";
+import {UI} from "./../base.js";
 import {
 	attachmentMap,
-	colorClassMap,
+	colorMap,
 	emphasisMap,
-	textAlignmentClassMap} from "./../../helpers/enums.js";
-import keys from "lodash/keys";
+	textAlignmentMap} from "./../../helpers/enums.js";
 import {required, within} from "validatex";
 
 
-export const segment = component({
-	name: "segment",
-	base: base,
-	attrSchema: {
+export class Segment extends UI {
+	attrSchema = {
 		attach: [required(false), within([true, "top", "bottop", "left", "right"],
 																		"^Invalid attachment '{value}'.")],
-		color: [required(false), within(keys(colorClassMap),
+		color: [required(false), within(Object.keys(colorMap),
 																		"Invalid color '{value}'.")],
-		emphasis: [required(false), within(keys(emphasisMap),
+		emphasis: [required(false), within(Object.keys(emphasisMap),
 																			"Invalid emphasis '{value}'.")],
-		textAlignment: [required(false), within(keys(textAlignmentClassMap),
+		textAlignment: [required(false), within(Object.keys(textAlignmentMap),
 																						"Invalid text alignment '{value}'.")]
-	},
-	getClassList (attrs) {
+	}
+
+	getClassList ({attrs}) {
 		return ["ui",
-						{raised: attrs.raised},
-						{stacked: attrs.stacked},
-						{piled: attrs.piled},
-						{vertical: attrs.vertical},
-						{disabled: attrs.disabled},
-						{loading: attrs.loading},
-						{inverted: attrs.inverted},
-						{padded: attrs.padded},
-						{compact: attrs.compact},
-						{circular: attrs.circular},
-						{clearing: attrs.clearing},
-						{basic: attrs.basic},
+						attrs.raised && "raised",
+						attrs.stacked && "stacked",
+						attrs.piled && "piled",
+						attrs.vertical && "vertical",
+						attrs.disabled && "disabled",
+						attrs.loading && "loading",
+						attrs.inverted && "inverted",
+						attrs.padded && "padded",
+						attrs.compact && "compact",
+						attrs.circular && "circular",
+						attrs.clearing && "clearing",
+						attrs.basic && "basic",
+						attrs.header && "header",
 						attachmentMap[attrs.attach],
-						colorClassMap[attrs.color],
+						colorMap[attrs.color],
 						emphasisMap[attrs.emphasis],
-						textAlignmentClassMap[attrs.textAlignment],
+						textAlignmentMap[attrs.textAlignment],
 						"segment"];
 	}
-});
+}

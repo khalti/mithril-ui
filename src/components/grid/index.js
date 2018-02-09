@@ -1,5 +1,5 @@
-import {grid} from "./grid.js";
-import {row} from "./row.js";
-import {column} from "./column.js";
+import {Grid} from "./grid.js";
+import {Row} from "./row.js";
+import {Column} from "./column.js";
 
-export {grid, row, column};
+export { Grid, Row, Column, };

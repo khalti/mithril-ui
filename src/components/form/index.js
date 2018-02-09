@@ -1,9 +1,12 @@
-import {input} from "./input.js";
-import {field} from "./field.js";
-import {fields} from "./fields.js";
-import {select} from "./select.js";
-import {form} from "./form.js";
-import {checkbox} from "./checkbox.js";
+import {Input} from "./input.js";
+import {Field} from "./field.js";
+import {Fields} from "./fields.js";
+import {Select} from "./select.js";
+import {Form} from "./form.js";
+import {Checkbox} from "./checkbox.js";
+import {TextArea} from "./textarea.js";
+import {DatePicker} from "./datePicker.js";
+import {Radio} from "./radio.js";
 
 
-export {input, field, fields, select, form, checkbox};
+export { Input, Field, Fields, Select, Form, Checkbox, TextArea, DatePicker, Radio,};

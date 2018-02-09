@@ -1,45 +1,43 @@
-import {base} from "./../base.js";
-import component from "mithril-componentx";
-import m from "mithril";
+import {UI} from "./../base.js";
+import _ from "mithril";
 import {
-	colorClassMap,
+	colorMap,
 	sizeMap,
-	columnsClassMap} from "./../../helpers/enums.js";
-import keys from "lodash/keys";
+	columnsMap} from "./../../helpers/enums.js";
 import {required, within} from "validatex";
 
 
-export const table = component({
-	name: "table",
-	base: base,
-	attrSchema: {
-		columnCount: [required(false), within(keys(columnsClassMap))],
-		color: [required(false), within(keys[colorClassMap])],
-		size: [required(false), within(keys[sizeMap])],
-	},
-	getClassList (attrs) {
+export class Table extends UI {
+	attrSchema = {
+		columnCount: [required(false), within(Object.keys(columnsMap))],
+		color: [required(false), within(Object.keys(colorMap))],
+		size: [required(false), within(Object.keys(sizeMap))],
+	}
+
+	getClassList ({attrs}) {
 		return [
 			"ui",
-			{"single line": attrs.singleLine},
-			{fixed: attrs.fixed},
+			attrs.singleLine && "single line",
+			attrs.fixed && "fixed",
 			attrs.stackable? "stackable": "unstackable",
-			{selectable: attrs.selectable},
-			{striped: attrs.striped},
-			{celled: attrs.celled},
-			{basic: attrs.basic},
-			{"very basic": attrs.veryBasic},
-			columnsClassMap[attrs.columnCount],
-			{collapsing: attrs.collapsing},
-			colorClassMap[attrs.color],
-			{inverted: attrs.inverted},
-			{sortable: attrs.sortable},
-			{padded: attrs.padded},
-			{compact: attrs.compact},
+			attrs.selectable && "selectable",
+			attrs.striped && "striped",
+			attrs.celled && "celled",
+			attrs.basic && "basic",
+			attrs.veryBasic && "very basic",
+			columnsMap[attrs.columnCount],
+			attrs.collapsing && "collapsing",
+			colorMap[attrs.color],
+			attrs.inverted && "inverted",
+			attrs.sortable && "sortable",
+			attrs.padded && "padded",
+			attrs.compact && "compact",
 			sizeMap[attrs.size],
 			"table"
 		];
-	},
-	getDefaultAttrs (attrs) {
+	}
+
+	getDefaultAttrs ({attrs}) {
 		return {root: "table"};
 	}
-});
+}

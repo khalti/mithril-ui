@@ -1,8 +1,7 @@
-import {base} from "./../base.js";
-import component from "mithril-componentx";
-import keys from "lodash/keys";
+import {UI} from "./../base.js";
 import enums from "./../../helpers/enums.js";
 import {required, within} from "validatex";
+import {properKeys} from "./../../helpers/misc.js";
 
 let fixedMap = {
 	top: "top fixed",
@@ -17,42 +16,41 @@ let fittedMap = {
 	horizontally: "fitted horizontally"
 };
 
-export const menu = component({
-	name: "menu",
-	base: base,
-	attrSchema: {
+export class Menu extends UI {
+	attrSchema = {
 		state: [required(false), within(["down", "active"], "Invalid state.")],
-		color: [required(false), within(keys(enums.colorClassMap), "Invalid color.")],
-		fixed: [required(false), within(keys(fixedMap), "Invalid position to fix.")],
+		color: [required(false), within(properKeys(enums.colorMap), "Invalid color.")],
+		fixed: [required(false), within(properKeys(fixedMap), "Invalid position to fix.")],
 		itemCount: [required(false),
-								within(enums.properKeys(enums.numberMap), "Invalid item count.")],
-		attach: [required(false), within(keys(enums.attachmentMap), "Invalid attachment.")],
-		size: [required(false), within(keys(enums.sizeMap), "Invalid size.")],
+								within(properKeys(enums.numberMap), "Invalid item count.")],
+		attach: [required(false), within(properKeys(enums.attachmentMap), "Invalid attachment.")],
+		size: [required(false), within(properKeys(enums.sizeMap), "Invalid size.")],
 		fitted: [required(false), within([true, "vertically", "horizontally"],
 																		"Invalid value for 'fitted'.")]
-	},
-	getClassList (attrs) {
+	}
+
+	getClassList ({attrs}) {
 		return ["ui",
-						{secondary: attrs.secondary},
-						{pointing: attrs.pointing},
-						{tabular: attrs.tabular},
-						{text: attrs.text},
-						{vertical: attrs.vertical},
-						{pagination: attrs.pagination},
+						attrs.secondary && "secondary",
+						attrs.pointing && "pointing",
+						attrs.tabular && "tabular",
+						attrs.text && "text",
+						attrs.vertical && "vertical",
+						attrs.pagination && "pagination",
 						attrs.state,
 						fixedMap[attrs.fixed],
-						{inverted: attrs.inverted},
-						enums.colorClassMap[attrs.color],
-						{fluid: attrs.fluid},
-						{compact: attrs.compact},
+						attrs.inverted && "inverted",
+						enums.colorMap[attrs.color],
+						attrs.fluid && "fluid",
+						attrs.compact && "compact",
 						enums.numberMap[attrs.itemCount] && enums.numberMap[attrs.itemCount] + " item",
 						enums.attachmentMap[attrs.attach],
 						enums.sizeMap[attrs.size],
 						fittedMap[attrs.fitted],
-						{icon: attrs.icon},
-						{"labeled icon": attrs.labeledIcon},
-						{borderless: attrs.borderless},
+						attrs.icon && "icon",
+						attrs.labeledIcon && "labeled icon",
+						attrs.borderless && "borderless",
 						enums.floatMap[attrs.float],
 						"menu"];
 	}
-});
+}

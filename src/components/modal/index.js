@@ -1,5 +1,10 @@
-import {modal} from "./modal.js";
-import {modalPool} from "./pool.js";
+import {
+	ModalHeader,
+	ModalContent,
+	ModalActions,
+	Modal,
+} from "./modal.js";
+import {ModalPool} from "./pool.js";
 
 
-export {modal, modalPool};
+export { ModalHeader, ModalContent, ModalActions, Modal, ModalPool, };

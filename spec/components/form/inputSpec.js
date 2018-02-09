@@ -1,18 +1,14 @@
-import {input} from "./../../../src/components/form/input.js";
-import m from 'mithril';
+import {window} from "./../../utils.js";
+import {Input} from "./../../../src/components/form/input.js";
+import _ from 'mithril';
 import chai from "chai";
 import classnames from "classnames";
 import {getVdom} from "./../../utils.js";
-import {icon} from "./../../../src/components/icon.js";
-import {label} from "./../../../src/components/label.js";
-import {button} from "./../../../src/components/button/button.js";
+import {Icon} from "./../../../src/components/icon/icon.js";
+import {Label} from "./../../../src/components/label.js";
+import {Button} from "./../../../src/components/button/button.js";
+import {expect} from "chai";
 
-
-let expect = chai.expect;
-
-let getClass = (attrs) => {
-	return classnames(input.getClassList(attrs));
-};
 
 describe("input", () => {
 	describe(".view", () => {
@@ -20,95 +16,124 @@ describe("input", () => {
 
 		beforeEach(() => {
 			attrs = {
-				prepend: icon,
-				append: icon,
+				prepend: _(Icon, {name: "hill"}),
+				append: _(Icon, {name: "mountain"}),
 				onclick: "aCallabck",
 				type: "hidden",
 				name: "aName"
 			};
-			vdom = getVdom(m(input, attrs));
+
+			_.render(document.body, _(Input, attrs));
 		});
 
-		it("includes name", () => {
-			let inputDom = vdom.children[1];
-			expect(inputDom.attrs.name).to.equal(attrs.name);
+		it("includes 'name'", () => {
+			let inputDom = document.querySelector("input");
+			expect(inputDom.name).to.equal(attrs.name);
 		});
 
 		it("'s root dom is a div", () => {
-			expect(vdom.tag).to.equal("div");
+			let rootDom = document.body.childNodes[0];
+			expect(rootDom.tagName).to.equal("DIV");
 		});
 
 		it("it appends", function () {
-			expect(vdom.children[2]).to.exist;
+			let prependDom = document.body.childNodes[0].childNodes[0];
+			expect(prependDom.tagName).to.equal("I");
 		});
 
 		it("it prepends", function () {
-			expect(vdom.children[0]).to.exist;
+			let appendDom = document.body.childNodes[0].childNodes[2];
+			expect(appendDom.tagName).to.equal("I");
 		});
 
 		it("'s root element has 'ui' and 'input' in its class", () => {
-			expect(vdom.attrs.class).to.have.string("ui");
-			expect(vdom.attrs.class).to.have.string("input");
+			let rootDom = document.body.childNodes[0];
+			expect(rootDom.className).to.have.string("ui");
+			expect(rootDom.className).to.have.string("input");
 		});
 
 		it("changes class of 'input' element to 'hidden' if 'attrs.type' is 'hidden'", () => {
-			expect(vdom.children[1]);
+			let inputDom = document.querySelector("input");
+			expect(inputDom.className).to.have.string("hidden");
 		});
 	});
 
-  describe(".getClass",  () => {
+  describe(".getClassList",  () => {
+		let vnode, input;
+
+		beforeEach(() => {
+			input = new Input();
+			vnode = {
+				attrs: {},
+				children: [],
+				state: {}
+			};
+		});
+
     it("returns '.ui.input' if there is nothing to prepend or append", () => {
-      let attrs = {};
-      expect(getClass(attrs)).to.equal("ui input");
+			let classList = input.getClassList(vnode);
+      expect(classList).to.contain("ui");
+      expect(classList).to.contain("input");
     });
 
-    it("returns '.ui.right.icon.input' if an icon is being appended", () => {
-      var attrs = {append: icon};
-      expect(getClass(attrs)).to.equal("ui right icon input");
+    it("includes 'right icon' if an icon is being appended", () => {
+      vnode.attrs = {append: _(Icon, {name: "add"})};
+			let classList = input.getClassList(vnode);
+      expect(classList).to.contain("right icon");
     });
 
-    it("returns '.ui.left.icon.input' if an icon is being prepended", () => {
-      var attrs = {prepend: icon};
-      expect(getClass(attrs)).to.equal("ui left icon input");
+    it("includes 'left icon' if an icon is being prepended", () => {
+      vnode.attrs = {prepend: _(Icon, {name: "remove"})};
+			let classList = input.getClassList(vnode);
+      expect(classList).to.contain("left icon");
     });
 
-    it("returns '.ui.left.right.icon.input' if input is surrounded by icons", () => {
-      var attrs = {prepend: icon, append: icon};
-      expect(getClass(attrs)).to.equal("ui left right icon input");
+    it("returns 'left right icon' if input is surrounded by icons", () => {
+      vnode.attrs = {prepend: _(Icon, {name: "aname"}), append: _(Icon, {name: "aname"})};
+			let classList = input.getClassList(vnode);
+      expect(classList).to.contain("left right icon");
     });
 
-    it("returns '.ui.left.labeled.input' if a label is being prepended", () => {
-      var attrs = {prepend: label};
-      expect(getClass(attrs)).to.equal("ui left labeled input");
+    it("returns 'left labeled' if a label is being prepended", () => {
+      vnode.attrs = {prepend: _(Label)};
+			let classList = input.getClassList(vnode);
+      expect(classList).to.contain("left labeled");
     });
 
-    it("returns '.ui.right.labeled.input' if a label is being appended", () => {
-      var attrs = {append: label};
-      expect(getClass(attrs)).to.equal("ui right labeled input");
+    it("returns 'right labeled' if a label is being appended", () => {
+      vnode.attrs = {append: _(Label)};
+			let classList = input.getClassList(vnode);
+      expect(classList).to.contain("right labeled");
     });
 
-    it("returns '.ui.left.right.labeled.input'", () => {
-      var attrs = {prepend: label, append: label};
-      expect(getClass(attrs)).to.equal("ui left right labeled input");
+    it("returns 'left right labeled'", () => {
+      vnode.attrs = {prepend: _(Label), append: _(Label)};
+			let classList = input.getClassList(vnode);
+      expect(classList).to.contain("left right labeled");
     });
 
-    it("returns '.ui.left.action.input'", () => {
-      var attrs = {prepend: button};
-      expect(getClass(attrs)).to.equal("ui left action input");
+    it("returns 'left action'", () => {
+      vnode.attrs = {prepend: _(Button)};
+			let classList = input.getClassList(vnode);
+      expect(classList).to.contain("left action");
     });
 
-    it("returns '.ui.right.labeled.input'", () => {
-      var attrs = {append: button};
-      expect(getClass(attrs)).to.equal("ui right action input");
+    it("returns 'right labeled'", () => {
+      vnode.attrs = {append: _(Button)};
+			let classList = input.getClassList(vnode);
+      expect(classList).to.contain("right action");
     });
 
-    it("returns '.ui.left.right.labeled.input'", () => {
-      var attrs = {prepend: button, append: button};
-      expect(getClass(attrs)).to.equal("ui left right action input");
+    it("returns 'left right action'", () => {
+      vnode.attrs = {prepend: _(Button), append: _(Button)};
+			let classList = input.getClassList(vnode);
+      expect(classList).to.contain("left right action");
     });
 
 		it("includes 'fluid'", () => {
-			expect(getClass({fluid: true})).to.have.string("fluid");
+      vnode.attrs = {fluid: true};
+			let classList = input.getClassList(vnode);
+			expect(classList).to.contain("fluid");
 		});
   });
 });

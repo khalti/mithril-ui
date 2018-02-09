@@ -1,126 +1,137 @@
-import {segment} from "./../../../src/components/segment/segment.js";
+import {window, getVnode} from "./../../utils.js";
+import {Segment} from "./../../../src/components/segment/segment.js";
 import {expect} from "chai";
-import classnames from "classnames";
-import m from "mithril";
+import _ from "mithril";
 
 
 describe("segment", () => {
+	let vnode, segment;
+
+	beforeEach(() => {
+		segment = new Segment();
+		vnode = getVnode();
+	});
+
 	it("complains on invalid attachment.", () => {
-		let aSegment = m(segment, {attach: "west"});
-		expect(aSegment.view.bind(aSegment)).to.throw(Error);
+		vnode.attrs = {attach: "west"};
+		expect(segment.oninit.bind(segment, vnode)).to.throw(Error);
 	});
 
 	it("complains on invalid color.", () => {
-		let aSegment = m(segment, {color: "transparent"});
-		expect(aSegment.view.bind(aSegment)).to.throw(Error);
+		vnode.attrs = {color: "transparent"};
+		expect(segment.oninit.bind(segment, vnode)).to.throw(Error);
 	});
 
 	it("complains on invalid emphasis.", () => {
-		let aSegment = m(segment, {emphasis: "no-emphasis"});
-		expect(aSegment.view.bind(aSegment)).to.throw(Error);
+		vnode.attrs = {emphasis: "no-emphasis"};
+		expect(segment.oninit.bind(segment, vnode)).to.throw(Error);
 	});
 
 	it("complains on invalid text alignment.", () => {
-		let aSegment = m(segment, {emphasis: "up"});
-		expect(aSegment.view.bind(aSegment)).to.throw(Error);
+		vnode.attrs = {emphasis: "up"};
+		expect(segment.oninit.bind(segment, vnode)).to.throw(Error);
 	});
 
 	describe("getClassList", () => {
+		let segment;
+
+		beforeEach(() => {
+			segment = new Segment();
+		});
+
 		it("includes 'ui'", () => {
-			let className = classnames(segment.getClassList({}));
-			expect(className).to.have.string("ui");
+			expect(segment.getClassList(vnode)).to.contain("ui");
 		});
 
 		it("includes 'segment'.", () => {
-			let className = classnames(segment.getClassList({}));
-			expect(className).to.have.string("segment");
+			expect(segment.getClassList(vnode)).to.contain("segment");
 		});
 
 		it("includes 'raised'.", () => {
-			let className = classnames(segment.getClassList({raised: true}));
-			expect(className).to.have.string("raised");
+			vnode.attrs = {raised: true};
+			expect(segment.getClassList(vnode)).to.contain("raised");
 		});
 
 		it("includes 'stacked'.", () => {
-			let className = classnames(segment.getClassList({stacked: true}));
-			expect(className).to.have.string("stacked");
+			vnode.attrs = {stacked: true};
+			expect(segment.getClassList(vnode)).to.contain("stacked");
 		});
 
 		it("includes 'piled'.", () => {
-			let className = classnames(segment.getClassList({piled: true}));
-			expect(className).to.have.string("piled");
+			vnode.attrs = {piled: true};
+			expect(segment.getClassList(vnode)).to.contain("piled");
 		});
 
 		it("includes 'vertical'.", () => {
-			let className = classnames(segment.getClassList({vertical: true}));
-			expect(className).to.have.string("vertical");
+			vnode.attrs = {vertical: true};
+			expect(segment.getClassList(vnode)).to.contain("vertical");
 		});
 
 		it("includes 'disabled'.", () => {
-			let className = classnames(segment.getClassList({disabled: true}));
-			expect(className).to.have.string("disabled");
+			vnode.attrs = {disabled: true};
+			expect(segment.getClassList(vnode)).to.contain("disabled");
 		});
 
 		it("includes 'loading'.", () => {
-			let className = classnames(segment.getClassList({loading: true}));
-			expect(className).to.have.string("loading");
+			vnode.attrs = {loading: true};
+			expect(segment.getClassList(vnode)).to.contain("loading");
 		});
 
 		it("includes 'inverted'.", () => {
-			let className = classnames(segment.getClassList({inverted: true}));
-			expect(className).to.have.string("inverted");
+			vnode.attrs = {inverted: true};
+			expect(segment.getClassList(vnode)).to.contain("inverted");
 		});
 
 		it("includes proper attachment.", () => {
-			var className = classnames(segment.getClassList({attach: true}));
-			expect(className).to.have.string("attached");
+			vnode.attrs = {attach: true};
+			expect(segment.getClassList(vnode)).to.contain("attached");
 
-			className = classnames(segment.getClassList({attach: "top"}));
-			expect(className).to.have.string("top attached");
+			vnode.attrs = {attach: "top"};
+			expect(segment.getClassList(vnode)).to.contain("top attached");
 
 			//TODO: test other attachments
 		});
 
 		it("includes 'padded'.", () => {
-			let className = classnames(segment.getClassList({padded: true}));
-			expect(className).to.have.string("padded");
+			vnode.attrs = {padded: true};
+			expect(segment.getClassList(vnode)).to.contain("padded");
 		});
 
 		it("includes 'compact'.", () => {
-			let className = classnames(segment.getClassList({compact: true}));
-			expect(className).to.have.string("compact");
+			vnode.attrs = {compact: true};
+			expect(segment.getClassList(vnode)).to.contain("compact");
 		});
 
 		it("includes proper color.", () => {
-			let className = classnames(segment.getClassList({color: "red"}));
-			expect(className).to.have.string("red");
+			vnode.attrs = {color: "red"};
+			expect(segment.getClassList(vnode)).to.contain("red");
 
 			// TODO: test other colors
 		});
 
 		it("includes proper emphasis.", () => {
-			let className = classnames(segment.getClassList({emphasis: "secondary"}));
-			expect(className).to.have.string("secondary");
+			vnode.attrs = {emphasis: "secondary"};
+			expect(segment.getClassList(vnode)).to.contain("secondary");
 		});
 
 		it("includes 'circular'.", () => {
-			let className = classnames(segment.getClassList({circular: true}));
-			expect(className).to.have.string("circular");
+			vnode.attrs = {circular: true};
+			expect(segment.getClassList(vnode)).to.contain("circular");
 		});
 
 		it("includes 'clearing'.", () => {
-			let className = classnames(segment.getClassList({clearing: true}));
-			expect(className).to.have.string("clearing");
+			vnode.attrs = {clearing: true};
+			expect(segment.getClassList(vnode)).to.contain("clearing");
 		});
 
 		it("includes 'basic'.", () => {
-			let className = classnames(segment.getClassList({basic: true}));
-			expect(className).to.have.string("basic");
+			vnode.attrs = {basic: true};
+			expect(segment.getClassList(vnode)).to.contain("basic");
 		});
 
 		it("includes proper text alignment.", () => {
-			let className = classnames(segment.getClassList({textAlignment: "left"}));
-			expect(className).to.have.string("left");
+			vnode.attrs = {textAlignment: "left"};
+			expect(segment.getClassList(vnode)).to.contain("left aligned");
 		});
 	});
 });

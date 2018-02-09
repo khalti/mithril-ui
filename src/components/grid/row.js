@@ -1,9 +1,6 @@
-import {base} from "./../base.js";
-import component from "mithril-componentx";
-import keys from "lodash/keys";
+import {properKeys, clone} from "./../../helpers/misc.js";
+import {UI} from "./../base.js";
 import enums from "./../../helpers/enums.js";
-import reduce from "lodash/reduce";
-import clone from "lodash/clone";
 import {required, within} from "validatex";
 
 
@@ -12,44 +9,43 @@ let stretchedMap = {
 	false: ""
 };
 
-export const row = component({
-	name: "row",
-	base: base,
-	attrSchema: {
-		columns: [required(false), within(enums.properKeys(enums.columnsClassMap),
+export class Row extends UI {
+	attrSchema = {
+		columns: [required(false), within(properKeys(enums.columnsMap),
 																			"Invalid value '{value}'.")],
 		stretched: [required(false), within([true, false],
 																				"'{value}' is not a boolean value.")],
-		color: [required(false), within(keys(enums.colorClassMap),
+		color: [required(false), within(Object.keys(enums.colorMap),
 																		"Invalid value '%{value}'.")],
 		centered: [required(false), within([true, false],
 																			"'{value}' is not a boolean value.")],
-		textAlignment: [required(false), within(keys(enums.textAlignmentClassMap),
+		textAlignment: [required(false), within(Object.keys(enums.textAlignmentMap),
 																						"Invalid value '{value}'.")],
-		verticalAlignment: [required(false), within(keys(enums.verticalAlignmentClassMap),
+		verticalAlignment: [required(false), within(Object.keys(enums.verticalAlignmentMap),
 																								"Invalid value '{value}'.")],
 		 // visible: {inclusion: {within: enums.devices,
 		 // 											message: "^Invalid value '%{value}'."}},
-		reverse: [required(false), within(keys(enums.reverseClassMap),
+		reverse: [required(false), within(Object.keys(enums.reverseMap),
 																			"Invalid value '{value}'.")]
-	},
-	getClassList (attrs) {
+	}
+
+	getClassList ({attrs}) {
 		let visibleClass;
 		let visibility = clone(attrs.visible || []);
 		if (visibility.length > 0) {
-			visibleClass = reduce(visibility, (className, device) => {
+			visibleClass = visibility.reduce((className, device) => {
 				return `${className} ${enums.deviceMap[device]}`;
-			})
+			}, "");
 		}
 
-		return [enums.columnsClassMap[attrs.columns],
+		return [enums.columnsMap[attrs.columns],
 						stretchedMap[attrs.stretched],
-						enums.colorClassMap[attrs.color],
-						enums.centeredClassMap[attrs.centered],
-						enums.textAlignmentClassMap[attrs.textAlignment],
-						enums.verticalAlignmentClassMap[attrs.verticalAlignment],
+						enums.colorMap[attrs.color],
+						enums.centeredMap[attrs.centered],
+						enums.textAlignmentMap[attrs.textAlignment],
+						enums.verticalAlignmentMap[attrs.verticalAlignment],
 						visibleClass? visibleClass + " only": "",
-						enums.reverseClassMap[attrs.reverse],
+						enums.reverseMap[attrs.reverse],
 						"row"];
 	}
-});
+}

@@ -1,13 +1,10 @@
-import component from "mithril-componentx";
-import {base} from "./base.js";
+import {UI} from "./base.js";
 import {within, required} from "validatex";
-import m from "mithril";
+import _ from "mithril";
 
 
-export const sidebar = component({
-	name: "sidebar",
-	base: base,
-	attrSchema: {
+export class Sidebar extends UI {
+	attrSchema = {
 		inverted: [required(false), within([true])],
 		vertical: [required(false), within([true])],
 		menu: [required(false), within([true])],
@@ -15,27 +12,27 @@ export const sidebar = component({
 		labeled: [required(false), within([true])],
 		direction: [required(true), within(["top", "right", "bottom", "left"])],
 		width: [required(false), within(["thin", "very thin", "wide", "very wide"])],
-		visible: [required(false), within([true, false])]
-	},
-	getClassList (attrs) {
+		visible: [required(false), within([true, false])],
+		animation: [required(false), within["push", "uncover", "overlay", "scale down"]]
+	}
+
+	getClassList ({attrs}) {
 		return [
 			"ui",
-			{inverted: attrs.inverted},
-			{vertical: attrs.vertical},
-			{menu: attrs.menu},
-			{icon: attrs.menu},
-			{labeled: attrs.labeled},
+			attrs.inverted && "inverted",
+			attrs.vertical && "vertical",
+			attrs.menu && "menu",
+			attrs.icon && "icon",
+			attrs.labeled && "labeled",
 			attrs.direction,
 			attrs.width,
-			{"uncover": attrs.visible && attrs.direction === "left"},
-			{"uncover": attrs.visible && attrs.direction === "right"},
-			{"overlay": attrs.visible && attrs.direction === "top"},
-			{"overlay": attrs.visible && attrs.direction === "bottom"},
-			{"visible": attrs.visible},
+			attrs.visible && attrs.animation,
+			attrs.visible && "visible",
 			"sidebar"
 		];
-	},
-	view ({attrs, children, state}) {
-		return m("div", attrs.rootAttrs, children);
 	}
-});
+
+	view ({attrs, children, state}) {
+		return _("div", attrs.rootAttrs, children);
+	}
+}

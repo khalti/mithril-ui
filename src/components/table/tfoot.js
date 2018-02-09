@@ -1,20 +1,15 @@
-import {base} from "./../base.js";
-import component from "mithril-componentx";
-import m from "mithril";
-import keys from "lodash/keys";
+import {UI} from "./../base.js";
+import _ from "mithril";
 
 
-export const tfoot = component({
-	name: "tfoot",
-	base: base,
-	attrSchema: {
-	},
-	getClassList (attrs) {
+export class TFoot extends UI {
+	getClassList ({attrs}) {
 		return [
-			{"full-width": attrs.fullWidth}
+			attrs.fullWidth && "full-width"
 		];
-	},
-	getDefaultAttrs (attrs) {
+	}
+
+	getDefaultAttrs ({attrs}) {
 		return {root: "tfoot"};
 	}
-});
+}

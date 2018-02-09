@@ -1,30 +1,27 @@
-import component from "mithril-componentx";
-import {menu, item} from "./menu";
+import {Menu} from "./menu/menu.js";
+import {MenuItem} from "./menu/item.js";
 import _ from "mithril";
 import {required, isNumber, isFunction} from "validatex";
-import {icon} from "./../index.js";
+import {Icon} from "./../components/icon/icon.js";
+import {properKeys} from "./../helpers/misc.js";
 
 
-export const pagination = component({
-	name: "pagination",
-
-	base: menu,
-
-	attrSchema: {
+export class Pagination extends Menu {
+	attrSchema = {
 		currentPage: [required(true), isNumber()],
 		pageCount: [required(true), isNumber()],
 		onPageChange: [required(true), isFunction()]
-	},
+	}
 
-	getClassList(attrs) {
-		let classList = this.base.getClassList(attrs);
+	getClassList(vnode) {
+		let classList = super.getClassList(vnode);
 		classList.push("pagination");
 		return classList;
-	},
+	}
 
 	getPages(pageCount) {
 		return Array.from(new Array(pageCount), (x,i) => i + 1);
-	},
+	}
 
 	getVisiblePages(pageCount, currentPage) {
 		let totalPages = this.getPages(pageCount);
@@ -35,47 +32,47 @@ export const pagination = component({
 		return totalPages.filter((page) => {
 			return idealVisiblePages.indexOf(page) !== -1;
 		});
-	},
+	}
 
 	getFirstPageBtn ({onPageChange, pageCount, currentPage}) {
 		let isCurrentPage = currentPage === 1;
 
-		return _(item, {disabled: isCurrentPage,
+		return _(MenuItem, {disabled: isCurrentPage,
 										href: isCurrentPage? "" : "#",
 										onclick: this.getClickHandler(onPageChange, 1, currentPage) },
-							_(icon, {class: "angle double left icon"}));
-	},
+							_(Icon, {name: "angle double left"}));
+	}
 
 	getLastPageBtn ({onPageChange, pageCount, currentPage}) {
 		let isCurrentPage = currentPage === pageCount;
 
-		return _(item, {href: isCurrentPage? "": "#",
+		return _(MenuItem, {href: isCurrentPage? "": "#",
 										disabled: isCurrentPage,
 										onclick: this.getClickHandler(onPageChange, pageCount, currentPage) },
-							_(icon, {class: "angle double right icon"}));
-	},
+							_(Icon, {name: "angle double right"}));
+	}
 
 	showLeft3dotsBtn(pageCount, currentPage) {
 		return this.getVisiblePages(pageCount, currentPage).indexOf(1) === -1;
-	},
+	}
 
 	showRight3dotsBtn (pageCount, currentPage) {
 		return this.getVisiblePages(pageCount, currentPage).indexOf(pageCount) === -1;
-	},
+	}
 
 	get3dotsBtn () {
-		return _(item, {disabled: true},
-						_(icon, {class: "ellipsis horizontal icon"}));
-	},
+		return _(MenuItem, {disabled: true},
+						_(Icon, {class: "ellipsis horizontal icon"}));
+	}
 
 	getPageBtn (onPageChange, pageNumber, currentPage) {
 		let isCurrentPage = pageNumber === currentPage;
 
-		return _(item, {active: isCurrentPage,
+		return _(MenuItem, {active: isCurrentPage,
 										href: isCurrentPage? "": "#",
 										onclick: this.getClickHandler(onPageChange, pageNumber, currentPage)},
 							pageNumber)
-	},
+	}
 
 	getClickHandler (pageChangeHandler, pageNumber, currentPage) {
 		return (e) => {
@@ -83,39 +80,39 @@ export const pagination = component({
 			e.preventDefault();
 			pageChangeHandler(pageNumber);
 		};
-	},
+	}
 
 	getPagesBtns ({onPageChange, pageCount, currentPage}) {
 		return this.getVisiblePages(pageCount, currentPage).map((page) => {
 			return this.getPageBtn(onPageChange, page, currentPage);
 		});
-	},
+	}
 
 	getNextPageBtn ({onPageChange, pageCount, currentPage}) {
 		let nextPage = currentPage + 1;
 		let disabled = currentPage === pageCount;
 
-		return _(item, {href: disabled? "": "#",
+		return _(MenuItem, {href: disabled? "": "#",
 										disabled: disabled,
 										onclick: this.getClickHandler(
 												onPageChange,
 												nextPage <= pageCount ? nextPage: undefined,
 												currentPage)},
-						_(icon, {class: "angle right icon"}));
-	},
+						_(Icon, {name: "angle right"}));
+	}
 
 	getPreviousPageBtn ({onPageChange, pageCount, currentPage}) {
 		let previousPage = currentPage - 1;
 		let disabled = currentPage === 1;
 
-		return _(item, {href: disabled? "": "#",
+		return _(MenuItem, {href: disabled? "": "#",
 										disabled: disabled,
 										onclick: this.getClickHandler(
 												onPageChange,
 												previousPage > 0? previousPage: undefined,
 												currentPage)},
-						_(icon, {class: "angle left icon"}));
-	},
+						_(Icon, {name: "angle left"}));
+	}
 
 	getItems (attrs) {
 		let {onPageChange, pageCount, currentPage} = attrs;
@@ -134,9 +131,9 @@ export const pagination = component({
 		items.push(this.getLastPageBtn(attrs));
 
 		return items;
-	},
+	}
 
 	view ({attrs, children, state}) {
 		return _("div", attrs.rootAttrs, this.getItems(attrs));
 	}
-});
+}

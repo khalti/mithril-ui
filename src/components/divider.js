@@ -1,24 +1,22 @@
-import {base} from "./base.js";
-import component from "mithril-componentx";
-import m from "mithril";
+import {UI} from "./base.js";
+import _ from "mithril";
 import {required, within} from "validatex";
 
 
-export const divider = component({
-	name: "divider",
-  base: base,
-	attrSchema: {
+export class Divider extends UI {
+	attrSchema = {
 		type: [required(false),
 					within(["vertical", "horizontal"], "Invalid type '{value}'.")],
-	},
-	getClassList: function (attrs) {
+	}
+
+	getClassList ({attrs}) {
 		return ["ui",
 						attrs.type,
-						{inverted: attrs.inverted},
-						{fitted: attrs.fitted},
-						{hidden: attrs.hidden},
-						{section: attrs.section},
-						{clearing: attrs.clearing},
+						attrs.inverted && "inverted",
+						attrs.fitted && "fitted",
+						attrs.hidden && "hidden",
+						attrs.section && "section",
+						attrs.clearing && "clearing",
 						"divider"];
 	}
-});
+}

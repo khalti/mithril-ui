@@ -1,22 +1,21 @@
-import m from "mithril";
+import o from "mithril";
 import {validate} from "validatex";
-import omit from "lodash/omit.js";
-import component from "mithril-componentx";
+import Component from "mithril-componentx";
 
 
-export const base = component({
-	name: "UI",
-	getDefaultAttrs (attrs) {
+export class UI extends Component {
+	getDefaultAttrs (vnode) {
 		return {root: "div"};
-	},
+	}
+
   validateAttrs (attrs) {
     let errors = validate(attrs, this.attrSchema);
 		if (errors) {
-			console.log(`@ ${this.name}`);
 			throw Error(JSON.stringify(errors));
 		}
-  },
-  view ({attrs, children, state}) {
-    return m(attrs.root, attrs.rootAttrs, children);
   }
-});
+
+  view ({attrs, children, state}) {
+    return o(attrs.root, attrs.rootAttrs, children);
+  }
+}

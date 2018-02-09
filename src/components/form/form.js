@@ -1,22 +1,19 @@
-import {base} from "./../base.js";
-import component from "mithril-componentx";
-import m from "mithril";
-import omit from "lodash/omit";
-import keys from "lodash/keys";
+import {UI} from "./../base.js";
+import _ from "mithril";
 import {sizeMap} from "./../../helpers/enums.js";
 import {required, within} from "validatex";
 
 
-export const form = component({
-	name: "form",
-	base: base,
-	attrSchema: {
-		size: [required(false), within(keys(sizeMap), "^Invalid size '%{value}'.")]
-	},
-	getDefaultAttrs (attrs) {
+export class Form extends UI {
+	attrSchema = {
+			size: [required(false), within(Object.keys(sizeMap), "^Invalid size '{value}'.")]
+	}
+
+	getDefaultAttrs ({attrs}) {
 		return {root: "form"};
-	},
-	isRootAttr (value, key) {
+	}
+
+	isRootAttr (key) {
 		try {
 			return /^(key|id|style|on.*|data-.*|config|method|action)$/.test(key)? true: false;
 		}
@@ -25,16 +22,18 @@ export const form = component({
 				return false;
 			}
 		}
-	},
-	getClassList (attrs) {
+	}
+
+	getClassList ({attrs}) {
+		// TODO: add state to handle [loading, success, error, warning]
 		return ["ui",
-						{"loading": attrs.loading},
-						{"success": attrs.success},
-						{"error": attrs.error},
-						{"warning": attrs.warning},
+						attrs.loading && "loading",
+						attrs.success && "success",
+						attrs.error && "error",
+						attrs.warning && "warning",
 						sizeMap[attrs.size],
-						{inverted: attrs.inverted},
-						{"equal width": attrs.equalWidth},
+						attrs.inverted && "inverted",
+						attrs.equalWidth && "equal width",
 						"form"];
 	}
-});
+}

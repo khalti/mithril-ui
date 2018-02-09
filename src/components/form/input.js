@@ -1,47 +1,42 @@
-import m from 'mithril';
-import component from "mithril-componentx";
-import {base} from "./../base.js";
-import omit from "lodash/omit";
-import omitBy from "lodash/omitBy";
+import _ from 'mithril';
+import {UI} from "./../base.js";
 import {required} from "validatex";
+import {componentIs, is, omit, omitBy} from "./../../helpers/misc.js";
+import {Icon} from "./../icon/icon.js";
+import {Button} from "./../button/button.js";
+import {Label} from "./../label.js";
 
 
 let isEventHandler = (value, key) => {
 	return /^on.*$/.test(key);
 };
 
-let isComponent = (comp) => {
-	if (!comp.is) {
-		return "Please pass a 'mithril-componentx' component which has not been passed through m."
-	}
-}
-
-export const input = component({
-	name: "input",
-	base: base,
-	attrSchema: {
+export class Input extends UI {
+	attrSchema = {
 		type: required(true),
-		prepend: [required(false), isComponent],
-		append: [required(false), isComponent]
-	},
-	getClassList (attrs) {
+		prepend: [required(false), componentIs([Icon, Button, Label])],
+		append: [required(false), componentIs([Icon, Button, Label])]
+	}
+
+	getClassList ({attrs}) {
 		let {prepend, append} = attrs;
 		return ["ui",
-			{"left icon": prepend && prepend.is("icon") && (!append || !append.is("icon"))},
-			{"right icon": (!prepend || !prepend.is("icon")) && append && append.is("icon")},
-			{"left right icon": prepend && prepend.is("icon") && append && append.is("icon")},
-			{"left labeled": prepend && prepend.is("label") && (!append || !append.is("label"))},
-			{"right labeled": (!prepend || !prepend.is("label")) && append && append.is("label")},
-			{"left right labeled": prepend && prepend.is("label") && append && append.is("label")},
-			{"left action": prepend && prepend.is("button") && (!append || !append.is("button"))},
-			{"right action": (!prepend || !prepend.is("button")) && append && append.is("button")},
-			{"left right action": prepend && prepend.is("button") && append && append.is("button")},
-			{disabled: attrs.disabled},
-			{fluid: attrs.fluid},
+			prepend && is(prepend.tag, Icon) && (!append || !is(append.tag, Icon)) && "left icon",
+			(!prepend || !is(prepend.tag, Icon)) && append && is(append.tag, Icon) && "right icon",
+			prepend && is(prepend.tag, Icon) && append && is(append.tag, Icon) && "left right icon",
+			prepend && is(prepend.tag, Label) && (!append || !is(append.tag, Label)) && "left labeled",
+			(!prepend || !is(prepend.tag, Label)) && append && is(append.tag, Label) && "right labeled",
+			prepend && is(prepend.tag, Label) && append && is(append.tag, Label) && "left right labeled",
+			prepend && is(prepend.tag, Button) && (!append || !is(append.tag, Button)) && "left action",
+			(!prepend || !is(prepend.tag, Button)) && append && is(append.tag, Button) && "right action",
+			prepend && is(prepend.tag, Button) && append && is(append.tag, Button) && "left right action",
+			attrs.disabled && "disabled",
+			attrs.loading && "loading",
+			attrs.fluid && "fluid",
 			"input"];
-	},
-  view (vnode) {
-		let attrs = vnode.attrs;
+	}
+
+  view ({attrs, children, state}) {
 		let inputAttrs = omit(attrs, ['prepend', 'append', 'rootAttrs']);
 		inputAttrs.className = attrs.type === "hidden"? "hidden": "";
 
@@ -52,12 +47,10 @@ export const input = component({
 		if (attrs.disabled) {
 			inputAttrs.tabIndex = -1
 		}
-
 		delete inputAttrs.root;
-
-    return m('div', omitBy(attrs.rootAttrs, isEventHandler),
-						 attrs.prepend? m(attrs.prepend): undefined,
-						 m('input', inputAttrs),
-						 attrs.append? m(attrs.append): undefined);
+    return _('div', omitBy(attrs.rootAttrs, isEventHandler),
+						 attrs.prepend? attrs.prepend: undefined,
+						 _('input', inputAttrs),
+						 attrs.append? attrs.append: undefined);
   }
-});
+}

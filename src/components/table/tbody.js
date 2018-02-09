@@ -1,14 +1,9 @@
-import {base} from "./../base.js";
-import component from "mithril-componentx";
-import m from "mithril";
-import keys from "lodash/keys";
+import {UI} from "./../base.js";
+import _ from "mithril";
 
 
-export const tbody = component({
-	base: base,
-	attrSchema: {
-	},
-	getDefaultAttrs (attrs) {
+export class TBody extends UI {
+	getDefaultAttrs ({attrs}) {
 		return {root: "tbody"};
 	}
-});
+}

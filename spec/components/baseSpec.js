@@ -1,54 +1,67 @@
-import {base}  from "./../../src/components/base.js";
-import {getVdom} from "./../utils.js";
-import component from "mithril-componentx";
-import chai from "chai";
+import {window, FRAME_BUDGET} from "./../utils.js";
+import {UI}  from "./../../src/components/base.js";
+import {expect} from "chai";
 import {required} from "validatex";
-import m from "mithril";
+import _ from "mithril";
 
 
-let expect = chai.expect;
-
-describe("base", () => {
+describe("UI", () => {
 	describe("validateAttrs", () => {
 		let profile;
+
 		beforeEach(() => {
-			profile = component({
-				base: base,
-				attrSchema: {name: required(true)}
-			});
+			class Profile extends UI {
+				attrSchema = {name: required(true)}
+			}
+
+			profile = new Profile();
 		});
 
 		it("throws errors if attributes are invalid", () => {
-			expect(profile.view.bind(profile, new profile.controller())).to.throw(Error);
+			expect(profile.validateAttrs.bind(profile, {})).to.throw(Error);
 		});
 
 		it("does not throw errors if attributes are valid", () => {
 			let attrs = {name: "aName"};
-			expect(profile.view.bind(profile, new profile.controller(attrs), attrs)).not.to.throw(Error);
+			expect(profile.validateAttrs.bind(profile, attrs)).not.to.throw(Error);
 		});
 	});
 
 	describe("view", () => {
-		let vdom ;
-		beforeEach(() => {
-			let attrs = {
-				root: "i",
-				"data-name": "aName"
-			};
+		let buttonDom, document;
 
-			vdom = base.view(new base.controller(attrs), attrs, "child1");
+		beforeEach(() => {
+			document = window.document;
+
+			class Button extends UI {
+				content = "a button content"
+
+				getDefaultAttrs(vnode) {
+					let attrs =  super.getDefaultAttrs(vnode);
+					attrs.id = "buttonId";
+					return attrs;
+				}
+
+				view ({attrs, children, state}) {
+					return _("button", attrs.rootAttrs, this.content);
+				}
+			}
+
+			_.mount(document.body, Button);
+
+			buttonDom = document.querySelector("button");
 		});
 
-		it("creates vdom with given attrs.tag", () => {
-			expect(vdom.tag).to.equal("i");
+		it("creates vdom with given attrs.root", () => {
+			expect(buttonDom.nodeName).to.equal("BUTTON");
 		});
 
 		it("creates vdom with given attributes", () => {
-			expect(vdom.attrs["data-name"]).to.equal("aName");
+			expect(buttonDom.getAttribute("id")).to.equal("buttonId");
 		});
 
 		it("creates vdom with given children", () => {
-			expect(vdom.children[0]).to.equal("child1");
+			expect(buttonDom.textContent).to.equal("a button content");
 		});
 	});
 });

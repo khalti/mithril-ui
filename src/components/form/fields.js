@@ -1,18 +1,25 @@
-import {base} from "./../base.js";
-import component from "mithril-componentx";
+import {UI} from "./../base.js";
 import {numberMap} from "./../../helpers/enums.js";
+import o from "mithril";
 
 
-export const fields = component({
-	name: "fields",
-	base: base,
-	getClassList (attrs) {
+export class Fields extends UI {
+	getClassList ({attrs}) {
 		return [
-			{grouped: attrs.grouped},
+			attrs.grouped && "grouped",
 			numberMap[attrs.fieldCount],
-			{"equal width": attrs.equalWidth},
-			{inline: attrs.inline},
+			attrs.equalWidth && "equal width",
+			attrs.inline && "inline",
 			"fields"
 		];
 	}
-});
+
+	getDefaultAttrs(vnode) {
+		let label = vnode.attrs.label;
+		if (label) {
+			vnode.children.unshift(o("label", label));
+		}
+
+		return super.getDefaultAttrs(vnode);
+	}
+}

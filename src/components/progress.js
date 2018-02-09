@@ -1,45 +1,44 @@
-import {base} from "./base.js";
-import component from "mithril-componentx";
+import {UI} from "./base.js";
 import {required, isNumber, within} from "validatex";
 import _ from "mithril";
-import {attachmentMap, sizeMap, colorClassMap} from "./../helpers/enums.js";
+import {attachmentMap, sizeMap, colorMap} from "./../helpers/enums.js";
 
 
 const states = ["active", "success", "warning", "error", "disabled"];
 
-export const bar = component({
-	name: "progressBar",
-	base: base,
-	attrSchema: {
+export class Bar extends UI {
+	attrSchema = {
 		percent: [required(true), isNumber()],
 		state: [required(false), within(states)]
-	},
-	view ({attrs, children, state}) {
-		return _("div.bar", {style: {width: `${attrs.percent}%`}});
 	}
-});
 
-export const progress = component({
-	name: "progress",
-	base: base,
-	attrSchema: {
+	view ({attrs, children, state}) {
+		attrs.rootAttrs.style = {width: `${attrs.percent}%`};
+		return _(".bar", attrs.rootAttrs);
+	}
+}
+
+export class Progress extends UI {
+	attrSchema = {
 		percent: [required(true), isNumber()],
 		state: [required(false), within(states)]
-	},
-	getClassList (attrs) {
+	}
+
+	getClassList ({attrs}) {
 		return [
 			"ui",
-			{indicating: attrs.indicating},
-			{inverted: attrs.inverted},
+			attrs.indicating && "indicating",
+			attrs.inverted && "inverted",
 			attachmentMap[attrs.attach],
 			sizeMap[attrs.size],
 			attrs.state,
-			colorClassMap[attrs.color],
+			colorMap[attrs.color],
 			"progress"
 		];
-	},
+	}
+
 	view ({attrs, children, state}) {
 		return _("div", attrs.rootAttrs,
-				_(bar, {percent: attrs.percent}));
+				_(Bar, {percent: attrs.percent}));
 	}
-});
+}

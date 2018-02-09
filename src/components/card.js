@@ -1,21 +1,21 @@
-import {base} from "./base.js";
-import component from "mithril-componentx";
+import {UI} from "./base.js";
 import _ from "mithril";
+import {colorMap, numberMap, floatMap} from "./../helpers/enums.js";
 
 
-export const card = component({
-	name: "card",
-	base: base,
-	getClassList (attrs) {
+export class Card extends UI {
+	getClassList ({attrs, children, state}) {
 		return [
 			"ui",
-			{fluid: attrs.fluid},
-			{centered: attrs.centered},
-			{raised: attrs.raised},
-			{link: attrs.link},
+			attrs.fluid && "fluid",
+			attrs.centered && "centered",
+			attrs.raised && "raised",
+			attrs.link && "link",
+			colorMap[attrs.color],
 			"card"
 		];
-	},
+	}
+
 	view ({attrs, children, state}) {
 		let tag = "div";
 		if (attrs.href) {
@@ -24,51 +24,51 @@ export const card = component({
 		}
 		return _(tag, attrs.rootAttrs, children);
 	}
-});
+}
 
 
-export const subCard = component({
-	name: "subCard",
-	base: base,
-	getClassList ({attrs, children, state}) {
-		return ["card"];
+export class SubCard extends Card {
+	getClassList (vnode) {
+		let classList = super.getClassList(vnode);
+		classList.shift();
+		return classList;
 	}
-});
+}
 
 
-export const cards = component({
-	name: "cards",
-	base: base,
+export class Cards extends UI {
 	getClassList ({attrs, children, state}) {
 		return [
 			"ui",
-			{link: attrs.link},
+			attrs.link && "link",
+			attrs.stackable && "stackable",
+			attrs.doubling && "doubling",
+			numberMap[attrs.cardCount],
 			"cards"
 		];
 	}
-});
+}
 
 
-export const content = component({
-	name: "cardContent",
-	base: base,
-	getClassList ({attrs, children, state}) {
+export class CardContent extends UI {
+	getClassList ({attrs}) {
 		return [
-			{extra: attrs.extra},
+			attrs.extra && "extra",
+			floatMap[attrs.float],
 			"content"
 		];
 	}
-});
+}
 
 
-export const header = component({
-	name: "cardHeader",
-	base: base,
-	getClassList (attrs) {
+export class CardHeader extends UI {
+	getClassList ({attrs}) {
 		return [
+			floatMap[attrs.float],
 			"header"
 		];
-	},
+	}
+
 	view ({attrs, children, state}) {
 		let tag = "div";
 
@@ -78,58 +78,54 @@ export const header = component({
 		}
 		return _(tag, attrs.rootAttrs, children);
 	}
-});
+}
 
 
-export const meta = component({
-	name: "cardMeta",
-	base: base,
+export class CardMeta extends UI {
 	getClassList ({attrs, children, state}) {
 		return [
+			floatMap[attrs.float],
 			"meta"
 		];
 	}
-});
+}
 
 
-export const description = component({
-	name: "cardDescription",
-	base: base,
+export class CardDescription extends UI {
 	getClassList ({attrs, children, state}) {
 		return [
+			floatMap[attrs.float],
 			"description"
 		];
 	}
-});
+}
 
 
-export const author = component({
-	name: "cardAuthor",
-	base: base,
+export class CardAuthor extends UI {
 	getClassList ({attrs, children, state}) {
 		return [
+			floatMap[attrs.float],
 			"author"
 		];
 	}
-});
+}
 
 
-export const time = component({
-	name: "cardTime",
-	base: base,
+export class CardTime extends UI {
 	getClassList ({attrs, children, state}) {
 		return [
+			floatMap[attrs.float],
 			"time"
 		];
 	}
-});
+}
 
-export const category = component({
-	name: "cardCategory",
-	base: base,
+
+export class CardCategory extends UI {
 	getClassList ({attrs, children, state}) {
 		return [
+			floatMap[attrs.float],
 			"category"
 		];
 	}
-});
+}

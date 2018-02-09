@@ -1,27 +1,41 @@
-import {container} from "./../../src/components/container.js";
-import chai from "chai";
+import {window} from "./../utils.js";
+import {Container} from "./../../src/components/container.js";
+import {expect} from "chai";
 
-let expect = chai.expect;
 
-describe("container", () => {
+describe("Container", () => {
+	let vnode, container;
+
+	beforeEach(() => {
+		container = new Container();
+		vnode = {
+			attrs: {},
+			children: [],
+			state: {}
+		};
+	});
+
 	describe(".getClassList", () => {
-		it("should return list where 'ui' is the first item.", () => {
-			expect(container.getClassList({})[0]).to.equal("ui");
+		it("includes 'ui'", () => {
+			let classList = container.getClassList(vnode);
+			expect(classList).to.contain("ui");
 		});
 
-		it("should return list where 'container' is the last item.", () => {
-			let classList = container.getClassList({});
-			expect(classList[classList.length - 1]).to.equal("container");
+		it("includes 'container'", () => {
+			let classList = container.getClassList(vnode);
+			expect(classList).to.contain("container");
 		});
 
 		it("should return proper type class", () => {
-			let classList = container.getClassList({type: "text"});
-			expect(classList[1]).to.equal(container.typeClassMap.text);
+			vnode.attrs = {type: "text"};
+			let classList = container.getClassList(vnode);
+			expect(classList).to.contain("text");
 		});
 
-		it("should return proper alignment class", () => {
-			let classList = container.getClassList({alignment: "center"});
-			expect(classList[2]).to.equal(container.alignmentClassMap.center);
+		it("should return proper text alignment class", () => {
+			vnode.attrs.textAlignment = "center";
+			let classList = container.getClassList(vnode);
+			expect(classList).to.contain("center aligned");
 		});
 	});
 });

@@ -1,13 +1,13 @@
-import m from "mithril";
-import component from "mithril-componentx";
+import _ from "mithril";
 import {required, within} from "validatex";
-import {base} from "./../base.js";
+import {UI} from "./../base.js";
+
+const DISABLE_SCROLL_CLASS = " dimmable dimmed scrolling";
 
 
-export const modalPool = component({
-	name: "modalPool",
-	base: base,
-	modals: [],
+export class ModalPool extends UI {
+	static modals = []
+
 	getStyle ({attrs, children, state}) {
 		return {
 			".ui.dimmer > .content > .center > *": {
@@ -15,25 +15,61 @@ export const modalPool = component({
 				"text-align": "left"
 			},
 		};
-	},
-	add (modal) {
-		modalPool.modals.unshift(modal);
-	},
-	shift (modal) {
-		modalPool.modals.shift();
-	},
+	}
+
+	static add (modal) {
+		ModalPool.modals = ModalPool.modals.concat([modal]);
+	}
+
+	static shift (modal) {
+		ModalPool.modals = ModalPool.modals.slice(1);
+	}
+
+	onupdate (vnode) {
+		let parentDom = vnode.dom.parentNode;
+		const className = parentDom.className;
+
+		if (ModalPool.modals.length > 0) {
+			if (!className.match(DISABLE_SCROLL_CLASS)) {
+				parentDom.className = className + DISABLE_SCROLL_CLASS;
+			}
+		}
+		else {
+			parentDom.className = className.replace(DISABLE_SCROLL_CLASS, "");
+		}
+	}
+
+	removeModal (e) {
+		if (e.target.className.match("modals")) {
+			ModalPool.shift();
+			return;
+		}
+
+		e.redraw = false;
+	}
+
+	getDefaultAttrs (vnode) {
+		let attrs = super.getDefaultAttrs(vnode);
+		attrs.onclick = this.removeModal.bind(this);
+		return attrs;
+	}
+
 	getClassList (attrs) {
 		return [
 			"ui",
-			{"inverted": attrs.inverted},
+			attrs.inverted && "inverted",
 			"page",
 			"modals",
 			"dimmer",
-			modalPool.modals.length === 0? undefined: "visible active"
+			ModalPool.modals.length !== 0 && "visible active"
 		];
-	},
-	view ({attrs, children, state}) {
-		let modals = modalPool.modals.length;
-		return m("div", attrs.rootAttrs, modals === 0? null: modalPool.modals);
 	}
-});
+
+	view ({attrs, children, state}) {
+		return _("div", attrs.rootAttrs,
+			ModalPool.modals.map((modal) => {
+				return _(modal.tag, modal.attrs,
+					modal.children.map((child) => _(child.tag, child.attrs, child.children)));
+			}));
+	}
+}

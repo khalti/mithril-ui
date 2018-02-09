@@ -1,17 +1,15 @@
-import {base} from "./../base.js";
-import component from "mithril-componentx";
+import {UI} from "./../base.js";
 import {required, within} from "validatex";
 
-export const subMenu = component({
-	name: "subMenu",
-	base: base,
-	attrSchema: {
+export class SubMenu extends UI {
+	attrSchema = {
 		right: [required(false), within([true, false])]
-	},
-	getClassList (attrs) {
+	}
+
+	getClassList ({attrs}) {
 		return [
-			{right: attrs.right},
+			attrs.right && "right",
 			"menu"
 		];
 	}
-});
+}

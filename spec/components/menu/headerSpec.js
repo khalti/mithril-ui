@@ -1,12 +1,12 @@
-import {header} from "./../../../src/components/menu/header.js";
-import classnames from "classnames";
+import {window, getVnode} from "./../../utils.js";
+import {MenuHeader} from "./../../../src/components/menu/header.js";
 import {expect} from "chai";
 
 
-describe("header", () => {
+describe("menuHeader", () => {
 	describe("getClassList", () => {
 		it("includes 'header'", () => {
-			let className = classnames(header.getClassList({}));
+			expect(new MenuHeader().getClassList(getVnode)).to.contain("header");
 		});
 	});
 });

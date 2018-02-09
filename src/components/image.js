@@ -1,46 +1,69 @@
-import {base} from "./base.js";
-import component from "mithril-componentx";
-import m from "mithril";
-import omit from "lodash/omit";
-import {verticalAlignmentClassMap, floatMap} from "./../helpers/enums.js";
+import {UI} from "./base.js";
+import _ from "mithril";
+import {verticalAlignmentMap, floatMap} from "./../helpers/enums.js";
 import {required} from "validatex";
 
 
-export const image = component({
-	name: "image",
-  base: base,
-	attrSchema: {
+export class Image extends UI {
+	attrSchema = {
 		src: required(true)
-	},
-	getDefaultAttrs (attrs) {
+	}
+
+	getDefaultAttrs ({attrs}) {
 		if (attrs.link) {
 			return {rootAttrs: {href: attrs.link}};
 		}
 		return {rootAttrs: {src: attrs.src}};
-	},
-	getClassList (attrs) {
+	}
+
+	getClassList ({attrs}) {
 		return ["ui",
-						{hidden: attrs.hidden},
-						{disabled: attrs.disabled},
-						{bordered: attrs.bordered},
-						{fluid: attrs.fluid},
-						{rounded: attrs.rounded},
-						{circular: attrs.circular},
-						{centered: attrs.centered},
-						{spaced: attrs.spaced},
-						verticalAlignmentClassMap[attrs.verticalAlignment],
+						attrs.inline && "inline",
+						attrs.hidden && "hidden",
+						attrs.disabled && "disabled",
+						 attrs.bordered && "bordered",
+						attrs.fluid && "fluid",
+						attrs.rounded && "rounded",
+						attrs.circular && "circular",
+						attrs.centered && "centered",
+						attrs.spaced && "spaced",
+						verticalAlignmentMap[attrs.verticalAlignment],
 						floatMap[attrs.float],
 						attrs.size,
 						"image"];
-	},
+	}
+
   view (vdom) {
 		let attrs = vdom.attrs;
+		let root;
 
-		if(attrs.link) {
-			return m("a", attrs.rootAttrs,
-							 m("img", {src: attrs.src}));
+		if (attrs.root) {
+			root = attrs.root;
+			delete attrs.rootAttrs["src"]
 		}
 
-    return m("img", attrs.rootAttrs);
+		if(attrs.link) {
+			root = "a";
+		}
+
+		return root
+			? _(root, attrs.rootAttrs,
+							 _("img", {src: attrs.src}))
+			: _("img", attrs.rootAttrs);
   }
-});
+}
+
+export class Images extends UI {
+	getClassList ({attrs}) {
+		let classes =
+			[ "ui"
+			, attrs.size
+			, "images"
+			]
+		return classes;
+	}
+
+	view ({attrs, state, children}) {
+		return _("div", attrs.rootAttrs, children);
+	}
+}

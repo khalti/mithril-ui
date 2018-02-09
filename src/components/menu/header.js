@@ -1,11 +1,8 @@
-import {base} from "./../base.js";
-import component from "mithril-componentx";
+import {UI} from "./../base.js";
 
 
-export const header = component({
-	name: "menuHeader",
-	base: base,
+export class MenuHeader extends UI {
 	getClassList (attrs) {
 		return ["header"];
 	}
-});
+}

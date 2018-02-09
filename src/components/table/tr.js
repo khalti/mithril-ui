@@ -1,25 +1,23 @@
-import {base} from "./../base.js";
-import component from "mithril-componentx";
-import m from "mithril";
+import {UI} from "./../base.js";
+import _ from "mithril";
 import {required, within} from "validatex";
-import {verticalAlignmentClassMap, textAlignmentClassMap} from "./../../helpers/enums.js";
-import keys from "lodash/keys";
+import {verticalAlignmentMap, textAlignmentMap} from "./../../helpers/enums.js";
 
 
-export const tr = component({
-	name: "tr",
-	base: base,
-	attrSchema: {
-		verticalAlignment: [required(false), within(keys(verticalAlignmentClassMap))],
-		textAlignment: [required(false), within(keys(textAlignmentClassMap))]
-	},
-	getClassList (attrs) {
+export class TR extends UI {
+	attrSchema = {
+		verticalAlignment: [required(false), within(Object.keys(verticalAlignmentMap))],
+		textAlignment: [required(false), within(Object.keys(textAlignmentMap))]
+	}
+
+	getClassList ({attrs}) {
 		return [
-			verticalAlignmentClassMap[attrs.verticalAlignment],
-			textAlignmentClassMap[attrs.textAlignment]
+			verticalAlignmentMap[attrs.verticalAlignment],
+			textAlignmentMap[attrs.textAlignment]
 		];
-	},
-	getDefaultAttrs (attrs) {
+	}
+
+	getDefaultAttrs ({attrs}) {
 		return {root: "tr"};
 	}
-});
+}

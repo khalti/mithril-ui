@@ -1,65 +1,62 @@
-import {divider} from  "./../../src/components/divider.js";
-import m from "mithril";
+import {window, getVnode} from "./../utils.js";
+import {Divider} from  "./../../src/components/divider.js";
+import _ from "mithril";
 import {expect} from "chai";
-import classnames from "classnames";
 
 
-describe("divider", () => {
+describe("Divider", () => {
+	let vnode, divider;
+
+	beforeEach(() => {
+		divider = new Divider();
+		vnode = getVnode();
+	});
+
 	it("complains on invalid type.", () => {
-		let aDivider = m(divider, {type: "diagonal"});
-		expect(aDivider.view.bind(aDivider)).to.throw(Error);
+		vnode.attrs = {type: "diagonal"};
+		expect(divider.oninit.bind(vnode)).to.throw(Error);
 	});
 
 	describe("getClassList", () => {
 		it("includes 'ui'.", () => {
-			let className = classnames(divider.getClassList({}));
-			expect(className).to.have.string("ui");
+			expect(divider.getClassList(vnode)).to.contain("ui");
 		});
 
 		it("includes 'divider'.", () => {
-			let className = classnames(divider.getClassList({}));
-			expect(className).to.have.string("divider");
+			expect(divider.getClassList(vnode)).to.contain("divider");
 		});
 
 		it("includes type.", () => {
-			var className = classnames(divider.getClassList({type: "vertical"}));
-			expect(className).to.have.string("vertical");
+			vnode.attrs = {type: "vertical"};
+			expect(divider.getClassList(vnode)).to.contain("vertical");
 
-			className = classnames(divider.getClassList({type: "horizontal"}));
-			expect(className).to.have.string("horizontal");
+			vnode.attrs = {type: "horizontal"};
+			expect(divider.getClassList(vnode)).to.contain("horizontal");
 		});
 
 		it("includes 'inverted'.", () => {
-			let className = classnames(divider.getClassList({inverted: true}));
-			expect(className).to.have.string("inverted");
+			vnode.attrs = {inverted: true};
+			expect(divider.getClassList(vnode)).to.contain("inverted");
 		});
 
 		it("includes 'fitted'.", () => {
-			let className = classnames(divider.getClassList({fitted: true}));
-			expect(className).to.have.string("fitted");
+			vnode.attrs = {fitted: true};
+			expect(divider.getClassList(vnode)).to.contain("fitted");
 		});
 
 		it("includes 'hidden'.", () => {
-			let className = classnames(divider.getClassList({hidden: true}));
-			expect(className).to.have.string("hidden");
+			vnode.attrs = {hidden: true};
+			expect(divider.getClassList(vnode)).to.contain("hidden");
 		});
 
 		it("includes 'section'.", () => {
-			let className = classnames(divider.getClassList({section: true}));
-			expect(className).to.have.string("section");
+			vnode.attrs = {section: true};
+			expect(divider.getClassList(vnode)).to.contain("section");
 		});
 
 		it("includes 'clearing'.", () => {
-			let className = classnames(divider.getClassList({clearing: true}));
-			expect(className).to.have.string("clearing");
-		});
-	});
-
-	describe("view", () => {
-		it("renders children", () => {
-			let aDivider = divider.view(divider.controller(), 1, 2);
-			expect(aDivider.children[0]).to.equal(1);
-			expect(aDivider.children[1]).to.equal(2);
+			vnode.attrs = {clearing: true};
+			expect(divider.getClassList(vnode)).to.contain("clearing");
 		});
 	});
 });

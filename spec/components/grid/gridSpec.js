@@ -1,85 +1,88 @@
-import {grid} from "./../../../src/components/grid/grid.js";
-import chai from "chai";
-import classnames from "classnames";
-
-let expect = chai.expect;
+import {window, getVnode} from "./../../utils.js";
+import {Grid} from "./../../../src/components/grid/grid.js";
+import {expect} from "chai";
 
 
-describe("grid", () =>{
+describe("grid", () => {
+	let vnode, grid;
+
+	beforeEach(() => {
+		grid = new Grid();
+		vnode = getVnode();
+	});
+
 	describe(".getClassList", () => {
 		it("should include list where 'ui' is the first item.", () => {
-			let className = classnames(grid.getClassList({}));
-			expect(className).to.have.string("ui");
+			expect(grid.getClassList(vnode)).to.contain("ui");
 		});
 
 		it("should include list where 'container' is the last item.", () => {
-			let className = classnames(grid.getClassList({}));
-			expect(className).to.have.string("grid");
+			expect(grid.getClassList(vnode)).to.contain("grid");
 		});
 
 		it("should include proper 'columns' class", () => {
-			let className = classnames(grid.getClassList({columns: 1}));
-			expect(className).to.have.string("one column");
+			vnode.attrs = {columns: 1};
+			expect(grid.getClassList(vnode)).to.contain("one column");
 		});
 
 		it("should include proper 'divide' class", () => {
-			let className = classnames(grid.getClassList({divide: "vertically"}));
-			expect(className).to.have.string("vertically divided")
+			vnode.attrs = {divide: "vertically"};
+			expect(grid.getClassList(vnode)).to.contain("vertically divided")
 		});
 
 		it("should include proper 'cell' class", () => {
-			var className = classnames(grid.getClassList({cell: "internally"}));
-			expect(className).to.have.string("internally celled");
+			vnode.attrs = {cell: "internally"};
+			expect(grid.getClassList(vnode)).to.contain("internally celled");
 		});
 
 		it("should include proper 'equalWidth' class", () => {
-			let className = classnames(grid.getClassList({equalWidth: true}));
-			expect(className).to.have.string("equal width");
+			vnode.attrs = {equalWidth: true};
+			expect(grid.getClassList(vnode)).contain("equal width");
 		});
 
 		it("should include proper 'padded' class", () => {
-			let className = classnames(grid.getClassList({padded: true}));
-			expect(className).to.have.string("padded");
+			vnode.attrs = {padded: true};
+			expect(grid.getClassList(vnode)).to.contain("padded");
 		});
 
 		it("should include proper 'relaxed' class", () => {
-			let className = classnames(grid.getClassList({relaxed: true}));
-			expect(className).to.have.string("relaxed");
+			vnode.attrs = {relaxed: true};
+			expect(grid.getClassList(vnode)).to.contain("relaxed");
 		});
 
 		it("should include proper 'centered' class", () => {
-			let className = classnames(grid.getClassList({centered: true}));
-			expect(className).to.have.string("centered");
+			vnode.attrs = {centered: true};
+			expect(grid.getClassList(vnode)).to.contain("centered");
 		});
 
 		it("should include proper 'textAlignment' class", () => {
-			let className = classnames(grid.getClassList({textAlignment: "right"}));
-			expect(className).to.have.string("right aligned");
+			vnode.attrs = {textAlignment: "right"};
+			expect(grid.getClassList(vnode)).to.contain("right aligned");
 		});
 
 		it("should include proper 'verticalAlignment' class", () => {
-			let className = classnames(grid.getClassList({verticalAlignment: "middle"}));
-			expect(className).to.have.string("middle aligned");
+			vnode.attrs = {verticalAlignment: "middle"};
+			expect(grid.getClassList(vnode)).to.contain("middle aligned");
 		});
 
 		it("should include proper 'doubling' class", () => {
-			let className = classnames(grid.getClassList({doubling: true}));
-			expect(className).to.have.string("doubling");
+			vnode.attrs = {doubling: true};
+			expect(grid.getClassList(vnode)).to.contain("doubling");
 		});
 
 		it("should include proper 'stackable' class", () => {
-			let className = classnames(grid.getClassList({stackable: true}));
-			expect(className).to.have.string("stackable");
+			vnode.attrs = {stackable: true};
+			expect(grid.getClassList(vnode)).to.contain("stackable");
 		});
 
 		it("should include proper 'reverse' class", () => {
-			let className = classnames(grid.getClassList({reverse: "mobile"}));
-			expect(className).to.have.string("mobile reversed");
+			vnode.attrs = {reverse: "mobile"};
+			expect(grid.getClassList(vnode)).to.contain("mobile reversed");
 		});
 
 		it("includes 'inverted'.", () => {
-			let className = classnames(grid.getClassList({inverted: true}));
-			expect(className).to.have.string("inverted");
+			vnode.attrs = {inverted: true};
+			expect(grid.getClassList(vnode)).to.contain("inverted");
 		});
 	});
 });

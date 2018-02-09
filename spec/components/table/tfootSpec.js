@@ -1,20 +1,27 @@
-import {tfoot} from "./../../../src/components/table/tfoot.js";
-import classnames from "classnames";
+import {window, getVnode} from "./../../utils.js";
+import {TFoot} from "./../../../src/components/table/tfoot.js";
 import {expect} from "chai";
-import m from "mithril";
+import _ from "mithril";
 
 
-describe("tfoot", () => {
+describe("TFoot", () => {
+	let vnode, tfoot;
+
+	beforeEach(() => {
+		tfoot = new TFoot();
+		vnode = getVnode();
+	});
+
 	describe("getClassList", () => {
 		it("includes 'full-width'", () => {
-			let got = tfoot.getClassList({fullWidth: true});
-			expect(classnames(got)).to.have.string("full-width");
+			vnode.attrs = {fullWidth: true};
+			expect(tfoot.getClassList(vnode)).to.contain("full-width");
 		});
 	});
 
 	describe("getDefaultAttrs", () => {
 		it("sets root element to be a 'tfoot'", () => {
-			expect(tfoot.getDefaultAttrs({}).root).to.equal("tfoot");
+			expect(tfoot.getDefaultAttrs(vnode).root).to.equal("tfoot");
 		});
 	});
 });

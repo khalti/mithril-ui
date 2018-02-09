@@ -1,46 +1,66 @@
-import component from "mithril-componentx";
-import {base} from "./../base.js";
+import {UI} from "./../base.js";
 import {step} from "./step.js";
 import enums from "./../../helpers/enums.js";
-import keys from "lodash/keys";
-import map from "lodash/map";
-import flattenDeep from "lodash/flattenDeep";
-import m from "mithril";
+import _ from "mithril";
 import {required, within} from "validatex";
+import {isArray} from "./../../helpers/type.js";
 
-export const steps = component({
-	name: "steps",
-	base: base,
-	attrSchema: {
-		attach: [required(false), within(keys(enums.attachmentMap),
-																		"Invalid value for attachment.")],
-		steps: required(true),
-		size: [required(false), within(keys(enums.sizeMap), "Invalid value for size.")]
-	},
-	getDefaultAttrs (attrs) {
-		return {state: attrs.state || 0};
-	},
-	getClassList (attrs) {
+
+export class Steps extends UI {
+	attrSchema = {
+		attach: [ required(false),
+							within(Object.keys(enums.attachmentMap), "Invalid value for attachment.")],
+		size: [required(false), within(Object.keys(enums.sizeMap), "Invalid value for size.")]
+	}
+
+	getDefaultAttrs ({attrs}) {
+		return {currentStep: attrs.currentStep || 0};
+	}
+
+	getClassList ({attrs, children}) {
+		let stepsCount = 0;
+		if (children && !isArray(children)) {
+			children = [children];
+			stepsCount = children.length;
+		}
+		else {
+			stepsCount = children.length;
+		}
+
 		return [
 			"ui",
-			{ordered: attrs.ordered},
-			{vertical: attrs.vertical},
-			{fluid: attrs.fluid},
+			attrs.ordered && "ordered",
+			attrs.vertical && "vertical",
+			attrs.fluid && "fluid",
 			enums.attachmentMap[attrs.attach],
-			enums.numberMap[attrs.steps.length],
+			enums.numberMap[stepsCount],
 			enums.sizeMap[attrs.size],
 			"steps"
 		];
-	},
-	view (vnode) {
-		let attrs = vnode.attrs;
+	}
 
-		let steps = map(attrs.steps, (stepAttrs, index) => {
-			stepAttrs.state = attrs.state;
-			stepAttrs.index = index + 1;
-			return m(step, stepAttrs);
+	view ({attrs, children, state}) {
+		if (children && !isArray(children)) {
+			children = [children];
+		}
+
+		let childIndex = 0;
+		children = children.map((child) => {
+			if (childIndex + 1 === attrs.currentStep) {
+				child.attrs.state = "active";
+			}
+			else if (childIndex + 1 > attrs.currentStep) {
+				child.attrs.state = "disabled";
+			}
+			else if (childIndex + 1 < attrs.currentStep) {
+				child.attrs.state = "completed";
+			}
+
+			childIndex ++;
+
+			return child;
 		});
 
-		return m("div", vnode.attrs.rootAttrs, steps)
+		return _("div", attrs.rootAttrs, children);
 	}
-});
+}

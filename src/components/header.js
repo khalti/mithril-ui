@@ -1,12 +1,11 @@
-import {base} from "./base.js";
-import component from "mithril-componentx";
-import m from "mithril";
-import {properKeys,
-				attachmentMap,
+import {UI} from "./base.js";
+import _ from "mithril";
+import {attachmentMap,
 				floatMap,
-				textAlignmentClassMap,
-				colorClassMap} from "./../helpers/enums.js";
+				textAlignmentMap,
+				colorMap} from "./../helpers/enums.js";
 import {required, within} from "validatex";
+import {properKeys} from "./../helpers/misc.js";
 
 
 let levelMap = {
@@ -18,31 +17,46 @@ let levelMap = {
 	6: "h6"
 };
 
-export const header = component({
-	name: "header",
-  base: base,
-	attrSchema: {
+export class Header extends UI {
+	attrSchema = {
 		level: [required(false), within(properKeys(levelMap), "Invalid level '{value}.'")]
-	},
-	getDefaultAttrs (attrs) {
+	}
+
+	getDefaultAttrs (vnode) {
 		return {};
-	},
-	getClassList (attrs) {
+	}
+
+	getClassList ({attrs}) {
 		return ["ui",
-						{icon: attrs.pyramid},
-						{disabled: attrs.disabled},
-						{dividing: attrs.dividing},
-						{block: attrs.block},
+						attrs.pyramid && "icon",
+						attrs.disabled && "disabled",
+						attrs.dividing && "dividing",
+						attrs.block && "block",
 						attachmentMap[attrs.attach],
 						floatMap[attrs.float],
-						textAlignmentClassMap[attrs.textAlignment],
-						colorClassMap[attrs.color],
-						{inverted: attrs.inverted},
+						textAlignmentMap[attrs.textAlignment],
+						colorMap[attrs.color],
+						attrs.inverted && "inverted",
 						"header"];
-	},
+	}
+
 	view (vnode) {
 		let attrs = vnode.attrs;
 
-		return m(levelMap[attrs.level] || "div", attrs.rootAttrs, vnode.children);
+		return _(levelMap[attrs.level] || "div", attrs.rootAttrs, vnode.children);
 	}
-});
+}
+
+
+export class SubHeader extends UI {
+	getClassList ({attrs}) {
+		return ["sub header"];
+	}
+}
+
+
+export class HeaderContent extends UI {
+	getClassList ({attrs}) {
+		return ["content"];
+	}
+}

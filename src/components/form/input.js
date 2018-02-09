@@ -1,9 +1,7 @@
 import _ from 'mithril';
 import {UI} from "./../base.js";
-import omit from "lodash/omit";
-import omitBy from "lodash/omitBy";
 import {required} from "validatex";
-import {componentIs, is} from "./../../helpers/misc.js";
+import {componentIs, is, omit, omitBy} from "./../../helpers/misc.js";
 import {Icon} from "./../icon/icon.js";
 import {Button} from "./../button/button.js";
 import {Label} from "./../label.js";
@@ -49,9 +47,7 @@ export class Input extends UI {
 		if (attrs.disabled) {
 			inputAttrs.tabIndex = -1
 		}
-
 		delete inputAttrs.root;
-
     return _('div', omitBy(attrs.rootAttrs, isEventHandler),
 						 attrs.prepend? attrs.prepend: undefined,
 						 _('input', inputAttrs),

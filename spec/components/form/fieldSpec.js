@@ -205,7 +205,6 @@ describe("field", () => {
 			_.render(document.body, _(Field, attrs));
 			let inputDom = document.querySelector("input");
 			inputDom.value = "earth";
-
 			trigger("input", inputDom);
 
 			expect(attrs.model()).to.equal("earth");

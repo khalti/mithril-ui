@@ -12,7 +12,7 @@ export class TextArea extends Field {
 			rows: attrs.rowCount,
 			name: attrs.name,
 			placeholder: attrs.placeholder,
-			value: attrs.model()
+			value: attrs.model.getData()
 			// autoExpand
 		};
 
@@ -25,11 +25,11 @@ export class TextArea extends Field {
 			}
 
 			if (attrs.update === attrs.validate) {
-				textareaAttrs[attrs.update] = o.withAttr('value', attrs.model.setAndValidate);
+				textareaAttrs[attrs.update] = o.withAttr('value', attrs.model.setAndValidate, attrs.model);
 			}
 			else {
 				if (attrs.update) {
-					textareaAttrs[attrs.update] = o.withAttr('value', attrs.model);
+					textareaAttrs[attrs.update] = o.withAttr('value', attrs.model.setData, attrs.model);
 				}
 				if (attrs.validate) {
 					textareaAttrs[attrs.validate] = () => {attrs.model.isValid();};

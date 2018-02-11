@@ -19,10 +19,10 @@ export class SelectedItem extends Label {
 	unselect (attrs, e) {
 		e.stopPropagation();
 
-		let selectedItems = attrs.model();
+		let selectedItems = attrs.model.getData();
 		let index = selectedItems.indexOf(attrs.item.value);
 		selectedItems.splice(index, 1);
-		attrs.model(selectedItems);
+		attrs.model.setData(selectedItems);
 	}
 
 	view ({attrs, state, children}) {
@@ -129,7 +129,7 @@ export class Dropdown extends UI {
 	}
  
 	isSelection(attrs) {
-		return attrs.model? true: false;
+		return attrs.model ? true: false;
 	}
 
 	isDefaultText (attrs, text) {
@@ -142,14 +142,14 @@ export class Dropdown extends UI {
 
 	getText (attrs) {
 		if (!attrs.model) return attrs.text;
-		if ( attrs.model && (this.isEmpty(attrs.model()) || (attrs.multiple && attrs.model().length == 0)) && attrs.placeholder) {
+		if ( attrs.model && (this.isEmpty(attrs.model.getData()) || (attrs.multiple && attrs.model.getData().length == 0)) && attrs.placeholder) {
 			return attrs.placeholder;
 		}
 
 		if (attrs.multiple) return "";
 
 		let match = firstMatch((attrs.options), (option) => {
-			return option.value === attrs.model();
+			return option.value === attrs.model.getData();
 		});
 
 		if (match) return match.label;
@@ -253,7 +253,7 @@ export class Dropdown extends UI {
 	selectOption (index, value, model, e) {
 		let modelValue;
 		if (this.multiple) {
-			modelValue = model();
+			modelValue = model.getData();
 			modelValue.push(value);
 		}
 		else {
@@ -280,7 +280,7 @@ export class Dropdown extends UI {
 				anOptionSelected = true;
 			}
 
-			if (attrs.model() === option.value) {
+			if (attrs.model.getData() === option.value) {
 				itemAttrs.active = true;
 			}
 
@@ -290,7 +290,7 @@ export class Dropdown extends UI {
 				itemAttrs.filtered = true;
 			}
 
-			if (attrs.multiple && attrs.model().indexOf(option.value) != -1) {
+			if (attrs.multiple && attrs.model.getData().indexOf(option.value) != -1) {
 				itemAttrs.filtered = true;
 			}
 
@@ -308,13 +308,13 @@ export class Dropdown extends UI {
 	view ({attrs, children, state}) {
 		const isSelection = this.isSelection(attrs);
 		const text = this.getText(attrs);
-		if (attrs.multiple && !issArray(attrs.model())) {
+		if (attrs.multiple && !issArray(attrs.model.getData())) {
 			throw new Error("Model value must be array.");
 		}
 
 		return o("div", attrs.rootAttrs,
 			isSelection?
-				o("input", {type: "hidden", name: attrs.name || "", value: attrs.model()})
+				o("input", {type: "hidden", name: attrs.name || "", value: attrs.model.getData()})
 				: null,
 
 			o(DropdownText,
@@ -324,7 +324,7 @@ export class Dropdown extends UI {
 				text),
 
 			attrs.multiple
-				? attrs.model().map((sel) => {
+				? attrs.model.getData().map((sel) => {
 					let item = firstMatch((attrs.options), (option) => {
 						return option.value === sel;
 					});

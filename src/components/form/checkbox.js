@@ -15,8 +15,8 @@ export class Checkbox extends Field {
 
 	validateAttrs (attrs) {
 		let errors = validate(attrs, this.attrSchema) || {};
-		if (attrs.multiple && attrs.model()) {
-			let err = validate(attrs.model(), isArray());
+		if (attrs.multiple && attrs.model.getData()) {
+			let err = validate(attrs.model.getData(), isArray());
 			if (err) {
 				errors["default"] = err;
 			}
@@ -34,10 +34,10 @@ export class Checkbox extends Field {
 
 	setValue (attrs) {
 		if (!attrs.multiple) {
-			attrs.model.setAndValidate(!attrs.model());
+			attrs.model.setAndValidate(!attrs.model.getData());
 		}
 		else {
-			let val = attrs.model() || [];
+			let val = attrs.model.getData() || [];
 			let index = val.indexOf(attrs.value);
 			if (index > -1) {
 				val.splice(index, 1);
@@ -51,17 +51,17 @@ export class Checkbox extends Field {
 
 	shouldCheck(attrs) {
 		if (!attrs.multiple) {
-			return attrs.model() === attrs.value;
+			return attrs.model.getData() === attrs.value;
 		}
-		return (attrs.model() || []).indexOf(attrs.value) > -1;
+		return (attrs.model.getData() || []).indexOf(attrs.value) > -1;
 	}
 
 	getLabelAppend (attrs) {
-		if(attrs.help && !attrs.model.errors()) {
+		if(attrs.help && !attrs.model.getError()) {
 			return _('label.help', attrs.help);
 		}
-		else if(attrs.model.error() && !attrs.hideError) {
-			return _('label.error', attrs.model.error());
+		else if(attrs.model.getError() && !attrs.hideError) {
+			return _('label.error', attrs.model.getError());
 		}
 		return null;
 	}

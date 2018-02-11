@@ -1,9 +1,19 @@
-import {window, trigger, presence} from "./../../utils.js";
+import {window, trigger} from "./../../utils.js";
 import {Field} from "../../../src/components/form/field.js";
-import powerform from "powerform";
+import {Field as PField, Form as PForm, ValidationError} from "powerform";
 import _ from "mithril";
 import chai from "chai";
 import classnames from "classnames";
+
+class TestField extends PField {
+	validate(value, allValues) {
+		if (!value) throw new ValidationError("This field is required.");
+	}
+}
+
+class TestForm extends PForm {
+	username = TestField.new();
+}
 
 let expect = chai.expect;
 
@@ -56,7 +66,7 @@ describe("field", () => {
 		let attrs, root, form;
 
 		beforeEach(() => {
-			form = powerform({username: {validator: presence, default: "1"}});
+			form = TestForm.new({data: {username: "1"}});
 			attrs = {
 				model: form.username,
 				placeholder: "Placeholder",
@@ -82,29 +92,29 @@ describe("field", () => {
 
 		it("returns the attrs.help", () => {
 			attrs.help = 'A help';
-			attrs.model("");
+			attrs.model.setData("");
 			let append = field.getLabelAppend(attrs);
 			expect(append.text).to.equal(attrs.help);
 		});
 
 		it("returns the error text", () => {
-			attrs.model.error('An error.');
+			attrs.model.setError('An error.');
 			let append = field.getLabelAppend(attrs);
-			expect(append.text).to.equal(attrs.model.error());
+			expect(append.text).to.equal(attrs.model.getError());
 		});
 
 		it("wont return error if .hideError is true", () => {
 			attrs.hideError = true;
-			attrs.model.error('An error.');
+			attrs.model.setError('An error.');
 			let append = field.getLabelAppend(attrs);
 			expect(append).not.to.exist;
 		});
 
 		it("returns error even if help text is present", () => {
 			attrs.help = "A help.";
-			attrs.model.error('An error.');
+			attrs.model.setError('An error.');
 			let append = field.getLabelAppend(attrs);
-			expect(append.text).to.equal(attrs.model.error());
+			expect(append.text).to.equal(attrs.model.getError());
 		});
 	});
 
@@ -112,7 +122,7 @@ describe("field", () => {
 		let vnode, form;
 
 		beforeEach(() => {
-			form = powerform({username: {validator: presence, default: "1"}});
+			form = TestForm.new({data: {username: "1"}})
 			vnode = {
 				attrs: {
 					model: form.username,
@@ -133,7 +143,7 @@ describe("field", () => {
 
 		it("adds 'error' if model has error", function () {
 			vnode.attrs.help = "A help.";
-			vnode.attrs.model.error('An error.');
+			vnode.attrs.model.setError('An error.');
 			let classList = field.getClassList(vnode);
 			expect(classnames(classList)).to.contain("field error");
 		});
@@ -141,7 +151,7 @@ describe("field", () => {
 		it("does not add 'error' class if hideError set to truthy", function () {
 			vnode.attrs.help = "A help.";
 			vnode.attrs.hideError = true;
-			vnode.attrs.model.error('An error.');
+			vnode.attrs.model.setError('An error.');
 			let classList = field.getClassList(vnode);
 			expect(classnames(classList)).to.contain("field");
 		});
@@ -157,7 +167,7 @@ describe("field", () => {
 		let attrs, form;
 
 		beforeEach(() => {
-			form = powerform({username: {validator: presence, default: "1"}});
+			form = TestForm.new({data: {username: "1"}});
 			attrs = {
 				model: form.username,
 				placeholder: "Placeholder",
@@ -178,15 +188,15 @@ describe("field", () => {
 		});
 
 		it("binds model to value of input", () => {
-			attrs.model("1");
+			attrs.model.setData("2");
 			_.render(document.body, _(Field, attrs));
 			let inputDom = document.querySelector("input");
 
-			expect(inputDom.value).to.equal(attrs.model());
+			expect(inputDom.value).to.equal(attrs.model.getData());
 		});
 
 		it("sets input's placeholder to attrs.placeholder", () => {
-			attrs.model("1");
+			attrs.model.setData("2");
 			_.render(document.body, _(Field, attrs));
 			let inputDom = document.querySelector("input");
 
@@ -207,7 +217,7 @@ describe("field", () => {
 			inputDom.value = "earth";
 			trigger("input", inputDom);
 
-			expect(attrs.model()).to.equal("earth");
+			expect(attrs.model.getData()).to.equal("earth");
 		});
 
 		it("validates on attrs.validate", function () {
@@ -218,7 +228,7 @@ describe("field", () => {
 			trigger("input", inputDom);
 			trigger("change", inputDom);
 
-			expect(attrs.model.error()).to.exist;
+			expect(attrs.model.getError()).to.exist;
 		});
 
 		it("updates and validates the value if attrs.update and attrs.validate are same", function() {
@@ -230,14 +240,14 @@ describe("field", () => {
 			// for valid data
 			inputDom.value = "earth";
 			trigger("change", inputDom);
-			expect(attrs.model()).to.equal("earth");
-			expect(attrs.model.error()).not.to.exist;
+			expect(attrs.model.getData()).to.equal("earth");
+			expect(attrs.model.getError()).not.to.exist;
 
 			// for invalid data
 			inputDom.value = "";
 			trigger("change", inputDom);
-			expect(attrs.model()).to.equal("");
-			expect(attrs.model.error()).to.exist;
+			expect(attrs.model.getData()).to.equal("");
+			expect(attrs.model.getError()).to.exist;
 		});
 
 		it("includes name", () => {

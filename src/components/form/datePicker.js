@@ -82,9 +82,9 @@ export class MonthDateGrid extends UI {
 
 
 						let tdClass = [];
-						this.datesAreEqual(date, new Date())? tdClass.push("today"): "";
-						this.datesAreEqual(date, new Date(attrs.model()))? tdClass.push("selected"): "";
-						date.getMonth() !== attrs.viewMonth? tdClass.push("offSet"): "";
+						this.datesAreEqual(date, new Date()) ? tdClass.push("today") : "";
+						this.datesAreEqual(date, new Date(attrs.model.getData())) ? tdClass.push("selected") : "";
+						date.getMonth() !== attrs.viewMonth ? tdClass.push("offSet") : "";
 
 						tdAttrs.class = tdClass.join(" ");
 						tdAttrs.onclick = attrs.setDate.bind(undefined, date);
@@ -181,7 +181,7 @@ export class DatePicker extends Field {
 		super.onbeforeupdate(vnode, oldVnode);
 		let {attrs} = vnode;
 
-		if (this.modelHasChanged(vnode.attrs.model())) {
+		if (this.modelHasChanged(vnode.attrs.model.getData())) {
 			this.setViewMonthYear(this.getViewMonthYear(attrs.model, attrs.format));
 		}
 	}
@@ -196,7 +196,7 @@ export class DatePicker extends Field {
 	}
 
 	getViewMonthYear (model, format) {
-		return model() && fecha.parse(model(), format) || new Date();
+		return model.getData() && fecha.parse(model.getData(), format) || new Date();
 	}
 
 	setViewMonthYear (date) {
@@ -220,7 +220,7 @@ export class DatePicker extends Field {
 	setDate (format, model, newDate) {
 		let date = new Date(newDate);
 		this.setViewMonthYear(date);
-		model(fecha.format(newDate, format));
+		model.setData(fecha.format(newDate, format));
 	}
 
 	prevMonth (e) {
@@ -254,7 +254,7 @@ export class DatePicker extends Field {
 
 		if (attrs.reset) {
 			attrs.append =
-				o(EmptyButton, {model: attrs.model, disabled: attrs.model()? false: true});
+				o(EmptyButton, {model: attrs.model, disabled: attrs.model.getData() ? false : true});
 		}
 
 		let view =

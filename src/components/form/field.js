@@ -41,14 +41,14 @@ export class Field extends UI {
 		if(isObject(attrs.label) && attrs.label.append) {
 			return _('label', attrs.label.text);
 		}
-		else if(attrs.help && !attrs.model.error() && !attrs.model()) {
+		else if(attrs.help && !attrs.model.getError() && !attrs.model.getData()) {
 			return _('label.help', attrs.help);
 		}
-		else if(attrs.model.error() && !attrs.hideError) {
+		else if(attrs.model.getError() && !attrs.hideError) {
 			return _('label.error',
 				attrs.safe
-				? _.trust(attrs.model.error())
-				: attrs.model.error());
+				? _.trust(attrs.model.getError())
+				: attrs.model.getError());
 		}
 	}
 
@@ -57,7 +57,7 @@ export class Field extends UI {
 			attrs.inline && "inline",
 			"field",
 			attrs.disabled && "disabled",
-			attrs.model.error() && !attrs.hideError && "error",
+			attrs.model.getError() && !attrs.hideError && "error",
 			widthMap[attrs.size]
 		];
 	}
@@ -68,7 +68,7 @@ export class Field extends UI {
       append: attrs.append,
       type: attrs.type,
       placeholder: attrs.placeholder,
-      value: attrs.model(),
+      value: attrs.model.getData(),
 			class: attrs.input? attrs.input.class : "",
 			disabled: attrs.disabled,
 			loading: attrs.loading,
@@ -84,11 +84,11 @@ export class Field extends UI {
 			}
 
 			if (attrs.update === attrs.validate) {
-				inputAttrs[attrs.update] = _.withAttr('value', attrs.model.setAndValidate);
+				inputAttrs[attrs.update] = _.withAttr('value', attrs.model.setAndValidate, attrs.model);
 			}
 			else {
 				if (attrs.update) {
-					inputAttrs[attrs.update] = _.withAttr('value', attrs.model);
+					inputAttrs[attrs.update] = _.withAttr('value', attrs.model.setData, attrs.model);
 				}
 				if (attrs.validate) {
 					inputAttrs[attrs.validate] = () => {attrs.model.isValid();};

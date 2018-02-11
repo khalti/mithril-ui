@@ -1,20 +1,23 @@
 import {window, trigger} from "./../../utils.js";
 import {Checkbox} from "../../../src/components/form/checkbox.js";
 import _ from "mithril";
-import powerform from "powerform";
-import {presence} from "./../../utils.js";
+import {Field, Form, ValidationError} from "powerform";
 import chai from "chai";
 
 let expect = chai.expect;
 
-let truth = presence;
+class TestField extends Field {
+	validate(value, allValues) {
+		if (!value) throw new ValidationError("This field is required.");
+	}
+}
 
 describe("checkbox", () => {
   let vnode;
   beforeEach(() => {
 		vnode = {
 			attrs : {
-				model: powerform({isTrue: {validator: truth, default: false}}).isTrue,
+				model: TestField.new({default: false}),
 				label: 'A label.',
 				value: true
 			}
@@ -55,7 +58,7 @@ describe("checkbox", () => {
 		});
 
 		it("sets the value of input's checked to the model's value", () => {
-			vnode.attrs.model(true);
+			vnode.attrs.model.setData(true);
 
 			_.render(document.body, _(Checkbox, vnode.attrs));
 			let inputDom = document.querySelector("input");
@@ -69,11 +72,11 @@ describe("checkbox", () => {
 
 			trigger("click", inputDom);
 
-			expect(vnode.attrs.model()).to.equal(true);
+			expect(vnode.attrs.model.getData()).to.equal(true);
 		});
 
 		it("its sets the class of input div to 'ui checkbox checked' if its checked", () => {
-			vnode.attrs.model(true);
+			vnode.attrs.model.setData(true);
 
 			_.render(document.body, _(Checkbox, vnode.attrs));
 			let checkboxDom = document.querySelector(".checkbox");
@@ -93,7 +96,7 @@ describe("checkbox", () => {
 		  beforeEach(() => {
 				listVnode = {
 					attrs : {
-						model: powerform({fruits: {validator: truth, default: ["apple"]}}).fruits,
+						model: TestField.new({default: ["apple"]}),
 						label: 'A label.',
 						value: "ball",
 						multiple: true
@@ -101,7 +104,7 @@ describe("checkbox", () => {
 				}
 		  });
 			it("model value should be list type if multiple is true", () => {
-				listVnode.attrs.model("apple");
+				listVnode.attrs.model.setData("apple");
 				let checkbox = new Checkbox();
 				expect(checkbox.oninit.bind(checkbox, listVnode)).to.throw(Error);
 			});
@@ -110,21 +113,21 @@ describe("checkbox", () => {
 				_.render(document.body, _(Checkbox, listVnode.attrs));
 				let inputDom = document.querySelector("input");
 				trigger("click", inputDom);
-				let val = listVnode.attrs.model();
+				let val = listVnode.attrs.model.getData();
 				expect(val[val.length - 1]).to.equal("ball");
 			});
 
 			it("value if present in model should be popped on click", () => {
-				listVnode.attrs.model(["apple", "ball"]);
+				listVnode.attrs.model.setData(["apple", "ball"]);
 				_.render(document.body, _(Checkbox, listVnode.attrs));
 				let inputDom = document.querySelector("input");
 				trigger("click", inputDom);
-				let val = listVnode.attrs.model();
+				let val = listVnode.attrs.model.getData();
 				expect(val[val.length - 1]).to.equal("apple");
 			});
 
 			it("checked if value present in model", () => {
-				listVnode.attrs.model(["apple", "ball"]);
+				listVnode.attrs.model.setData(["apple", "ball"]);
 				_.render(document.body, _(Checkbox, listVnode.attrs));
 				let checkboxDom = document.querySelector(".checkbox");
 
@@ -132,7 +135,7 @@ describe("checkbox", () => {
 			});
 
 			it("checked empty if value not present in model", () => {
-				listVnode.attrs.model(["apple"]);
+				listVnode.attrs.model.setData(["apple"]);
 				_.render(document.body, _(Checkbox, listVnode.attrs));
 				let checkboxDom = document.querySelector(".checkbox");
 
@@ -145,7 +148,7 @@ describe("checkbox", () => {
 		  beforeEach(() => {
 				listVnode = {
 					attrs : {
-						model: powerform({fruits: {validator: truth}}).fruits,
+						model: TestField.new(),
 						label: 'A label.',
 						value: "apple",
 						multiple: true
@@ -153,7 +156,7 @@ describe("checkbox", () => {
 				}
 		  });
 			it("model value should be list type if multiple is true", () => {
-				listVnode.attrs.model("apple");
+				listVnode.attrs.model.setData("apple");
 				let checkbox = new Checkbox();
 				expect(checkbox.oninit.bind(checkbox, listVnode)).to.throw(Error);
 			});
@@ -162,21 +165,21 @@ describe("checkbox", () => {
 				_.render(document.body, _(Checkbox, listVnode.attrs));
 				let inputDom = document.querySelector("input");
 				trigger("click", inputDom);
-				let val = listVnode.attrs.model();
+				let val = listVnode.attrs.model.getData();
 				expect(val[val.length - 1]).to.equal("apple");
 			});
 
 			it("value if present in model should be popped on click", () => {
-				listVnode.attrs.model(["apple"]);
+				listVnode.attrs.model.setData(["apple"]);
 				_.render(document.body, _(Checkbox, listVnode.attrs));
 				let inputDom = document.querySelector("input");
 				trigger("click", inputDom);
-				let val = listVnode.attrs.model();
+				let val = listVnode.attrs.model.getData();
 				expect(val.length).to.equal(0);
 			});
 
 			it("checked if value present in model", () => {
-				listVnode.attrs.model(["apple", "ball"]);
+				listVnode.attrs.model.setData(["apple", "ball"]);
 				_.render(document.body, _(Checkbox, listVnode.attrs));
 				let checkboxDom = document.querySelector(".checkbox");
 
@@ -184,7 +187,7 @@ describe("checkbox", () => {
 			});
 
 			it("checked empty if value not present in model", () => {
-				listVnode.attrs.model();
+				listVnode.attrs.model.getData();
 				_.render(document.body, _(Checkbox, listVnode.attrs));
 				let checkboxDom = document.querySelector(".checkbox");
 

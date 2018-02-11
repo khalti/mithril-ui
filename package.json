@@ -49,7 +49,7 @@
     "jsdom": "^9.12.0",
     "mithril": "1.1.1",
     "mithril-componentx": "^0.6.5-rc1",
-    "powerform": "2.8.0",
+    "powerform": "^3.1.4",
     "validatex": "^0.3.1"
   }
 }

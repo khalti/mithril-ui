@@ -22,17 +22,17 @@ export class Radio extends Field {
 	}
 
 	getLabelAppend (attrs) {
-		if(attrs.help && !attrs.model.errors()) {
+		if(attrs.help && !attrs.model.getError()) {
 			return o('label.help', attrs.help);
 		}
-		else if(attrs.model.error() && !attrs.hideError) {
-			return o('label.error', attrs.model.error());
+		else if(attrs.model..getError() && !attrs.hideError) {
+			return o('label.error', attrs.model.getError());
 		}
 		return null;
 	}
 
 	shouldCheck(attrs) {
-		return attrs.model() === attrs.value;
+		return attrs.model.getData() === attrs.value;
 	}
 
   view (vnode) {

@@ -1,12 +1,6 @@
-import map from "lodash/map";
 import {jsdom} from "jsdom";
-
+import {ValidationError} from 'powerform';
 export const FRAME_BUDGET = 1000/60;
-
-
-export const presence = (value) => {
-	if (!value) return "This field is required.";
-};
 
 
 global.window = jsdom().defaultView;

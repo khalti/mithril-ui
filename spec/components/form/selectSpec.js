@@ -1,9 +1,14 @@
-import {window, presence, trigger, FRAME_BUDGET} from "./../../utils.js";
+import {window, trigger, FRAME_BUDGET} from "./../../utils.js";
 import {Select} from "../../../src/components/form/select.js";
 import _ from 'mithril';
-import powerform from "powerform";
+import {Field, ValidationError} from "powerform";
 import {expect}  from "chai";
 
+class TestField extends Field {
+	validate(value, allValues) {
+		if (!value) throw new ValidationError("This field is required.");
+	}
+}
 
 describe("selection", () => {
   let attrs, vdom, model, superheroes;
@@ -13,7 +18,7 @@ describe("selection", () => {
                    {value: 1, label: "Batman", icon: "aicon"},
                    {value: 2, label: "Superman", icon: "aicon"},
                    {value: 3, label: "flash", icon: "aicon"}];
-    model = powerform({superhero: {validator: presence}}).superhero;
+    model = TestField.new();
     attrs = {
       label: "Superheroes",
       model: model,

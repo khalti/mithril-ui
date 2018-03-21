@@ -25,7 +25,7 @@ export class Radio extends Field {
 		if(attrs.help && !attrs.model.getError()) {
 			return o('label.help', attrs.help);
 		}
-		else if(attrs.model..getError() && !attrs.hideError) {
+		else if(attrs.model.getError() && !attrs.hideError) {
 			return o('label.error', attrs.model.getError());
 		}
 		return null;
